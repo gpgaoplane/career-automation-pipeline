@@ -35,7 +35,9 @@ career ops/                        ← Claude Code opens here
 │   └── output/                    ← generated Excel files and PDFs
 └── docs/
     ├── STATUS.md                  ← project progress (update with /wrap-up)
-    └── plans/                     ← implementation plans
+    ├── plans/                     ← implementation plans
+    └── design/                    ← durable technical design decisions
+        └── scraping-architecture.md
 ```
 
 ## Critical Rule: Two CLAUDE.md Files
@@ -161,10 +163,35 @@ data/applications.md           ← master tracker
 
 The Excel has columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
 
-## Memory & Learning
+## Scenario Routing
 
-- Project corrections → `~/.claude/projects/D--Projects-career-ops/memory/`
-- Cross-project patterns → `~/.claude/memory/MEMORY.md`
-- Stable project rules → `.claude/rules/`
-- Use `/learn-rule` to capture corrections immediately
-- Use `/wrap-up` at session end to update `docs/STATUS.md`
+Read these files **before acting** in each scenario:
+
+| Scenario | Read first |
+|----------|-----------|
+| About to evaluate a job, score a role, write cover letter | `career-ops/modes/_profile.md` + `career-ops/modes/_shared.md` |
+| About to generate or tailor a CV | `context/knowledge bank/5_career_positioning/kb_master_resume_and_positioning.md` + `kb_resume_mapping_logic.md` |
+| About to build or modify any scraper | `docs/design/scraping-architecture.md` |
+| About to add or change companies in portals.yml | `docs/design/scraping-architecture.md` (ATS API map section) |
+| About to write to the data layer | `.claude/rules/pipeline.md` |
+| Starting a session after a break | `docs/STATUS.md` + `.claude/project-memory.md` |
+| Encountered unexpected behavior or tool failure | `~/.claude/projects/D--Projects-career-ops/memory/tool-failures.md` |
+
+## Memory Architecture
+
+Three committed layers (travel with repo) + one external layer (machine-local):
+
+| Layer | File | What goes here |
+|-------|------|---------------|
+| In-repo scratchpad | `.claude/project-memory.md` | Decisions, discoveries, per-company notes, session handoff |
+| Design rationale | `docs/design/` | Durable technical decisions with reasoning |
+| Enforced rules | `.claude/rules/` | Patterns confirmed 2+ times, always applied |
+| Machine-local | `~/.claude/projects/D--Projects-career-ops/memory/` | Tool failures, machine-specific corrections |
+
+Write routing:
+- New architectural decision made → `.claude/project-memory.md` + `docs/design/` if substantial
+- Correction happened once → `~/.claude/projects/.../memory/`
+- Correction happened 2+ times → promote to `.claude/rules/`
+- Cross-project pattern → `~/.claude/memory/MEMORY.md`
+- Use `/scf:learn-rule` to route corrections immediately
+- Use `/scf:wrap-up` at session end to update `docs/STATUS.md` and `.claude/project-memory.md`
