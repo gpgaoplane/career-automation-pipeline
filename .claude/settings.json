@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/PC/.claude/**)",
+      "Read(//c/Users/PC/.claude/memory/**)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm --version)",
+      "Bash(node -e ' *)",
+      "Bash(python3 -c ' *)",
+      "Bash(python -c \"import openpyxl; print\\('openpyxl ok'\\)\")",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Read(//d/Projects/self-skills/super-claude-framework-all-in-one/**)"
+    ]
+  }
+}

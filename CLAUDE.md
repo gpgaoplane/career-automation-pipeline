@@ -1,0 +1,170 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. This project wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline targeting 171 pre-filtered AI-relevant companies.
+
+**Working dir layout:**
+```
+career ops/                        ← Claude Code opens here
+├── CLAUDE.md                      ← this file
+├── context/
+│   ├── knowledge bank/            ← Will's full personal context (read-only source of truth)
+│   │   ├── 1_professional_identity/kb_will_identity.md
+│   │   ├── 2_dalamula/kb_dalamula_business.md
+│   │   ├── 3_experience_and_competencies/kb_technical_competencies.md
+│   │   ├── 4_personal_projects/kb_projects_index.md
+│   │   └── 5_career_positioning/kb_master_resume_and_positioning.md
+│   └── AI_Companies_Consolidated_Ranked_v2.xlsx  ← 450 ranked companies source
+├── career-ops/                    ← cloned career-ops tool (git repo)
+│   ├── CLAUDE.md                  ← career-ops SYSTEM layer — DO NOT MODIFY
+│   ├── scan.mjs                   ← zero-token Greenhouse/Ashby/Lever API scraper
+│   ├── custom-scraper.mjs         ← Playwright scraper for non-API companies (to build)
+│   ├── export-jobs.mjs            ← Excel exporter (to build)
+│   ├── portals.yml                ← 171 filtered companies + title filters (to build)
+│   ├── config/profile.yml         ← Will's personal profile (to build)
+│   ├── cv.md                      ← Will's CV in markdown (to build)
+│   ├── modes/_profile.md          ← Will's archetype scoring overrides (to build)
+│   ├── data/
+│   │   ├── applications.md        ← application tracker
+│   │   ├── pipeline.md            ← pending job URLs inbox
+│   │   └── scan-history.tsv       ← dedup history
+│   ├── reports/                   ← per-job evaluation reports
+│   └── output/                    ← generated Excel files and PDFs
+└── docs/
+    ├── STATUS.md                  ← project progress (update with /wrap-up)
+    └── plans/                     ← implementation plans
+```
+
+## Critical Rule: Two CLAUDE.md Files
+
+`career-ops/CLAUDE.md` is the **system layer** maintained by the career-ops upstream project. Never edit it for personalization. All of Will's customizations go in:
+- `career-ops/config/profile.yml` — personal details, comp targets, location
+- `career-ops/modes/_profile.md` — archetype scoring, deal-breakers, narrative
+- `career-ops/portals.yml` — company list and title filters
+
+## Knowledge Bank (read before evaluation work)
+
+Always consult before generating CVs, writing cover letters, or scoring roles:
+
+| File | What it contains |
+|------|-----------------|
+| `context/knowledge bank/1_professional_identity/kb_will_identity.md` | Full bio, career arc, strengths/weaknesses, worldview |
+| `context/knowledge bank/2_dalamula/kb_dalamula_business.md` | Dalamula metrics, phases, lessons (50+ clients, $125K+, 61 deployments) |
+| `context/knowledge bank/3_experience_and_competencies/kb_technical_competencies.md` | Full tech stack with depth levels |
+| `context/knowledge bank/5_career_positioning/kb_master_resume_and_positioning.md` | All resume bullets tagged by role track |
+| `context/knowledge bank/5_career_positioning/kb_resume_mapping_logic.md` | Which bullets go on which resume variant |
+
+**Reconciled key metrics (use these, not approximations):**
+- LoRAs: 20+ identity + ~100 style/persona
+- Deployments: 61 documented
+- Clients: 50+, Revenue: $125K+
+- Image acceptance: 10% baseline → 80%+ (with LoRA)
+- Video acceptance: 20% → 40–50%
+
+## Commands (all run from `career-ops/` directory)
+
+```bash
+# Setup verification
+node doctor.mjs                    # checks cv.md, profile.yml, portals.yml exist
+
+# Scraping
+node scan.mjs                      # API scrape (Greenhouse/Ashby/Lever) — zero LLM tokens
+node scan.mjs --dry-run            # preview without writing
+node scan.mjs --company Anthropic  # single company
+node custom-scraper.mjs            # Playwright scrape for non-API companies
+node custom-scraper.mjs --dry-run
+
+# Export
+node export-jobs.mjs               # produces output/jobs-YYYY-MM-DD.xlsx
+
+# Full pipeline (scan → scrape → export)
+npm run full-scan
+
+# Pipeline maintenance
+node verify-pipeline.mjs           # health check
+node normalize-statuses.mjs        # fix canonical statuses
+node dedup-tracker.mjs             # remove duplicates
+node merge-tracker.mjs             # merge batch tracker additions
+
+# career-ops slash commands (in Claude Code session inside career-ops/)
+/career-ops scan                   # scan portals
+/career-ops pipeline               # evaluate pending URLs from pipeline.md
+/career-ops oferta                 # evaluate a single job offer
+/career-ops pdf                    # generate tailored CV PDF
+/career-ops tracker                # show application status
+/career-ops batch                  # batch evaluate with parallel workers
+/career-ops patterns               # analyze rejection patterns
+```
+
+## Pipeline Architecture
+
+```
+Excel (450 companies)
+    ↓ filter (171 AI-relevant)
+portals.yml
+    ↓
+scan.mjs ──────────────── Greenhouse/Ashby/Lever APIs (zero token cost)
+custom-scraper.mjs ─────── Playwright for remaining companies
+    ↓ (both write to)
+data/pipeline.md           pending URLs inbox
+data/scan-history.tsv      dedup history
+    ↓
+export-jobs.mjs
+    ↓
+output/jobs-YYYY-MM-DD.xlsx   ← human inspection + AI processing artifact
+    ↓ (approved jobs)
+/career-ops pipeline           ← full evaluation per job (blocks A–G + legitimacy)
+    ↓
+reports/{num}-{slug}-{date}.md
+batch/tracker-additions/{num}-{slug}.tsv
+    ↓
+node merge-tracker.mjs
+    ↓
+data/applications.md           ← master tracker
+```
+
+## Will's Target Roles (priority order)
+
+1. **AI Engineer / Solutions Architect** — production agentic systems, RAG, multi-agent
+2. **Account Executive / BD** — AI products, technical sales
+3. **AI Product Manager** — discovery, roadmap, KPI ownership
+4. **Consultant / Technical Advisory** — enterprise AI deployment
+5. **Generative AI / Creative AI** — LoRA, ComfyUI, multimodal
+
+## Scoring Calibration
+
+**Boost** roles at Series B+ or public AI-native companies involving: multi-agent systems, RAG, enterprise AI deployment, generative AI production, technical sales, SA activities (architecture + client advisory).
+
+**Reduce** for: pure frontend, non-AI SaaS, semiconductor/hardware, pure management without technical component.
+
+**Hard deal-breakers (score 1.0 or Discard):**
+- On-site 4–5 days/week with no flexibility
+- Comp below $120K USD total
+- Company <10 people (too early stage)
+- Requires US work authorization (Will needs sponsorship for US roles)
+- Pure non-technical sales with no AI/technical component
+
+## Data Layer Rules
+
+- **NEVER edit `data/applications.md` to add new rows** — write TSV to `batch/tracker-additions/` and run `node merge-tracker.mjs`
+- **YES** edit `applications.md` to update status/notes on existing rows
+- All report files: `reports/{###}-{company-slug}-{YYYY-MM-DD}.md`
+- Status values are canonical — see `templates/states.yml`. Never invent new statuses.
+- After any batch of evaluations: run `node merge-tracker.mjs`
+
+## Companies Source
+
+`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. 171 filtered as relevant based on AI-native category. Excluded: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
+
+The Excel has columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
+
+## Memory & Learning
+
+- Project corrections → `~/.claude/projects/D--Projects-career-ops/memory/`
+- Cross-project patterns → `~/.claude/memory/MEMORY.md`
+- Stable project rules → `.claude/rules/`
+- Use `/learn-rule` to capture corrections immediately
+- Use `/wrap-up` at session end to update `docs/STATUS.md`

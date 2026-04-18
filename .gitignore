@@ -1,0 +1,27 @@
+# Private personal data — never commit
+context/
+
+# Local Claude overrides
+CLAUDE.local.md
+
+# Node dependencies
+career-ops/node_modules/
+
+# Playwright browser binaries and cache
+career-ops/.playwright/
+career-ops/playwright-report/
+
+# Generated output artifacts
+career-ops/output/
+
+# Environment files
+.env
+*.env
+.env.local
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
