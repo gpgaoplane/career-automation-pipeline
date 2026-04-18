@@ -165,21 +165,49 @@ The Excel has columns: Rank | Company Name | Type | Valuation | HQ | Category | 
 
 ## Scenario Routing
 
-Read these files **before acting** in each scenario:
+The routing table below serves two purposes: (1) tells Claude what to read before acting, (2) is the **file ownership map** — when a decision changes in a domain, update the file listed in that row.
 
-| Scenario | Read first |
-|----------|-----------|
-| About to evaluate a job, score a role, write cover letter | `career-ops/modes/_profile.md` + `career-ops/modes/_shared.md` |
-| About to generate or tailor a CV | `context/knowledge bank/5_career_positioning/kb_master_resume_and_positioning.md` + `kb_resume_mapping_logic.md` |
-| About to build or modify any scraper | `docs/design/scraping-architecture.md` |
-| About to add or change companies in portals.yml | `docs/design/scraping-architecture.md` (ATS API map section) |
-| About to write to the data layer | `.claude/rules/pipeline.md` |
-| Starting a session after a break | `docs/STATUS.md` + `.claude/project-memory.md` |
-| Encountered unexpected behavior or tool failure | `~/.claude/projects/D--Projects-career-ops/memory/tool-failures.md` |
+| Scenario / Domain | Read before acting | Update when domain changes |
+|-------------------|--------------------|---------------------------|
+| Evaluate a job, score a role, write cover letter | `career-ops/modes/_profile.md` + `_shared.md` | `modes/_profile.md` |
+| Generate or tailor a CV | `context/knowledge bank/5_career_positioning/kb_master_resume_and_positioning.md` + `kb_resume_mapping_logic.md` | knowledge bank files (read-only — update cv.md instead) |
+| Build or modify any scraper | `docs/design/scraping-architecture.md` | `docs/design/scraping-architecture.md` |
+| Add or change companies in portals.yml | `docs/design/scraping-architecture.md` (ATS API map) | `docs/design/scraping-architecture.md` + `portals.yml` |
+| Write to the data layer | `.claude/rules/pipeline.md` | `.claude/rules/pipeline.md` |
+| Layer ownership or script responsibilities | `.claude/rules/architecture.md` | `.claude/rules/architecture.md` |
+| Starting a session after a break | `docs/STATUS.md` + `.claude/project-memory.md` | updated at wrap-up |
+| Unexpected behavior or tool failure | `~/.claude/projects/D--Projects-career-ops/memory/tool-failures.md` | `tool-failures.md` |
+
+## File Staleness Protocol
+
+Every file in this project falls into one of four categories:
+
+**1. Routing-table files** — staleness governed by the ownership map above. When a domain decision changes, update the listed file immediately, not at wrap-up.
+
+**2. Structural files** — go stale when project shape changes. Check these at every `/scf:wrap-up`:
+
+| File | Goes stale when |
+|------|----------------|
+| `CLAUDE.md` (this file) | Directory layout changes, new commands added, pipeline diagram changes, new files created |
+| `.claude/project-memory.md` | Any new decision made, per-company scraping note discovered |
+| `docs/STATUS.md` | Every session — always update at wrap-up |
+
+**3. Ephemeral files** — consumed, not updated. Plans in `docs/plans/` describe future work; once executed they become historical record. Do not update them — they are correct as written at the time of planning.
+
+**4. User-maintained files** — Claude does not update these. `CLAUDE.local.md` is yours.
+
+## Wrap-up Checklist
+
+Run `/scf:wrap-up` at session end. Before closing, explicitly check:
+
+- [ ] Did any domain decision change? → update the routing-table file for that domain
+- [ ] Did directory structure change? → update CLAUDE.md layout section
+- [ ] Did new commands get added? → update CLAUDE.md commands section
+- [ ] Did pipeline architecture change? → update CLAUDE.md pipeline diagram
+- [ ] Were architectural decisions made? → add to `.claude/project-memory.md`
+- [ ] Update `docs/STATUS.md` handoff note
 
 ## Memory Architecture
-
-Three committed layers (travel with repo) + one external layer (machine-local):
 
 | Layer | File | What goes here |
 |-------|------|---------------|
@@ -189,9 +217,8 @@ Three committed layers (travel with repo) + one external layer (machine-local):
 | Machine-local | `~/.claude/projects/D--Projects-career-ops/memory/` | Tool failures, machine-specific corrections |
 
 Write routing:
-- New architectural decision made → `.claude/project-memory.md` + `docs/design/` if substantial
+- New architectural decision → `.claude/project-memory.md` + `docs/design/` if substantial
 - Correction happened once → `~/.claude/projects/.../memory/`
 - Correction happened 2+ times → promote to `.claude/rules/`
 - Cross-project pattern → `~/.claude/memory/MEMORY.md`
 - Use `/scf:learn-rule` to route corrections immediately
-- Use `/scf:wrap-up` at session end to update `docs/STATUS.md` and `.claude/project-memory.md`
