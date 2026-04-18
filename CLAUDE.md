@@ -143,11 +143,24 @@ data/applications.md           ← master tracker
 **Reduce** for: pure frontend, non-AI SaaS, semiconductor/hardware, pure management without technical component.
 
 **Hard deal-breakers (score 1.0 or Discard):**
-- On-site 4–5 days/week with no flexibility
-- Comp below $120K USD total
-- Company <10 people (too early stage)
-- Requires US work authorization (Will needs sponsorship for US roles)
+
+Universal:
+- Company <10 people
 - Pure non-technical sales with no AI/technical component
+- Pure AI research with no path to production
+- Technical role with no meaningful AI component
+
+US roles:
+- Not 100% remote → SKIP (Will works from Toronto; no US presence viable)
+- Comp below $120K USD
+- Sponsorship is NOT a deal-breaker — remote from Toronto requires no US work authorization
+
+Canadian roles:
+- On-site >3 days/week, or any on-site outside Toronto → SKIP
+- Comp below $90K CAD
+- $90K–$110K CAD: lower score (−0.2), flag in report, not auto-SKIP
+- $110K–$130K CAD: good range
+- $130K+ CAD: excellent
 
 ## Data Layer Rules
 

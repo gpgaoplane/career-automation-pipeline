@@ -23,14 +23,28 @@ Moonearn (blockchain compute co-founder, 2022) → UCLA MFE → Inception Capita
 4. Consultant / Technical Advisory — enterprise AI deployment
 5. Generative AI / Creative AI — LoRA, ComfyUI, multimodal
 
-**Compensation target:** $120K–$180K USD total comp. Minimum $120K. Remote preferred; Toronto hybrid max 2 days/week.
+**Compensation target:**
+- US roles: $120K–$180K USD. Minimum $120K USD.
+- Canadian roles: $110K–$150K CAD. Minimum $90K CAD. Good range: $110K–$130K CAD. Excellent: $130K+ CAD.
 
-**Hard deal-breakers (score 1.0 / Discard):**
-- On-site 4–5 days/week with no flexibility
-- Total comp below $120K USD
+**Hard deal-breakers:**
+
+Universal:
 - Company fewer than 10 people
-- US roles requiring self-sponsorship (needs employer sponsorship)
 - Pure non-technical sales with no AI/technical component
+- Pure AI research with no path to production
+- Technical role with no meaningful AI component
+
+US roles:
+- Not 100% remote → SKIP (Will works from Toronto; no US on-site or hybrid viable)
+- Comp below $120K USD → SKIP
+- Sponsorship is NOT a deal-breaker — remote from Toronto requires no US work authorization
+
+Canadian roles:
+- On-site >3 days/week → SKIP
+- Any on-site outside Toronto → SKIP
+- Comp below $90K CAD → SKIP
+- $90K–$110K CAD: lower score, flag in report, not auto-SKIP
 
 **Key metrics (use these exactly — sourced from knowledge bank):**
 - Clients: 50+ | Revenue: $125K+ | Deployments: 61 documented

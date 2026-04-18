@@ -34,13 +34,24 @@ Will's signature is being **the only person in the room who can do all of it**: 
 
 ## Deal-Breakers — Score 1.0 or SKIP
 
-Apply these before any other scoring:
-- On-site 4–5 days/week with no remote flexibility → SKIP
-- Total compensation below $120K USD → SKIP
-- Company fewer than 10 employees → SKIP (too early, no platform)
-- US role requiring self-sponsorship (Will needs employer TN/H1B sponsorship for US) → flag prominently
+Apply these before any other scoring. Distinguish US vs Canadian roles.
+
+**Universal hard passes (any country):**
+- Company fewer than 10 employees → SKIP
 - Pure non-technical sales with zero AI/technical component → SKIP
-- Purely academic research role with no path to production → SKIP
+- Pure AI research with no path to production (academic, no deployment) → SKIP
+- Technical role with no meaningful AI component → SKIP
+- Pure management with no technical component → SKIP
+
+**US role hard passes:**
+- Not 100% remote → SKIP (Will works from Toronto; hybrid or on-site US is not viable)
+- Total compensation below $120K USD → SKIP
+- Sponsorship requirement is NOT a deal-breaker — Will works remotely from Canada, no US work authorization needed for remote roles
+
+**Canadian role hard passes:**
+- On-site more than 3 days/week → SKIP (max 3 days on-site acceptable)
+- On-site outside Toronto → SKIP (Toronto only for any in-person requirement)
+- Total compensation below $90K CAD → SKIP
 
 ## Scoring Calibration
 
@@ -57,20 +68,36 @@ Apply these before any other scoring:
 - Pure frontend/UI role with minimal AI component
 - Non-AI SaaS (CRM, ERP, HRIS) with AI bolted on superficially
 - Semiconductor / hardware design roles
-- Pure management with no technical component
 - Roles requiring domain expertise Will doesn't have (radiology, genomics, legal)
-- Companies requiring US work authorization with no sponsorship path confirmed
+
+## Compensation Scoring by Market
+
+**US roles (USD):**
+- $120K–$150K USD: acceptable, score at face value
+- $150K–$180K USD: good, small boost
+- $180K+ USD: excellent, boost
+- Below $120K USD: SKIP
+
+**Canadian roles (CAD):**
+- Below $90K CAD: SKIP
+- $90K–$110K CAD: lower score (−0.2), but not disqualifying — flag in report
+- $110K–$130K CAD: good, target median range, no penalty
+- $130K+ CAD: excellent, small boost
+- Note: many Canadian AI roles list in CAD. Always confirm currency. If unlisted, note in report and score conservatively.
 
 ## Compensation Framing
 
-**Salary expectations:**
+**Salary expectations (US roles):**
 > "Based on market data for this type of role — AI engineering / SA / technical sales — and my background delivering production systems and $125K+ in commercial revenue as a founder, I'm targeting $120K–$180K USD total comp. I'm flexible on structure across base, bonus, and equity — what matters is the total package and the opportunity to work on hard problems with a great team."
+
+**Salary expectations (Canadian roles):**
+> "I'm targeting $110K–$150K CAD total comp for Canadian roles. Given my background in production AI deployment and full-cycle B2B sales, I'm confident this is well-supported by market data."
 
 **Geographic discount pushback:**
 > "The roles I'm competitive for are output-based, not location-based. I built and delivered production AI systems across North America and APAC from Toronto. My track record doesn't change based on postal code."
 
 **When offered below target:**
-> "I'm comparing with opportunities in the $150K+ range. I'm drawn to [company] because of [specific reason]. Can we explore closing that gap through [equity / signing bonus / performance review timeline]?"
+> "I'm comparing with opportunities in the $150K+ USD / $130K+ CAD range. I'm drawn to [company] because of [specific reason]. Can we explore closing that gap through [equity / signing bonus / performance review timeline]?"
 
 ## Portfolio and Demo
 
@@ -84,8 +111,17 @@ Apply these before any other scoring:
 
 ## Location Policy
 
-**In forms:** Remote / hybrid. Toronto-based. EST timezone. Canadian work authorization (no sponsorship needed in Canada).
+**US roles:**
+- Must be 100% remote. Will works from Toronto, Canada — no US work authorization required for remote roles.
+- Sponsorship is irrelevant for remote US roles; do NOT flag as a deal-breaker.
+- If role requires any US on-site presence: SKIP.
+- In report: note "Remote from Toronto, CA — no US work authorization issue."
 
-**US roles:** Flag visa requirement in every report. Score the visa dimension at 3.0 unless company has confirmed sponsorship history or explicitly offers it.
+**Canadian roles:**
+- Remote (any location): no penalty.
+- Hybrid in Toronto, ≤3 days/week: acceptable, no penalty.
+- Fully on-site in Toronto: acceptable if compensation is strong ($130K+ CAD); flag in report.
+- Hybrid outside Toronto or on-site outside Toronto: SKIP.
+- In report: always specify on-site days and location explicitly.
 
-**In evaluations:** If role is fully remote, no location penalty. If hybrid outside Toronto, reduce by 0.3 unless Will is interested enough to consider relocation (flag explicitly in report).
+**In forms:** Remote / hybrid. Toronto-based. EST timezone. Canadian permanent resident — full Canadian work authorization, no sponsorship needed.

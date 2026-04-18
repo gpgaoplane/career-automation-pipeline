@@ -72,22 +72,33 @@ narrative:
       hero_metric: "Identity-preserving LoRA conditioning, cinematic lighting, 100K–400K+ follower growth"
 
 compensation:
-  target_range: "$120K-180K USD"
-  currency: "USD"
-  minimum: "$120K"
+  # US roles
+  target_range_usd: "$120K-180K USD"
+  minimum_usd: "$120K USD"
+  # Canadian roles
+  target_range_cad: "$110K-150K CAD"
+  minimum_cad: "$90K CAD"
+  good_range_cad: "$110K-130K CAD"
+  currency_primary: "USD"
   location_flexibility: >
-    Remote strongly preferred. Toronto-based. Open to hybrid max 2 days/week in Toronto.
-    Available for occasional travel (conferences, client visits, team meetups).
-    Not available for daily on-site outside Toronto without relocation package.
+    US roles: 100% remote only. Will works from Toronto, Canada — no US presence required.
+    Canadian roles: remote preferred; hybrid up to 3 days/week in Toronto acceptable;
+    fully on-site in Toronto acceptable for strong comp ($130K+ CAD).
+    On-site outside Toronto: not available.
 
 location:
   country: "Canada"
   city: "Toronto"
   timezone: "EST (UTC-5)"
   visa_status: >
-    Canadian permanent resident. Canadian work authorization — no sponsorship needed for Canada.
-    US roles require employer sponsorship (TN or H1B) — must be confirmed before applying.
-  onsite_availability: "Max 2 days/week hybrid in Toronto; occasional travel OK"
+    Canadian permanent resident. Full Canadian work authorization — no sponsorship needed for Canada.
+    US remote roles: Will works from Toronto, Canada. No US work authorization needed for remote
+    positions — sponsorship is not required or relevant. Do NOT flag US sponsorship as a blocker
+    for remote roles.
+  onsite_availability: >
+    US: 100% remote only — no on-site or hybrid.
+    Canada: remote or hybrid up to 3 days/week (Toronto only); fully on-site Toronto acceptable
+    for strong comp. Outside Toronto: not available.
 
 language:
   modes_dir: "modes"
