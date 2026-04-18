@@ -49,9 +49,9 @@ Apply these before any other scoring. Distinguish US vs Canadian roles.
 - Sponsorship requirement is NOT a deal-breaker — Will works remotely from Canada, no US work authorization needed for remote roles
 
 **Canadian role hard passes:**
-- On-site more than 3 days/week → SKIP (max 3 days on-site acceptable)
 - On-site outside Toronto → SKIP (Toronto only for any in-person requirement)
 - Total compensation below $90K CAD → SKIP
+- On-site frequency is NOT a hard pass — use scoring instead (see Location Policy below)
 
 ## Scoring Calibration
 
@@ -119,9 +119,10 @@ Apply these before any other scoring. Distinguish US vs Canadian roles.
 
 **Canadian roles:**
 - Remote (any location): no penalty.
-- Hybrid in Toronto, ≤3 days/week: acceptable, no penalty.
-- Fully on-site in Toronto: acceptable if compensation is strong ($130K+ CAD); flag in report.
-- Hybrid outside Toronto or on-site outside Toronto: SKIP.
-- In report: always specify on-site days and location explicitly.
+- Hybrid in Toronto, ≤3 days/week: no penalty.
+- Hybrid in Toronto, 4–5 days/week: reduce score by 0.2; acceptable if comp ≥ $120K CAD.
+- Fully on-site in Toronto, 5 days/week: reduce score by 0.3; acceptable if comp ≥ $120K CAD — do NOT SKIP.
+- Any on-site outside Toronto: SKIP regardless of comp.
+- In report: always specify on-site days, location, and comp currency explicitly.
 
 **In forms:** Remote / hybrid. Toronto-based. EST timezone. Canadian permanent resident — full Canadian work authorization, no sponsorship needed.

@@ -156,9 +156,12 @@ US roles:
 - Sponsorship is NOT a deal-breaker — remote from Toronto requires no US work authorization
 
 Canadian roles:
-- On-site >3 days/week, or any on-site outside Toronto → SKIP
-- Comp below $90K CAD
-- $90K–$110K CAD: lower score (−0.2), flag in report, not auto-SKIP
+- Any on-site outside Toronto → SKIP
+- Comp below $90K CAD → SKIP
+- On-site frequency (Toronto only): scoring only, not hard pass
+  - ≤3 days/week: no penalty
+  - 4–5 days/week: −0.2, acceptable if comp ≥ $120K CAD
+- $90K–$110K CAD: lower score (−0.2), flag in report
 - $110K–$130K CAD: good range
 - $130K+ CAD: excellent
 

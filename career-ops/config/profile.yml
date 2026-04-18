@@ -97,8 +97,8 @@ location:
     for remote roles.
   onsite_availability: >
     US: 100% remote only — no on-site or hybrid.
-    Canada: remote or hybrid up to 3 days/week (Toronto only); fully on-site Toronto acceptable
-    for strong comp. Outside Toronto: not available.
+    Canada: remote preferred; any on-site frequency in Toronto acceptable if comp >= $120K CAD;
+    4-5 days/week reduces score but is not a hard pass. Outside Toronto: not available.
 
 language:
   modes_dir: "modes"
