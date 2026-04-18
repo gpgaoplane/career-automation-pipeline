@@ -1,0 +1,94 @@
+# Career-Ops Profile — Will (Xinyuan) Guo
+# Source of truth: context/knowledge bank/1_professional_identity/kb_will_identity.md
+# DO NOT edit modes/_shared.md for personalization — put everything here or in modes/_profile.md
+
+candidate:
+  full_name: "Will (Xinyuan) Guo"
+  email: "william974314065@gmail.com"
+  phone: "+1 416-508-2788"
+  location: "Toronto, Ontario, Canada"
+  linkedin: "linkedin.com/in/xinyuan-guo"
+  portfolio_url: "https://dalamula.ai"
+  github: "github.com/gpgaoplane"
+  twitter: ""
+
+target_roles:
+  primary:
+    - "AI Engineer"
+    - "Solutions Architect"
+    - "Account Executive — AI"
+    - "AI Product Manager"
+    - "Technical Consultant — AI"
+    - "Generative AI Engineer"
+  archetypes:
+    - name: "AI Engineer"
+      level: "Mid-Senior"
+      fit: "primary"
+    - name: "Solutions Architect"
+      level: "Senior"
+      fit: "primary"
+    - name: "Generative AI Engineer"
+      level: "Senior"
+      fit: "primary"
+    - name: "Account Executive"
+      level: "Mid-Senior"
+      fit: "secondary"
+    - name: "AI Product Manager"
+      level: "Mid-Senior"
+      fit: "secondary"
+    - name: "Consultant"
+      level: "Senior"
+      fit: "adjacent"
+
+narrative:
+  headline: "Applied AI practitioner who builds, sells, and deploys production agentic systems"
+  exit_story: >
+    Co-founded and operated Dalamula Technology for 3 years — a generative AI studio that delivered
+    61 production deployments across 50+ clients, generated $125K+ in revenue, and received a $1M
+    term sheet at peak. Strategic wind-down in early 2026 as closed-source platform products from
+    major companies (Google Veo, Kling, Sora, Runway) compressed the boutique studio market.
+    Now targeting roles where I can apply production AI depth at enterprise scale with a world-class
+    platform and team behind me. Moving toward the work (technical advisory, architecture, deployment),
+    not away from failure.
+  superpowers:
+    - "Full-stack agentic AI — LangGraph, Google ADK, RAG, LoRA fine-tuning, multimodal production pipelines"
+    - "Technical-commercial hybrid — personally built AND sold 50+ B2B AI engagements simultaneously"
+    - "Generative AI production at scale — 120+ LoRAs trained, 23 workflow versions, 61 deployments"
+    - "Speed-to-production — from zero to working production system in days, not weeks"
+    - "Frontier AI daily practitioner — self-built agentic intelligence pipeline, 3+ years daily usage"
+    - "Cross-domain fluency — engineering, sales, PM, creative direction, strategic advisory"
+  proof_points:
+    - name: "Dalamula Technology"
+      url: "https://dalamula.ai"
+      hero_metric: "50+ clients, $125K+ revenue, 61 production deployments, $1M term sheet"
+    - name: "Super Claude Framework"
+      url: "https://github.com/gpgaoplane/super-claude-framework-all-in-one"
+      hero_metric: "Published on Claude Code marketplace — 3-tier memory routing, cross-session state"
+    - name: "Agentic News Intelligence Platform"
+      url: ""
+      hero_metric: "7-layer DAG, 6 sub-agents, runs unattended daily on GCP"
+    - name: "Neon-Surrealism Portfolio"
+      url: "https://dalamula.ai"
+      hero_metric: "Identity-preserving LoRA conditioning, cinematic lighting, 100K–400K+ follower growth"
+
+compensation:
+  target_range: "$120K-180K USD"
+  currency: "USD"
+  minimum: "$120K"
+  location_flexibility: >
+    Remote strongly preferred. Toronto-based. Open to hybrid max 2 days/week in Toronto.
+    Available for occasional travel (conferences, client visits, team meetups).
+    Not available for daily on-site outside Toronto without relocation package.
+
+location:
+  country: "Canada"
+  city: "Toronto"
+  timezone: "EST (UTC-5)"
+  visa_status: >
+    Canadian permanent resident. Canadian work authorization — no sponsorship needed for Canada.
+    US roles require employer sponsorship (TN or H1B) — must be confirmed before applying.
+  onsite_availability: "Max 2 days/week hybrid in Toronto; occasional travel OK"
+
+language:
+  modes_dir: "modes"
+  output_language: "en"

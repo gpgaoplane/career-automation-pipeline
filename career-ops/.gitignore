@@ -1,7 +1,5 @@
-# Personal data (user fills these)
-data/applications.md
-data/pipeline.md
-data/scan-history.tsv
+# Personal data — tracked in this private repo (absorbed from upstream)
+# data/applications.md, data/pipeline.md, data/scan-history.tsv are intentionally tracked
 reports/*.md
 !reports/.gitkeep
 output/*
@@ -15,10 +13,8 @@ batch/tracker-additions/**/*.tsv
 jds/*
 !jds/.gitkeep
 
-# User config and customization (never auto-updated)
-config/profile.yml
-portals.yml
-modes/_profile.md
+# User config — tracked in this private repo
+# config/profile.yml, portals.yml, modes/_profile.md are intentionally tracked
 .update-dismissed
 .update-lock
 

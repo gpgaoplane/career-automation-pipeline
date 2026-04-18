@@ -1,0 +1,3174 @@
+# portals.yml — Career-Ops Portal Scanner Configuration
+# Candidate: Will (Xinyuan) Guo
+# Last updated: 2026-04-18
+# Source: context/AI_Companies_Consolidated_Ranked_v2.xlsx (all 448 companies with valid career URLs)
+# Skipped: Eternal (no URL), Treefera (no URL)
+# Title filters derived from Will's target role tracks: AI-ENG, SA, AE, PM, GEN-AI, CREATIVE
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TITLE FILTER
+# At least 1 positive must match AND 0 negatives must match (case-insensitive).
+# ─────────────────────────────────────────────────────────────────────────────
+
+title_filter:
+  positive:
+    # ── AI / ML Engineering ──────────────────────────────────────────────────
+    - "AI Engineer"
+    - "ML Engineer"
+    - "Machine Learning Engineer"
+    - "Applied AI"
+    - "Applied ML"
+    - "LLM Engineer"
+    - "Agentic"
+    - "Agent Engineer"
+    - "GenAI"
+    - "Generative AI"
+    - "RAG"
+    - "MLOps"
+    - "LLMOps"
+    - "AI Platform"
+    - "AI Infrastructure"
+    - "Foundation Model"
+    - "Model Engineer"
+    - "AI Research Engineer"
+    - "Multimodal"
+    - "NLP Engineer"
+    - "Conversational AI"
+    # ── Solutions / Technical Advisory ───────────────────────────────────────
+    - "Solutions Architect"
+    - "Solutions Engineer"
+    - "Forward Deployed Engineer"
+    - "Forward Deployed"
+    - "Customer Engineer"
+    - "Integration Engineer"
+    - "Technical Account"
+    - "Technical Account Manager"
+    - "Field Engineer"
+    - "Field AI"
+    - "Implementation Engineer"
+    - "Deployment Engineer"
+    - "AI Architect"
+    - "Enterprise Architect"
+    # ── Sales / Business Development ─────────────────────────────────────────
+    - "Account Executive"
+    - "Enterprise Account Executive"
+    - "Strategic Account Executive"
+    - "Sales Engineer"
+    - "AI Sales"
+    - "Business Development"
+    - "Enterprise Sales"
+    - "Technical Sales"
+    - "Partner Sales"
+    # ── Product Management ───────────────────────────────────────────────────
+    - "AI Product Manager"
+    - "Product Manager"
+    - "Technical Product Manager"
+    - "Technical PM"
+    - "Group Product Manager"
+    - "Senior Product Manager"
+    - "Staff Product Manager"
+    # ── Consulting / Advisory ────────────────────────────────────────────────
+    - "AI Consultant"
+    - "Technical Consultant"
+    - "AI Advisor"
+    - "AI Strategist"
+    - "Technology Consultant"
+    # ── Generative AI / Creative ─────────────────────────────────────────────
+    - "Creative Technologist"
+    - "Technical Artist"
+    - "AI Trainer"
+    - "AI Model Trainer"
+    - "Image Trainer"
+    - "Video Trainer"
+    - "Prompt Engineer"
+    - "ComfyUI"
+    - "LoRA"
+    - "Stable Diffusion"
+    - "Video Generation"
+    - "Content AI"
+    # ── Broad AI roles ───────────────────────────────────────────────────────
+    - "Artificial Intelligence"
+    - "Deep Learning"
+    - "AI Developer"
+    - "AI Software Engineer"
+    - "Software Engineer, AI"
+    - "Software Engineer - AI"
+    - "Staff AI"
+    - "Senior AI"
+    - "Principal AI"
+
+  negative:
+    - "intern"
+    - "internship"
+    - "co-op"
+    - "coop"
+    - "PhD"
+    - "postdoc"
+    - "research scientist"
+    - "principal scientist"
+    - "staff scientist"
+    - "hardware engineer"
+    - "ASIC"
+    - "chip design"
+    - "semiconductor"
+    - "embedded"
+    - "FPGA"
+    - "firmware"
+    - "mechanical engineer"
+    - "electrical engineer"
+    - "civil engineer"
+    - "recruiter"
+    - "talent acquisition"
+    - "hr manager"
+    - "human resources"
+    - "payroll"
+    - "accountant"
+    - "financial analyst"
+    - "legal counsel"
+    - "paralegal"
+    - "attorney"
+    - "administrative"
+    - "executive assistant"
+    - "office manager"
+    - "facilities"
+    - "supply chain"
+    - "procurement"
+    - "safety engineer"
+    - "quality assurance"
+    - "security analyst"
+    - "network engineer"
+    - "systems administrator"
+    - "database administrator"
+    - "data entry"
+    - "customer support"
+    - "marketing manager"
+    - "social media manager"
+    - "graphic designer"
+    - "ui designer"
+    - "ux designer"
+    - "copywriter"
+    - "content writer"
+    - "journalist"
+    - "radiologist"
+    - "physician"
+    - "nurse"
+    - "clinical"
+    - "neuroscientist"
+    - "biologist"
+    - "chemist"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SEARCH QUERIES
+# ─────────────────────────────────────────────────────────────────────────────
+
+search_queries:
+  - "AI engineer jobs Toronto remote 2026"
+  - "solutions architect AI Toronto remote 2026"
+  - "agentic AI engineer jobs 2026"
+  - "LLM engineer jobs remote Canada 2026"
+  - "generative AI engineer jobs remote 2026"
+  - "account executive AI startup Toronto 2026"
+  - "forward deployed engineer AI 2026"
+  - "AI product manager remote Canada 2026"
+  - "RAG engineer jobs 2026"
+  - "LangGraph engineer jobs 2026"
+  - "ComfyUI engineer jobs 2026"
+  - "multimodal AI engineer jobs 2026"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TRACKED COMPANIES — all 448 from AI_Companies_Consolidated_Ranked_v2.xlsx
+# scan.mjs auto-detects Greenhouse/Ashby/Lever from careers_url pattern
+# explicit api: field added for non-standard slugs
+# ─────────────────────────────────────────────────────────────────────────────
+
+tracked_companies:
+
+  # ── AI 3D Generation ──────────────────────────────────────────
+  - name: "Runway-adjacent: Lumen Orbis"
+    rank: 376
+    category: "AI 3D Generation"
+    careers_url: "https://runwayml.com/careers/"
+    enabled: true
+
+
+  # ── AI Agents ─────────────────────────────────────────────────
+  - name: "Sierra"
+    rank: 234
+    category: "AI Agents"
+    careers_url: "https://sierra.ai/careers"
+    enabled: true
+
+  - name: "Cresta"
+    rank: 298
+    category: "AI Agents"
+    careers_url: "https://www.cresta.com/careers"
+    enabled: true
+
+  - name: "Adept AI"
+    rank: 314
+    category: "AI Agents"
+    careers_url: "https://www.adept.ai/careers"
+    enabled: true
+
+  - name: "Inworld AI"
+    rank: 423
+    category: "AI Agents"
+    careers_url: "https://inworld.ai/careers"
+    enabled: true
+
+
+  # ── AI Agents / Reasoning ─────────────────────────────────────
+  - name: "Imbue"
+    rank: 319
+    category: "AI Agents / Reasoning"
+    careers_url: "https://imbue.com/careers/"
+    enabled: true
+
+
+  # ── AI Anti-Ransomware ────────────────────────────────────────
+  - name: "Abnormal-adjacent: Halcyon"
+    rank: 380
+    category: "AI Anti-Ransomware"
+    careers_url: "https://www.halcyon.ai/careers"
+    enabled: true
+
+
+  # ── AI Automation / RPA ───────────────────────────────────────
+  - name: "UiPath"
+    rank: 228
+    category: "AI Automation / RPA"
+    careers_url: "https://www.uipath.com/careers"
+    enabled: true
+
+
+  # ── AI Biotech / Protein Engineering ──────────────────────────
+  - name: "Cradle"
+    rank: 383
+    category: "AI Biotech / Protein Engineering"
+    careers_url: "https://cradle.bio/careers"
+    enabled: true
+
+
+  # ── AI Chatbot / Consumer ─────────────────────────────────────
+  - name: "xAI/Grok"
+    rank: 446
+    category: "AI Chatbot / Consumer"
+    careers_url: "https://x.ai/careers"
+    enabled: true
+
+
+  # ── AI Chips / Compute ────────────────────────────────────────
+  - name: "NVIDIA"
+    rank: 1
+    category: "AI Chips / Compute"
+    careers_url: "https://www.nvidia.com/en-us/about-nvidia/careers/"
+    enabled: true
+
+  - name: "Broadcom"
+    rank: 7
+    category: "AI Chips / Compute"
+    careers_url: "https://www.broadcom.com/company/careers"
+    enabled: true
+
+  - name: "AMD"
+    rank: 21
+    category: "AI Chips / Compute"
+    careers_url: "https://www.amd.com/en/corporate/careers.html"
+    enabled: true
+
+  - name: "Cambricon Technologies"
+    rank: 67
+    category: "AI Chips / Compute"
+    careers_url: "https://www.cambricon.com/index.php?s=/English/Recruitment/index.html"
+    enabled: true
+
+  - name: "Cerebras Systems"
+    rank: 168
+    category: "AI Chips / Compute"
+    careers_url: "https://www.cerebras.net/careers/"
+    enabled: true
+
+  - name: "Groq"
+    rank: 250
+    category: "AI Chips / Compute"
+    careers_url: "https://groq.com/careers/"
+    enabled: true
+
+  - name: "SiFive"
+    rank: 277
+    category: "AI Chips / Compute"
+    careers_url: "https://www.sifive.com/careers"
+    enabled: true
+
+
+  # ── AI Chips / Inference ──────────────────────────────────────
+  - name: "D-Matrix"
+    rank: 293
+    category: "AI Chips / Inference"
+    careers_url: "https://www.d-matrix.ai/careers/"
+    enabled: true
+
+  - name: "Positron"
+    rank: 333
+    category: "AI Chips / Inference"
+    careers_url: "https://www.positron.ai/careers"
+    enabled: true
+
+
+  # ── AI Chips / Inference ASIC ─────────────────────────────────
+  - name: "Cerebras-adjacent: Etched"
+    rank: 353
+    category: "AI Chips / Inference ASIC"
+    careers_url: "https://www.etched.com/careers"
+    enabled: true
+
+
+  # ── AI Chips / RISC-V ─────────────────────────────────────────
+  - name: "Tenstorrent"
+    rank: 285
+    category: "AI Chips / RISC-V"
+    careers_url: "https://tenstorrent.com/careers"
+    enabled: true
+
+
+  # ── AI Cloud ──────────────────────────────────────────────────
+  - name: "Microsoft"
+    rank: 4
+    category: "AI Cloud"
+    careers_url: "https://careers.microsoft.com/"
+    enabled: true
+
+  - name: "Amazon"
+    rank: 5
+    category: "AI Cloud"
+    careers_url: "https://www.amazon.jobs/"
+    enabled: true
+
+  - name: "Alibaba"
+    rank: 27
+    category: "AI Cloud"
+    careers_url: "https://talent.alibaba.com/"
+    enabled: true
+
+  - name: "CoreWeave"
+    rank: 85
+    category: "AI Cloud"
+    careers_url: "https://www.coreweave.com/careers"
+    enabled: true
+
+  - name: "Vercel"
+    rank: 237
+    category: "AI Cloud"
+    careers_url: "https://vercel.com/careers"
+    enabled: true
+
+  - name: "Together AI"
+    rank: 244
+    category: "AI Cloud"
+    careers_url: "https://www.together.ai/careers"
+    enabled: true
+
+  - name: "Fireworks AI"
+    rank: 318
+    category: "AI Cloud"
+    careers_url: "https://fireworks.ai/careers"
+    enabled: true
+
+  - name: "Modal"
+    rank: 348
+    category: "AI Cloud"
+    careers_url: "https://modal.com/careers"
+    enabled: true
+
+  - name: "OctoAI"
+    rank: 428
+    category: "AI Cloud"
+    careers_url: "https://octo.ai/careers"
+    enabled: true
+
+
+  # ── AI Cloud / GPU Infrastructure ─────────────────────────────
+  - name: "Lambda Labs"
+    rank: 300
+    category: "AI Cloud / GPU Infrastructure"
+    careers_url: "https://lambdalabs.com/careers"
+    enabled: true
+
+
+  # ── AI Cloud / Sustainable Compute ────────────────────────────
+  - name: "Crusoe"
+    rank: 282
+    category: "AI Cloud / Sustainable Compute"
+    careers_url: "https://crusoe.ai/careers"
+    enabled: true
+
+
+  # ── AI Cloud Infrastructure ───────────────────────────────────
+  - name: "Foxconn-adjacent: Nebius"
+    rank: 164
+    category: "AI Cloud Infrastructure"
+    careers_url: "https://careers.nebius.com/"
+    enabled: true
+
+  - name: "Nscale"
+    rank: 217
+    category: "AI Cloud Infrastructure"
+    careers_url: "https://www.nscale.com/careers"
+    enabled: true
+
+
+  # ── AI Cloud Security ─────────────────────────────────────────
+  - name: "CrowdStrike-adjacent: Wiz"
+    rank: 133
+    category: "AI Cloud Security"
+    careers_url: "https://www.wiz.io/careers"
+    enabled: true
+
+
+  # ── AI Coding ─────────────────────────────────────────────────
+  - name: "Codeium"
+    rank: 389
+    category: "AI Coding"
+    careers_url: "https://codeium.com/careers"
+    enabled: true
+
+
+  # ── AI Coding / Vibe-Coding ───────────────────────────────────
+  - name: "Lovable"
+    rank: 252
+    category: "AI Coding / Vibe-Coding"
+    careers_url: "https://lovable.dev/careers"
+    enabled: true
+
+  - name: "Vercel-adjacent: Lovable"
+    rank: 443
+    category: "AI Coding / Vibe-Coding"
+    careers_url: "https://lovable.dev/careers"
+    enabled: true
+
+
+  # ── AI Coding Assistant ───────────────────────────────────────
+  - name: "AI coding: Tabnine"
+    rank: 350
+    category: "AI Coding Assistant"
+    careers_url: "https://www.tabnine.com/careers/"
+    enabled: true
+
+
+  # ── AI Coding CLI ─────────────────────────────────────────────
+  - name: "Writer-adjacent: Anthropic Claude Code"
+    rank: 444
+    category: "AI Coding CLI"
+    careers_url: "https://www.anthropic.com/careers"
+    enabled: true
+
+
+  # ── AI Coding Tools ───────────────────────────────────────────
+  - name: "Anysphere (Cursor)"
+    rank: 141
+    category: "AI Coding Tools"
+    careers_url: "https://www.cursor.com/careers"
+    enabled: true
+
+  - name: "Poolside"
+    rank: 225
+    category: "AI Coding Tools"
+    careers_url: "https://www.poolside.ai/careers"
+    enabled: true
+
+  - name: "Cognition AI"
+    rank: 233
+    category: "AI Coding Tools"
+    careers_url: "https://www.cognition.ai/careers"
+    enabled: true
+
+  - name: "Replit"
+    rank: 238
+    category: "AI Coding Tools"
+    careers_url: "https://replit.com/site/careers"
+    enabled: true
+
+
+  # ── AI Contact Center ─────────────────────────────────────────
+  - name: "Observe.AI"
+    rank: 362
+    category: "AI Contact Center"
+    careers_url: "https://www.observe.ai/careers"
+    enabled: true
+
+
+  # ── AI Content / Enterprise ───────────────────────────────────
+  - name: "Typeface"
+    rank: 337
+    category: "AI Content / Enterprise"
+    careers_url: "https://www.typeface.ai/careers"
+    enabled: true
+
+
+  # ── AI Contract / Agreement ───────────────────────────────────
+  - name: "Docusign AI"
+    rank: 201
+    category: "AI Contract / Agreement"
+    careers_url: "https://careers.docusign.com/"
+    enabled: true
+
+
+  # ── AI Customer Messaging / Agents ────────────────────────────
+  - name: "Intercom AI"
+    rank: 308
+    category: "AI Customer Messaging / Agents"
+    careers_url: "https://www.intercom.com/careers"
+    enabled: true
+
+
+  # ── AI Customer Support Agents ────────────────────────────────
+  - name: "Decagon"
+    rank: 317
+    category: "AI Customer Support Agents"
+    careers_url: "https://decagon.ai/careers"
+    enabled: true
+
+
+  # ── AI Cyber Risk / Insurance ─────────────────────────────────
+  - name: "Resilience"
+    rank: 343
+    category: "AI Cyber Risk / Insurance"
+    careers_url: "https://resilience.com/careers/"
+    enabled: true
+
+
+  # ── AI Cybersecurity ──────────────────────────────────────────
+  - name: "Abnormal Security"
+    rank: 260
+    category: "AI Cybersecurity"
+    careers_url: "https://abnormalsecurity.com/careers"
+    enabled: true
+
+  - name: "Darktrace"
+    rank: 262
+    category: "AI Cybersecurity"
+    careers_url: "https://darktrace.com/careers"
+    enabled: true
+
+
+  # ── AI Cybersecurity / NDR ────────────────────────────────────
+  - name: "Vectra AI"
+    rank: 309
+    category: "AI Cybersecurity / NDR"
+    careers_url: "https://www.vectra.ai/about/careers"
+    enabled: true
+
+
+  # ── AI Cybersecurity / SASE ───────────────────────────────────
+  - name: "Cato Networks"
+    rank: 266
+    category: "AI Cybersecurity / SASE"
+    careers_url: "https://www.catonetworks.com/careers/"
+    enabled: true
+
+
+  # ── AI Data Center / Compute ──────────────────────────────────
+  - name: "xAI Colossus"
+    rank: 445
+    category: "AI Data Center / Compute"
+    careers_url: "https://x.ai/careers"
+    enabled: true
+
+
+  # ── AI Data Labeling ──────────────────────────────────────────
+  - name: "Scale AI-adjacent: Labelbox"
+    rank: 366
+    category: "AI Data Labeling"
+    careers_url: "https://scale.com/careers"
+    enabled: true
+
+
+  # ── AI Data Labeling / Programmatic ───────────────────────────
+  - name: "Snorkel AI"
+    rank: 336
+    category: "AI Data Labeling / Programmatic"
+    careers_url: "https://snorkel.ai/join-us/"
+    enabled: true
+
+
+  # ── AI Data Labeling / RLHF ───────────────────────────────────
+  - name: "Scale AI-adjacent: Surge AI"
+    rank: 392
+    category: "AI Data Labeling / RLHF"
+    careers_url: "https://scale.com/careers"
+    enabled: true
+
+
+  # ── AI Data Processing / ETL ──────────────────────────────────
+  - name: "Unstructured"
+    rank: 367
+    category: "AI Data Processing / ETL"
+    careers_url: "https://unstructured.io/careers"
+    enabled: true
+
+
+  # ── AI Data Quality ───────────────────────────────────────────
+  - name: "Cleanlab"
+    rank: 379
+    category: "AI Data Quality"
+    careers_url: "https://cleanlab.ai/careers/"
+    enabled: true
+
+
+  # ── AI Database / AutoML ──────────────────────────────────────
+  - name: "Cohere-adjacent: MindsDB"
+    rank: 382
+    category: "AI Database / AutoML"
+    careers_url: "https://cohere.com/careers"
+    enabled: true
+
+
+  # ── AI Developer Security ─────────────────────────────────────
+  - name: "Snyk"
+    rank: 242
+    category: "AI Developer Security"
+    careers_url: "https://snyk.io/careers/"
+    enabled: true
+
+
+  # ── AI Developer Tools ────────────────────────────────────────
+  - name: "Hugging Face"
+    rank: 268
+    category: "AI Developer Tools"
+    careers_url: "https://huggingface.co/jobs"
+    enabled: true
+
+  - name: "LangChain"
+    rank: 306
+    category: "AI Developer Tools"
+    careers_url: "https://www.langchain.com/careers"
+    enabled: true
+
+  - name: "Replicate"
+    rank: 368
+    category: "AI Developer Tools"
+    careers_url: "https://replicate.com/careers"
+    enabled: true
+
+  - name: "Domino Data Lab"
+    rank: 411
+    category: "AI Developer Tools"
+    careers_url: "https://domino.ai/careers"
+    enabled: true
+
+
+  # ── AI Developer Tools / Local LLMs ───────────────────────────
+  - name: "Hugging Face-adjacent: Ollama"
+    rank: 386
+    category: "AI Developer Tools / Local LLMs"
+    careers_url: "https://huggingface.co/jobs"
+    enabled: true
+
+
+  # ── AI Developer Tools / PyTorch ──────────────────────────────
+  - name: "Hugging Face-adjacent: Lightning AI"
+    rank: 372
+    category: "AI Developer Tools / PyTorch"
+    careers_url: "https://huggingface.co/jobs"
+    enabled: true
+
+
+  # ── AI Drug Discovery ─────────────────────────────────────────
+  - name: "DeepMind-adjacent: Isomorphic Labs"
+    rank: 408
+    category: "AI Drug Discovery"
+    careers_url: "https://www.isomorphiclabs.com/work-with-us"
+    enabled: true
+
+
+  # ── AI Drug Discovery / mRNA ──────────────────────────────────
+  - name: "BioNTech AI"
+    rank: 155
+    category: "AI Drug Discovery / mRNA"
+    careers_url: "https://www.biontech.com/us/en/home/careers.html"
+    enabled: true
+
+
+  # ── AI Email Security ─────────────────────────────────────────
+  - name: "Abnormal-adjacent: Material Security"
+    rank: 311
+    category: "AI Email Security"
+    careers_url: "https://material.security/careers"
+    enabled: true
+
+  - name: "Abnormal-adjacent: Tessian"
+    rank: 395
+    category: "AI Email Security"
+    careers_url: "https://www.tessian.com/careers"
+    enabled: true
+
+
+  # ── AI Embeddings ─────────────────────────────────────────────
+  - name: "Cohere-adjacent: Voyage AI"
+    rank: 405
+    category: "AI Embeddings"
+    careers_url: "https://cohere.com/careers"
+    enabled: true
+
+
+  # ── AI Embeddings / Open-Source ───────────────────────────────
+  - name: "Nomic AI"
+    rank: 390
+    category: "AI Embeddings / Open-Source"
+    careers_url: "https://home.nomic.ai/careers"
+    enabled: true
+
+
+  # ── AI Enterprise Browser / Security ──────────────────────────
+  - name: "Abnormal-adjacent: Island"
+    rank: 265
+    category: "AI Enterprise Browser / Security"
+    careers_url: "https://www.island.io/careers"
+    enabled: true
+
+
+  # ── AI Evaluation / Benchmarking ──────────────────────────────
+  - name: "LMArena"
+    rank: 296
+    category: "AI Evaluation / Benchmarking"
+    careers_url: "https://jobs.ashbyhq.com/lmarena"
+    api: "https://api.ashbyhq.com/posting-api/job-board/lmarena?includeCompensation=true"
+    enabled: true
+
+
+  # ── AI Evaluation / LLM Testing ───────────────────────────────
+  - name: "Galileo AI"
+    rank: 385
+    category: "AI Evaluation / LLM Testing"
+    careers_url: "https://ats.rippling.com/galileo/jobs"
+    enabled: true
+
+
+  # ── AI Feature Store / ML Infrastructure ──────────────────────
+  - name: "Databricks-adjacent: Tecton"
+    rank: 355
+    category: "AI Feature Store / ML Infrastructure"
+    careers_url: "https://www.databricks.com/company/careers"
+    enabled: true
+
+
+  # ── AI Finance / Corporate Cards ──────────────────────────────
+  - name: "Brex AI"
+    rank: 224
+    category: "AI Finance / Corporate Cards"
+    careers_url: "https://www.brex.com/careers"
+    enabled: true
+
+
+  # ── AI Finance / Research ─────────────────────────────────────
+  - name: "Rogo"
+    rank: 364
+    category: "AI Finance / Research"
+    careers_url: "https://www.rogodata.com/careers"
+    enabled: true
+
+
+  # ── AI Finance / Spend Management ─────────────────────────────
+  - name: "Ramp AI"
+    rank: 223
+    category: "AI Finance / Spend Management"
+    careers_url: "https://ramp.com/careers"
+    enabled: true
+
+
+  # ── AI Financial Planning ─────────────────────────────────────
+  - name: "Pigment"
+    rank: 302
+    category: "AI Financial Planning"
+    careers_url: "https://www.pigment.com/careers"
+    enabled: true
+
+
+  # ── AI Hardware ───────────────────────────────────────────────
+  - name: "SambaNova Systems"
+    rank: 263
+    category: "AI Hardware"
+    careers_url: "https://sambanova.ai/company/careers/"
+    enabled: true
+
+
+  # ── AI Hardware / Manufacturing ───────────────────────────────
+  - name: "Foxconn / Hon Hai"
+    rank: 88
+    category: "AI Hardware / Manufacturing"
+    careers_url: "https://recruit.foxconn.com/"
+    enabled: true
+
+
+  # ── AI Healthcare ─────────────────────────────────────────────
+  - name: "Tempus AI"
+    rank: 239
+    category: "AI Healthcare"
+    careers_url: "https://www.tempus.com/careers/"
+    enabled: true
+
+  - name: "Abridge"
+    rank: 258
+    category: "AI Healthcare"
+    careers_url: "https://www.abridge.com/careers"
+    enabled: true
+
+  - name: "Recursion Pharmaceuticals"
+    rank: 278
+    category: "AI Healthcare"
+    careers_url: "https://www.recursion.com/careers"
+    enabled: true
+
+  - name: "Hippocratic AI"
+    rank: 327
+    category: "AI Healthcare"
+    careers_url: "https://hippocraticai.com/careers/"
+    enabled: true
+
+
+  # ── AI Healthcare / Clinical AI ───────────────────────────────
+  - name: "Ambience Healthcare"
+    rank: 315
+    category: "AI Healthcare / Clinical AI"
+    careers_url: "https://www.ambiencehealthcare.com/careers"
+    enabled: true
+
+
+  # ── AI Healthcare / Medical Imaging ───────────────────────────
+  - name: "Viz.ai"
+    rank: 310
+    category: "AI Healthcare / Medical Imaging"
+    careers_url: "https://www.viz.ai/careers"
+    enabled: true
+
+
+  # ── AI Healthcare / Revenue Cycle ─────────────────────────────
+  - name: "Tennr"
+    rank: 342
+    category: "AI Healthcare / Revenue Cycle"
+    careers_url: "https://www.tennr.com/careers"
+    enabled: true
+
+
+  # ── AI Hiring / Talent Platform ───────────────────────────────
+  - name: "Mercor"
+    rank: 281
+    category: "AI Hiring / Talent Platform"
+    careers_url: "https://www.mercor.com/careers"
+    enabled: true
+
+
+  # ── AI IT Support / Enterprise ────────────────────────────────
+  - name: "Moveworks"
+    rank: 330
+    category: "AI IT Support / Enterprise"
+    careers_url: "https://www.moveworks.com/us/en/company/careers"
+    enabled: true
+
+
+  # ── AI Image Generation ───────────────────────────────────────
+  - name: "Black Forest Labs"
+    rank: 324
+    category: "AI Image Generation"
+    careers_url: "https://bfl.ai/careers"
+    enabled: true
+
+  - name: "Luma-adjacent: Ideogram"
+    rank: 360
+    category: "AI Image Generation"
+    careers_url: "https://jobs.ashbyhq.com/ideogram"
+    enabled: true
+
+
+  # ── AI Incident Response / DevOps ─────────────────────────────
+  - name: "Resolve AI"
+    rank: 334
+    category: "AI Incident Response / DevOps"
+    careers_url: "https://resolve.ai/careers"
+    enabled: true
+
+
+  # ── AI Inference Infrastructure ───────────────────────────────
+  - name: "Baseten"
+    rank: 261
+    category: "AI Inference Infrastructure"
+    careers_url: "https://www.baseten.co/careers/"
+    enabled: true
+
+
+  # ── AI Inference Platform ─────────────────────────────────────
+  - name: "Lepton AI"
+    rank: 373
+    category: "AI Inference Platform"
+    careers_url: "https://www.lepton.ai/careers"
+    enabled: true
+
+
+  # ── AI Infrastructure ─────────────────────────────────────────
+  - name: "VAST Data"
+    rank: 138
+    category: "AI Infrastructure"
+    careers_url: "https://www.vastdata.com/company/careers"
+    enabled: true
+
+  - name: "Scale AI"
+    rank: 143
+    category: "AI Infrastructure"
+    careers_url: "https://scale.com/careers"
+    enabled: true
+
+  - name: "Anyscale"
+    rank: 316
+    category: "AI Infrastructure"
+    careers_url: "https://www.anyscale.com/careers"
+    enabled: true
+
+
+  # ── AI Knowledge / Notes ──────────────────────────────────────
+  - name: "Notion-adjacent: Mem"
+    rank: 391
+    category: "AI Knowledge / Notes"
+    careers_url: "https://www.notion.so/careers"
+    enabled: true
+
+
+  # ── AI Legal Tech ─────────────────────────────────────────────
+  - name: "Harvey-adjacent: Legora"
+    rank: 256
+    category: "AI Legal Tech"
+    careers_url: "https://www.harvey.ai/careers"
+    enabled: true
+
+  - name: "EvenUp"
+    rank: 326
+    category: "AI Legal Tech"
+    careers_url: "https://www.evenuplaw.com/careers/"
+    enabled: true
+
+
+  # ── AI Local / Community ──────────────────────────────────────
+  - name: "Nextdoor AI"
+    rank: 332
+    category: "AI Local / Community"
+    careers_url: "https://about.nextdoor.com/careers/"
+    enabled: true
+
+
+  # ── AI Marketing / GTM ────────────────────────────────────────
+  - name: "Copy.ai"
+    rank: 370
+    category: "AI Marketing / GTM"
+    careers_url: "https://www.copy.ai/careers"
+    enabled: true
+
+
+  # ── AI Media / Enterprise AI ──────────────────────────────────
+  - name: "Veritone"
+    rank: 378
+    category: "AI Media / Enterprise AI"
+    careers_url: "https://veritone.wd1.myworkdayjobs.com/Veritone_Career_Site"
+    enabled: true
+
+
+  # ── AI NLP / Intelligence Analysis ────────────────────────────
+  - name: "Palantir-adjacent: Primer"
+    rank: 374
+    category: "AI NLP / Intelligence Analysis"
+    careers_url: "https://www.palantir.com/careers/"
+    enabled: true
+
+
+  # ── AI Observability ──────────────────────────────────────────
+  - name: "Weights & Biases"
+    rank: 307
+    category: "AI Observability"
+    careers_url: "https://wandb.ai/site/careers/"
+    enabled: true
+
+
+  # ── AI Observability / ML Monitoring ──────────────────────────
+  - name: "Arize AI"
+    rank: 351
+    category: "AI Observability / ML Monitoring"
+    careers_url: "https://job-boards.greenhouse.io/arizeai"
+    api: "https://boards-api.greenhouse.io/v1/boards/arizeai/jobs"
+    enabled: true
+
+
+  # ── AI Payments / Fraud ───────────────────────────────────────
+  - name: "Stripe AI"
+    rank: 81
+    category: "AI Payments / Fraud"
+    careers_url: "https://stripe.com/jobs"
+    enabled: true
+
+
+  # ── AI Presentations / Content ────────────────────────────────
+  - name: "Tome"
+    rank: 344
+    category: "AI Presentations / Content"
+    careers_url: "https://tome.app/careers"
+    enabled: true
+
+
+  # ── AI Process Mining ─────────────────────────────────────────
+  - name: "Celonis"
+    rank: 222
+    category: "AI Process Mining"
+    careers_url: "https://careers.celonis.com"
+    enabled: true
+
+
+  # ── AI Productivity / Workspace ───────────────────────────────
+  - name: "Notion AI"
+    rank: 235
+    category: "AI Productivity / Workspace"
+    careers_url: "https://www.notion.so/careers"
+    enabled: true
+
+
+  # ── AI RPA / Intelligent Automation ───────────────────────────
+  - name: "Automation Anywhere"
+    rank: 251
+    category: "AI RPA / Intelligent Automation"
+    careers_url: "https://www.automationanywhere.com/company/careers"
+    enabled: true
+
+
+  # ── AI Real-Time Intelligence ─────────────────────────────────
+  - name: "Palantir-adjacent: Dataminr"
+    rank: 271
+    category: "AI Real-Time Intelligence"
+    careers_url: "https://www.palantir.com/careers/"
+    enabled: true
+
+
+  # ── AI Research / Foundation Models ───────────────────────────
+  - name: "Sakana AI"
+    rank: 321
+    category: "AI Research / Foundation Models"
+    careers_url: "https://sakana.ai/careers/"
+    enabled: true
+
+
+  # ── AI Revenue Intelligence ───────────────────────────────────
+  - name: "Gong"
+    rank: 247
+    category: "AI Revenue Intelligence"
+    careers_url: "https://www.gong.io/careers"
+    enabled: true
+
+
+  # ── AI SaaS ───────────────────────────────────────────────────
+  - name: "Grammarly"
+    rank: 221
+    category: "AI SaaS"
+    careers_url: "https://www.grammarly.com/careers"
+    enabled: true
+
+  - name: "Harvey"
+    rank: 230
+    category: "AI SaaS"
+    careers_url: "https://www.harvey.ai/careers"
+    enabled: true
+
+  - name: "DeepL"
+    rank: 289
+    category: "AI SaaS"
+    careers_url: "https://www.deepl.com/en/careers"
+    enabled: true
+
+  - name: "Writer"
+    rank: 295
+    category: "AI SaaS"
+    careers_url: "https://writer.com/careers/"
+    enabled: true
+
+  - name: "Jasper"
+    rank: 299
+    category: "AI SaaS"
+    careers_url: "https://www.jasper.ai/careers"
+    enabled: true
+
+
+  # ── AI Search ─────────────────────────────────────────────────
+  - name: "Perplexity AI"
+    rank: 177
+    category: "AI Search"
+    careers_url: "https://www.perplexity.ai/hub/careers"
+    enabled: true
+
+  - name: "Perplexity-adjacent: You.com"
+    rank: 375
+    category: "AI Search"
+    careers_url: "https://you.com/careers"
+    enabled: true
+
+
+  # ── AI Search / Embeddings ────────────────────────────────────
+  - name: "Cohere-adjacent: Jina AI"
+    rank: 381
+    category: "AI Search / Embeddings"
+    careers_url: "https://cohere.com/careers"
+    enabled: true
+
+
+  # ── AI Security ───────────────────────────────────────────────
+  - name: "SentinelOne"
+    rank: 245
+    category: "AI Security"
+    careers_url: "https://www.sentinelone.com/careers/"
+    enabled: true
+
+
+  # ── AI Surgical / AR ──────────────────────────────────────────
+  - name: "Augmedics"
+    rank: 352
+    category: "AI Surgical / AR"
+    careers_url: "https://www.augmedics.com/careers/"
+    enabled: true
+
+
+  # ── AI Translation ────────────────────────────────────────────
+  - name: "DeepL-adjacent: Translated"
+    rank: 371
+    category: "AI Translation"
+    careers_url: "https://www.deepl.com/en/careers"
+    enabled: true
+
+
+  # ── AI Translation / Customer Service ─────────────────────────
+  - name: "DeepL-adjacent: Unbabel"
+    rank: 384
+    category: "AI Translation / Customer Service"
+    careers_url: "https://www.deepl.com/en/careers"
+    enabled: true
+
+
+  # ── AI Translation / Localization ─────────────────────────────
+  - name: "DeepL-adjacent: Phrase"
+    rank: 357
+    category: "AI Translation / Localization"
+    careers_url: "https://www.deepl.com/en/careers"
+    enabled: true
+
+
+  # ── AI Travel / Expense Management ────────────────────────────
+  - name: "Navan"
+    rank: 236
+    category: "AI Travel / Expense Management"
+    careers_url: "https://navan.com/careers"
+    enabled: true
+
+
+  # ── AI Video / Avatar Generation ──────────────────────────────
+  - name: "Runway-adjacent: HeyGen"
+    rank: 365
+    category: "AI Video / Avatar Generation"
+    careers_url: "https://job-boards.greenhouse.io/heygen"
+    enabled: true
+
+
+  # ── AI Video Generation ───────────────────────────────────────
+  - name: "Runway-adjacent: Kling AI"
+    rank: 178
+    category: "AI Video Generation"
+    careers_url: "https://runwayml.com/careers/"
+    enabled: true
+
+  - name: "Pika"
+    rank: 275
+    category: "AI Video Generation"
+    careers_url: "https://pika.art/careers"
+    enabled: true
+
+  - name: "Runway-adjacent: Genmo"
+    rank: 387
+    category: "AI Video Generation"
+    careers_url: "https://runwayml.com/careers/"
+    enabled: true
+
+
+  # ── AI Video Understanding ────────────────────────────────────
+  - name: "Twelve Labs"
+    rank: 377
+    category: "AI Video Understanding"
+    careers_url: "https://www.twelvelabs.io/careers"
+    enabled: true
+
+
+  # ── AI Video/Audio Editing ────────────────────────────────────
+  - name: "Descript"
+    rank: 325
+    category: "AI Video/Audio Editing"
+    careers_url: "https://www.descript.com/careers"
+    enabled: true
+
+
+  # ── AI Visual Data / Enterprise ───────────────────────────────
+  - name: "Coactive AI"
+    rank: 369
+    category: "AI Visual Data / Enterprise"
+    careers_url: "https://coactive.ai/careers"
+    enabled: true
+
+
+  # ── AI Voice / Speech Intelligence ────────────────────────────
+  - name: "AssemblyAI"
+    rank: 346
+    category: "AI Voice / Speech Intelligence"
+    careers_url: "https://www.assemblyai.com/careers"
+    enabled: true
+
+
+  # ── AI Voice / Speech-to-Text ─────────────────────────────────
+  - name: "Deepgram"
+    rank: 356
+    category: "AI Voice / Speech-to-Text"
+    careers_url: "https://deepgram.com/careers"
+    enabled: true
+
+
+  # ── Autonomous Air Taxi / eVTOL ───────────────────────────────
+  - name: "Shield AI-adjacent: Joby Aviation"
+    rank: 243
+    category: "Autonomous Air Taxi / eVTOL"
+    careers_url: "https://www.shield.ai/careers"
+    enabled: true
+
+
+  # ── Autonomous Drones ─────────────────────────────────────────
+  - name: "Anduril-adjacent: Skydio"
+    rank: 287
+    category: "Autonomous Drones"
+    careers_url: "https://www.skydio.com/careers"
+    enabled: true
+
+
+  # ── Autonomous Maritime / Defense AI ──────────────────────────
+  - name: "Shield AI-adjacent: Saronic"
+    rank: 284
+    category: "Autonomous Maritime / Defense AI"
+    careers_url: "https://www.shield.ai/careers"
+    enabled: true
+
+
+  # ── Autonomous Vehicles ───────────────────────────────────────
+  - name: "Tesla"
+    rank: 9
+    category: "Autonomous Vehicles"
+    careers_url: "https://www.tesla.com/careers"
+    enabled: true
+
+  - name: "Waymo"
+    rank: 105
+    category: "Autonomous Vehicles"
+    careers_url: "https://waymo.com/careers/"
+    enabled: true
+
+  - name: "Aurora Innovation"
+    rank: 226
+    category: "Autonomous Vehicles"
+    careers_url: "https://aurora.tech/careers"
+    enabled: true
+
+  - name: "Mobileye"
+    rank: 253
+    category: "Autonomous Vehicles"
+    careers_url: "https://careers.mobileye.com/"
+    enabled: true
+
+  - name: "Pony.ai"
+    rank: 269
+    category: "Autonomous Vehicles"
+    careers_url: "https://apply.workable.com/pony-dot-ai/"
+    enabled: true
+
+  - name: "Five AI-adjacent: Oxa"
+    rank: 358
+    category: "Autonomous Vehicles"
+    careers_url: "https://oxa.tech/careers/"
+    enabled: true
+
+
+  # ── Autonomous Vehicles / Embodied AI ─────────────────────────
+  - name: "Wayve"
+    rank: 301
+    category: "Autonomous Vehicles / Embodied AI"
+    careers_url: "https://wayve.ai/careers/"
+    enabled: true
+
+
+  # ── Brain-Computer Interface / AI ─────────────────────────────
+  - name: "Neuralink"
+    rank: 241
+    category: "Brain-Computer Interface / AI"
+    careers_url: "https://neuralink.com/careers/"
+    enabled: true
+
+
+  # ── Cloud, networking & infrastructure ────────────────────────
+  - name: "Oracle"
+    rank: 18
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.oracle.com/careers/"
+    enabled: true
+
+  - name: "Cisco"
+    rank: 25
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://jobs.cisco.com/"
+    enabled: true
+
+  - name: "IBM"
+    rank: 30
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.ibm.com/careers"
+    enabled: true
+
+  - name: "Arista Networks"
+    rank: 33
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.arista.com/en/careers"
+    enabled: true
+
+  - name: "Equinix"
+    rank: 56
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://careers.equinix.com/"
+    enabled: true
+
+  - name: "Cloudflare"
+    rank: 82
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.cloudflare.com/careers/"
+    enabled: true
+
+  - name: "Nokia"
+    rank: 91
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://jobs.nokia.com/"
+    enabled: true
+
+  - name: "Keysight"
+    rank: 93
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://jobs.keysight.com/"
+    enabled: true
+
+  - name: "Hewlett Packard Enterprise"
+    rank: 130
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://careers.hpe.com/"
+    enabled: true
+
+  - name: "Pure Storage"
+    rank: 175
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.purestorage.com/company/careers.html"
+    enabled: true
+
+  - name: "NetApp"
+    rank: 182
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://careers.netapp.com/"
+    enabled: true
+
+  - name: "HP"
+    rank: 191
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://jobs.hp.com/"
+    enabled: true
+
+  - name: "F5"
+    rank: 193
+    category: "Cloud, networking & infrastructure"
+    careers_url: "https://www.f5.com/company/careers"
+    enabled: true
+
+
+  # ── Consumer AI ───────────────────────────────────────────────
+  - name: "ByteDance"
+    rank: 15
+    category: "Consumer AI"
+    careers_url: "https://jobs.bytedance.com/en/"
+    enabled: true
+
+  - name: "SoundHound AI"
+    rank: 246
+    category: "Consumer AI"
+    careers_url: "https://www.soundhound.com/careers/"
+    enabled: true
+
+  - name: "Moonshot AI"
+    rank: 279
+    category: "Consumer AI"
+    careers_url: "https://www.moonshot.cn/careers"
+    enabled: true
+
+  - name: "Inflection AI"
+    rank: 304
+    category: "Consumer AI"
+    careers_url: "https://www.inflection.io/careers"
+    enabled: true
+
+  - name: "Character.AI"
+    rank: 312
+    category: "Consumer AI"
+    careers_url: "https://character.ai/careers"
+    enabled: true
+
+
+  # ── Consumer electronics, devices & gaming ────────────────────
+  - name: "Apple"
+    rank: 3
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://jobs.apple.com/"
+    enabled: true
+
+  - name: "Sony"
+    rank: 51
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.sonyjobs.com/"
+    enabled: true
+
+  - name: "Xiaomi"
+    rank: 58
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.mi.com/global/careers/"
+    enabled: true
+
+  - name: "Nintendo"
+    rank: 86
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://careers.nintendo.com/"
+    enabled: true
+
+  - name: "Electronic Arts"
+    rank: 97
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.ea.com/careers"
+    enabled: true
+
+  - name: "Garmin"
+    rank: 98
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://careers.garmin.com/jobs"
+    enabled: true
+
+  - name: "Panasonic"
+    rank: 108
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://careers.na.panasonic.com/"
+    enabled: true
+
+  - name: "Take-Two Interactive"
+    rank: 123
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://careers.take2games.com/"
+    enabled: true
+
+  - name: "Canon"
+    rank: 165
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://global.canon/en/employ/"
+    enabled: true
+
+  - name: "Konami Holdings"
+    rank: 192
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.konami.com/jobs/en/"
+    enabled: true
+
+  - name: "Bandai Namco"
+    rank: 205
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.bandainamcoent.com/careers"
+    enabled: true
+
+  - name: "Roku"
+    rank: 211
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://www.weareroku.com/jobs/search"
+    enabled: true
+
+  - name: "LG Electronics"
+    rank: 216
+    category: "Consumer electronics, devices & gaming"
+    careers_url: "https://lge-careers.com/"
+    enabled: true
+
+
+  # ── Consumer internet & platforms ─────────────────────────────
+  - name: "Tencent"
+    rank: 14
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.tencent.com/en-us/home.html"
+    enabled: true
+
+  - name: "Netflix"
+    rank: 20
+    category: "Consumer internet & platforms"
+    careers_url: "https://jobs.netflix.com/"
+    enabled: true
+
+  - name: "Uber"
+    rank: 40
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.uber.com/us/en/careers/"
+    enabled: true
+
+  - name: "PDD Holdings"
+    rank: 42
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.pinduoduo.com/"
+    enabled: true
+
+  - name: "Spotify"
+    rank: 57
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.lifeatspotify.com/jobs"
+    enabled: true
+
+  - name: "MercadoLibre"
+    rank: 64
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.mercadolibre.com/"
+    enabled: true
+
+  - name: "Airbnb"
+    rank: 71
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.airbnb.com/"
+    enabled: true
+
+  - name: "NetEase"
+    rank: 74
+    category: "Consumer internet & platforms"
+    careers_url: "https://hr.163.com/"
+    enabled: true
+
+  - name: "DoorDash"
+    rank: 76
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.doordash.com/"
+    enabled: true
+
+  - name: "Meituan"
+    rank: 79
+    category: "Consumer internet & platforms"
+    careers_url: "https://zhaopin.meituan.com/"
+    enabled: true
+
+  - name: "Sea Limited"
+    rank: 96
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.sea.com/careers"
+    enabled: true
+
+  - name: "eBay"
+    rank: 106
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.ebayinc.com/"
+    enabled: true
+
+  - name: "JD.com"
+    rank: 111
+    category: "Consumer internet & platforms"
+    careers_url: "https://campus.jd.com/"
+    enabled: true
+
+  - name: "Ericsson"
+    rank: 113
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.ericsson.com/en/careers"
+    enabled: true
+
+  - name: "Baidu"
+    rank: 120
+    category: "Consumer internet & platforms"
+    careers_url: "https://talent.baidu.com/"
+    enabled: true
+
+  - name: "Coupang"
+    rank: 124
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.coupang.jobs/en/"
+    enabled: true
+
+  - name: "Trip.com"
+    rank: 128
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.trip.com/"
+    enabled: true
+
+  - name: "Expedia Group"
+    rank: 140
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.expediagroup.com/"
+    enabled: true
+
+  - name: "Reddit"
+    rank: 144
+    category: "Consumer internet & platforms"
+    careers_url: "https://www.redditinc.com/careers"
+    enabled: true
+
+  - name: "Kuaishou Technology"
+    rank: 154
+    category: "Consumer internet & platforms"
+    careers_url: "https://usrdc.kuaishou.com/join-us"
+    enabled: true
+
+  - name: "Naver"
+    rank: 176
+    category: "Consumer internet & platforms"
+    careers_url: "https://recruit.navercorp.com/"
+    enabled: true
+
+  - name: "DiDi"
+    rank: 188
+    category: "Consumer internet & platforms"
+    careers_url: "https://careers.didiglobal.com/"
+    enabled: true
+
+  - name: "Lenovo"
+    rank: 196
+    category: "Consumer internet & platforms"
+    careers_url: "https://jobs.lenovo.com/"
+    enabled: true
+
+  - name: "Grab Holdings"
+    rank: 209
+    category: "Consumer internet & platforms"
+    careers_url: "https://grab.careers/"
+    enabled: true
+
+
+  # ── Creative software & collaboration ─────────────────────────
+  - name: "Canva"
+    rank: 110
+    category: "Creative software & collaboration"
+    careers_url: "https://www.lifeatcanva.com/en/jobs/"
+    enabled: true
+
+
+  # ── Cybersecurity ─────────────────────────────────────────────
+  - name: "Palo Alto Networks"
+    rank: 48
+    category: "Cybersecurity"
+    careers_url: "https://jobs.paloaltonetworks.com/"
+    enabled: true
+
+  - name: "CrowdStrike"
+    rank: 60
+    category: "Cybersecurity"
+    careers_url: "https://www.crowdstrike.com/careers/"
+    enabled: true
+
+  - name: "Fortinet"
+    rank: 89
+    category: "Cybersecurity"
+    careers_url: "https://www.fortinet.com/corporate/careers"
+    enabled: true
+
+  - name: "Zscaler"
+    rank: 181
+    category: "Cybersecurity"
+    careers_url: "https://www.zscaler.com/careers"
+    enabled: true
+
+  - name: "Check Point Software"
+    rank: 210
+    category: "Cybersecurity"
+    careers_url: "https://www.checkpoint.com/careers/"
+    enabled: true
+
+
+  # ── Data Cloud / AI Features ──────────────────────────────────
+  - name: "Databricks-adjacent: Snowflake AI"
+    rank: 75
+    category: "Data Cloud / AI Features"
+    careers_url: "https://careers.snowflake.com/"
+    enabled: true
+
+
+  # ── Data Integration / AI Pipeline ────────────────────────────
+  - name: "Databricks-adjacent: Fivetran"
+    rank: 255
+    category: "Data Integration / AI Pipeline"
+    careers_url: "https://www.databricks.com/company/careers"
+    enabled: true
+
+
+  # ── Data Transformation / Analytics Engineering ───────────────
+  - name: "Databricks-adjacent: dbt Labs"
+    rank: 270
+    category: "Data Transformation / Analytics Engineering"
+    careers_url: "https://www.databricks.com/company/careers"
+    enabled: true
+
+
+  # ── Defense AI ────────────────────────────────────────────────
+  - name: "Anduril Industries"
+    rank: 87
+    category: "Defense AI"
+    careers_url: "https://www.anduril.com/careers/"
+    enabled: true
+
+  - name: "Helsing"
+    rank: 218
+    category: "Defense AI"
+    careers_url: "https://helsing.ai/careers"
+    enabled: true
+
+  - name: "Shield AI"
+    rank: 220
+    category: "Defense AI"
+    careers_url: "https://www.shield.ai/careers"
+    enabled: true
+
+  - name: "BigBear.ai"
+    rank: 297
+    category: "Defense AI"
+    careers_url: "https://careers.bigbear.ai/jobs"
+    enabled: true
+
+
+  # ── Defense AI / Decision Intelligence ────────────────────────
+  - name: "Palantir-adjacent: Rebellion Defense"
+    rank: 363
+    category: "Defense AI / Decision Intelligence"
+    careers_url: "https://www.palantir.com/careers/"
+    enabled: true
+
+
+  # ── Defense Drones / AI Systems ───────────────────────────────
+  - name: "Anduril-adjacent: AeroVironment"
+    rank: 249
+    category: "Defense Drones / AI Systems"
+    careers_url: "https://www.avinc.com/careers/"
+    enabled: true
+
+
+  # ── Enterprise AI ─────────────────────────────────────────────
+  - name: "Palantir"
+    rank: 19
+    category: "Enterprise AI"
+    careers_url: "https://www.palantir.com/careers/"
+    enabled: true
+
+  - name: "Databricks"
+    rank: 47
+    category: "Enterprise AI"
+    careers_url: "https://www.databricks.com/company/careers"
+    enabled: true
+
+  - name: "Glean"
+    rank: 231
+    category: "Enterprise AI"
+    careers_url: "https://www.glean.com/careers"
+    enabled: true
+
+  - name: "DataRobot"
+    rank: 254
+    category: "Enterprise AI"
+    careers_url: "https://www.datarobot.com/careers/"
+    enabled: true
+
+  - name: "Presight AI"
+    rank: 267
+    category: "Enterprise AI"
+    careers_url: "https://careers.g42.ai/presight/global/en/home"
+    enabled: true
+
+  - name: "C3.ai"
+    rank: 273
+    category: "Enterprise AI"
+    careers_url: "https://c3.ai/careers/"
+    enabled: true
+
+  - name: "Dataiku"
+    rank: 276
+    category: "Enterprise AI"
+    careers_url: "https://www.dataiku.com/company/careers/"
+    enabled: true
+
+  - name: "Hebbia"
+    rank: 340
+    category: "Enterprise AI"
+    careers_url: "https://www.hebbia.com/careers"
+    enabled: true
+
+  - name: "H2O.ai"
+    rank: 418
+    category: "Enterprise AI"
+    careers_url: "https://h2o.ai/company/careers/"
+    enabled: true
+
+
+  # ── Enterprise AI / RAG ───────────────────────────────────────
+  - name: "Contextual AI"
+    rank: 354
+    category: "Enterprise AI / RAG"
+    careers_url: "https://contextual.ai/careers"
+    enabled: true
+
+
+  # ── Enterprise software & developer tools ─────────────────────
+  - name: "SAP"
+    rank: 31
+    category: "Enterprise software & developer tools"
+    careers_url: "https://jobs.sap.com/"
+    enabled: true
+
+  - name: "Salesforce"
+    rank: 37
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.salesforce.com/"
+    enabled: true
+
+  - name: "Shopify"
+    rank: 39
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.shopify.com/careers"
+    enabled: true
+
+  - name: "Intuit"
+    rank: 59
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.intuit.com/careers/"
+    enabled: true
+
+  - name: "Adobe"
+    rank: 61
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.adobe.com/careers.html"
+    enabled: true
+
+  - name: "ServiceNow"
+    rank: 63
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.servicenow.com/careers.html"
+    enabled: true
+
+  - name: "Automatic Data Processing"
+    rank: 70
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.adp.com/"
+    enabled: true
+
+  - name: "Autodesk"
+    rank: 101
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.autodesk.com/careers"
+    enabled: true
+
+  - name: "Snowflake"
+    rank: 103
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.snowflake.com/"
+    enabled: true
+
+  - name: "Datadog"
+    rank: 119
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.datadoghq.com/"
+    enabled: true
+
+  - name: "Constellation Software"
+    rank: 122
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.csisoftware.com/careers"
+    enabled: true
+
+  - name: "Roper Technologies"
+    rank: 125
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.ropertech.com/careers"
+    enabled: true
+
+  - name: "Workday"
+    rank: 134
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.workday.com/en-us/company/careers/overview.html"
+    enabled: true
+
+  - name: "Fiserv"
+    rank: 135
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.fiserv.com/"
+    enabled: true
+
+  - name: "Dassault Systèmes"
+    rank: 150
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.3ds.com/careers/jobs"
+    enabled: true
+
+  - name: "Veeva Systems"
+    rank: 153
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.veeva.com/"
+    enabled: true
+
+  - name: "Zoom"
+    rank: 160
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.zoom.us/"
+    enabled: true
+
+  - name: "MongoDB"
+    rank: 184
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.mongodb.com/careers"
+    enabled: true
+
+  - name: "Global Payments"
+    rank: 186
+    category: "Enterprise software & developer tools"
+    careers_url: "https://jobs.globalpayments.com/"
+    enabled: true
+
+  - name: "Wolters Kluwer"
+    rank: 194
+    category: "Enterprise software & developer tools"
+    careers_url: "https://careers.wolterskluwer.com/"
+    enabled: true
+
+  - name: "SS&C Technologies"
+    rank: 195
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.ssctech.com/careers/join-ssc"
+    enabled: true
+
+  - name: "Atlassian"
+    rank: 198
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.atlassian.com/company/careers"
+    enabled: true
+
+  - name: "PTC"
+    rank: 203
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.ptc.com/en/careers"
+    enabled: true
+
+  - name: "Trimble"
+    rank: 206
+    category: "Enterprise software & developer tools"
+    careers_url: "https://www.trimble.com/en/careers"
+    enabled: true
+
+
+  # ── Fintech & payments infrastructure ─────────────────────────
+  - name: "Stripe"
+    rank: 38
+    category: "Fintech & payments infrastructure"
+    careers_url: "https://stripe.com/jobs"
+    enabled: true
+
+  - name: "Revolut"
+    rank: 73
+    category: "Fintech & payments infrastructure"
+    careers_url: "https://www.revolut.com/careers/"
+    enabled: true
+
+
+  # ── Fintech, payments & crypto ────────────────────────────────
+  - name: "Coinbase"
+    rank: 102
+    category: "Fintech, payments & crypto"
+    careers_url: "https://www.coinbase.com/careers"
+    enabled: true
+
+  - name: "Strategy"
+    rank: 104
+    category: "Fintech, payments & crypto"
+    careers_url: "https://www.strategy.com/careers"
+    enabled: true
+
+  - name: "PayPal"
+    rank: 107
+    category: "Fintech, payments & crypto"
+    careers_url: "https://careers.pypl.com/"
+    enabled: true
+
+  - name: "Block"
+    rank: 117
+    category: "Fintech, payments & crypto"
+    careers_url: "https://block.xyz/careers"
+    enabled: true
+
+  - name: "Adyen"
+    rank: 129
+    category: "Fintech, payments & crypto"
+    careers_url: "https://careers.adyen.com/"
+    enabled: true
+
+  - name: "Circle Internet Group"
+    rank: 152
+    category: "Fintech, payments & crypto"
+    careers_url: "https://careers.circle.com/"
+    enabled: true
+
+  - name: "Futu Holdings"
+    rank: 172
+    category: "Fintech, payments & crypto"
+    careers_url: "https://career.futuhk.com/"
+    enabled: true
+
+  - name: "SoFi"
+    rank: 173
+    category: "Fintech, payments & crypto"
+    careers_url: "https://www.sofi.com/careers/"
+    enabled: true
+
+  - name: "Kaspi.kz Joint Stock Company"
+    rank: 212
+    category: "Fintech, payments & crypto"
+    careers_url: "https://job.kaspi.kz/"
+    enabled: true
+
+
+  # ── Frontier AI / Fine-Tuning ─────────────────────────────────
+  - name: "Thinking Machines Lab"
+    rank: 292
+    category: "Frontier AI / Fine-Tuning"
+    careers_url: "https://thinkingmachines.ai/careers"
+    enabled: true
+
+
+  # ── Frontier AI / Indian AI ───────────────────────────────────
+  - name: "Krutrim"
+    rank: 328
+    category: "Frontier AI / Indian AI"
+    careers_url: "https://olacabs.com/careers"
+    enabled: true
+
+
+  # ── Frontier AI / Multimodal ──────────────────────────────────
+  - name: "Mistral-adjacent: Reka"
+    rank: 361
+    category: "Frontier AI / Multimodal"
+    careers_url: "https://reka.ai/careers"
+    enabled: true
+
+
+  # ── Frontier AI / Open-Source Models ──────────────────────────
+  - name: "Reflection AI"
+    rank: 156
+    category: "Frontier AI / Open-Source Models"
+    careers_url: "https://reflection.ai/careers/"
+    enabled: true
+
+
+  # ── Frontier Model Labs ───────────────────────────────────────
+  - name: "Alphabet (Google)"
+    rank: 2
+    category: "Frontier Model Labs"
+    careers_url: "https://www.google.com/about/careers/applications/"
+    enabled: true
+
+  - name: "Meta Platforms"
+    rank: 8
+    category: "Frontier Model Labs"
+    careers_url: "https://www.metacareers.com/"
+    enabled: true
+
+  - name: "OpenAI"
+    rank: 12
+    category: "Frontier Model Labs"
+    careers_url: "https://openai.com/careers/"
+    enabled: true
+
+  - name: "Anthropic"
+    rank: 22
+    category: "Frontier Model Labs"
+    careers_url: "https://www.anthropic.com/careers"
+    enabled: true
+
+  - name: "xAI"
+    rank: 28
+    category: "Frontier Model Labs"
+    careers_url: "https://x.ai/careers"
+    enabled: true
+
+  - name: "Safe Superintelligence"
+    rank: 132
+    category: "Frontier Model Labs"
+    careers_url: "https://ssi.inc/careers"
+    enabled: true
+
+  - name: "Mistral AI"
+    rank: 219
+    category: "Frontier Model Labs"
+    careers_url: "https://mistral.ai/careers/"
+    enabled: true
+
+  - name: "Cohere"
+    rank: 248
+    category: "Frontier Model Labs"
+    careers_url: "https://cohere.com/careers"
+    enabled: true
+
+  - name: "Zhipu AI"
+    rank: 280
+    category: "Frontier Model Labs"
+    careers_url: "https://www.zhipuai.cn/en/job"
+    enabled: true
+
+  - name: "Baichuan AI"
+    rank: 291
+    category: "Frontier Model Labs"
+    careers_url: "https://cq6qe6bvfr6.jobs.feishu.cn/"
+    enabled: true
+
+  - name: "AI21 Labs"
+    rank: 303
+    category: "Frontier Model Labs"
+    careers_url: "https://www.ai21.com/careers"
+    enabled: true
+
+  - name: "01.AI"
+    rank: 313
+    category: "Frontier Model Labs"
+    careers_url: "https://www.01.ai/careers"
+    enabled: true
+
+  - name: "Aleph Alpha"
+    rank: 345
+    category: "Frontier Model Labs"
+    careers_url: "https://jobs.ashbyhq.com/AlephAlpha"
+    api: "https://api.ashbyhq.com/posting-api/job-board/AlephAlpha?includeCompensation=true"
+    enabled: true
+
+  - name: "DeepSeek"
+    rank: 393
+    category: "Frontier Model Labs"
+    careers_url: "https://www.deepseek.com/careers"
+    enabled: true
+
+
+  # ── Generative Video ──────────────────────────────────────────
+  - name: "Runway"
+    rank: 259
+    category: "Generative Video"
+    careers_url: "https://runwayml.com/careers/"
+    enabled: true
+
+  - name: "Luma AI"
+    rank: 347
+    category: "Generative Video"
+    careers_url: "https://lumalabs.ai/careers"
+    enabled: true
+
+  - name: "Pika Labs"
+    rank: 432
+    category: "Generative Video"
+    careers_url: "https://pika.art/careers"
+    enabled: true
+
+
+  # ── Humanoid Robotics ─────────────────────────────────────────
+  - name: "Apptronik"
+    rank: 257
+    category: "Humanoid Robotics"
+    careers_url: "https://apptronik.com/careers"
+    enabled: true
+
+  - name: "Figure-adjacent: UBTECH"
+    rank: 283
+    category: "Humanoid Robotics"
+    careers_url: "https://www.ubtrobot.com/pages/join-us"
+    enabled: true
+
+  - name: "Agility Robotics"
+    rank: 288
+    category: "Humanoid Robotics"
+    careers_url: "https://www.agilityrobotics.com/careers"
+    enabled: true
+
+  - name: "1X Technologies"
+    rank: 323
+    category: "Humanoid Robotics"
+    careers_url: "https://www.1x.tech/careers"
+    enabled: true
+
+
+  # ── Humanoid Robotics / AGI ───────────────────────────────────
+  - name: "Sanctuary AI"
+    rank: 335
+    category: "Humanoid Robotics / AGI"
+    careers_url: "https://www.sanctuary.ai/careers"
+    enabled: true
+
+
+  # ── Humanoid Robotics / Rehabilitation ────────────────────────
+  - name: "Fourier Intelligence"
+    rank: 359
+    category: "Humanoid Robotics / Rehabilitation"
+    careers_url: "https://jobs.intel.com/"
+    enabled: true
+
+
+  # ── Multimodal AI ─────────────────────────────────────────────
+  - name: "SenseTime"
+    rank: 232
+    category: "Multimodal AI"
+    careers_url: "https://www.sensetime.com/en/careers"
+    enabled: true
+
+  - name: "MiniMax"
+    rank: 286
+    category: "Multimodal AI"
+    careers_url: "https://www.minimax.io/careers"
+    enabled: true
+
+
+  # ── Other tech ────────────────────────────────────────────────
+  - name: "Schneider Electric"
+    rank: 34
+    category: "Other tech"
+    careers_url: "https://www.se.com/ww/en/about-us/careers/"
+    enabled: true
+
+  - name: "Analog Devices"
+    rank: 35
+    category: "Other tech"
+    careers_url: "https://www.analog.com/en/about-adi/careers.html"
+    enabled: true
+
+  - name: "Delta Electronics"
+    rank: 41
+    category: "Other tech"
+    careers_url: "https://www.deltaww.com/en-US/careers"
+    enabled: true
+
+  - name: "AppLovin"
+    rank: 43
+    category: "Other tech"
+    careers_url: "https://www.applovin.com/careers/"
+    enabled: true
+
+  - name: "Booking Holdings"
+    rank: 45
+    category: "Other tech"
+    careers_url: "https://careers.bookingholdings.com/"
+    enabled: true
+
+  - name: "Dell"
+    rank: 49
+    category: "Other tech"
+    careers_url: "https://jobs.dell.com/"
+    enabled: true
+
+  - name: "Keyence"
+    rank: 62
+    category: "Other tech"
+    careers_url: "https://www.keyence.com/company/recruit/"
+    enabled: true
+
+  - name: "TE Connectivity"
+    rank: 77
+    category: "Other tech"
+    careers_url: "https://careers.te.com/"
+    enabled: true
+
+  - name: "Robinhood"
+    rank: 83
+    category: "Other tech"
+    careers_url: "https://careers.robinhood.com/"
+    enabled: true
+
+  - name: "Murata Manufacturing"
+    rank: 99
+    category: "Other tech"
+    careers_url: "https://recruit.murata.com/en-us/careers/"
+    enabled: true
+
+  - name: "Nebius Group"
+    rank: 116
+    category: "Other tech"
+    careers_url: "https://careers.nebius.com/"
+    enabled: true
+
+  - name: "AST SpaceMobile"
+    rank: 121
+    category: "Other tech"
+    careers_url: "https://ast-science.com/company/careers/"
+    enabled: true
+
+  - name: "NEC Corp"
+    rank: 127
+    category: "Other tech"
+    careers_url: "https://careers.nec.com/"
+    enabled: true
+
+  - name: "IQVIA"
+    rank: 142
+    category: "Other tech"
+    careers_url: "https://jobs.iqvia.com/"
+    enabled: true
+
+  - name: "Astera Labs"
+    rank: 145
+    category: "Other tech"
+    careers_url: "https://www.asteralabs.com/careers/"
+    enabled: true
+
+  - name: "Qnity Electronics"
+    rank: 146
+    category: "Other tech"
+    careers_url: "https://careers.qnityelectronics.com/"
+    enabled: true
+
+  - name: "PT DCI Indonesia Tbk"
+    rank: 147
+    category: "Other tech"
+    careers_url: "https://dci-indonesia.com/careers/"
+    enabled: true
+
+  - name: "Amadeus IT Group"
+    rank: 161
+    category: "Other tech"
+    careers_url: "https://amadeus.com/en/careers/overview"
+    enabled: true
+
+  - name: "Fidelity National Information Services"
+    rank: 163
+    category: "Other tech"
+    careers_url: "https://fis.wd5.myworkdayjobs.com/SearchJobs"
+    enabled: true
+
+  - name: "Fair Isaac"
+    rank: 166
+    category: "Other tech"
+    careers_url: "https://www.fico.com/en/careers"
+    enabled: true
+
+  - name: "Entegris"
+    rank: 174
+    category: "Other tech"
+    careers_url: "https://www.entegris.com/careers"
+    enabled: true
+
+  - name: "Leidos"
+    rank: 179
+    category: "Other tech"
+    careers_url: "https://careers.leidos.com/"
+    enabled: true
+
+  - name: "JD Health"
+    rank: 183
+    category: "Other tech"
+    careers_url: "https://zhaopin.jd.com/"
+    enabled: true
+
+  - name: "Twilio"
+    rank: 187
+    category: "Other tech"
+    careers_url: "https://www.twilio.com/company/jobs"
+    enabled: true
+
+  - name: "iFlytek"
+    rank: 197
+    category: "Other tech"
+    careers_url: "https://hr.iflytek.com/"
+    enabled: true
+
+  - name: "QXO, Inc."
+    rank: 200
+    category: "Other tech"
+    careers_url: "https://jobs.qxo.com/"
+    enabled: true
+
+  - name: "Toast"
+    rank: 202
+    category: "Other tech"
+    careers_url: "https://careers.toasttab.com/"
+    enabled: true
+
+  - name: "CoStar Group"
+    rank: 204
+    category: "Other tech"
+    careers_url: "https://www.costargroup.com/careers"
+    enabled: true
+
+  - name: "Samsara"
+    rank: 208
+    category: "Other tech"
+    careers_url: "https://www.samsara.com/company/careers"
+    enabled: true
+
+
+  # ── Photonic AI Chips ─────────────────────────────────────────
+  - name: "Lightmatter"
+    rank: 274
+    category: "Photonic AI Chips"
+    careers_url: "https://lightmatter.co/people/careers/"
+    enabled: true
+
+
+  # ── RAG Platform / Enterprise Search ──────────────────────────
+  - name: "Vectara"
+    rank: 388
+    category: "RAG Platform / Enterprise Search"
+    careers_url: "https://vectara.com/careers/"
+    enabled: true
+
+
+  # ── Robotics ──────────────────────────────────────────────────
+  - name: "Figure AI"
+    rank: 118
+    category: "Robotics"
+    careers_url: "https://www.figure.ai/careers"
+    enabled: true
+
+  - name: "Nuro"
+    rank: 240
+    category: "Robotics"
+    careers_url: "https://www.nuro.ai/careers"
+    enabled: true
+
+  - name: "Skydio"
+    rank: 437
+    category: "Robotics"
+    careers_url: "https://www.skydio.com/careers"
+    enabled: true
+
+  - name: "Zipline"
+    rank: 450
+    category: "Robotics"
+    careers_url: "https://www.zipline.com/careers"
+    enabled: true
+
+
+  # ── Robotics / Humanoid ───────────────────────────────────────
+  - name: "Unitree Robotics"
+    rank: 305
+    category: "Robotics / Humanoid"
+    careers_url: "https://www.unitree.com/joinus/"
+    enabled: true
+
+
+  # ── Robotics AI / Foundation Models ───────────────────────────
+  - name: "Physical Intelligence"
+    rank: 294
+    category: "Robotics AI / Foundation Models"
+    careers_url: "https://jobs.intel.com/"
+    enabled: true
+
+
+  # ── Robotics AI / Warehouse ───────────────────────────────────
+  - name: "Covariant"
+    rank: 341
+    category: "Robotics AI / Warehouse"
+    careers_url: "https://covariant.ai/careers/"
+    enabled: true
+
+
+  # ── Robotics, autonomy & industrial tech ──────────────────────
+  - name: "Symbotic"
+    rank: 131
+    category: "Robotics, autonomy & industrial tech"
+    careers_url: "https://www.symbotic.com/careers/"
+    enabled: true
+
+
+  # ── Semiconductors & hardware supply chain ────────────────────
+  - name: "TSMC"
+    rank: 6
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.tsmc.com/english/careers"
+    enabled: true
+
+  - name: "Samsung"
+    rank: 11
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.samsung.com/us/careers/"
+    enabled: true
+
+  - name: "ASML"
+    rank: 13
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.asml.com/en/careers"
+    enabled: true
+
+  - name: "SK Hynix"
+    rank: 16
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.skhynix.com/eng/recruit/Main.do"
+    enabled: true
+
+  - name: "Micron Technology"
+    rank: 17
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.micron.com/careers"
+    enabled: true
+
+  - name: "Lam Research"
+    rank: 23
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.lamresearch.com/careers/"
+    enabled: true
+
+  - name: "Intel"
+    rank: 24
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://jobs.intel.com/"
+    enabled: true
+
+  - name: "Applied Materials"
+    rank: 26
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.appliedmaterials.com/company/careers"
+    enabled: true
+
+  - name: "KLA"
+    rank: 29
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.kla.com/careers"
+    enabled: true
+
+  - name: "Texas Instruments"
+    rank: 32
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://careers.ti.com/"
+    enabled: true
+
+  - name: "Arm Holdings"
+    rank: 36
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://careers.arm.com/"
+    enabled: true
+
+  - name: "Sandisk"
+    rank: 44
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.westerndigital.com/careers"
+    enabled: true
+
+  - name: "Qualcomm"
+    rank: 46
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.qualcomm.com/company/careers"
+    enabled: true
+
+  - name: "Tokyo Electron"
+    rank: 50
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.tel.com/careers/"
+    enabled: true
+
+  - name: "KIOXIA Holdings Corporation"
+    rank: 52
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.kioxia-holdings.com/en-jp/careers.html"
+    enabled: true
+
+  - name: "Advantest"
+    rank: 53
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.advantest.com/careers"
+    enabled: true
+
+  - name: "Seagate Technology"
+    rank: 54
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.seagate.com/jobs/"
+    enabled: true
+
+  - name: "Marvell Technology"
+    rank: 55
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.marvell.com/company/careers.html"
+    enabled: true
+
+  - name: "Foxconn"
+    rank: 65
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://recruit.foxconn.com/"
+    enabled: true
+
+  - name: "MediaTek"
+    rank: 66
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://careers.mediatek.com/"
+    enabled: true
+
+  - name: "Synopsys"
+    rank: 68
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.synopsys.com/careers.html"
+    enabled: true
+
+  - name: "Cadence Design Systems"
+    rank: 69
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.cadence.com/en_US/home/company/careers.html"
+    enabled: true
+
+  - name: "SMIC"
+    rank: 72
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.smics.com/en/site/recruit"
+    enabled: true
+
+  - name: "Monolithic Power Systems"
+    rank: 78
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.monolithicpower.com/en/about-mps/careers.html"
+    enabled: true
+
+  - name: "Infineon Technologies"
+    rank: 80
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.infineon.com/careers"
+    enabled: true
+
+  - name: "Lumentum"
+    rank: 84
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.lumentum.com/en/careers"
+    enabled: true
+
+  - name: "ASE Group"
+    rank: 90
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://ase.aseglobal.com/about-ase/careers/"
+    enabled: true
+
+  - name: "Coherent Corp."
+    rank: 92
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.coherent.com/careers"
+    enabled: true
+
+  - name: "NXP Semiconductors"
+    rank: 94
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.nxp.com/company/about-nxp/careers:CAREERS"
+    enabled: true
+
+  - name: "NAURA Technology Group"
+    rank: 95
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.naura.com/en/JoinUs"
+    enabled: true
+
+  - name: "Disco Corp."
+    rank: 100
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.disco.co.jp/eg/recruit/"
+    enabled: true
+
+  - name: "ASM International"
+    rank: 109
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.asm.com/careers"
+    enabled: true
+
+  - name: "Moore Threads"
+    rank: 112
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.mthreads.com/jobs"
+    enabled: true
+
+  - name: "Quanta Computer"
+    rank: 114
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.quantatw.com/Careers"
+    enabled: true
+
+  - name: "Microchip Technology"
+    rank: 115
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.microchip.com/en-us/about/careers"
+    enabled: true
+
+  - name: "STMicroelectronics"
+    rank: 126
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.st.com/content/st_com/en/about/careers.html"
+    enabled: true
+
+  - name: "Renesas Electronics"
+    rank: 136
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.renesas.com/us/en/about/careers"
+    enabled: true
+
+  - name: "Unimicron"
+    rank: 137
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.unimicron.com/en/hr01.html"
+    enabled: true
+
+  - name: "AMEC"
+    rank: 139
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.amec-inc.com/en/index/Lists/index/catid/100.html"
+    enabled: true
+
+  - name: "ON Semiconductor"
+    rank: 148
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.onsemi.com/careers"
+    enabled: true
+
+  - name: "GigaDevice Semiconductor"
+    rank: 149
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.gigadevice.com/about/careers/"
+    enabled: true
+
+  - name: "GlobalFoundries"
+    rank: 151
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://gf.com/about-us/careers/"
+    enabled: true
+
+  - name: "Tower Semiconductor"
+    rank: 157
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://towersemi.com/careers/"
+    enabled: true
+
+  - name: "Credo Technology"
+    rank: 158
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://credosemi.com/about-credo/careers/"
+    enabled: true
+
+  - name: "United Microelectronics"
+    rank: 159
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://careers.umc.com/"
+    enabled: true
+
+  - name: "Lasertec"
+    rank: 162
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.lasertec.co.jp/en/recruit/"
+    enabled: true
+
+  - name: "Hua Hong Semiconductor Limited"
+    rank: 169
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.huahonggrace.com/en/careers/"
+    enabled: true
+
+  - name: "Nanya Technology"
+    rank: 170
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.nanya.com/en/Jobs"
+    enabled: true
+
+  - name: "Wiwynn"
+    rank: 171
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.wiwynn.com/careers"
+    enabled: true
+
+  - name: "MACOM Technology Solutions"
+    rank: 180
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.macom.com/about-macom/careers"
+    enabled: true
+
+  - name: "BE Semiconductor"
+    rank: 185
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.besi.com/careers/jobs/"
+    enabled: true
+
+  - name: "VeriSilicon Microelectronics"
+    rank: 189
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.verisilicon.com/en/Careers"
+    enabled: true
+
+  - name: "HANMI Semiconductor"
+    rank: 190
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.hanmisemi.com/"
+    enabled: true
+
+  - name: "Nova Ltd."
+    rank: 199
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.novami.com/careers/"
+    enabled: true
+
+  - name: "Supermicro"
+    rank: 207
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://jobs.supermicro.com/"
+    enabled: true
+
+  - name: "Amkor Technology"
+    rank: 213
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://amkor.com/careers/"
+    enabled: true
+
+  - name: "Inspur"
+    rank: 214
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://en.inspur.com/"
+    enabled: true
+
+  - name: "Lattice Semiconductor"
+    rank: 215
+    category: "Semiconductors & hardware supply chain"
+    careers_url: "https://www.latticesemi.com/en/About/Jobs"
+    enabled: true
+
+
+  # ── Serverless Postgres / AI Data ─────────────────────────────
+  - name: "Neon"
+    rank: 331
+    category: "Serverless Postgres / AI Data"
+    careers_url: "https://www.infineon.com/careers"
+    enabled: true
+
+
+  # ── Space, comms & AI infrastructure ──────────────────────────
+  - name: "SpaceX"
+    rank: 10
+    category: "Space, comms & AI infrastructure"
+    careers_url: "https://www.spacex.com/careers"
+    enabled: true
+
+
+  # ── Spatial AI / 3D World Models ──────────────────────────────
+  - name: "World Labs"
+    rank: 338
+    category: "Spatial AI / 3D World Models"
+    careers_url: "https://job-boards.greenhouse.io/worldlabs"
+    api: "https://boards-api.greenhouse.io/v1/boards/worldlabs/jobs"
+    enabled: true
+
+
+  # ── Synthetic Media ───────────────────────────────────────────
+  - name: "ElevenLabs"
+    rank: 229
+    category: "Synthetic Media"
+    careers_url: "https://elevenlabs.io/careers"
+    enabled: true
+
+  - name: "Synthesia"
+    rank: 272
+    category: "Synthetic Media"
+    careers_url: "https://www.synthesia.io/careers"
+    enabled: true
+
+  - name: "Suno"
+    rank: 290
+    category: "Synthetic Media"
+    careers_url: "https://suno.com/careers"
+    enabled: true
+
+  - name: "Midjourney"
+    rank: 320
+    category: "Synthetic Media"
+    careers_url: "https://www.midjourney.com/careers"
+    enabled: true
+
+  - name: "Stability AI"
+    rank: 322
+    category: "Synthetic Media"
+    careers_url: "https://stability.ai/careers"
+    enabled: true
+
+  - name: "Udio"
+    rank: 394
+    category: "Synthetic Media"
+    careers_url: "https://www.udio.com/careers"
+    enabled: true
+
+  - name: "HeyGen"
+    rank: 420
+    category: "Synthetic Media"
+    careers_url: "https://job-boards.greenhouse.io/heygen"
+    api: "https://boards-api.greenhouse.io/v1/boards/heygen/jobs"
+    enabled: true
+
+
+  # ── Uncategorized ─────────────────────────────────────────────
+  - name: "OpenEvidence"
+    rank: 227
+    category: "Uncategorized"
+    careers_url: "https://www.openevidence.com/careers"
+    enabled: true
+
+  - name: "OneTrust"
+    rank: 264
+    category: "Uncategorized"
+    careers_url: "https://www.onetrust.com/careers/"
+    enabled: true
+
+  - name: "Adept"
+    rank: 396
+    category: "Uncategorized"
+    careers_url: "https://www.adept.ai/careers"
+    enabled: true
+
+  - name: "Airia"
+    rank: 397
+    category: "Uncategorized"
+    careers_url: "https://airia.com/careers"
+    enabled: true
+
+  - name: "Aurascape"
+    rank: 398
+    category: "Uncategorized"
+    careers_url: "https://www.aurascape.ai/careers"
+    enabled: true
+
+  - name: "Avoca"
+    rank: 399
+    category: "Uncategorized"
+    careers_url: "https://www.avoca.ai/careers"
+    enabled: true
+
+  - name: "Blip.ai"
+    rank: 400
+    category: "Uncategorized"
+    careers_url: "https://www.blip.pt/jobs/"
+    enabled: true
+
+  - name: "Blossom"
+    rank: 401
+    category: "Uncategorized"
+    careers_url: "https://www.joinblossomhealth.com/careers"
+    enabled: true
+
+  - name: "Cera"
+    rank: 402
+    category: "Uncategorized"
+    careers_url: "https://www.cerahq.com/jobs"
+    enabled: true
+
+  - name: "CloudNC"
+    rank: 403
+    category: "Uncategorized"
+    careers_url: "https://www.cloudnc.com/careers"
+    enabled: true
+
+  - name: "Codium"
+    rank: 404
+    category: "Uncategorized"
+    careers_url: "https://www.qodo.ai/careers/"
+    enabled: true
+
+  - name: "ComplyAdvantage"
+    rank: 406
+    category: "Uncategorized"
+    careers_url: "https://complyadvantage.com/careers/"
+    enabled: true
+
+  - name: "Deel"
+    rank: 407
+    category: "Uncategorized"
+    careers_url: "https://www.deel.com/careers"
+    enabled: true
+
+  - name: "Delfina Care"
+    rank: 409
+    category: "Uncategorized"
+    careers_url: "https://www.delfina.com/careers"
+    enabled: true
+
+  - name: "DevRev"
+    rank: 410
+    category: "Uncategorized"
+    careers_url: "https://devrev.ai/careers"
+    enabled: true
+
+  - name: "Doppel"
+    rank: 412
+    category: "Uncategorized"
+    careers_url: "https://www.doppel.com/careers"
+    enabled: true
+
+  - name: "Exactly.ai"
+    rank: 413
+    category: "Uncategorized"
+    careers_url: "https://exactly.ai/career"
+    enabled: true
+
+  - name: "Exscientia"
+    rank: 414
+    category: "Uncategorized"
+    careers_url: "https://www.exscientia.ai/careers"
+    enabled: true
+
+  - name: "Fathom"
+    rank: 415
+    category: "Uncategorized"
+    careers_url: "https://fathom.video/careers"
+    enabled: true
+
+  - name: "Gamma"
+    rank: 416
+    category: "Uncategorized"
+    careers_url: "https://gamma.app/careers"
+    enabled: true
+
+  - name: "GitLab"
+    rank: 417
+    category: "Uncategorized"
+    careers_url: "https://about.gitlab.com/jobs/"
+    enabled: true
+
+  - name: "Harmonic"
+    rank: 419
+    category: "Uncategorized"
+    careers_url: "https://www.harmonic.ai/careers"
+    enabled: true
+
+  - name: "Huma"
+    rank: 421
+    category: "Uncategorized"
+    careers_url: "https://www.huma.com/careers"
+    enabled: true
+
+  - name: "Innowise"
+    rank: 422
+    category: "Uncategorized"
+    careers_url: "https://innowise.com/careers/"
+    enabled: true
+
+  - name: "Joyful Health"
+    rank: 424
+    category: "Uncategorized"
+    careers_url: "https://www.joyfulhealth.com/careers"
+    enabled: true
+
+  - name: "JusBrasil"
+    rank: 425
+    category: "Uncategorized"
+    careers_url: "https://www.jusbrasil.com.br/carreiras"
+    enabled: true
+
+  - name: "Lendable"
+    rank: 426
+    category: "Uncategorized"
+    careers_url: "https://careers.lendable.com/"
+    enabled: true
+
+  - name: "Listen Labs"
+    rank: 427
+    category: "Uncategorized"
+    careers_url: "https://listenlabs.ai/careers"
+    enabled: true
+
+  - name: "Omnea"
+    rank: 429
+    category: "Uncategorized"
+    careers_url: "https://www.omnea.co/careers"
+    enabled: true
+
+  - name: "Opaque Systems"
+    rank: 430
+    category: "Uncategorized"
+    careers_url: "https://www.opaque.co/careers"
+    enabled: true
+
+  - name: "OpenRouter"
+    rank: 431
+    category: "Uncategorized"
+    careers_url: "https://openrouter.ai/careers"
+    enabled: true
+
+  - name: "Quantexa"
+    rank: 434
+    category: "Uncategorized"
+    careers_url: "https://www.quantexa.com/careers/"
+    enabled: true
+
+  - name: "Ramp"
+    rank: 435
+    category: "Uncategorized"
+    careers_url: "https://ramp.com/careers"
+    enabled: true
+
+  - name: "Skild AI"
+    rank: 436
+    category: "Uncategorized"
+    careers_url: "https://www.skild.ai/careers"
+    enabled: true
+
+  - name: "Suffescom Solutions"
+    rank: 438
+    category: "Uncategorized"
+    careers_url: "https://www.suffescom.com/jobs"
+    enabled: true
+
+  - name: "Supabase"
+    rank: 439
+    category: "Uncategorized"
+    careers_url: "https://supabase.com/careers"
+    enabled: true
+
+  - name: "Thought Machine"
+    rank: 440
+    category: "Uncategorized"
+    careers_url: "https://www.thoughtmachine.net/careers"
+    enabled: true
+
+  - name: "Traba"
+    rank: 441
+    category: "Uncategorized"
+    careers_url: "https://traba.work/company/careers"
+    enabled: true
+
+  - name: "XBOW"
+    rank: 447
+    category: "Uncategorized"
+    careers_url: "https://jobs.ashbyhq.com/xbowcareers"
+    api: "https://api.ashbyhq.com/posting-api/job-board/xbowcareers?includeCompensation=true"
+    enabled: true
+
+  - name: "Zapier"
+    rank: 448
+    category: "Uncategorized"
+    careers_url: "https://zapier.com/jobs"
+    enabled: true
+
+
+  # ── Vector Databases ──────────────────────────────────────────
+  - name: "Pinecone"
+    rank: 339
+    category: "Vector Databases"
+    careers_url: "https://www.pinecone.io/careers/"
+    enabled: true
+
+  - name: "Weaviate"
+    rank: 349
+    category: "Vector Databases"
+    careers_url: "https://weaviate.io/company/careers"
+    enabled: true
+
+  - name: "Qdrant"
+    rank: 433
+    category: "Vector Databases"
+    careers_url: "https://qdrant.tech/careers/"
+    enabled: true
+
+  - name: "Zilliz"
+    rank: 449
+    category: "Vector Databases"
+    careers_url: "https://zilliz.com/careers"
+    enabled: true
+
+
+  # ── Warehouse Robotics / AI ───────────────────────────────────
+  - name: "Locus Robotics"
+    rank: 329
+    category: "Warehouse Robotics / AI"
+    careers_url: "https://locusrobotics.com/company/careers"
+    enabled: true
+
