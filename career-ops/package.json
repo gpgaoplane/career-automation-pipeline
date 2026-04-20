@@ -16,6 +16,7 @@
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "custom-scrape": "node custom-scraper.mjs",
+    "export": "node export-jobs.mjs",
     "full-scan": "node scan.mjs && node custom-scraper.mjs && node export-jobs.mjs"
   },
   "keywords": [
@@ -34,6 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.2.0",
+    "exceljs": "^4.4.0",
     "js-yaml": "^4.1.1",
     "playwright": "^1.58.1"
   }
