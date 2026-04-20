@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. This project wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline targeting 171 pre-filtered AI-relevant companies.
+AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. This project wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering 416 enabled companies (448 total in portals.yml, 32 disabled).
 
 **Working dir layout:**
 ```
@@ -21,12 +21,12 @@ career ops/                        ← Claude Code opens here
 ├── career-ops/                    ← cloned career-ops tool (git repo)
 │   ├── CLAUDE.md                  ← career-ops SYSTEM layer — DO NOT MODIFY
 │   ├── scan.mjs                   ← zero-token Greenhouse/Ashby/Lever API scraper
-│   ├── custom-scraper.mjs         ← Playwright scraper for non-API companies (to build)
-│   ├── export-jobs.mjs            ← Excel exporter (to build)
-│   ├── portals.yml                ← 171 filtered companies + title filters (to build)
-│   ├── config/profile.yml         ← Will's personal profile (to build)
-│   ├── cv.md                      ← Will's CV in markdown (to build)
-│   ├── modes/_profile.md          ← Will's archetype scoring overrides (to build)
+│   ├── custom-scraper.mjs         ← Playwright scraper for branded-page companies (built)
+│   ├── export-jobs.mjs            ← Excel exporter (built)
+│   ├── portals.yml                ← 448 companies (416 enabled) + title filters (built)
+│   ├── config/profile.yml         ← Will's personal profile (built)
+│   ├── cv.md                      ← Will's CV in markdown (built)
+│   ├── modes/_profile.md          ← Will's archetype scoring overrides (built)
 │   ├── data/
 │   │   ├── applications.md        ← application tracker
 │   │   ├── pipeline.md            ← pending job URLs inbox

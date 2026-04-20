@@ -86,6 +86,22 @@ Playwright renders the page and extracts job titles + URLs via generic link/text
 
 ---
 
+## Known Limitation: Career URL Landing Pages
+
+Some `careers_url` entries in portals.yml point to a company's **generic careers introduction page** (marketing copy, "Life at Company", benefits overview) rather than the page that actually loads job listings. This causes silent empty results across all three tiers:
+
+- **Tier 1** fetches the page but finds no ATS fingerprints — no Greenhouse/Ashby/Lever URLs are embedded in a page that has no job widget
+- **Tier 2** navigates via Playwright but intercepts no ATS XHR calls — a landing page makes no job API requests
+- **Tier 3** sees no job links in the DOM — nothing to extract
+
+**This is not a scraper bug.** The URL is correct as a company entry point but wrong as a job listings entry point.
+
+**How to detect after a run:** companies that return zero jobs AND have no ATS discovery cache entry after Tier 2 completes are candidates for this issue. Cross-reference with the Excel source — if the Excel shows a direct ATS URL for that company, update `careers_url` in portals.yml to the ATS URL or the specific jobs subpage (e.g., `company.com/careers/jobs` instead of `company.com/careers`).
+
+**portals.yml is never auto-mutated** — URL corrections must be made manually after inspecting the company's career page.
+
+---
+
 ## Per-Site UI Handling Strategy
 
 **Approach: base script + iterative fallback (not pre-planned per-site)**
