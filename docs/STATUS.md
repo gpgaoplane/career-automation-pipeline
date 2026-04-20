@@ -21,10 +21,18 @@
   - Tested: Runway dry-run → Tier 2 found Ashby, 4 offers extracted
 - [x] `package.json` npm scripts — `custom-scrape`, `full-scan` added; `cheerio` dep added
 
+- [x] portals.yml URL data quality fix — 22 URL corrections + 17 disables (39 total), Runway-adjacent pattern fixed across all groups (commit 3429bfa)
+- [x] First scan.mjs run — 1406 jobs from Ashby/Greenhouse APIs in pipeline.md + scan-history.tsv (commit 06bf430)
+- [x] **`export-jobs.mjs` built** — 3-sheet Excel export (commit c6c1fd8):
+  - Sheet 1: Pending Jobs (1406 rows, sorted by company rank)
+  - Sheet 2: By Company (136 companies with pending job counts)
+  - Sheet 3: Scan History (1406 raw dedup rows)
+  - `exceljs` dep added; `npm run export` script added
+
 ## In Progress / Up Next
-- [ ] `export-jobs.mjs` — pipeline.md + scan-history.tsv → Excel with company metadata
-- [ ] Validation run: `node scan.mjs --dry-run` on 3 test companies, then `node custom-scraper.mjs --dry-run` on 5+
-- [ ] Review portals.yml "Runway-adjacent" entries — they share Runway's careers URL (data issue, not scraper bug)
+- [ ] Run `node custom-scraper.mjs --dry-run` on 5+ non-API companies to validate Tier 2/3 discovery
+- [ ] Full pipeline evaluation: open `output/jobs-2026-04-20.xlsx`, identify high-priority roles, run `/career-ops pipeline`
+- [ ] Update `.claude/project-memory.md` with ATS discovery architecture decisions
 
 ## Blockers
 None
@@ -33,4 +41,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-custom-scraper.mjs complete with 3-tier ATS discovery. Tested with dry-run — Tier 2 working. Next: build `export-jobs.mjs` (reads pipeline.md + scan-history.tsv + portals.yml, writes output/jobs-YYYY-MM-DD.xlsx with 3 sheets: Pending Jobs / By Company / Scan History). Read `.claude/rules/architecture.md` for export-jobs responsibilities before starting.
+Phase 2 scripts complete. Pipeline has 1406 pending jobs from first scan.mjs run (API companies only). Excel at `output/jobs-2026-04-20.xlsx` — 3 sheets ready for review. Next: validate custom-scraper.mjs Tier 2/3 on non-API companies (5+ dry-run), then move to Phase 3 — run `/career-ops pipeline` to evaluate high-priority jobs from the Excel.
