@@ -1,28 +1,88 @@
 # Scraping Architecture — Design Decisions
 
-Locked down 2026-04-18. Reference before modifying any scraper or adding companies.
+Last updated 2026-04-19. Reference before modifying any scraper or adding companies.
 
 ---
 
 ## ATS API Map
 
-| ATS | Detection pattern | API endpoint pattern | Priority |
-|-----|------------------|---------------------|----------|
-| **Greenhouse** | `greenhouse.io` in careers_url | `boards-api.greenhouse.io/v1/boards/{slug}/jobs` | High — handled by scan.mjs |
-| **Ashby** | `ashbyhq.com` in careers_url | `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` | High — handled by scan.mjs |
-| **Lever** | `lever.co` in careers_url | `api.lever.co/v0/postings/{slug}?mode=json` | High — handled by scan.mjs |
-| **Workday** | `myworkdayjobs.com` in careers_url | POST `{tenant}.wd{n}.myworkdayjobs.com/wday/cxs/{tenant}/Recruiting/jobs` | High — build in custom-scraper |
-| **SmartRecruiters** | `smartrecruiters.com` in careers_url | `api.smartrecruiters.com/v1/companies/{id}/postings` | Medium |
-| **BambooHR** | `bamboohr.com` in careers_url | `{company}.bamboohr.com/careers/list` | Medium |
-| **Recruitee** | `recruitee.com` in careers_url | `{company}.recruitee.com/api/offers/` | Low — EU-heavy |
-| **Personio** | `personio.de` in careers_url | `{company}.jobs.personio.de/api/v1/jobs` | Low — EU-heavy |
-| **TeamTailor** | `teamtailor.com` in careers_url | `api.teamtailor.com/v1/jobs` (token required) | Low |
-| **Rippling** | `rippling.com` in careers_url | No public API — Playwright required | Low |
-| **iCIMS** | `icims.com` in careers_url | Complex semi-private — Playwright required | Low |
-| **Custom/unknown** | No known ATS detected | Playwright generic handler | Fallback |
+| ATS | Detection | API endpoint pattern | Handled by |
+|-----|-----------|---------------------|------------|
+| **Greenhouse** | `greenhouse.io` in careers_url (direct) | `boards-api.greenhouse.io/v1/boards/{slug}/jobs` | scan.mjs |
+| **Ashby** | `ashbyhq.com` in careers_url (direct) | `api.ashbyhq.com/posting-api/job-board/{slug}?includeCompensation=true` | scan.mjs |
+| **Lever** | `lever.co` in careers_url (direct) | `api.lever.co/v0/postings/{slug}?mode=json` | scan.mjs |
+| **Greenhouse** | discovered via HTML/network on branded page | same API as above | custom-scraper (delegates) |
+| **Ashby** | discovered via HTML/network on branded page | same API as above | custom-scraper (delegates) |
+| **Lever** | discovered via HTML/network on branded page | same API as above | custom-scraper (delegates) |
+| **Workday** | discovered via HTML/network | POST `{tenant}.wd{n}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` | custom-scraper |
+| **SmartRecruiters** | discovered via HTML/network | `api.smartrecruiters.com/v1/companies/{id}/postings` | custom-scraper |
+| **BambooHR** | discovered via HTML/network | `{company}.bamboohr.com/careers/list` | custom-scraper |
+| **Recruitee** | discovered via HTML/network | `{company}.recruitee.com/api/offers/` | custom-scraper |
+| **Personio** | discovered via HTML/network | `{company}.jobs.personio.de/api/v1/jobs` | custom-scraper |
+| **TeamTailor** | discovered via HTML/network | `api.teamtailor.com/v1/jobs` (token required) | custom-scraper |
+| **Rippling** | `rippling.com` in careers_url | No public API — Playwright required | custom-scraper |
+| **iCIMS** | `icims.com` in careers_url | Complex semi-private — Playwright required | custom-scraper |
+| **Custom/unknown** | no ATS discovered | Playwright generic DOM extraction | custom-scraper |
 
-**scan.mjs handles:** Greenhouse, Ashby, Lever (auto-detected, do not replicate)
-**custom-scraper.mjs handles:** all others above + generic fallback
+**scan.mjs handles:** Greenhouse, Ashby, Lever ONLY when careers_url directly contains the ATS domain.
+**custom-scraper.mjs handles:** all companies scan.mjs skips. Uses ATS discovery to find hidden Greenhouse/Ashby/Lever behind branded career pages, then calls the same APIs.
+
+---
+
+## ATS Discovery Layer
+
+**Problem:** portals.yml career URLs are branded landing pages (e.g. `runwayml.com/careers`), not ATS API URLs. ~437 companies are listed as "generic" but many secretly use Greenhouse/Ashby/Lever/Workday behind their own domain. Discovery must be fully automated — no manual URL updating.
+
+**Solution:** Three-tier discovery runs per company before dispatch. Results are cached in `data/ats-discovery-cache.json` with a 30-day TTL. portals.yml is never mutated.
+
+### Tier 1 — Plain fetch + HTML regex (fastest, zero browser)
+
+Fetch the careers_url with plain `fetch()`, then search the raw HTML for known ATS fingerprints:
+
+| Pattern | Detects |
+|---------|---------|
+| `boards\.greenhouse\.io/(?:embed/job_board/js\?for=)?([a-z0-9-]+)` | Greenhouse widget/iframe |
+| `job-boards(?:\.eu)?\.greenhouse\.io/([a-z0-9-]+)` | Greenhouse job board link |
+| `jobs\.ashbyhq\.com/([a-z0-9-]+)` | Ashby embed/link |
+| `jobs\.lever\.co/([a-z0-9-]+)` | Lever embed/link |
+| `([a-z0-9-]+)\.(wd\d+)\.myworkdayjobs\.com/([^/"?#\s]+)` | Workday (tenant + instance + site) |
+| `([a-z0-9-]+)\.smartrecruiters\.com` | SmartRecruiters |
+| `([a-z0-9-]+)\.bamboohr\.com` | BambooHR |
+| `([a-z0-9-]+)\.recruitee\.com` | Recruitee |
+
+If matched: cache and proceed to dispatch. Skip Tier 2.
+
+### Tier 2 — Playwright network interception (catches JS-loaded ATSes)
+
+Launch Playwright, navigate to the careers_url, intercept all XHR/fetch requests. Watch for calls to known ATS API hostnames:
+
+- `api.ashbyhq.com`, `boards-api.greenhouse.io`, `api.lever.co`
+- `*.myworkdayjobs.com`, `api.smartrecruiters.com`, etc.
+
+Extract slug from intercepted URL. Cache and dispatch. This catches single-page apps that load job widgets dynamically.
+
+### Tier 3 — Generic DOM extraction (final fallback)
+
+Playwright renders the page and extracts job titles + URLs via generic link/text heuristics. No ATS identified — scrapes what it sees.
+
+### Cache format (`data/ats-discovery-cache.json`)
+
+```json
+{
+  "Runway": { "ats": "greenhouse", "slug": "runwayml", "discovered": "2026-04-19" },
+  "Sierra": { "ats": "ashby", "slug": "sierra", "discovered": "2026-04-19" },
+  "Glean": { "ats": "workday", "tenant": "glean", "instance": "wd3", "site": "Glean", "discovered": "2026-04-19" }
+}
+```
+
+- Key: company name (matches `name` field in portals.yml)
+- TTL: 30 days from `discovered` date — stale entries re-run discovery
+- portals.yml is never touched by discovery
+
+### Playwright concurrency
+
+- Browser tasks (Tier 2 + 3): ≤ 5 concurrent
+- API tasks (post-discovery): ≤ 10 concurrent
 
 ---
 

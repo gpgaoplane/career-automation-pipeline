@@ -21,6 +21,7 @@ jds/*
 # Generated
 .resolved-prompt-*
 node_modules/
+data/ats-discovery-cache.json
 bun.lock
 
 # OS

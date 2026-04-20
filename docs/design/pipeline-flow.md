@@ -61,19 +61,26 @@
              │
              ▼ (skipped ~440 companies)
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                  custom-scraper.mjs (TO BUILD — Phase 2b)                       │
+│                  custom-scraper.mjs (Phase 2b)                                  │
 │  ─────────────────────────────────────────────────────────────────────          │
 │  For each company scan.mjs skipped:                                             │
-│    detect ATS from careers_url pattern                                          │
-│    ├─ Workday pattern      → POST to {tenant}.wd*.myworkdayjobs.com API         │
-│    ├─ SmartRecruiters      → GET api.smartrecruiters.com/v1/companies/.../postings │
-│    ├─ BambooHR             → GET {company}.bamboohr.com/careers/list            │
-│    ├─ Recruitee            → GET {company}.recruitee.com/api/offers/            │
-│    ├─ Personio             → GET {company}.jobs.personio.de/api/v1/jobs         │
-│    ├─ TeamTailor           → GET api.teamtailor.com (needs token)               │
-│    ├─ iCIMS / Rippling     → Playwright (no public API)                         │
-│    └─ Custom page          → fetch+cheerio (if static) OR Playwright (if JS)    │
-│  Apply title_filter → dedup against scan-history.tsv → write to pipeline.md     │
+│    ┌─ ATS Discovery (3-tier, results cached in data/ats-discovery-cache.json) ─┐│
+│    │  Tier 1: fetch HTML → regex (greenhouse/ashby/lever/workday scripts)      ││
+│    │  Tier 2: Playwright network intercept → watch XHR for ATS API hostnames  ││
+│    │  Tier 3: generic DOM extraction (fallback, no ATS identified)             ││
+│    │  Cache: 30-day TTL by company name. portals.yml never mutated.            ││
+│    └────────────────────────────────────────────────────────────────────────── ┘│
+│    dispatch by discovered ATS:                                                  │
+│    ├─ greenhouse / ashby / lever → call same APIs as scan.mjs (with slug)      │
+│    ├─ Workday     → POST to {tenant}.wd*.myworkdayjobs.com API                 │
+│    ├─ SmartRecruiters → GET api.smartrecruiters.com/v1/companies/.../postings  │
+│    ├─ BambooHR    → GET {company}.bamboohr.com/careers/list                    │
+│    ├─ Recruitee   → GET {company}.recruitee.com/api/offers/                    │
+│    ├─ Personio    → GET {company}.jobs.personio.de/api/v1/jobs                 │
+│    ├─ TeamTailor  → GET api.teamtailor.com (needs token)                       │
+│    ├─ iCIMS / Rippling → Playwright (no public API)                            │
+│    └─ Custom page → fetch+cheerio (static) OR Playwright (JS-heavy)            │
+│  Apply title_filter → dedup against scan-history.tsv → write to pipeline.md    │
 └────────────┬────────────────────────────────────────────────────────────────────┘
              │
              ▼
@@ -227,18 +234,18 @@
                    ▼                      ▼
            ┌─────────────────┐     ┌─────────────────────────────┐
            │ Apply title     │     │  custom-scraper.mjs         │
-           │ filter:         │     │  (TO BUILD)                 │
+           │ filter:         │     │  (v1 built, discovery WIP)  │
            │   positive ≥ 1  │     │  ┌───────────────────────┐  │
-           │   negative = 0  │     │  │ Detect ATS by URL:    │  │
-           └────────┬────────┘     │  │  myworkdayjobs.com    │  │
-                    │              │  │  smartrecruiters.com  │  │
-                    ▼              │  │  bamboohr.com         │  │
-         ┌───────────────────┐     │  │  recruitee.com        │  │
-         │ Check dedup:      │     │  │  personio.de          │  │
-         │ scan-history.tsv  │     │  │  teamtailor.com       │  │
-         │ & pipeline.md     │     │  │  rippling.com         │  │
-         └────────┬──────────┘     │  │  icims.com            │  │
-                  │                │  │  (unknown custom)     │  │
+           │   negative = 0  │     │  │ ATS Discovery (3-tier)│  │
+           └────────┬────────┘     │  │ ─────────────────     │  │
+                    │              │  │ T1: fetch HTML+regex  │  │
+                    ▼              │  │  greenhouse/ashby/    │  │
+         ┌───────────────────┐     │  │  lever/workday signs  │  │
+         │ Check dedup:      │     │  │ T2: Playwright XHR    │  │
+         │ scan-history.tsv  │     │  │  intercept ATS calls  │  │
+         │ & pipeline.md     │     │  │ T3: generic DOM       │  │
+         └────────┬──────────┘     │  │ cache: ats-discovery- │  │
+                  │                │  │   cache.json (30d TTL)│  │
                   ▼                │  └────────┬──────────────┘  │
         ┌─────────────────┐        │           ▼                 │
         │ If new: append  │        │  ┌────────────────────────┐ │
@@ -554,10 +561,11 @@
     ├─ portals.yml (448 companies)          ✓ committed
     └─ data/ initialized                    ✓ committed
 
-  PHASE 2 — Custom scripts                  [░░░░░░░░░░░░]   0% PENDING
-    ├─ custom-scraper.mjs                   ✗ to build
+  PHASE 2 — Custom scripts                  [██████░░░░░░]  50% IN PROGRESS
+    ├─ custom-scraper.mjs (v1 base)         ✓ built (Workday + generic handlers)
+    ├─ custom-scraper ATS discovery layer   ✗ to build (3-tier + cache)
     ├─ export-jobs.mjs                      ✗ to build
-    └─ package.json npm scripts             ✗ to update
+    └─ package.json npm scripts             ✓ updated (custom-scrape + full-scan)
 
   PHASE 3 — First scrape run                [░░░░░░░░░░░░]   0% PENDING
     ├─ scan.mjs (3-company validation)      ⏳ recommended next
