@@ -1,6 +1,6 @@
 # portals.yml — Career-Ops Portal Scanner Configuration
 # Candidate: Will (Xinyuan) Guo
-# Last updated: 2026-04-18
+# Last updated: 2026-04-20
 # Source: context/AI_Companies_Consolidated_Ranked_v2.xlsx (all 448 companies with valid career URLs)
 # Skipped: Eternal (no URL), Treefera (no URL)
 # Title filters derived from Will's target role tracks: AI-ENG, SA, AE, PM, GEN-AI, CREATIVE
@@ -188,7 +188,7 @@ tracked_companies:
     rank: 376
     category: "AI 3D Generation"
     careers_url: "https://runwayml.com/careers/"
-    enabled: true
+    enabled: false
 
 
   # ── AI Agents ─────────────────────────────────────────────────
@@ -196,7 +196,7 @@ tracked_companies:
     rank: 234
     category: "AI Agents"
     careers_url: "https://sierra.ai/careers"
-    enabled: true
+    enabled: false
 
   - name: "Cresta"
     rank: 298
@@ -208,13 +208,13 @@ tracked_companies:
     rank: 314
     category: "AI Agents"
     careers_url: "https://www.adept.ai/careers"
-    enabled: true
+    enabled: false
 
   - name: "Inworld AI"
     rank: 423
     category: "AI Agents"
     careers_url: "https://inworld.ai/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Agents / Reasoning ─────────────────────────────────────
@@ -254,7 +254,7 @@ tracked_companies:
     rank: 446
     category: "AI Chatbot / Consumer"
     careers_url: "https://x.ai/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Chips / Compute ────────────────────────────────────────
@@ -262,7 +262,7 @@ tracked_companies:
     rank: 1
     category: "AI Chips / Compute"
     careers_url: "https://www.nvidia.com/en-us/about-nvidia/careers/"
-    enabled: true
+    enabled: false
 
   - name: "Broadcom"
     rank: 7
@@ -408,13 +408,13 @@ tracked_companies:
     rank: 164
     category: "AI Cloud Infrastructure"
     careers_url: "https://careers.nebius.com/"
-    enabled: true
+    enabled: false
 
   - name: "Nscale"
     rank: 217
     category: "AI Cloud Infrastructure"
     careers_url: "https://www.nscale.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Cloud Security ─────────────────────────────────────────
@@ -444,7 +444,7 @@ tracked_companies:
     rank: 443
     category: "AI Coding / Vibe-Coding"
     careers_url: "https://lovable.dev/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Coding Assistant ───────────────────────────────────────
@@ -452,7 +452,7 @@ tracked_companies:
     rank: 350
     category: "AI Coding Assistant"
     careers_url: "https://www.tabnine.com/careers/"
-    enabled: true
+    enabled: false
 
 
   # ── AI Coding CLI ─────────────────────────────────────────────
@@ -460,7 +460,7 @@ tracked_companies:
     rank: 444
     category: "AI Coding CLI"
     careers_url: "https://www.anthropic.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Coding Tools ───────────────────────────────────────────
@@ -468,7 +468,7 @@ tracked_companies:
     rank: 141
     category: "AI Coding Tools"
     careers_url: "https://www.cursor.com/careers"
-    enabled: true
+    enabled: false
 
   - name: "Poolside"
     rank: 225
@@ -572,15 +572,15 @@ tracked_companies:
     rank: 445
     category: "AI Data Center / Compute"
     careers_url: "https://x.ai/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Data Labeling ──────────────────────────────────────────
   - name: "Scale AI-adjacent: Labelbox"
     rank: 366
     category: "AI Data Labeling"
-    careers_url: "https://scale.com/careers"
-    enabled: true
+    careers_url: "https://job-boards.greenhouse.io/labelbox"
+    enabled: false
 
 
   # ── AI Data Labeling / Programmatic ───────────────────────────
@@ -595,7 +595,7 @@ tracked_companies:
   - name: "Scale AI-adjacent: Surge AI"
     rank: 392
     category: "AI Data Labeling / RLHF"
-    careers_url: "https://scale.com/careers"
+    careers_url: "https://surgehq.ai/careers"
     enabled: true
 
 
@@ -619,7 +619,7 @@ tracked_companies:
   - name: "Cohere-adjacent: MindsDB"
     rank: 382
     category: "AI Database / AutoML"
-    careers_url: "https://cohere.com/careers"
+    careers_url: "https://job-boards.greenhouse.io/mindsdb"
     enabled: true
 
 
@@ -661,7 +661,7 @@ tracked_companies:
   - name: "Hugging Face-adjacent: Ollama"
     rank: 386
     category: "AI Developer Tools / Local LLMs"
-    careers_url: "https://huggingface.co/jobs"
+    careers_url: "https://www.workatastartup.com/companies/ollama"
     enabled: true
 
 
@@ -669,7 +669,7 @@ tracked_companies:
   - name: "Hugging Face-adjacent: Lightning AI"
     rank: 372
     category: "AI Developer Tools / PyTorch"
-    careers_url: "https://huggingface.co/jobs"
+    careers_url: "https://job-boards.greenhouse.io/lightningai"
     enabled: true
 
 
@@ -708,7 +708,7 @@ tracked_companies:
     rank: 405
     category: "AI Embeddings"
     careers_url: "https://cohere.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Embeddings / Open-Source ───────────────────────────────
@@ -716,7 +716,7 @@ tracked_companies:
     rank: 390
     category: "AI Embeddings / Open-Source"
     careers_url: "https://home.nomic.ai/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Enterprise Browser / Security ──────────────────────────
@@ -748,7 +748,7 @@ tracked_companies:
   - name: "Databricks-adjacent: Tecton"
     rank: 355
     category: "AI Feature Store / ML Infrastructure"
-    careers_url: "https://www.databricks.com/company/careers"
+    careers_url: "https://www.tecton.ai/careers/"
     enabled: true
 
 
@@ -773,7 +773,7 @@ tracked_companies:
     rank: 223
     category: "AI Finance / Spend Management"
     careers_url: "https://ramp.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Financial Planning ─────────────────────────────────────
@@ -781,7 +781,7 @@ tracked_companies:
     rank: 302
     category: "AI Financial Planning"
     careers_url: "https://www.pigment.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Hardware ───────────────────────────────────────────────
@@ -797,7 +797,7 @@ tracked_companies:
     rank: 88
     category: "AI Hardware / Manufacturing"
     careers_url: "https://recruit.foxconn.com/"
-    enabled: true
+    enabled: false
 
 
   # ── AI Healthcare ─────────────────────────────────────────────
@@ -805,7 +805,7 @@ tracked_companies:
     rank: 239
     category: "AI Healthcare"
     careers_url: "https://www.tempus.com/careers/"
-    enabled: true
+    enabled: false
 
   - name: "Abridge"
     rank: 258
@@ -928,7 +928,7 @@ tracked_companies:
   - name: "Notion-adjacent: Mem"
     rank: 391
     category: "AI Knowledge / Notes"
-    careers_url: "https://www.notion.so/careers"
+    careers_url: "https://get.mem.ai/careers"
     enabled: true
 
 
@@ -936,7 +936,7 @@ tracked_companies:
   - name: "Harvey-adjacent: Legora"
     rank: 256
     category: "AI Legal Tech"
-    careers_url: "https://www.harvey.ai/careers"
+    careers_url: "https://jobs.ashbyhq.com/legora"
     enabled: true
 
   - name: "EvenUp"
@@ -974,7 +974,7 @@ tracked_companies:
   - name: "Palantir-adjacent: Primer"
     rank: 374
     category: "AI NLP / Intelligence Analysis"
-    careers_url: "https://www.palantir.com/careers/"
+    careers_url: "https://job-boards.greenhouse.io/primerai"
     enabled: true
 
 
@@ -1000,7 +1000,7 @@ tracked_companies:
     rank: 81
     category: "AI Payments / Fraud"
     careers_url: "https://stripe.com/jobs"
-    enabled: true
+    enabled: false
 
 
   # ── AI Presentations / Content ────────────────────────────────
@@ -1008,7 +1008,7 @@ tracked_companies:
     rank: 344
     category: "AI Presentations / Content"
     careers_url: "https://tome.app/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Process Mining ─────────────────────────────────────────
@@ -1039,7 +1039,7 @@ tracked_companies:
   - name: "Palantir-adjacent: Dataminr"
     rank: 271
     category: "AI Real-Time Intelligence"
-    careers_url: "https://www.palantir.com/careers/"
+    careers_url: "https://dataminr.wd12.myworkdayjobs.com/Dataminr"
     enabled: true
 
 
@@ -1109,7 +1109,7 @@ tracked_companies:
   - name: "Cohere-adjacent: Jina AI"
     rank: 381
     category: "AI Search / Embeddings"
-    careers_url: "https://cohere.com/careers"
+    careers_url: "https://jina-ai.jobs.personio.com/"
     enabled: true
 
 
@@ -1133,7 +1133,7 @@ tracked_companies:
   - name: "DeepL-adjacent: Translated"
     rank: 371
     category: "AI Translation"
-    careers_url: "https://www.deepl.com/en/careers"
+    careers_url: "https://translated.applytojob.com/"
     enabled: true
 
 
@@ -1141,7 +1141,7 @@ tracked_companies:
   - name: "DeepL-adjacent: Unbabel"
     rank: 384
     category: "AI Translation / Customer Service"
-    careers_url: "https://www.deepl.com/en/careers"
+    careers_url: "https://careers.unbabel.com/"
     enabled: true
 
 
@@ -1149,7 +1149,7 @@ tracked_companies:
   - name: "DeepL-adjacent: Phrase"
     rank: 357
     category: "AI Translation / Localization"
-    careers_url: "https://www.deepl.com/en/careers"
+    careers_url: "https://phrase.com/careers/"
     enabled: true
 
 
@@ -1166,7 +1166,7 @@ tracked_companies:
     rank: 365
     category: "AI Video / Avatar Generation"
     careers_url: "https://job-boards.greenhouse.io/heygen"
-    enabled: true
+    enabled: false
 
 
   # ── AI Video Generation ───────────────────────────────────────
@@ -1174,19 +1174,19 @@ tracked_companies:
     rank: 178
     category: "AI Video Generation"
     careers_url: "https://runwayml.com/careers/"
-    enabled: true
+    enabled: false
 
   - name: "Pika"
     rank: 275
     category: "AI Video Generation"
     careers_url: "https://pika.art/careers"
-    enabled: true
+    enabled: false
 
   - name: "Runway-adjacent: Genmo"
     rank: 387
     category: "AI Video Generation"
-    careers_url: "https://runwayml.com/careers/"
-    enabled: true
+    careers_url: "https://jobs.ashbyhq.com/genmo"
+    enabled: false
 
 
   # ── AI Video Understanding ────────────────────────────────────
@@ -1194,7 +1194,7 @@ tracked_companies:
     rank: 377
     category: "AI Video Understanding"
     careers_url: "https://www.twelvelabs.io/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Video/Audio Editing ────────────────────────────────────
@@ -1202,7 +1202,7 @@ tracked_companies:
     rank: 325
     category: "AI Video/Audio Editing"
     careers_url: "https://www.descript.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── AI Visual Data / Enterprise ───────────────────────────────
@@ -1233,7 +1233,7 @@ tracked_companies:
   - name: "Shield AI-adjacent: Joby Aviation"
     rank: 243
     category: "Autonomous Air Taxi / eVTOL"
-    careers_url: "https://www.shield.ai/careers"
+    careers_url: "https://www.jobyaviation.com/careers/"
     enabled: true
 
 
@@ -1242,15 +1242,15 @@ tracked_companies:
     rank: 287
     category: "Autonomous Drones"
     careers_url: "https://www.skydio.com/careers"
-    enabled: true
+    enabled: false
 
 
   # ── Autonomous Maritime / Defense AI ──────────────────────────
   - name: "Shield AI-adjacent: Saronic"
     rank: 284
     category: "Autonomous Maritime / Defense AI"
-    careers_url: "https://www.shield.ai/careers"
-    enabled: true
+    careers_url: "https://www.saronic.com/careers"
+    enabled: false
 
 
   # ── Autonomous Vehicles ───────────────────────────────────────
@@ -1690,22 +1690,22 @@ tracked_companies:
     rank: 75
     category: "Data Cloud / AI Features"
     careers_url: "https://careers.snowflake.com/"
-    enabled: true
+    enabled: false
 
 
   # ── Data Integration / AI Pipeline ────────────────────────────
   - name: "Databricks-adjacent: Fivetran"
     rank: 255
     category: "Data Integration / AI Pipeline"
-    careers_url: "https://www.databricks.com/company/careers"
-    enabled: true
+    careers_url: "https://www.fivetran.com/careers"
+    enabled: false
 
 
   # ── Data Transformation / Analytics Engineering ───────────────
   - name: "Databricks-adjacent: dbt Labs"
     rank: 270
     category: "Data Transformation / Analytics Engineering"
-    careers_url: "https://www.databricks.com/company/careers"
+    careers_url: "https://job-boards.greenhouse.io/dbtlabsinc"
     enabled: true
 
 
@@ -1739,7 +1739,7 @@ tracked_companies:
   - name: "Palantir-adjacent: Rebellion Defense"
     rank: 363
     category: "Defense AI / Decision Intelligence"
-    careers_url: "https://www.palantir.com/careers/"
+    careers_url: "https://rebelliondefense.com/careers/"
     enabled: true
 
 
@@ -2208,7 +2208,7 @@ tracked_companies:
   - name: "Fourier Intelligence"
     rank: 359
     category: "Humanoid Robotics / Rehabilitation"
-    careers_url: "https://jobs.intel.com/"
+    careers_url: "https://www.fourierintelligence.com/careers"
     enabled: true
 
 
@@ -2456,7 +2456,7 @@ tracked_companies:
   - name: "Physical Intelligence"
     rank: 294
     category: "Robotics AI / Foundation Models"
-    careers_url: "https://jobs.intel.com/"
+    careers_url: "https://jobs.ashbyhq.com/physicalintelligence"
     enabled: true
 
 
@@ -2830,7 +2830,7 @@ tracked_companies:
   - name: "Neon"
     rank: 331
     category: "Serverless Postgres / AI Data"
-    careers_url: "https://www.infineon.com/careers"
+    careers_url: "https://neon.tech/careers"
     enabled: true
 
 
