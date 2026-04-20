@@ -2,4 +2,1411 @@
 
 ## Pendientes
 
+- [ ] https://jobs.ashbyhq.com/cradlebio/07b4fd84-7dcf-4e31-a1f5-c2cff0e44f78 | Cradle | Account Executive, Global Accounts
+- [ ] https://jobs.ashbyhq.com/inworld-ai/56fc5614-9273-401a-9cc3-92e8caf27635 | Inworld AI | Staff / Principal Machine Learning Engineer, Serving - USA
+- [ ] https://jobs.ashbyhq.com/inworld-ai/183e158a-df78-4bcb-a5ee-96ddcb61c306 | Inworld AI | Senior / Lead Machine Learning Engineer, Serving - Germany
+- [ ] https://jobs.ashbyhq.com/inworld-ai/8a663fc5-3471-49df-8965-9438601ae590 | Inworld AI | Staff / Principal Machine Learning Engineer, Serving - UK
+- [ ] https://jobs.ashbyhq.com/inworld-ai/bf5054ab-ed19-4890-8f0b-ca8a57210e42 | Inworld AI | Staff / Principal Machine Learning Engineer, Serving - Switzerland
+- [ ] https://jobs.ashbyhq.com/inworld-ai/92e64120-ce88-4f76-a694-244cd2813f28 | Inworld AI | Senior / Lead Machine Learning Engineer, Serving - Serbia
+- [ ] https://job-boards.greenhouse.io/imbue/jobs/4202485009 | Imbue | AI Developer Advocate
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5833421004 | Abnormal-adjacent: Halcyon | Account Executive, Quebec
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5819215004 | Abnormal-adjacent: Halcyon | Business Development Representative
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5857728004 | Abnormal-adjacent: Halcyon | Business Development Representative, SLED
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5833418004 | Abnormal-adjacent: Halcyon | Commercial Account Executive, Calgary
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5721057004 | Abnormal-adjacent: Halcyon | Enterprise Account Executive 
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5708979004 | Abnormal-adjacent: Halcyon | Enterprise Account Executive, Mid-Atlantic
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5652340004 | Abnormal-adjacent: Halcyon | Enterprise Account Executive, Ohio Valley
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5815261004 | Abnormal-adjacent: Halcyon | Enterprise Account Executive, Pacific Northwest
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5831423004 | Abnormal-adjacent: Halcyon | Enterprise Account Executive, Toronto
+- [ ] https://job-boards.greenhouse.io/halcyon/jobs/5653586004 | Abnormal-adjacent: Halcyon | Pre-Sales Solutions Architect, Toronto
+- [ ] https://jobs.ashbyhq.com/Sierra/8152eaf6-012b-4154-95e2-7d6c52faba93 | Sierra | Sales Engineer
+- [ ] https://jobs.ashbyhq.com/Sierra/422cb7bb-ab03-447b-808c-6d72f59bbd2f | Sierra | Product Manager, Agent Data Platform
+- [ ] https://jobs.ashbyhq.com/Sierra/effd7cd2-8a28-4bae-a3b8-40720ba09717 | Sierra | Product Manager, Agent Development
+- [ ] https://jobs.ashbyhq.com/Sierra/9501ffa2-b433-4f51-b7f0-d8e53e37442d | Sierra | Enterprise Account Executive, Europe
+- [ ] https://jobs.ashbyhq.com/Sierra/fed8ca9a-0bb7-44ef-a541-0be6a8ae7bba | Sierra | Product Manager, Agent Development (German speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/c56c272f-86e0-43c8-b3eb-6f6b1cec3b36 | Sierra | Sales Engineer (German speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/ecbaa355-c644-471a-ac11-07a21ee0c543 | Sierra | Sales Engineer (French speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/38f06024-4ee9-47d6-a36f-f2791ac1e412 | Sierra | Product Manager, Agent Development (French speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/4892f01e-8871-4b32-8963-527f1cf8db5d | Sierra | Product Manager, Agent Development (Spanish speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/39c1ed90-786b-41c6-943e-7c2427f90043 | Sierra | Enterprise Account Executive, Europe (German speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/9f5b273f-1604-4b5b-bbbb-13cf0af35150 | Sierra | Enterprise Account Executive, Europe (Italian speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/684fe45e-e8ab-40bc-8faa-c291646a48bb | Sierra | Sales Engineering Manager
+- [ ] https://jobs.ashbyhq.com/Sierra/c7e3f330-6649-4c42-920d-eb267ebd6d16 | Sierra | Business Development
+- [ ] https://jobs.ashbyhq.com/Sierra/d4a8ec61-f97d-4010-9505-0fc2d8b00167 | Sierra | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/Sierra/9dc1651d-43e9-4970-a757-a5223cef1c4d | Sierra | Product Manager, Agent Development (Arabic speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/edf44ab4-538b-4e65-b93c-392c950b9fe6 | Sierra | Product Manager, Agent Development 
+- [ ] https://jobs.ashbyhq.com/Sierra/2e07f536-bbaa-4cc0-957a-774ddf99de64 | Sierra | Product Manager, Agent Development (Italian speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/fe103c28-bc7e-433e-ad82-90a1655cba32 | Sierra | Enterprise Account Executive, Europe (Arabic speaking)
+- [ ] https://jobs.ashbyhq.com/Sierra/a4376f1f-10bd-4804-899e-4b98b8245198 | Sierra | Enterprise Sales Leader
+- [ ] https://jobs.ashbyhq.com/Sierra/409c7bae-fdfc-4d36-a427-297683063d43 | Sierra | Sales Engineer 
+- [ ] https://jobs.ashbyhq.com/Sierra/10d2e2f1-6657-40c9-b6fb-6999c76df6cf | Sierra | Product Manager, Agent SDK
+- [ ] https://jobs.ashbyhq.com/Sierra/c6d2a0ee-2401-4751-bafb-e1468876e568 | Sierra | Sales Engineer (France)
+- [ ] https://jobs.ashbyhq.com/Sierra/65eb2c63-c936-4e8e-87e7-ea080dcdca73 | Sierra | Product Manager, Agent Development - Healthcare
+- [ ] https://jobs.ashbyhq.com/Sierra/39355227-d7a2-4066-b930-2bf2eeebc20c | Sierra | Sales Engineer (Spain)
+- [ ] https://jobs.ashbyhq.com/Sierra/8e477331-3525-4e87-b311-e500f0fa61e9 | Sierra | Enterprise Account Executive (ANZ)
+- [ ] https://jobs.ashbyhq.com/Sierra/a84c4ee1-1534-4bfa-960b-25f104a2bde6 | Sierra | Enterprise Sales Leader (ANZ)
+- [ ] https://jobs.ashbyhq.com/Sierra/0c66e8ed-1c18-4b64-ad27-a522a866b6e1 | Sierra | Product Manager, Voice
+- [ ] https://jobs.ashbyhq.com/Sierra/5aaa2eeb-92bc-4b0a-901e-8e091eff819e | Sierra | Product Manager, Agent Studio
+- [ ] https://jobs.ashbyhq.com/Sierra/22ba107d-de01-4aa3-98fc-838cccad760c | Sierra | Product Manager, Ghostwriter
+- [ ] https://job-boards.greenhouse.io/xai/jobs/5039320007 | xAI/Grok | Accounting Expert - Technical Accounting 
+- [ ] https://job-boards.greenhouse.io/xai/jobs/5099635007 | xAI/Grok | Business Expert - Sales & Business Development
+- [ ] https://job-boards.greenhouse.io/xai/jobs/5111374007 | xAI/Grok | Member of Technical Staff - Multimodal Understanding
+- [ ] https://job-boards.greenhouse.io/xai/jobs/4805886007 | xAI/Grok | Member of Technical Staff - Real-Time Storage
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5807654004 | Vercel | Account Executive-Startups (APAC)
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5624231004 | Vercel | Account Executive- Startups, Greenfield
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5752956004 | Vercel | Account Executive-Startups, Greenfield (EMEA)
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5789770004 | Vercel | Account Executive- Startups, Install Base
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5676402004 | Vercel | Director, Technical Accounting & Financial Reporting
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5042174004 | Vercel | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5872425004 | Vercel | Forward Deployed Engineer, v0
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5848322004 | Vercel |  Majors Account Executive, Berlin
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5806456004 | Vercel | Manager, Solutions Architecture
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5735116004 | Vercel | Sales Engineer, Startups 
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5553789004 | Vercel | Senior Partner Solutions Engineer
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5798406004 | Vercel | Software Engineer, AI Gateway
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5474915004 | Vercel | Software Engineer, AI SDK
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5804110004 | Vercel | Solutions Architect
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5806749004 | Vercel | Solutions Architect 
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5800328004 | Vercel | Strategic Account Executive
+- [ ] https://jobs.ashbyhq.com/lambda/5e7d8b67-ab65-4902-b3a3-37f3468d55ac | Lambda Labs | Storage Engineering Manager
+- [ ] https://jobs.ashbyhq.com/lambda/e0327962-391e-45d2-9428-bc5e109c8dfa | Lambda Labs | Staff Product Manager
+- [ ] https://jobs.ashbyhq.com/lambda/11976cf8-9535-4654-a7ef-cf322bd5da91 | Lambda Labs | Staff Storage Engineer
+- [ ] https://jobs.ashbyhq.com/lambda/a78dfe47-1176-4da7-b9da-0e18551ea434 | Lambda Labs | Staff External Product Manager
+- [ ] https://jobs.ashbyhq.com/lambda/943f678e-d9ef-4e58-b3a2-8a3d4df7e3b5 | Lambda Labs | Senior Associate - Technical Accounting
+- [ ] https://jobs.ashbyhq.com/lambda/cf395a28-87bd-4d44-891a-bbefa6958fe2 | Lambda Labs | Senior Manager, Technical Accounting & Financial Reporting
+- [ ] https://jobs.ashbyhq.com/lambda/8714b844-7754-429a-a22f-2f849dbf9621 | Lambda Labs | Senior Storage Engineer
+- [ ] https://jobs.ashbyhq.com/lambda/b6182853-e064-4377-b235-0ce30d2c7443 | Lambda Labs | Staff Storage Systems Architect
+- [ ] https://jobs.ashbyhq.com/cognition/b154cc8a-0f04-44b8-88d8-72901fc0582d | Cognition AI | Federal Account Executive
+- [ ] https://jobs.ashbyhq.com/cognition/a12f5aac-c232-4bf2-953a-2b7217412aed | Cognition AI | Director, Enterprise Sales (Central)
+- [ ] https://jobs.ashbyhq.com/cognition/fd6e659a-ae80-430a-8ec6-f3ec918e5a85 | Cognition AI | Director, Enterprise Sales (West)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4697461101 | Nscale | Datacenter Deployment Engineer
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4753046101 | Nscale | Data Engineer (Forward Deployed)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4799818101 | Nscale | Director, People Partnering – AI Infrastructure (US)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4824220101 | Nscale | Engineer, Storage Services
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4818970101 | Nscale | Finance Manager, AI Infrastructure
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4788600101 | Nscale | Mechanical / Controls Integration Engineer
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4684983101 | Nscale | Network Deployment Engineer
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4808665101 | Nscale | Network & Server Deployment Engineer (GPU Data Centre)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4824204101 | Nscale | Principal Engineer, Storage Services
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4809292101 | Nscale | Principal Solutions Architect -AI Infrastructure Strategy
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4828725101 | Nscale | Senior AI Engineer
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4809267101 | Nscale |  Senior Deployment Engineer - Seattle (United States)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4809422101 | Nscale | Senior Network Architect – AI Infrastructure
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4809433101 | Nscale | Senior Program Manager – AI Infrastructure, Data Center Site Delivery (US)
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4831037101 | Nscale | Senior Site Reliability Engineer -AI Infrastructure Operations
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4721543101 | Nscale | Solutions Architect
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4827967101 | Nscale | Specialised AI Engineer 
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/5098104007 | Tenstorrent | Business Development Lead, India 
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/4607141007 | Tenstorrent | C++ Machine Learning Engineer, AI Models Training
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/4607144007 | Tenstorrent | C++ Machine Learning Engineer, Models Training
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/4832276007 | Tenstorrent | Machine Learning Engineer, AI Models
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/5086799007 | Tenstorrent | RISC-V AI / HPC & Agentic Software Engineer
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/5056085007 | Tenstorrent | RISC-V AI / HPC & Agentic Software Engineering Lead
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/4717175007 | Tenstorrent | Software Engineer, AI Compiler
+- [ ] https://job-boards.greenhouse.io/tenstorrent/jobs/4116462007 | Tenstorrent | Sr. Software Engineer, AI Compiler
+- [ ] https://jobs.ashbyhq.com/cursor/515926c1-f044-4aff-9d5f-0bb84cb7eca2 | Anysphere (Cursor) | Software Engineer, Storage
+- [ ] https://jobs.ashbyhq.com/cursor/61e4677d-cf3d-458a-bf6c-02287d5d2c39 | Anysphere (Cursor) | Geo Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/cursor/64a6cb18-493b-4d18-9f22-c661ae533bfa | Anysphere (Cursor) | Field Engineering
+- [ ] https://jobs.ashbyhq.com/cursor/3d9da649-b3e6-4b4c-943d-1d081dae9497 | Anysphere (Cursor) | Field Engineering Manager
+- [ ] https://jobs.ashbyhq.com/cursor/13ceadb8-638f-40c7-a59d-70dab2f4de0b | Anysphere (Cursor) | Commercial Account Executive
+- [ ] https://jobs.ashbyhq.com/cursor/7c636ebc-71e7-4aa8-b393-066ee8fb9f2d | Anysphere (Cursor) | Strategic Account Executive, Financial Services
+- [ ] https://jobs.ashbyhq.com/cursor/10584dee-87e0-41c2-b439-c41e7c442b29 | Anysphere (Cursor) | Strategic Enterprise Account Executive, Southwest
+- [ ] https://jobs.ashbyhq.com/cursor/eb238291-8a00-4385-8108-4e4d634c2be0 | Anysphere (Cursor) | Strategic Enterprise Account Executive, East
+- [ ] https://jobs.ashbyhq.com/cursor/2994b271-8a13-4716-945c-20419b3bee68 | Anysphere (Cursor) | Strategic Enterprise Account Executive, Southeast
+- [ ] https://jobs.ashbyhq.com/cursor/88c6e423-1217-42f0-ada4-8cbaf9c24790 | Anysphere (Cursor) | Strategic Enterprise Account Executive, West
+- [ ] https://jobs.ashbyhq.com/cursor/db5ed269-a81d-419e-85c0-c5aec495c6a6 | Anysphere (Cursor) | Strategic Enterprise Account Executive, Central
+- [ ] https://jobs.ashbyhq.com/cursor/830da589-1982-4e1b-b977-af3c60fe7685 | Anysphere (Cursor) | Regional Director, Enterprise Sales, Northeast
+- [ ] https://jobs.ashbyhq.com/cursor/f602d5d4-7961-479b-894e-7e975e7bfe4e | Anysphere (Cursor) | Regional Director, Enterprise Sales, Northwest
+- [ ] https://jobs.ashbyhq.com/cursor/3b1ec65c-0d2b-43e1-81db-4d33a9a2faa4 | Anysphere (Cursor) | Strategic Account Executive, High-Tech
+- [ ] https://jobs.ashbyhq.com/cursor/18f88921-87f8-4729-8bb9-5ba6f4cb1155 | Anysphere (Cursor) | Strategic Account Executive, Health Verticals
+- [ ] https://jobs.ashbyhq.com/cursor/409d6bff-d60c-45b7-8d4c-21f6574010de | Anysphere (Cursor) | Strategic Account Executive, Retail / Hospitality / Entertainment
+- [ ] https://jobs.ashbyhq.com/cursor/fcdf7683-bd29-49a5-9284-f000b04a266a | Anysphere (Cursor) | Strategic Account Executive, Life Sciences
+- [ ] https://jobs.ashbyhq.com/cursor/34cecd0c-c392-4454-8ef5-261310541011 | Anysphere (Cursor) | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/cursor/01fdd3d5-be8c-47d5-a317-bfe797739670 | Anysphere (Cursor) | Associate Field Engineer
+- [ ] https://www.observe.ai/position?gh_jid=5129722008 | Observe.AI | AI Agent Engineer, Client Facing
+- [ ] https://www.observe.ai/position?gh_jid=5107653008 | Observe.AI | Senior Enterprise Account Executive (Midwest Territory)
+- [ ] https://www.observe.ai/position?gh_jid=5107619008 | Observe.AI | Senior Enterprise Account Executive (Northwest Territory)
+- [ ] https://www.observe.ai/position?gh_jid=5131980008 | Observe.AI | Senior Machine Learning Engineer - NLP
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4001304009 | Fireworks AI | Applied Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4006906009 | Fireworks AI | Business Development Representative (BDR)
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4000253009 | Fireworks AI | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4008626009 | Fireworks AI | Forward Deployed Product Manager
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4013136009 | Fireworks AI | GenAI GTM Representative – GenAI Startups
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4056271009 | Fireworks AI |  Software Engineer, AI Infrastructure
+- [ ] https://job-boards.greenhouse.io/fireworksai/jobs/4059100009 | Fireworks AI | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/lovable/c8ae0225-d765-447e-8436-0a9a24345a28 | Lovable | Global Head of Strategic Partnerships and Business Development
+- [ ] https://jobs.ashbyhq.com/lovable/ac61dda2-bff0-4f22-adca-a48b0b2f560c | Lovable | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/lovable/118e129c-1634-4bd2-bf1b-a99a28aa6608 | Lovable | Account Executive
+- [ ] https://jobs.ashbyhq.com/lovable/7fe39289-1f7f-47d4-8002-d3aeeaaaabc6 | Lovable | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/lovable/9f99aea5-f136-406a-8b6c-a7840338b7c0 | Lovable | Product Manager 
+- [ ] https://jobs.ashbyhq.com/lovable/e8897c7e-53bd-43f8-94bb-02237f4459bb | Lovable | Product Manager (Build Experience)
+- [ ] https://jobs.ashbyhq.com/lovable/1140665c-a426-49d5-bcdd-f78560efe50d | Lovable | Product Manager (Agents) 
+- [ ] https://jobs.ashbyhq.com/lovable/282cea94-a525-43a6-a18e-8b92900d03f8 | Lovable | Product Manager (Security)
+- [ ] https://jobs.ashbyhq.com/lovable/129316bb-b02c-4177-8d8a-5184e3de6070 | Lovable | Enterprise Account Executive | London
+- [ ] https://jobs.ashbyhq.com/lovable/601f50aa-db7f-4727-8427-80b9038c52ca | Lovable | Product Manager (Enterprise)
+- [ ] https://jobs.ashbyhq.com/lovable/ea31ce4f-b0db-448b-b3b0-a8fb4fb7fa90 | Vercel-adjacent: Lovable | Account Executive
+- [ ] https://jobs.ashbyhq.com/lovable/642dfe37-d5f5-4cf7-a38d-d6dac3dde58f | Vercel-adjacent: Lovable | Solutions Architect
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7254820 | Intercom AI | Account Executive, Commercial
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7408013 | Intercom AI | Account Executive, Commercial 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7591182 | Intercom AI | Account Executive, Commercial - French Speaking 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7609852 | Intercom AI | Account Executive, Emerging AI Products
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7395357 | Intercom AI | Account Executive, Enterprise
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7296732 | Intercom AI | Account Executive (Existing Business), Commercial 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7286050 | Intercom AI | Account Executive, MidMarket
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7345114 | Intercom AI | Account Executive, Mid-Market
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7386163 | Intercom AI | Account Executive, MidMarket - German Speaking
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/6998800 | Intercom AI | Account Executive, Senior MidMarket
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7824137 | Intercom AI | AI Infrastructure Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7807477 | Intercom AI | Business Development Representative
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7807509 | Intercom AI | Business Development Representative, Emerging AI Products 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7765514 | Intercom AI | Business Development Representative, MidMarket/Commercial
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7765466 | Intercom AI | Engineering Manager, Forward Deployed Engineering
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7556413 | Intercom AI | Forward Deployed Software Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7345261 | Intercom AI | Manager, Account Executives (MidMarket)
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7644731 | Intercom AI | Manager, Solutions Engineering (Mid-Market & Enterprise) 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7776018 | Intercom AI | Senior AI Deployment Architect
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7464291 | Intercom AI | Senior AI Product Manager
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/6949785 | Intercom AI | Senior Engineer, AI Developer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7462098 | Intercom AI | Senior Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7763257 | Intercom AI | Senior Manager, Forward Deployed Engineering
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/6466001 | Intercom AI | Senior Product Engineer - AI Platform
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7382846 | Intercom AI | Senior Product Engineer, AI Platform
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7371973 | Intercom AI | Senior Product Manager
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/5663720 | Intercom AI | Senior Product Manager 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7511861 | Intercom AI | Senior Product Manager, Web 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/6758904 | Intercom AI | Senior Product Manager, Web (Narrative/Content) 
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7262006 | Intercom AI | Senior Solutions Architect
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7594453 | Intercom AI | Senior Solutions Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7426411 | Intercom AI | Solutions Architect
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/6849119 | Intercom AI | Solutions Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7624926 | Intercom AI | Solutions Engineer - LATAM (Portuguese Speaking)
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7310770 | Intercom AI | Staff Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/intercom/jobs/7274777 | Intercom AI | Staff Product Manager - Web Growth
+- [ ] https://www.vectra.ai/about/jobs?gh_jid=7242133 | Vectra AI | Account Executive
+- [ ] https://www.vectra.ai/about/jobs?gh_jid=7060677 | Vectra AI | Sr. AI/ML Engineer
+- [ ] https://jobs.ashbyhq.com/cohere/443368a3-6276-4b90-9671-27fed40fd6d2 | Cohere-adjacent: MindsDB | Senior Member of Technical Staff, Multimodal AI
+- [ ] https://jobs.ashbyhq.com/cohere/6d0f0753-ff22-46fd-90e9-08998914a8e7 | Cohere-adjacent: MindsDB | Solutions Architect - Public Sector
+- [ ] https://jobs.ashbyhq.com/cohere/e550c9f7-db88-408b-a1ad-3aad9fd77bf1 | Cohere-adjacent: MindsDB | Senior Account Executive - Energy & Utilities
+- [ ] https://jobs.ashbyhq.com/cohere/2a179d34-c391-48bd-b2a3-b04f468a3840 | Cohere-adjacent: MindsDB | Product Manager, Search and Embeddings
+- [ ] https://jobs.ashbyhq.com/cohere/ca446389-c793-459b-b07a-a3544defea04 | Cohere-adjacent: MindsDB | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/cohere/69a9ab2e-a7eb-4c4f-825a-5c25cf063900 | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Infrastructure Specialist (UK/EU/ME)
+- [ ] https://jobs.ashbyhq.com/cohere/be48aafc-9610-4ebd-8414-a0722a3cd59a | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Infrastructure Specialist (North America)
+- [ ] https://jobs.ashbyhq.com/cohere/df93ec57-d51e-4466-93be-4878c5fda4da | Cohere-adjacent: MindsDB | Software Engineer - Applied ML - UK Public Sector
+- [ ] https://jobs.ashbyhq.com/cohere/38f75a48-199c-4325-a7f8-2af6ed6a1b3b | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Infrastructure Specialist
+- [ ] https://jobs.ashbyhq.com/cohere/b0bcef37-1d20-414f-aade-c54942d63df9 | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Agentic Platform
+- [ ] https://jobs.ashbyhq.com/cohere/6745547c-cc72-466c-867c-a0539b04909b | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Prompt Specialist
+- [ ] https://jobs.ashbyhq.com/cohere/c199be74-1770-4db2-a06e-474bad4716fe | Cohere-adjacent: MindsDB | Senior Account Executive - KSA
+- [ ] https://jobs.ashbyhq.com/cohere/98f69f63-2f54-4813-86ea-13d67336326e | Cohere-adjacent: MindsDB | Senior Account Executive - US Public Sector (SLED, Civilian and Federal)
+- [ ] https://jobs.ashbyhq.com/cohere/eb58bff6-645c-4434-9893-b34586d69be7 | Cohere-adjacent: MindsDB | Solutions Architect - San Francisco 
+- [ ] https://jobs.ashbyhq.com/cohere/1fa01a03-9253-4f62-8f10-0fe368b38cb9 | Cohere-adjacent: MindsDB | Applied AI Engineer – Agentic Workflows
+- [ ] https://jobs.ashbyhq.com/cohere/9c18b199-cd1f-4ef3-9fab-ce05589348ae | Cohere-adjacent: MindsDB | Applied AI Engineer - Agentic Workflows (Singapore)
+- [ ] https://jobs.ashbyhq.com/cohere/556467eb-3dc8-46e2-b015-277872210997 | Cohere-adjacent: MindsDB | Forward Deployed Engineer, Sovereign AI
+- [ ] https://jobs.ashbyhq.com/cohere/995f4f08-d0db-42f1-ba44-f8f1a7e5a4d1 | Cohere-adjacent: MindsDB | Strategic Account Executive - Telecommunications
+- [ ] https://jobs.ashbyhq.com/cohere/c0cab8c2-7215-449b-92c8-44b48c313514 | Cohere-adjacent: MindsDB | Strategic Account Executive - Energy (oil and gas) & Utilities 
+- [ ] https://jobs.ashbyhq.com/cohere/031c2335-db85-4265-8a88-a54b911be36a | Cohere-adjacent: MindsDB | Applied AI Engineer – Agentic Workflows (Korea)
+- [ ] https://jobs.ashbyhq.com/cohere/a8122632-cc3b-4a1a-bd78-4b4b9466cb38 | Cohere-adjacent: MindsDB | Product Manager, Safety Research
+- [ ] https://jobs.ashbyhq.com/cohere/d9d2740b-8869-462d-85df-21c1941bc13d | Cohere-adjacent: MindsDB | Product Manager,  Native Experience & Growth
+- [ ] https://jobs.ashbyhq.com/cohere/fe2e2971-e2c0-43fd-9ab1-187571776a5d | Cohere-adjacent: MindsDB | Product Manager,  Platform Experience & Developer Product
+- [ ] https://jobs.ashbyhq.com/cohere/2a7f1fad-05ff-4260-af36-556d1d694775 | Cohere-adjacent: MindsDB | Product Manager, Public Sector & Defence
+- [ ] https://jobs.ashbyhq.com/cohere/1d1b300d-254b-48c4-958f-99c6b907f295 | Cohere-adjacent: MindsDB | Product Manager, Agent Harness & Modelling
+- [ ] https://jobs.ashbyhq.com/cohere/880ccfde-891b-459a-8b81-a5e270eb8691 | Cohere-adjacent: MindsDB | Director of SEC Reporting and Technical Accounting
+- [ ] https://jobs.ashbyhq.com/langchain/9930dd01-d12e-42e1-b751-5240c3814f85 | LangChain | Enterprise Account Executive (San Francisco Bay Area)
+- [ ] https://jobs.ashbyhq.com/langchain/f07c1416-f126-4925-8606-5dd7c5a90f6f | LangChain | Senior Backend Software Engineer, AI Observability & Evals Platform (LangSmith)
+- [ ] https://jobs.ashbyhq.com/langchain/c75915ba-a32b-4e17-873d-19b47564170d | LangChain | Fullstack Software Engineer, Applied AI
+- [ ] https://jobs.ashbyhq.com/langchain/27af5f96-b287-4bcc-8679-f96686dc7c8d | LangChain | Product Manager, LangSmith
+- [ ] https://jobs.ashbyhq.com/langchain/e12d7176-8b9f-438a-8f3b-0cbbffab9c5c | LangChain | Solutions Architect (San Francisco)
+- [ ] https://jobs.ashbyhq.com/langchain/b9cf3229-c257-4536-bae6-e9b63134dc68 | LangChain | Enterprise Account Executive (NYC)
+- [ ] https://jobs.ashbyhq.com/langchain/1b28dcf7-04c1-4bc1-9e16-d288ce634cd2 | LangChain | Customer Engineer (Amsterdam)
+- [ ] https://jobs.ashbyhq.com/langchain/a16d58f7-e210-495c-9e6f-82222267de3a | LangChain | Customer Engineer (London) 
+- [ ] https://jobs.ashbyhq.com/langchain/426359a5-3a48-4b81-ba25-b2f32678b153 | LangChain | Commercial Account Executive
+- [ ] https://jobs.ashbyhq.com/langchain/3c38ac0d-4cb5-4c04-86c0-37b20166c8ec | LangChain | Enterprise Account Executive (Chicago)
+- [ ] https://jobs.ashbyhq.com/langchain/c4432849-e3fd-402d-b21d-c8bdac30d8fd | LangChain | Enterprise Account Executive (Detroit)
+- [ ] https://jobs.ashbyhq.com/langchain/fd3767ba-6247-47bd-85ae-7e76be3871e6 | LangChain | Enterprise Account Executive (Dallas)
+- [ ] https://jobs.ashbyhq.com/langchain/c16d44ab-faf0-4111-9ca7-8acb5dffcf46 | LangChain | Account Executive (UK)
+- [ ] https://jobs.ashbyhq.com/langchain/c8150807-d346-47d5-9242-b0994d77ca87 | LangChain | Enterprise Account Executive (Germany)
+- [ ] https://jobs.ashbyhq.com/langchain/dddb3751-8ecc-4bea-951c-09826dcc4d88 | LangChain | Enterprise Account Executive (Australia)
+- [ ] https://jobs.ashbyhq.com/langchain/9ef63e88-b1ff-4e88-9bf8-20c01439b80a | LangChain | Enterprise Account Executive (Stockholm)
+- [ ] https://jobs.ashbyhq.com/langchain/65dbb419-ca80-4fda-b1b7-b81c08878992 | LangChain | Commercial Account Executive (UK)
+- [ ] https://jobs.ashbyhq.com/langchain/fc868832-3865-4f4a-8222-33422a7d3d96 | LangChain | Solutions Architect (Amsterdam)
+- [ ] https://jobs.ashbyhq.com/langchain/faeb56fd-e7d6-47d6-babe-e35315969206 | LangChain | Solutions Architect (London)
+- [ ] https://jobs.ashbyhq.com/langchain/f71210f9-12e1-4726-88b9-ebafa194d5b2 | LangChain | Solutions Architect (NYC)
+- [ ] https://jobs.ashbyhq.com/langchain/da7cbabd-ceed-4d7d-ae25-f226cac0c1c1 | LangChain | Solutions Architect (Austin)
+- [ ] https://jobs.ashbyhq.com/langchain/933a41a3-43ca-44de-a0ae-f541149151b7 | LangChain | Solutions Architect (Dallas)
+- [ ] https://jobs.ashbyhq.com/langchain/6847e38f-ec98-4fb2-a2cb-a97cdd9be108 | LangChain | Enterprise Account Executive (Federal) 
+- [ ] https://jobs.ashbyhq.com/langchain/0a5dd30c-6da1-4095-bd96-b16f27eeb333 | LangChain | Solutions Architect (Remote)
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5840801004 | Snorkel AI | Account Executive: Data-as-a-Service (DaaS)
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5709067004 | Snorkel AI | Applied AI Engineer - AI Solutions
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5721276004 | Snorkel AI | Applied AI Engineer - Federal (TS Required)
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5837448004 | Snorkel AI | Director, Forward Deployed Researcher - Data as a Service
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5831429004 | Snorkel AI | Enteprise Account Executive - Federal
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5689470004 | Snorkel AI | Forward Deployed Engineer - Data-as-a-Service
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5811245004 | Snorkel AI | Forward Deployed Researcher - Data as a Service   
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5830807004 | Snorkel AI | Manager, Forward Deployed Engineering
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5735316004 | Snorkel AI | Senior Applied AI Engineer - Dubai
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5821400004 | Snorkel AI | Senior Product Manager – Data & Quality 
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5811231004 | Snorkel AI | Senior Product Manager – Platform
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5971772004 | Snorkel AI | Senior Software Engineer - AI Platform
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5831080004 | Snorkel AI | Staff Applied AI Engineer - Pre-Sales
+- [ ] https://job-boards.greenhouse.io/snorkelai/jobs/5713066004 | Snorkel AI | Staff Product Manager - Marketplace 
+- [ ] https://jobs.ashbyhq.com/cohere/ab11983e-2657-45b4-8f4b-318415e3d0c6 | Cohere-adjacent: Voyage AI | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/cohere/fea8cc38-1a55-4f1c-a652-8c39c66138fc | Cohere-adjacent: Voyage AI | Forward Deployed Engineer, Infrastructure Specialist
+- [ ] https://jobs.ashbyhq.com/cohere/75c0032c-7200-48bf-9d6d-355880dd93d9 | Cohere-adjacent: Voyage AI | Forward Deployed Engineer, Agentic Platform
+- [ ] https://jobs.ashbyhq.com/cohere/1bc73d85-e6f4-4338-b53a-9ffb609a950d | Cohere-adjacent: Voyage AI | Solutions Architect - Public Sector
+- [ ] https://veritone.wd1.myworkdayjobs.com/job/United-States-of-America---Remote/Director--Business-Development---Deal-Lead---Commercial_R0134 | Veritone | Director, Business Development & Deal Lead - Commercial
+- [ ] https://veritone.wd1.myworkdayjobs.com/job/Noida-Uttar-Pradesh-India--/Sr-Integrations-Solutions-Engineer---Fully-Remote-India-Based_R0118 | Veritone | Sr. Integrations Solutions Engineer - Fully Remote/India Based
+- [ ] https://job-boards.greenhouse.io/recursionpharmaceuticals/jobs/7488023 | Recursion Pharmaceuticals | Staff Product Manager, Agentic Systems
+- [ ] https://jobs.ashbyhq.com/ramp/63df0ffc-bdc6-40ba-906f-fe03378536b0 | Ramp AI | AI Operations Specialist | Agentic Workflows
+- [ ] https://jobs.ashbyhq.com/ramp/707d5f91-bcf7-42b2-a0e6-8130bf13e56b | Ramp AI | Account Executive | Strategic 
+- [ ] https://jobs.ashbyhq.com/ramp/a808d519-404a-4aee-9189-2b1ad62d0330 | Ramp AI | Account Executive | SLED
+- [ ] https://jobs.ashbyhq.com/ramp/51acae48-933b-4c71-be48-3e9317cf3ab7 | Ramp AI | Agentic Operator, Growth Marketing
+- [ ] https://jobs.ashbyhq.com/ramp/8c004352-f162-4d89-858f-75a649e77ec4 | Ramp AI | Account Executive | Commercial
+- [ ] https://jobs.ashbyhq.com/ramp/e0b64893-0459-4d84-ac4f-7b50966ef024 | Ramp AI | Product Manager | Growth
+- [ ] https://jobs.ashbyhq.com/ramp/9972df9e-4133-4e2c-9305-49c285b76506 | Ramp AI | Product Manager | Generalist (All Levels)
+- [ ] https://jobs.ashbyhq.com/ramp/9d165e64-bf63-4b16-878f-b46188563ca2 | Ramp AI | Director, Technical Consultant
+- [ ] https://jobs.ashbyhq.com/ramp/deca582c-a1d0-4705-9975-60aed81ba89f | Ramp AI | Software Engineer, Forward Deployed
+- [ ] https://jobs.ashbyhq.com/ramp/e32364c2-a952-44c3-b2dc-a1c6204ddb8a | Ramp AI | Technical Accounting Manager
+- [ ] https://jobs.ashbyhq.com/ramp/f8e75f30-738c-4987-8e00-2837af8d8bf6 | Ramp AI | Account Executive | Federal 
+- [ ] https://jobs.ashbyhq.com/ramp/d204e136-2749-42de-82b4-88a0dd352090 | Ramp AI | Applied AI Engineer
+- [ ] https://jobs.ashbyhq.com/ramp/b42cce4b-8fa9-4e8d-892d-3a29a7afb909 | Ramp AI | Software Engineer, AI DevX
+- [ ] https://jobs.ashbyhq.com/ramp/e45a8b6a-5029-4ca5-ac6f-5af940843c72 | Ramp AI | Technical Consultant | Strategic
+- [ ] https://jobs.ashbyhq.com/ramp/bc828c32-cac3-42b4-9d26-ce80af957da1 | Ramp AI | Product Manager | Financial Intelligence
+- [ ] https://jobs.ashbyhq.com/ramp/b4cbb19e-8249-4339-8eac-20e3806d7999 | Ramp AI | Enterprise Account Executive, Juno
+- [ ] https://jobs.ashbyhq.com/ramp/f7c4de3c-1d64-42e9-8111-f38e265327d8 | Ramp AI |  Account Executive | Mid-Market
+- [ ] https://jobs.ashbyhq.com/ambiencehealthcare/2c014d0c-2a7e-4095-b86d-9439dade6f62 | Ambience Healthcare | Staff ML Engineer, AI Platform
+- [ ] https://jobs.ashbyhq.com/ambiencehealthcare/04fdff4f-1f26-47bf-8d26-ffeb4149520d | Ambience Healthcare | AI-First Product Manager
+- [ ] https://jobs.ashbyhq.com/ambiencehealthcare/a8b59898-34b0-4272-83a0-d530af467004 | Ambience Healthcare | Staff ML Engineer, Frontier AI 
+- [ ] https://jobs.ashbyhq.com/ambiencehealthcare/99e23425-8ea7-4b5e-8979-953fbbe0e109 | Ambience Healthcare | National Strategic Account Executive 
+- [ ] https://jobs.ashbyhq.com/materialsecurity/054ccf41-0b51-4524-827d-85732b0a4a95 | Abnormal-adjacent: Material Security | Staff Product Manager
+- [ ] https://jobs.ashbyhq.com/materialsecurity/004c4e76-037b-45ec-ac09-1d526a7f47fb | Abnormal-adjacent: Material Security | Solutions Engineer
+- [ ] https://jobs.lever.co/unstructuredtechnologies/9eb8340f-76ab-4a83-a9c5-8f97fd95f5cc | Unstructured | AI Engineer - Public Sector
+- [ ] https://jobs.lever.co/unstructuredtechnologies/5c12cb9c-b60f-4199-933d-903fb1c0ed19 | Unstructured | Forward Deployed Engineer
+- [ ] https://jobs.lever.co/unstructuredtechnologies/0541c346-2b0e-4cba-8e3f-4c97a7f85c65 | Unstructured | Public Sector Program Manager / Customer Success Manager (Ft. Bragg, NC)
+- [ ] https://jobs.lever.co/unstructuredtechnologies/f8b581c3-f22b-4db9-8dc8-eaa50af17ffe | Unstructured | Senior Business Development Representative
+- [ ] https://jobs.lever.co/unstructuredtechnologies/37a52fb3-83ee-4e6a-b56a-329bdfdb84fc | Unstructured | Strategic Account Executive - SLED
+- [ ] https://job-boards.greenhouse.io/blackforestlabs/jobs/5142062008 | Black Forest Labs | Account Executive
+- [ ] https://job-boards.greenhouse.io/blackforestlabs/jobs/4132217008 | Black Forest Labs | Member of Technical Staff - Image / Video Generation
+- [ ] https://job-boards.greenhouse.io/blackforestlabs/jobs/5014658008 | Black Forest Labs | Senior Account Executive
+- [ ] https://job-boards.greenhouse.io/blackforestlabs/jobs/4642947008 | Black Forest Labs | Senior Solutions Architect  
+- [ ] https://jobs.lever.co/pigment/3ad3e4c6-33f2-49ef-8e97-a39abf812113 | Pigment | Business Development Representative
+- [ ] https://jobs.lever.co/pigment/3124ad58-dcc6-49a3-88f2-8e43d84c1ce7 | Pigment | Corporate Account Executive (x/f/m) - DACH
+- [ ] https://jobs.lever.co/pigment/869f8f33-87dd-4d34-b515-010d6078089a | Pigment | Enterprise Account Executive - West
+- [ ] https://jobs.lever.co/pigment/120a3c2c-29d2-459c-9b6e-178e98ecdb25 | Pigment | Enterprise Account Executive (x/f/m) - DACH
+- [ ] https://jobs.lever.co/pigment/4ace4f88-26af-45a1-bb70-d022a6cfc4fe | Pigment | Enterprise Account Executive, East Region
+- [ ] https://jobs.lever.co/pigment/55bb7d94-15f1-43c0-a1bd-1d05994a110b | Pigment | Head of Technical Account Management - AMER
+- [ ] https://jobs.lever.co/pigment/a204cd46-bdae-4a7b-8c79-814432fcaf21 | Pigment | Lead Product Designer - Agentic AI
+- [ ] https://jobs.lever.co/pigment/cca74c7d-5668-42fe-a120-9d55ba0281eb | Pigment | Mid-Market Account Executive
+- [ ] https://jobs.lever.co/pigment/92b63ea5-3295-4f66-b444-55f9c6647eb8 | Pigment | Mid-Market Account Executive (x/f/m) - DACH
+- [ ] https://jobs.lever.co/pigment/8a706f5e-47fb-4afc-a8ef-ef291c0cb48f | Pigment | Regional Vice President, Enterprise Sales, East Region
+- [ ] https://jobs.lever.co/pigment/6213a352-bd7c-415a-af75-e857f262311d | Pigment | Regional Vice President, Enterprise Sales, West Region
+- [ ] https://jobs.lever.co/pigment/01e58869-2094-4757-9315-b0972eb1d5c1 | Pigment | Senior AI Scientist
+- [ ] https://jobs.lever.co/pigment/3fbcf5f3-924f-4749-a90d-8394817c40be | Pigment | Solutions Architect - Paris
+- [ ] https://jobs.lever.co/pigment/fb659c21-bd62-4b67-ade9-1b7f55e7f1cf | Pigment | Solutions Architect - UK
+- [ ] https://jobs.lever.co/pigment/6699af88-830d-4ef8-ae9a-6f036d9f101b | Pigment | Technical Account Management Team Lead - EMEA
+- [ ] https://jobs.lever.co/pigment/82144cf5-b990-4625-8d1a-54c4752ae529 | Pigment | Technical Account Manager - Paris
+- [ ] https://jobs.lever.co/pigment/f68496ae-6940-4f9a-82a6-57ee5773b5b3 | Pigment | Technical Account Manager, Success Advisory - San Francisco, New York or Toronto
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Dallas-Office-United-States/Solutions-Engineering-Manager---Enterprise-TOLA_JR101503 | Darktrace | Solutions Engineering Manager - Enterprise TOLA
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Colombia-Remote/Enterprise-Account-Executive--Columbia_JR101367 | Darktrace | Enterprise Account Executive, Columbia
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Amsterdam-Office-Netherlands/Senior-Solutions-Engineer_JR100806 | Darktrace | Cybersecurity Solutions Engineer
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/New-York-Office/Cloud-Solutions-Architect_JR100731 | Darktrace | Cloud (GCP) Solutions Architect
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/California-Remote/Account-Executive---Bay-Area_JR101535-1 | Darktrace | Enterprise Account Executive - Bay Area
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Chicago-Office-United-States/Solutions-Engineer_JR101644 | Darktrace | Solutions Engineer
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Vancouver-Office/Senior-Solutions-Engineer_JR101630 | Darktrace | Senior Solutions Engineer
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/London-Office-United-Kingdom/Channel-Partner-Solutions-Engineer_JR101261 | Darktrace | Senior Partner Solutions Engineer
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Amsterdam-Office-Netherlands/Account-Executive_JR101164 | Darktrace | Account Executive
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Arlington-Office/Expression-of-Interest---Account-Executive---Mid-Atlantic_JR101114 | Darktrace | Account Executive, Enterprise
+- [ ] https://darktrace.wd3.myworkdayjobs.com/job/Missouri-Remote/Senior-Partner-Solutions-Engineer---WWT_JR101463 | Darktrace | Senior Partner Solutions Engineer - WWT
+- [ ] https://jobs.ashbyhq.com/mercor/e0ba162c-7e0e-4eee-a296-838c8b6e9034 | Mercor | Machine Learning Engineer 
+- [ ] https://jobs.ashbyhq.com/mercor/4f4fc8c3-4056-47bb-9e00-1db6e5dd958f | Mercor | Software Engineer, Agentic Product
+- [ ] https://jobs.ashbyhq.com/mercor/c019b11f-4fbb-46a2-bbad-338ba8f4bedb | Mercor | Agentic Finance Engineer
+- [ ] https://jobs.ashbyhq.com/mercor/b0f12b3f-91ae-4b9e-ad0b-ed0299f80554 | Mercor | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/mercor/fed139c1-e972-423a-835c-b7bd19ea8b3a | Mercor | Software Engineer, Applied AI
+- [ ] https://jobs.ashbyhq.com/mercor/547dead0-d223-4023-8357-206714d94d12 | Mercor | Machine Learning Engineer, Anonymization
+- [ ] https://jobs.ashbyhq.com/mercor/73a9f1c6-3c62-4c49-b65d-e5f6a3549d95 | Mercor | Machine Learning Engineer, Marketplace 
+- [ ] https://jobs.ashbyhq.com/mercor/b39b38ad-6b71-40da-854f-4a5de2657b50 | Mercor | Engineering Manager, Applied AI
+- [ ] https://jobs.ashbyhq.com/anyscale/b988fd59-9034-486c-8d52-96012da739b1 | Anyscale | Product Manager - Observability
+- [ ] https://jobs.ashbyhq.com/anyscale/71f0d335-6b29-437e-a7ae-ec1f3fc0b143 | Anyscale | Senior / Staff Product Manager - Ray Data
+- [ ] https://jobs.ashbyhq.com/anyscale/cd928922-bff9-4086-aef6-01b67af240ba | Anyscale | Azure Anyscale Account Executive
+- [ ] https://jobs.ashbyhq.com/d-Matrix/88c7f9b3-d4d4-4d88-b9cb-be6e0dfb989f | D-Matrix | Senior Staff AI/ML System Software Engineer
+- [ ] https://jobs.ashbyhq.com/d-Matrix/7b4b1167-1d63-4d35-b9cb-02e4ddab8436 | D-Matrix | Principal AI/ML System Software Engineer
+- [ ] https://jobs.ashbyhq.com/notion/0fe96f47-a9ea-4623-ac73-9053c3541297 | Notion-adjacent: Mem | Account Executive, Mid-Market 
+- [ ] https://jobs.ashbyhq.com/notion/479b8826-d166-433b-8d7e-373cda9c533e | Notion-adjacent: Mem | Enterprise Account Executive, San Francisco 
+- [ ] https://jobs.ashbyhq.com/notion/05e14247-17c4-4e98-9a13-53828a4e2f13 | Notion-adjacent: Mem | Outbound Business Development Representative 
+- [ ] https://jobs.ashbyhq.com/notion/0810dcca-ac29-4f72-b44f-a777d0108550 | Notion-adjacent: Mem | Account Executive, Commercial
+- [ ] https://jobs.ashbyhq.com/notion/6ad34426-b980-436b-80c4-3634c00094ad | Notion-adjacent: Mem | Solutions Engineer, EMEA
+- [ ] https://jobs.ashbyhq.com/notion/dcee20e4-9e14-417a-9c96-c3e5ad6324da | Notion-adjacent: Mem | Account Executive, Mid-Market, DACH
+- [ ] https://jobs.ashbyhq.com/notion/f8ee0af3-89e1-441a-ab51-faa62097979d | Notion-adjacent: Mem | Account Executive, Enterprise, UK
+- [ ] https://jobs.ashbyhq.com/notion/26bc4374-8571-4c10-9d71-36bbe776da2a | Notion-adjacent: Mem | Account Executive - Mid Market, Japan
+- [ ] https://jobs.ashbyhq.com/notion/207f5a14-0005-48f9-a4a0-01be50e88895 | Notion-adjacent: Mem | Account Executive - Enterprise, Japan
+- [ ] https://jobs.ashbyhq.com/notion/e5d316fa-0857-4e4b-96ca-1f2710a96c95 | Notion-adjacent: Mem | Solutions Engineer, Tokyo
+- [ ] https://jobs.ashbyhq.com/notion/10437426-14c8-4c45-8075-67959ce80393 | Notion-adjacent: Mem | Forward Deployed Engineer, GTM
+- [ ] https://jobs.ashbyhq.com/notion/d9d9ff4b-966e-4471-93d9-ebbc60d040b7 | Notion-adjacent: Mem | Account Executive, Enterprise, DACH
+- [ ] https://jobs.ashbyhq.com/notion/a86b061d-02fb-4354-a263-7fb7306dd09e | Notion-adjacent: Mem | Account Executive, Enterprise, France 
+- [ ] https://jobs.ashbyhq.com/notion/490dc0d9-81c5-4c29-af4e-eb6348201aeb | Notion-adjacent: Mem | Account Executive, Commercial, Benelux
+- [ ] https://jobs.ashbyhq.com/notion/7f02bc74-65e8-4b62-a2dc-aee2fa8a3894 | Notion-adjacent: Mem | Enterprise Sales Leader
+- [ ] https://jobs.ashbyhq.com/notion/c76cc26a-bf61-4076-89f0-188ae6362f99 | Notion-adjacent: Mem | Account Executive, Commercial, France
+- [ ] https://jobs.ashbyhq.com/notion/74f2a07a-fa6e-4275-a6f1-f4745b2fdfad | Notion-adjacent: Mem | Account Executive - Commercial, Japan
+- [ ] https://jobs.ashbyhq.com/notion/17d76ca7-2edc-44c9-8ee4-9b1a07a6dbe9 | Notion-adjacent: Mem | Account Executive, Commercial, DACH
+- [ ] https://jobs.ashbyhq.com/notion/801ab5f3-ccd7-43dd-96ac-6e59f7ab3b56 | Notion-adjacent: Mem | Engineering Manager, Context (Agentic Search)
+- [ ] https://jobs.ashbyhq.com/notion/b0c0afb3-f075-47c7-9a8e-428032b3bb20 | Notion-adjacent: Mem | Solutions Engineer - Enterprise - AMER
+- [ ] https://jobs.ashbyhq.com/notion/df86ffdc-4981-4d20-b48c-230298611f5d | Notion-adjacent: Mem | Enterprise Account Executive, New York
+- [ ] https://jobs.ashbyhq.com/notion/e6064a52-c600-4645-833d-cf04f2fbd236 | Notion-adjacent: Mem | Account Executive, Mid-Market Sydney
+- [ ] https://jobs.ashbyhq.com/notion/3c0141de-06fb-4186-9cd4-75395f0b5488 | Notion-adjacent: Mem | Manager, Solutions Engineering, Mid-Market
+- [ ] https://jobs.ashbyhq.com/notion/62ccd2ab-c37d-4637-81f9-c4c3148b35c1 | Notion-adjacent: Mem | Account Executive, Mid-Market, Nordics
+- [ ] https://jobs.ashbyhq.com/notion/fc61232a-6dee-45e8-9fa3-4eb7c100629c | Notion-adjacent: Mem | Account Executive, Mid-Market, Benelux
+- [ ] https://jobs.ashbyhq.com/notion/25aa4f5c-a0df-4dd7-82b6-ea97c8cad12e | Notion-adjacent: Mem | Staff Software Engineer, AI Agentic Search
+- [ ] https://jobs.ashbyhq.com/notion/c7f6dbf1-5637-45c5-8495-57a65f1061d2 | Notion-adjacent: Mem | Business Development Representative, UKI
+- [ ] https://jobs.ashbyhq.com/notion/2f91a6fc-6985-4f08-b4c6-2a5ef1563418 | Notion-adjacent: Mem | Solutions Engineer, Enterprise, France
+- [ ] https://jobs.ashbyhq.com/notion/b88401ce-043e-47b4-a8d8-571035b78e53 | Notion-adjacent: Mem | Solutions Engineer, Enterprise, UK 
+- [ ] https://jobs.ashbyhq.com/notion/a4d1527b-e195-434b-8d8f-7c492aaabe1a | Notion-adjacent: Mem | Account Executive, Commercial, MENA
+- [ ] https://jobs.ashbyhq.com/notion/9fe70944-f84f-421c-8168-bbf21d4b4ca4 | Notion-adjacent: Mem | Enterprise Sales Manager, Japan
+- [ ] https://jobs.ashbyhq.com/notion/655992c3-b372-48e1-96f3-e52a139b8a0c | Notion-adjacent: Mem | Sales Engineering Manager, Enterprise, EMEA
+- [ ] https://jobs.ashbyhq.com/notion/3dfc254c-a51d-4bec-9f14-0d3be3fadcf6 | Notion-adjacent: Mem | Account Executive, Commercial, UKI
+- [ ] https://jobs.ashbyhq.com/notion/acadea40-df26-49fe-8c6e-a0b044edacf1 | Notion-adjacent: Mem | Solutions Engineer, Korea
+- [ ] https://jobs.ashbyhq.com/notion/8bd87691-e256-43ac-b034-932b14c1254c | Notion-adjacent: Mem | Manager, Solutions Engineering - Enterprise
+- [ ] https://jobs.ashbyhq.com/notion/b50c884e-1170-46d2-ae4c-3f559d2c98c4 | Notion-adjacent: Mem | Forward Deployed Engineer, GTM, DACH
+- [ ] https://jobs.ashbyhq.com/notion/2ca618b4-2223-47ca-b1f0-84ac101fcd90 | Notion-adjacent: Mem | Forward Deployed Engineer, GTM, France
+- [ ] https://jobs.ashbyhq.com/notion/b8bd02a1-3b20-4772-b285-de429cd2a3b9 | Notion-adjacent: Mem | Partner Sales Manager, Japan
+- [ ] https://jobs.ashbyhq.com/notion/4de50892-302a-47cf-96b7-4cea4dacdc9a | Notion-adjacent: Mem | Account Executive, Business Growth Sales
+- [ ] https://jobs.ashbyhq.com/notion/fede5201-c97f-4492-bfa6-66da7afbb068 | Notion-adjacent: Mem | Solutions Engineer, Commercial
+- [ ] https://jobs.ashbyhq.com/notion/fc35163e-e2d2-4741-99d4-ea032911acd7 | Notion-adjacent: Mem | Partner Sales Lead, Sydney
+- [ ] https://jobs.ashbyhq.com/notion/ee6eda13-d827-43cc-8211-7822911e1e41 | Notion-adjacent: Mem | Account Executive, Enterprise, Benelux
+- [ ] https://jobs.ashbyhq.com/notion/5583a3c9-12d7-4cdc-b9dc-df7753b2b4cc | Notion-adjacent: Mem | Account Executive, Enterprise, Nordics
+- [ ] https://jobs.ashbyhq.com/notion/620bd7ee-3ed4-40c6-ae96-917b50770f34 | Notion-adjacent: Mem | Account Executive, Enterprise, Meddit
+- [ ] https://jobs.ashbyhq.com/notion/a6a91521-87cd-41aa-b800-24dc8808d375 | Notion-adjacent: Mem | Partner Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/notion/35785e61-c4c3-44ec-a401-6741d89dd16a | Notion-adjacent: Mem | Product Manager, Enterprise
+- [ ] https://jobs.ashbyhq.com/notion/1cd3f44f-aa30-44a6-a64b-c7bfc813eeb9 | Notion-adjacent: Mem | Forward Deployed Engineer, GTM - Korea
+- [ ] https://jobs.ashbyhq.com/notion/17330e14-83db-49a4-ae31-411690d97dba | Notion-adjacent: Mem | Software Engineer, AI Workflows
+- [ ] https://tempus.wd5.myworkdayjobs.com/job/New-York-City/Senior-Scientist-II--Applied-Machine-Learning-and-Agentic-AI--Pharma-R-D_JR202600227 | Tempus AI | Senior Scientist II, Applied Machine Learning and Translational Agentic AI, Life Science R&D
+- [ ] https://tempus.wd5.myworkdayjobs.com/job/Remote---New-York/Director--Business-Development---AI-Products_JR202600292-1 | Tempus AI | Director, Business Development - AI Products
+- [ ] https://about.nextdoor.com/careers-list/?gh_jid=6005888 | Nextdoor AI | Senior Machine Learning Engineer - Ads
+- [ ] https://about.nextdoor.com/careers-list/?gh_jid=5584158 | Nextdoor AI | Senior Machine Learning Engineer - Notifications/Feed
+- [ ] https://about.nextdoor.com/careers-list/?gh_jid=7714434 | Nextdoor AI | Staff Product Manager, Ads Optimization
+- [ ] https://jobs.ashbyhq.com/notion/600324a4-7df1-4499-9380-4c1cddd2a008 | Notion AI | Account Executive, Commercial
+- [ ] https://jobs.ashbyhq.com/notion/08251acf-5b73-408c-b30a-861eb20b72bf | Notion AI | Account Executive, Mid-Market 
+- [ ] https://jobs.ashbyhq.com/notion/b21fef72-4864-4a3e-a627-91557a0f8a36 | Notion AI | Outbound Business Development Representative 
+- [ ] https://jobs.ashbyhq.com/notion/72aa3c47-3b8a-4718-b359-0c486813527c | Notion AI | Solutions Engineer, EMEA
+- [ ] https://jobs.ashbyhq.com/DeepL/b324d0b7-bc20-4fcf-a747-61aeb9849c9b | DeepL | Account Executive - Enterprise (Japan)
+- [ ] https://jobs.ashbyhq.com/DeepL/eea18ab0-0803-4d5a-b3d6-35c1c414e1ef | DeepL | Partner Sales Manager, Americas
+- [ ] https://jobs.ashbyhq.com/DeepL/ec04bc76-1c91-41c1-be56-f0c27cf3a62a | DeepL | Senior Account Executive - Enterprise 
+- [ ] https://jobs.ashbyhq.com/DeepL/33708c39-653b-477f-80ae-77036d242087 | DeepL | Account Executive - Corporate (Japan) ミッドマーケット担当
+- [ ] https://jobs.ashbyhq.com/DeepL/b1dc9616-cf5b-4edc-9d08-2a15dbf6fb65 | DeepL | Enterprise Account Executive | UKI
+- [ ] https://jobs.ashbyhq.com/DeepL/b20283e0-7080-46b1-817c-fba3685e7f00 | DeepL | Senior Manager, Partner Sales - APJ
+- [ ] https://jobs.ashbyhq.com/DeepL/7d853b75-d857-4ebb-929b-b83abeab73a5 | DeepL | Commercial Account Executive | Polish speaker 
+- [ ] https://jobs.ashbyhq.com/DeepL/08d92b33-3ced-4d47-be31-3323e4c18b8b | DeepL | Staff Product Manager
+- [ ] https://jobs.ashbyhq.com/DeepL/2682772e-396b-450e-bd26-b9f718453ede | DeepL | Corporate Account Executive | Austria (based in Germany)
+- [ ] https://jobs.ashbyhq.com/DeepL/6dcd3363-9b7a-4aa4-b28e-8c542b8c2a2e | DeepL | Enterprise Account Executive Public Sector – Bund oder Sozialversicherungsträger
+- [ ] https://jobs.ashbyhq.com/DeepL/e2d24033-34a9-42eb-b4d8-2629a99b2638 | DeepL | Enterprise Account Executive | Benelux - Public Sector
+- [ ] https://jobs.ashbyhq.com/DeepL/7551a242-f13e-4dd3-a8a7-7a1c12f818cb | DeepL | Enterprise Account Executive | Middle East
+- [ ] https://jobs.ashbyhq.com/DeepL/c62e04e0-aa61-48b2-a40b-f3e4f338a5a4 | DeepL | Enterprise Sales Development Representative | DACH
+- [ ] https://jobs.ashbyhq.com/DeepL/bd6d7f2e-eb15-4f41-84ab-aa37e102cc15 | DeepL | Enterprise Account Executive | Switzerland
+- [ ] https://jobs.ashbyhq.com/DeepL/4079d759-a55c-4d02-8882-e765559a0a9e | DeepL | Enterprise Account Executive - Italy
+- [ ] https://jobs.ashbyhq.com/DeepL/52a9239d-751d-4016-989c-6d60003bd485 | DeepL | Partner Sales Manager - DACH
+- [ ] https://jobs.ashbyhq.com/DeepL/968dcbf5-90f0-4d1c-b2ef-d0af4dfa010c | DeepL | Commercial Account Executive | DACH 
+- [ ] https://jobs.ashbyhq.com/DeepL/dc59654e-c78d-4ef9-b99d-a961b86ba5c3 | DeepL | Account Executive - Enterprise (Kansai) 関西担当営業
+- [ ] https://jobs.ashbyhq.com/DeepL/70ca273a-a0f1-4992-b669-3aa2ae3d6285 | DeepL | Enterprise Account Executive | Iberia
+- [ ] https://jobs.ashbyhq.com/DeepL/69dd71e2-2892-4a4e-a6f9-ea1cbca11ac9 | DeepL | Business Development Representative  - Japan
+- [ ] https://jobs.ashbyhq.com/perplexity/598e1f7d-b802-4de2-99ac-90eb2bc33315 | Perplexity AI | Member of Technical Staff (AI Infrastructure Engineer)
+- [ ] https://jobs.ashbyhq.com/perplexity/aa511ea8-96e3-42ba-b28f-5e222170bcee | Perplexity AI | Member of Technical Staff (Forward Deployed Engineer, Applied AI)
+- [ ] https://jobs.ashbyhq.com/perplexity/0190699f-010b-44f2-8399-278899fef018 | Perplexity AI | Member of Technical Staff (Machine Learning Engineer, Search)
+- [ ] https://jobs.ashbyhq.com/perplexity/3c656963-876a-458d-bca6-916a42a24c1a | Perplexity AI | Member of Technical Staff (AI Engineer, Applied ML)
+- [ ] https://jobs.ashbyhq.com/perplexity/8673866c-f624-4b58-b171-752cf003630e | Perplexity AI | Member of Technical Staff (Software Engineer, AI Platform)
+- [ ] https://jobs.ashbyhq.com/perplexity/bc1a6878-8de9-48c2-a791-95b2f8f27261 | Perplexity AI | Member of Technical Staff (AI Software Engineer, Agents)
+- [ ] https://jobs.ashbyhq.com/perplexity/a5b97109-222d-49e1-b2ac-e101487a5ddd | Perplexity AI | Business Development Representative
+- [ ] https://jobs.ashbyhq.com/perplexity/e7f59bee-4960-4b86-a0f5-b312cafd10bc | Perplexity AI | Member of Technical Staff (Software Engineer, Agentic Commerce)
+- [ ] https://jobs.ashbyhq.com/DeepL/a829633d-6204-4275-a055-0552ec2c1486 | DeepL-adjacent: Translated | Senior Account Executive - Enterprise 
+- [ ] https://jobs.ashbyhq.com/DeepL/82fb0385-a3fe-4704-94ef-9ec5fdba9055 | DeepL-adjacent: Translated | Commercial Account Executive | DACH 
+- [ ] https://jobs.ashbyhq.com/DeepL/49c1f91a-f8ff-4b00-b19f-b40bbbdd05a6 | DeepL-adjacent: Translated | Enterprise Account Executive | UKI
+- [ ] https://jobs.ashbyhq.com/Rogo/0c016b7d-348a-4574-8698-6a4c354f9fed | Rogo | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/Rogo/88402be7-95b6-48cc-bd70-4e181eaf8bba | Rogo | Product Manager | AI & Financial Intelligence
+- [ ] https://jobs.ashbyhq.com/Rogo/ccecba20-cd08-4ab6-82bf-1c7df8b2719e | Rogo | Product Manager | Enterprise
+- [ ] https://jobs.ashbyhq.com/Rogo/27b32b85-e265-4580-b8f2-d72462170981 | Rogo | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/Rogo/7f2980ee-3b69-465c-a40f-6fbb89e48e99 | Rogo | Enterprise Account Executive, EMEA
+- [ ] https://jobs.ashbyhq.com/Rogo/92c32bce-b734-4129-98da-b27d3649756d | Rogo | Cloud Solutions Architect
+- [ ] https://jobs.ashbyhq.com/Rogo/08fb9faa-9049-4c4f-925e-7747cc452820 | Rogo | Strategic Account Executive
+- [ ] https://jobs.ashbyhq.com/Rogo/061596d1-d1e9-4851-a350-4e0b63dde12d | Rogo | Strategic Account Executive, EMEA
+- [ ] https://jobs.ashbyhq.com/Rogo/e4de91da-ac42-4a4d-9da3-989c4760662e | Rogo | Mid-Market Account Executive
+- [ ] https://jobs.ashbyhq.com/Rogo/b574c77d-981b-47fc-bf4f-17aa7bde1603 | Rogo | Mid-Market Account Executive, EMEA
+- [ ] https://jobs.ashbyhq.com/Rogo/e235ef28-b6f8-4550-8946-18cd8c01a0d0 | Rogo | Enterprise Account Executive, APAC
+- [ ] https://boards.greenhouse.io/descript/jobs/7633072003?gh_jid=7633072003 | Descript | Account Executive
+- [ ] https://boards.greenhouse.io/descript/jobs/6576153003?gh_jid=6576153003 | Descript | Product Manager, AI Models
+- [ ] https://boards.greenhouse.io/descript/jobs/7606367003?gh_jid=7606367003 | Descript | Product Manager, API & Platform
+- [ ] https://boards.greenhouse.io/descript/jobs/7413750003?gh_jid=7413750003 | Descript | Product Manager, Editor
+- [ ] https://boards.greenhouse.io/descript/jobs/7580335003?gh_jid=7580335003 | Descript | Senior Software Engineer, AI Platform and Enablement
+- [ ] https://jobs.ashbyhq.com/uipath/61a01b95-d6e0-428b-8403-016bea208f98 | UiPath | Senior Sales Engineer - Public Sector
+- [ ] https://jobs.ashbyhq.com/uipath/a05915c6-61a3-43dd-9196-8c2f2e19e1ec | UiPath | Machine Learning Engineer
+- [ ] https://jobs.ashbyhq.com/uipath/c8cbb84e-8ed3-431f-9938-c89c6c3e8ec7 | UiPath | Senior Public Sector Account Executive (FedGov)
+- [ ] https://jobs.ashbyhq.com/uipath/35b83489-f882-4caa-8217-1c4f20cfbc12 | UiPath | Technical Account Manager
+- [ ] https://jobs.ashbyhq.com/uipath/dbce1deb-f0cb-4432-a7d4-0eecfa10e4c0 | UiPath | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/uipath/23fff74c-3abf-4202-afed-13f941d390c5 | UiPath | Senior Solutions Engineer, Manchester
+- [ ] https://jobs.ashbyhq.com/uipath/3838ef44-0ca5-4d17-b086-4d0dd003c29d | UiPath | Commercial Account Executive
+- [ ] https://jobs.ashbyhq.com/uipath/1b62d5f7-2b80-44a9-b9a9-07744f4c3363 | UiPath | Principal Product Manager 
+- [ ] https://jobs.ashbyhq.com/uipath/e25959e9-0842-4342-a348-1b4389c6b6ae | UiPath | Enterprise Sales Executive, Balkan region
+- [ ] https://jobs.ashbyhq.com/uipath/72b306de-acf4-4cb2-ac89-e455986b1d56 | UiPath | Senior Sales Engineer - Test Automation, Healthcare
+- [ ] https://jobs.ashbyhq.com/uipath/d3422efb-e391-495d-9415-031419910aa3 | UiPath | Forward Deployed Engineer II
+- [ ] https://jobs.ashbyhq.com/uipath/e94efdaf-b227-4ed5-840e-91b3177eb9bf | UiPath | Enterprise Account Executive -High Tech
+- [ ] https://jobs.ashbyhq.com/uipath/ac6f8c02-89ec-4eb6-9c42-b4463332f0ef | UiPath | Senior Sales Engineer - Test Automation, Public Sector
+- [ ] https://jobs.ashbyhq.com/uipath/62827ec1-3213-4a9b-8377-498a81b54533 | UiPath | Enterprise Sales Executive - Manufacturing, Retail and Distribution
+- [ ] https://jobs.ashbyhq.com/uipath/1092d64a-57e3-469a-9106-080227119e3d | UiPath | Sales Engineer - Healthcare
+- [ ] https://jobs.ashbyhq.com/uipath/325da70f-9704-4a48-ac5e-e4f20b0720b1 | UiPath | Enterprise Sales Execuitive - Healthcare
+- [ ] https://jobs.ashbyhq.com/uipath/385d56f0-f46f-4232-ac0b-7089e3513cf8 | UiPath | Enterprise Sales Executive
+- [ ] https://jobs.ashbyhq.com/uipath/96e979f8-402d-481e-9be3-8a99eea7d290 | UiPath | Enterprise Account Executive (Guangzhou based)
+- [ ] https://jobs.ashbyhq.com/uipath/80c56238-f520-42c7-8afb-03fdc0e64f0b | UiPath | Enterprise Sales Executive, FSI
+- [ ] https://jobs.ashbyhq.com/uipath/e55c686f-3f38-43c1-aab9-3c05c3a5d1ec | UiPath | Principal Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/uipath/72949e08-2fc1-43bd-b1ab-09adcca9ed37 | UiPath | Senior Sales Engineer, Workfusion - Banking and Financial Services
+- [ ] https://jobs.ashbyhq.com/tennr/b6ba5c5e-fa4f-4fb6-b02e-3974f26c892d | Tennr | Enterprise Solutions Architect
+- [ ] https://jobs.ashbyhq.com/tennr/6a47f165-5c4c-4834-9ddb-b1b8084148cf | Tennr | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/tennr/638715dd-77e6-4a0e-a4d1-2f67c3dd74f8 | Tennr | Product Manager
+- [ ] https://jobs.ashbyhq.com/tennr/3d7a5bf5-e1b0-4efd-a98a-7946b0fd5aab | Tennr | Strategic Account Executive, Health Systems
+- [ ] https://jobs.ashbyhq.com/tennr/a9bc289e-e54f-4def-ba52-1ef757f288df | Tennr | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/tennr/5547643e-8d63-408d-a32d-d78491b27557 | Tennr | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/tennr/0c7c0d2c-7eb8-4584-8635-ccc548a60619 | Tennr | Enterprise Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/assemblyai/jobs/4632922005 | AssemblyAI | Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/assemblyai/jobs/4636327005 | AssemblyAI | Senior Software Engineer, AI Data
+- [ ] https://jobs.ashbyhq.com/baseten/df2f0ebb-a84a-45c2-bc74-dc9589fcc1ae | Baseten | Account Executive - AI Native: Startups
+- [ ] https://jobs.ashbyhq.com/baseten/84c1801c-1a65-49fb-aaaa-beeafd530e7e | Baseten | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/baseten/0d1f68d4-ee6c-4b5f-9ef9-21a2dabbc152 | Baseten | Account Executive - AI Native: Strategic
+- [ ] https://jobs.ashbyhq.com/baseten/3027e0bc-731f-4fef-b081-2031590766fd | Baseten | Product Manager - Core Product
+- [ ] https://jobs.ashbyhq.com/baseten/b88a68b7-d2bc-4a30-a79a-3ef292ad7c26 | Baseten | Software Engineer - AI Enablement
+- [ ] https://jobs.ashbyhq.com/baseten/223f44cf-c7b8-416c-b694-e265579aa1c2 | Baseten | Account Executive - Industries
+- [ ] https://jobs.ashbyhq.com/baseten/1dc3b76d-cf9a-4980-8d78-50829cc04345 | Baseten | Customer Engineer
+- [ ] https://jobs.ashbyhq.com/inflectionio/be4c7eb2-4318-4240-8312-75ef771eb3b5 | Inflection AI | Senior Product Manager
+- [ ] https://jobs.ashbyhq.com/inflectionio/d30c570f-267e-44eb-998a-0cc732d3bdff | Inflection AI | Enterprise Account Executive 
+- [ ] https://jobs.ashbyhq.com/inflectionio/e16a34a5-3acc-48a7-a6be-e6d0da70f4e3 | Inflection AI | Forward Deployed Solution Architect
+- [ ] https://jobs.ashbyhq.com/Abridge/897709b2-e03d-4574-8611-5cfd669adde9 | Abridge | Software Engineer, GenAI
+- [ ] https://jobs.ashbyhq.com/Abridge/c45524b6-96b2-49f0-9cd5-176b998d6ba7 | Abridge | Product Manager - Core Product Experiences
+- [ ] https://jobs.ashbyhq.com/Abridge/68ff97c1-ab67-4c55-b4d7-c189f0a948a0 | Abridge | Software Engineer, Gen AI Platform
+- [ ] https://jobs.ashbyhq.com/Abridge/a7365ce0-34cb-4345-a597-06cfa9a47454 | Abridge | Staff Product Manager, Data Platform
+- [ ] https://jobs.ashbyhq.com/Abridge/991c2527-c2f9-41bb-a68f-282581b78794 | Abridge | Product Manager, Payer Products
+- [ ] https://jobs.lever.co/palantir/5ec536c8-67b8-4b6b-b23e-cde403d59d53 | Palantir-adjacent: Dataminr | Account Executive
+- [ ] https://jobs.lever.co/palantir/fa93a1f8-dc95-40d0-b5ca-f2aebaab0806 | Palantir-adjacent: Dataminr | Deployment Strategist - Japan Forward Deployed
+- [ ] https://jobs.lever.co/palantir/1a53939d-8ffa-4570-b31a-6d0bc53fdb59 | Palantir-adjacent: Dataminr | Deployment Strategist - Korea Forward Deployed
+- [ ] https://jobs.lever.co/palantir/636fc05c-d348-4a06-be51-597cb9e07488 | Palantir-adjacent: Dataminr | Forward Deployed AI Engineer
+- [ ] https://jobs.lever.co/palantir/00c2c97b-8514-4617-9883-e53e486b6dcd | Palantir-adjacent: Dataminr | Forward Deployed Enablement Engineer - Customer Success
+- [ ] https://jobs.lever.co/palantir/96a0ce26-cf84-4fa8-934b-acc4363620b2 | Palantir-adjacent: Dataminr | Forward Deployed Engineer - Mixed Reality
+- [ ] https://jobs.lever.co/palantir/72e51928-07f0-4be0-aae5-0ae6956a4846 | Palantir-adjacent: Dataminr | Forward Deployed Infrastructure Engineer - UK Government
+- [ ] https://jobs.lever.co/palantir/74748e0e-a0bc-4c53-a636-ef14e36d9b5e | Palantir-adjacent: Dataminr | Forward Deployed Infrastructure Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/689e6869-01bc-40f1-b580-adb33a020065 | Palantir-adjacent: Dataminr | Forward Deployed Reliability Engineer
+- [ ] https://jobs.lever.co/palantir/22053072-4c22-49c4-8299-28e107ceeb98 | Palantir-adjacent: Dataminr | Forward Deployed Security Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/06c7bd36-e24b-4f3a-8b45-1e846ae44095 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer
+- [ ] https://jobs.lever.co/palantir/27bf5707-96fa-460e-8a5b-53bc192ca87b | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer  - Edge Autonomous Systems
+- [ ] https://jobs.lever.co/palantir/8f15d728-99cc-4003-9add-928bd72a7f30 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - AUS Government
+- [ ] https://jobs.lever.co/palantir/0edf7365-49f0-4263-818a-19409ec4f430 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Autonomous Systems C2
+- [ ] https://jobs.lever.co/palantir/215bfcd6-c929-45ae-a11b-3fa59ed78025 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - France Government
+- [ ] https://jobs.lever.co/palantir/34b3a697-6e22-4751-befd-0b7921abbd5f | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Intel
+- [ ] https://jobs.lever.co/palantir/8aba5995-653d-4805-96e8-24488e6abf37 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Japan Forward Deployed
+- [ ] https://jobs.lever.co/palantir/12e94938-55cb-4ad9-9c05-405ebc9ef430 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Japan Government
+- [ ] https://jobs.lever.co/palantir/a39bf84c-6648-4871-bd07-9b882d401c4c | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Korea Forward Deployed
+- [ ] https://jobs.lever.co/palantir/3d0d9d92-0321-4459-a17d-fa1a76636a43 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Tactical Edge
+- [ ] https://jobs.lever.co/palantir/57a3f928-e7d3-4037-8196-b38e2f867152 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - UK Government
+- [ ] https://jobs.lever.co/palantir/289ad049-7b4e-41e3-8a39-146fbeb6fb64 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/13f99633-43b5-4459-8e84-25073f257c18 | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer - Warp Speed
+- [ ] https://jobs.lever.co/palantir/b4aa51a2-bc43-4d67-bf55-12db7feefb3a | Palantir-adjacent: Dataminr | Forward Deployed Software Engineer, New Grad - UK Government
+- [ ] https://jobs.ashbyhq.com/character/690f5ec2-2d7b-4c28-9b4d-d710e7225851 | Character.AI | Software Engineer, Backend/Applied ML (Safety & Integrity)
+- [ ] https://jobs.ashbyhq.com/character/3cfa1472-4f6d-46fa-bd08-f6de0833a53f | Character.AI | Software Engineer, Applied ML (Discovery, Recommendation & Search)
+- [ ] https://jobs.ashbyhq.com/character/2673e467-097e-43c0-ba0d-83e54b3a9cb1 | Character.AI | Software Engineer, AI Platform (All Industry Levels)
+- [ ] https://jobs.ashbyhq.com/character/0d291945-66fc-464c-9397-99130369a383 | Character.AI | Product Manager, Activation & Growth
+- [ ] https://jobs.ashbyhq.com/character/5aa34edd-33b0-4e46-b8ff-439b42704ccf | Character.AI | Product Manager, Core Product
+- [ ] https://jobs.ashbyhq.com/character/d5a38f47-cd16-4e10-818d-45a4f845b529 | Character.AI | Research Engineer, Multimodal
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7792848 | Reddit | Ads Conversion Modeling, Machine Learning Engineering Manager
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7413698 | Reddit | Client Account Executive, Mid-Market (App Dev)
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7702238 | Reddit | Client Account Executive, Mid-Market Sales (B2B Services)
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7649830 | Reddit | Client Account Executive, Mid-Market Sales (Signature Goods)
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7131934 | Reddit | Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7672841 | Reddit | Senior Client Account Executive, Mid-Market - UK
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/6960833 | Reddit | Senior Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7391392 | Reddit | Senior Machine Learning Engineer, Core Experience and Growth
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7074776 | Reddit | Senior  Machine Learning Engineer, ML Training Platform 
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7746309 | Reddit | Senior Product Manager, Ads API
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7753480 | Reddit | Senior Software Engineer, GenAI Platform
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/6409611 | Reddit | Senior Staff Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7791994 | Reddit | Senior Staff Machine Learning Engineer, Feed Relevance
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7772274 | Reddit | Senior Staff Machine Learning Engineer, GenAI Platform
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7181821 | Reddit | Staff Machine Learning Engineer, Ads Auction (Ads Marketplace Quality)
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7747244 | Reddit | Staff Machine Learning Engineer, Consumer 
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7377109 | Reddit | Staff Machine Learning Engineer, Dev Platform Data and Discovery
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7772523 | Reddit | Staff Machine Learning Engineer, GenAI Platform
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7803856 | Reddit | Staff Product Manager, Finance Applications
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7724536 | Reddit | Staff Product Manager, Paid User Acquisition
+- [ ] https://job-boards.greenhouse.io/reddit/jobs/7511698 | Reddit | Staff Software Engineer, Storage
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Field-MO/Principal-Enterprise-Account-Executive_RP1037137 | F5 | Senior Enterprise Account Executive
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Canada-Homebase/Manager--Solutions-Engineering_RP1036397 | F5 | Manager, Solutions Engineering
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Field-WA/Sr-Solutions-Engineer---Healthcare_RP1037324-1 | F5 | Sr Solutions Engineer - Healthcare
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Seattle/Principal-AI-Engineer_RP1037021 | F5 | Principal AI Engineer
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Seattle/Principle-AI-Engineer_RP1037019 | F5 | Principle AI Engineer
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Field-VA/Senior-Solutions-Engineer-US-Federal-Civilian_RP1037068 | F5 | Senior Solutions Engineer US Federal Civilian
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Tokyo/Principal-Solutions-Engineer_RP1036725 | F5 | Principal Solutions Engineer
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Field-VA/Principal-Account-Executive_RP1037205 | F5 | Principal Account Executive
+- [ ] https://jobs.ashbyhq.com/Deepgram/1395ef4d-883a-4006-85a1-4e7d44623431 | Deepgram | Pre-Sales Solutions Engineer (EST or PST)
+- [ ] https://jobs.ashbyhq.com/Deepgram/7fe7bd7d-b337-4337-b459-a892be80789e | Deepgram | Strategic Account Executive
+- [ ] https://jobs.ashbyhq.com/Deepgram/844ec2d9-4256-4be0-a6c6-78ebf1391a78 | Deepgram | Solutions Architect (EST or PST)
+- [ ] https://jobs.ashbyhq.com/Deepgram/9e9ceef6-e22c-4157-906c-91b2da8e22ae | Deepgram | Enterprise Account Executive - AI Platform (B2B Saas/Restaurant Tech Vertical)
+- [ ] https://jobs.ashbyhq.com/Deepgram/91ea80f4-cc54-4c52-8ef5-d2c2b2764640 | Deepgram | Corporate Account Executive
+- [ ] https://jobs.ashbyhq.com/Deepgram/7ac1a5bc-f305-4f2a-a547-394566a549b2 | Deepgram | Pre-Sales Solutions Engineer - Europe
+- [ ] https://jobs.ashbyhq.com/Deepgram/9cb09363-9b68-4957-869a-da70b95ad6bd | Deepgram | Solutions Architect - Europe
+- [ ] https://jobs.ashbyhq.com/Deepgram/1278975c-e0d8-45be-82dd-8d0d1f2774e5 | Deepgram | Senior Pre-Sales Solutions Engineer - India
+- [ ] https://jobs.ashbyhq.com/Deepgram/64895340-1377-4b40-b182-1ec6b9644997 | Deepgram | Solutions Architect - India
+- [ ] https://jobs.ashbyhq.com/Deepgram/cdecda60-85d8-4b7f-94db-c4665b3d5988 | Deepgram | EMEA Account Executive
+- [ ] https://jobs.ashbyhq.com/Deepgram/f8b9322f-67a4-448f-bd2c-e9a102c4a55d | Deepgram | EMEA Account Executive (German speaking)
+- [ ] https://jobs.ashbyhq.com/Deepgram/c69aab8a-e1d5-44ac-9113-12671a364015 | Deepgram | Forward Deployed Engineer, Deepgram for Restaurants
+- [ ] https://jobs.ashbyhq.com/Deepgram/6ab5816d-bbe1-4383-bb53-675e9f641528 | Deepgram | Solutions Engineer, Enterprise
+- [ ] https://jobs.ashbyhq.com/Deepgram/b10db691-f77c-4a65-8f7c-ff9574f53f1e | Deepgram | Senior Solutions Engineer, Federal
+- [ ] https://jobs.ashbyhq.com/Deepgram/f904ff60-f5d1-45c7-8fa2-8456c47b4204 | Deepgram | Pre-Sales Solutions Engineer (San Francisco, CA)
+- [ ] https://jobs.ashbyhq.com/Deepgram/be9609b4-b48d-4421-90e5-69049ad0d6ce | Deepgram | Solutions Architect (San Francisco, CA)
+- [ ] https://jobs.ashbyhq.com/replit/2c1463ab-05a4-482a-a605-013403a41e80 | Replit | Field Engineer
+- [ ] https://jobs.ashbyhq.com/replit/a0ad29c9-0e9a-437c-82b3-94d4d8383eb5 | Replit | Mid-Market Account Executive
+- [ ] https://jobs.ashbyhq.com/replit/cf236c47-218b-4a31-b0b6-d6ed12a8e077 | Replit | Senior Product Manager
+- [ ] https://jobs.ashbyhq.com/replit/ecebead2-74fc-4d00-98c5-6f67266cbab5 | Replit | Enterprise Account Executive 
+- [ ] https://jobs.ashbyhq.com/replit/705620d0-74cd-4628-89c0-1e1bf39a998a | Replit | Growth Product Manager
+- [ ] https://crowdstrike.wd5.myworkdayjobs.com/job/USA---Sunnyvale-CA/Sr-Product-Manager--Endpoint-Protection-Products--Hybrid-_R28142 | CrowdStrike | Sr. Product Manager, Endpoint Protection Products (Hybrid)
+- [ ] https://crowdstrike.wd5.myworkdayjobs.com/job/Japan---Tokyo/Manager--Sales-Engineering---Japan----_R26799 | CrowdStrike | Manager, Sales Engineering - Japan (セールスエンジニアリング・マネージャー)
+- [ ] https://crowdstrike.wd5.myworkdayjobs.com/job/USA---Remote/Regional-Sales-Engineer--NG-SIEM----Remote-_R28064-1 | CrowdStrike | Regional Sales Engineer, NG SIEM - Corporate (USA Remote)
+- [ ] https://crowdstrike.wd5.myworkdayjobs.com/job/Australia---Remote-QL/Regional-Sales-Engineer---Enterprise-Accounts--Queensland--Remote--AUS-_R28359 | CrowdStrike | Regional Sales Engineer - Enterprise Accounts, Queensland (Remote, AUS)
+- [ ] https://crowdstrike.wd5.myworkdayjobs.com/job/Belgium---Remote/Manager--Corporate-Sales-Engineering_R26894-1 | CrowdStrike | Manager, Corporate Sales Engineering (BeNeLux)
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4654073005 | Hebbia | Account Executive, Enterprise
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4640379005 | Hebbia | AI Strategist
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4614766005 | Hebbia | AI Strategist, Strategic Accounts
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4683103005 | Hebbia | Forward Deployed Banker (AI Strategist)
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4679338005 | Hebbia | Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4683104005 | Hebbia | Forward Deployed Investor (AI Strategist)
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4556367005 | Hebbia | Solutions Engineer
+- [ ] https://job-boards.greenhouse.io/hebbia/jobs/4684835005 | Hebbia | Solutions Engineer - Partnerships
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5849778004 | Dataiku | Business Development Representative, Italy
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5734728004 | Dataiku | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5829112004 | Dataiku | Enterprise Account Executive, ASEAN (Thailand & Malaysia)
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5592425004 | Dataiku | Enterprise Account Executive, Japan
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5792018004 | Dataiku | Enterprise Account Executive KSA
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5917164004 | Dataiku | Sales Engineer
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5687725004 | Dataiku | Sales Engineer - Japan
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5834337004 | Dataiku | Senior Field Engineer
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5749198004 | Dataiku | Senior Sales Engineer - Singapore 
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5812604004 | Dataiku | Sr Product Manager 
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5872110004 | Dataiku | Sr Sales Engineer, West
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5592389004 | Dataiku | Strategic Account Executive, LATAM 
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5849771004 | Dataiku | Strategic Account Executive - Southeast
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5821910004 | Dataiku | Technical Account Manager - Dubai
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5536894004 | Dataiku | Technical Account Manager - Germany
+- [ ] https://job-boards.greenhouse.io/dataiku/jobs/5674073004 | Dataiku | Technical Account Manager - Japan
+- [ ] https://jobs.lever.co/shieldai/a255acce-59cb-40df-bef3-4753e8687f75 | Shield AI-adjacent: Joby Aviation | Business Development Manager (R4247)
+- [ ] https://jobs.lever.co/shieldai/6d6a32da-b985-45ea-adc2-1e67d4791f5a | Shield AI-adjacent: Joby Aviation | Business Development Manager, Japan (R3905)
+- [ ] https://jobs.lever.co/shieldai/adb5864a-938a-4d24-8163-264f0ab2d5b2 | Shield AI-adjacent: Joby Aviation | Business Development Manager, Saudi Arabia (R3983)
+- [ ] https://jobs.lever.co/shieldai/1797f337-f646-4fd1-8f31-a8163213eaec | Shield AI-adjacent: Joby Aviation | Director of Business Development, Middle East (R4499)
+- [ ] https://jobs.lever.co/shieldai/d2460f30-ea78-4bc2-b6d0-ecab2d8c5cc2 | Shield AI-adjacent: Joby Aviation | Field Engineer - Maritime Systems (VBAT) (R4778)
+- [ ] https://jobs.lever.co/shieldai/7886f437-2d5e-4616-8dcb-3dc488f1f585 | Shield AI-adjacent: Joby Aviation | Product Manager,  AI Platforms (R3865)
+- [ ] https://jobs.lever.co/shieldai/9bb06428-e22a-4538-9e5c-ffc75c89c4dd | Shield AI-adjacent: Joby Aviation | Product Manager, Assured Edge Autonomy (R4504)
+- [ ] https://jobs.lever.co/shieldai/3017a4b0-a65d-4756-a1db-7d10e4f5ed66 | Shield AI-adjacent: Joby Aviation | Senior Staff BD Account Executive, Hivemind - Air Force (R4795)
+- [ ] https://jobs.lever.co/shieldai/f14b7309-0674-4f18-8754-86d783049fed | Shield AI-adjacent: Joby Aviation | Senior Staff BD Account Executive, Hivemind - Army (R4794)
+- [ ] https://jobs.lever.co/shieldai/0f25e1d7-3eba-4d11-857d-815d4f1341d4 | Shield AI-adjacent: Joby Aviation | Staff Sales Engineer (R4790)
+- [ ] https://jobs.lever.co/shieldai/4327879d-715a-4b10-8f47-cb3d64c956c4 | Shield AI-adjacent: Joby Aviation | Territory Business Development Manager, Army (R4796)
+- [ ] https://jobs.ashbyhq.com/writer/24ad21fb-b351-4fd6-a86e-1f0b62e1ccde | Writer | Senior manager, solutions architecture (UK)
+- [ ] https://jobs.ashbyhq.com/writer/9747a588-7475-4418-87b5-6b1ddde30947 | Writer | Senior software engineer, enterprise AI platform (UK)
+- [ ] https://jobs.ashbyhq.com/writer/93672b3b-2faa-44ca-838c-133fb6150117 | Writer | AI engineer (UK) 
+- [ ] https://jobs.ashbyhq.com/writer/1330ba60-697e-498b-b3f4-b0c7c5390305 | Writer | Software engineer, generative AI
+- [ ] https://jobs.ashbyhq.com/writer/e5950d69-1db2-418b-8b94-5e446b24de9e | Writer | Software engineer, generative AI (UK)
+- [ ] https://jobs.ashbyhq.com/writer/098a1bc6-ea8f-489a-945e-f94744c9ea22 | Writer | AI engineer 
+- [ ] https://jobs.ashbyhq.com/writer/888951e8-4a92-41c4-8363-7c87e768f1d7 | Writer | Strategic account executive (UK)
+- [ ] https://jobs.ashbyhq.com/writer/5701c1ae-68f4-4fa1-8dbb-e9f1cec4a558 | Writer | Enterprise account executive (UK)
+- [ ] https://jobs.ashbyhq.com/writer/3bd516ae-65e0-4ccb-9325-37a4f5288bb0 | Writer | Solutions architect (pre-sales) (West)
+- [ ] https://jobs.ashbyhq.com/writer/fab017a9-7787-4a7b-9d1b-ed82ec822c26 | Writer | Solutions architect (East) 
+- [ ] https://jobs.ashbyhq.com/writer/ddc0fc0d-e62f-48c4-bc56-6298e3b0b710 | Writer | Enterprise sales development representative (EMEA)
+- [ ] https://jobs.ashbyhq.com/writer/fc905a07-4d9c-4aae-af52-d8373631a0d6 | Writer | Strategic account executive (East)
+- [ ] https://jobs.ashbyhq.com/writer/55e79a1b-ca5b-42be-89d6-21409d034713 | Writer | Strategic account executive (Central)
+- [ ] https://jobs.ashbyhq.com/writer/a5ee3166-5c75-4a92-aea2-87a6e68cdc8d | Writer | Strategic account executive (West)
+- [ ] https://jobs.ashbyhq.com/writer/f2d02ca2-a915-434a-ace0-1a93d2111716 | Writer | AI deployment engineer (UK)
+- [ ] https://jobs.ashbyhq.com/writer/220bdc8d-54f1-428d-b7ac-e0dc5945e349 | Writer | AI deployment engineer (US)
+- [ ] https://jobs.lever.co/palantir/ff1029bd-bb6d-4d78-a03e-5f9744d0b798 | Palantir | Forward Deployed AI Engineer
+- [ ] https://jobs.lever.co/palantir/4cba9c95-d16f-440d-83e7-2352480f689f | Palantir | Forward Deployed Enablement Engineer - Customer Success
+- [ ] https://jobs.lever.co/palantir/8fcae765-de9a-4990-ba84-e65b524d683b | Palantir | Forward Deployed Infrastructure Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/1bb19522-3936-4adc-9ced-c3df8b5900b9 | Palantir | Forward Deployed Software Engineer
+- [ ] https://jobs.lever.co/palantir/909875b4-1940-41bd-b08d-a269c7235100 | Palantir | Forward Deployed Software Engineer - AUS Government
+- [ ] https://jobs.lever.co/palantir/c62264f5-5da8-40fe-9b44-f7f0f0012e11 | Palantir | Forward Deployed Software Engineer - Autonomous Systems C2
+- [ ] https://jobs.lever.co/palantir/84131e3f-455e-47fc-9c11-898d95f09048 | Palantir | Forward Deployed Software Engineer - US Government
+- [ ] https://avav.wd1.myworkdayjobs.com/job/US-Regional/Sr-Director--Business-Development_7533 | Anduril-adjacent: AeroVironment | Sr. Director, Business Development
+- [ ] https://autodesk.wd1.myworkdayjobs.com/job/EMEA---Italy---OffsiteHome/XMLNAME-26WD95690-Enterprise-Technical-Sales-Executive---AECO-Italy_26WD99254 | Autodesk | Enterprise Technical Sales Executive – AECO - Italy
+- [ ] https://autodesk.wd1.myworkdayjobs.com/job/Bengaluru-IND/Senior-ML-Engineer_26WD95860-1 | Autodesk | Senior ML Engineer
+- [ ] https://autodesk.wd1.myworkdayjobs.com/job/AMER---Brazil---OffsiteHome/Technical-Sales-Specialist_26WD97303-1 | Autodesk | Technical Sales Specialist
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Remote-USA/Senior-Presales-Engineer---ALM--MedTech-_JR111984 | PTC | Senior Presales Engineer - ALM (MedTech)
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Shanghai-China/Business-Development-Manager---AI-Driven_JR111229 | PTC | Business Development Manager - AI Driven
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Barcelona-Spain/Business-Development-Representative--DACH-_JR109520 | PTC | Talent Community Inside Sales - Business Development
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Boston-MA-USA/Business-Development-Representative_JR110290 | PTC | Business Development Representative
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Remote-USA/Enterprise-Account-Executive---Electronics---High-Tech_JR111298-1 | PTC | Enterprise Account Executive - Electronics & High-Tech
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Remote-USA/Enterprise-Account-Executive---Industrials_JR111367 | PTC | Enterprise Account Executive - Industrials
+- [ ] https://ptc.wd1.myworkdayjobs.com/job/Remote-USA/Enterprise-Account-Executive--MedTech_JR111846-1 | PTC | Enterprise Account Executive, MedTech
+- [ ] https://boards.greenhouse.io/apptronik/jobs/5802422004?gh_jid=5802422004 | Apptronik | Integration Engineer - Connect
+- [ ] https://boards.greenhouse.io/apptronik/jobs/5848437004?gh_jid=5848437004 | Apptronik | Principal Software Engineer - AI and Simulation
+- [ ] https://boards.greenhouse.io/apptronik/jobs/5823488004?gh_jid=5823488004 | Apptronik | Product Manager
+- [ ] https://boards.greenhouse.io/apptronik/jobs/5735869004?gh_jid=5735869004 | Apptronik | Senior Robotics Software & Integration Engineer
+- [ ] https://jobs.lever.co/mistral/2a357282-9d44-4b41-a249-c75ffe878ce2 | Mistral AI | Account Executive - Enterprise, (Consulting)
+- [ ] https://jobs.lever.co/mistral/7894fd8a-ffc9-4c89-87f0-f8a7b695cf01 | Mistral AI | Account Executive – AI for Citizens
+- [ ] https://jobs.lever.co/mistral/618c9763-cb22-4343-baca-cf1cf6b05f5c | Mistral AI | Account Executive, Digital Native US
+- [ ] https://jobs.lever.co/mistral/ed08b81f-9c52-4f86-addd-c4c06f3b114a | Mistral AI | Account Executive, Enterprise - New York
+- [ ] https://jobs.lever.co/mistral/25757afe-9b9d-4be7-87e1-e744eaa01105 | Mistral AI | Account Executive, Enterprise - SF Bay Area
+- [ ] https://jobs.lever.co/mistral/5fb6179e-74ae-46c8-9cde-95b71890e76a | Mistral AI | Account Executive, Enterprise, DACH
+- [ ] https://jobs.lever.co/mistral/46bf0c1c-cca2-4941-bd8d-18024fa59afa | Mistral AI | Account Executive, Enterprise, France - Paris
+- [ ] https://jobs.lever.co/mistral/04a3a058-aff8-4cc4-a419-eb09e83fa947 | Mistral AI | Account Executive, Enterprise, Netherlands
+- [ ] https://jobs.lever.co/mistral/52808932-3aaa-419f-a08d-1fb2a0aed781 | Mistral AI | Account Executive, Enterprise, UK - London
+- [ ] https://jobs.lever.co/mistral/b56f6523-b7d2-47a3-abe6-2c793c7672fc | Mistral AI | AI Developer Advocate
+- [ ] https://jobs.lever.co/mistral/3e8b03e7-ff33-4cd1-8042-90b7ac3c4683 | Mistral AI | AI Developer Advocate - Singapore
+- [ ] https://jobs.lever.co/mistral/c79ff8ed-6689-4dda-aec6-979a5dc767d0 | Mistral AI | AI Engineer, Product
+- [ ] https://jobs.lever.co/mistral/aceffeba-c4e9-4b3b-adff-e7e78b986c5c | Mistral AI | Applied AI Engineer, Fullstack Software Engineer - EMEA
+- [ ] https://jobs.lever.co/mistral/3e51d533-1f2d-48e3-9a2b-33fc7e8b0c0c | Mistral AI | Applied AI Engineer, Senior/Staff Devops/SRE - EMEA
+- [ ] https://jobs.lever.co/mistral/5538042e-f157-4a2c-a9ee-e412de9ba761 | Mistral AI | Applied AI Engineer, Senior/Staff Fullstack Software Engineer - Singapore
+- [ ] https://jobs.lever.co/mistral/5993e633-2c23-4054-801e-1da4c2adadc5 | Mistral AI | Applied AI,  Senior/Staff Forward Deployed Machine Learning Engineer - Singapore
+- [ ] https://jobs.lever.co/mistral/3d9a6ece-1f8c-4e0b-a275-fde6300ed1f8 | Mistral AI | Applied AI, AI Engineer for Mistral
+- [ ] https://jobs.lever.co/mistral/e0db3860-0a80-47a8-958a-f8e62f3bb59c | Mistral AI | Applied AI, Evaluation Engineer
+- [ ] https://jobs.lever.co/mistral/77f6fd1b-65cf-45d8-9b68-594c62732f62 | Mistral AI | Applied AI, Forward Deployed Machine Learning Engineer - EMEA
+- [ ] https://jobs.lever.co/mistral/a73cb128-b07e-437c-b82d-57b06661c52b | Mistral AI | Applied AI, Forward Deployed Machine Learning Engineer - Montreal
+- [ ] https://jobs.lever.co/mistral/cb2137e6-d6b1-47d7-8450-6370a61f2b79 | Mistral AI | Applied AI, Forward Deployed Machine Learning Engineer - Morocco
+- [ ] https://jobs.lever.co/mistral/0b476d3a-5f0c-4dda-9a5e-bd5ed8515328 | Mistral AI | Applied AI, Forward Deployed Machine Learning Engineer - Palo Alto
+- [ ] https://jobs.lever.co/mistral/ebfdc0da-13fd-4ae9-9861-bedb5ff493ea | Mistral AI | Applied AI, Technical Lead - Forward Deployed AI Engineer
+- [ ] https://jobs.lever.co/mistral/e2cf255f-49c8-4630-afe0-7f665f51f01f | Mistral AI | Applied AI, Technical Lead, Forward Deployed AI Engineer - EMEA
+- [ ] https://jobs.lever.co/mistral/042d7b29-279b-48e2-a44b-c7bdc3180dab | Mistral AI | Applied AI, Technical Lead, Forward Deployed AI Engineer - Montreal
+- [ ] https://jobs.lever.co/mistral/b551de18-b9ae-493e-beb1-629fe9e88381 | Mistral AI | Business Development Manager - Tech Partners
+- [ ] https://jobs.lever.co/mistral/bfb756e5-c820-4c55-96f4-f41c4cfa972e | Mistral AI | Enterprise Sales Leader
+- [ ] https://jobs.lever.co/mistral/ef4c26fc-3fdb-4dd2-a64e-95264ee769dd | Mistral AI | Machine Learning Engineer, Open-Source Software - Paris/London
+- [ ] https://jobs.lever.co/mistral/6201f9a0-233f-4de3-a8cc-65b75e99370f | Mistral AI | Product Manager, AI Studio
+- [ ] https://jobs.lever.co/mistral/e769b26a-90e9-4c6f-877c-a145a93f705d | Mistral AI | Product Manager, Audio
+- [ ] https://jobs.lever.co/mistral/ca22a1ac-c87e-4463-914a-6753ca79318c | Mistral AI | Product Manager, Cloud Partnerships
+- [ ] https://jobs.lever.co/mistral/c08c3a0f-9899-4e6c-8195-8b1cc24c56ff | Mistral AI | Product Manager, Context & Search
+- [ ] https://jobs.lever.co/mistral/11087966-f183-44b1-adc9-3a400c1f52ad | Mistral AI | Product Manager, Forge
+- [ ] https://jobs.lever.co/mistral/650e0e53-dc35-4e61-9b46-6f7ef003d0be | Mistral AI | Product Manager, Mistral Vibe
+- [ ] https://jobs.lever.co/mistral/0004f890-99d5-47c5-bb67-8f3f76a1e08f | Mistral AI | Senior AI Deployment Strategist - Paris
+- [ ] https://jobs.ashbyhq.com/Reka/e059e019-b7f1-4ccb-a53b-1db4f821621c | Mistral-adjacent: Reka | Member of Technical Staff (Applied AI)
+- [ ] https://wk.wd3.myworkdayjobs.com/job/USA---Cary-NC/Business-Development---Strategy-Analyst_R0053002 | Wolters Kluwer | Business Development - Strategy Analyst
+- [ ] https://wk.wd3.myworkdayjobs.com/job/USA---Tampa-FL/Business-Development-Strategy-Director_R0052857 | Wolters Kluwer | Business Development - Strategy Director
+- [ ] https://wk.wd3.myworkdayjobs.com/job/CAN---North-York/Senior-Technology-Product-Manager_R0056800 | Wolters Kluwer | Senior Technology Product Manager
+- [ ] https://wk.wd3.myworkdayjobs.com/job/CAN---North-York/Lead-Product-Manager_R0056801 | Wolters Kluwer | Lead Product Manager
+- [ ] https://ast-science.com/company/careers/?gh_jid=4677744005 | AST SpaceMobile | AI Solutions Architect / Program Manager, Cross-Domain
+- [ ] https://ast-science.com/company/careers/?gh_jid=4612700005 | AST SpaceMobile | Business Development Manager - LATAM
+- [ ] https://ast-science.com/company/careers/?gh_jid=4664910005 | AST SpaceMobile | Product Manager - Device Platform
+- [ ] https://ast-science.com/company/careers/?gh_jid=4684880005 | AST SpaceMobile | Product Manager – Spacecraft Systems (LEO Satellites)
+- [ ] https://ast-science.com/company/careers/?gh_jid=4664376005 | AST SpaceMobile | RAN Deployment Engineer									
+- [ ] https://ast-science.com/company/careers/?gh_jid=4664882005 | AST SpaceMobile | RAN Deployment Engineer (India)			
+- [ ] https://ast-science.com/company/careers/?gh_jid=4667289005 | AST SpaceMobile | RF System Integration Engineer
+- [ ] https://ast-science.com/company/careers/?gh_jid=4647750005 | AST SpaceMobile | Senior RAN and RF Integration Engineer
+- [ ] https://ast-science.com/company/careers/?gh_jid=4672116005 | AST SpaceMobile | Senior RF Testing and Integration Engineer
+- [ ] https://ast-science.com/company/careers/?gh_jid=4629417005 | AST SpaceMobile | Senior Software Integration Engineer
+- [ ] https://ast-science.com/company/careers/?gh_jid=4664368005 | AST SpaceMobile | Technical Product Manager									
+- [ ] https://ast-science.com/company/careers/?gh_jid=4664745005 | AST SpaceMobile | Technical Product Manager (India)					
+- [ ] https://jobs.ashbyhq.com/reflectionai/1d029ec2-a842-4dff-b784-1328422c03e8 | Reflection AI | Forward Deployed Engineer Lead
+- [ ] https://jobs.ashbyhq.com/reflectionai/8b97b583-3cc6-4834-ae2c-d5aecf22ed7d | Reflection AI | Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/asteralabs/jobs/4602854005 | Astera Labs | Principal Product Manager - Ethernet
+- [ ] https://job-boards.greenhouse.io/asteralabs/jobs/4678070005 | Astera Labs | Principal Product Manager - Smart Cable Modules
+- [ ] https://job-boards.greenhouse.io/asteralabs/jobs/4646965005 | Astera Labs | Sr. Principal Product Manager - Leo
+- [ ] https://job-boards.greenhouse.io/asteralabs/jobs/4646964005 | Astera Labs | Sr. Principal Product Manager - Scorpio
+- [ ] https://analogdevices.wd1.myworkdayjobs.com/job/US-MA-Wilmington/Principal-AI-Infrastructure-Engineer-_R262018 | Analog Devices | Principal AI Infrastructure Engineer
+- [ ] https://analogdevices.wd1.myworkdayjobs.com/job/US-MA-Wilmington/Senior-AI-Infrastructure-Engineer-_R262019 | Analog Devices | Senior AI Infrastructure Engineer
+- [ ] https://jobs.lever.co/sanctuary/45642cfb-e812-4617-8de7-3cec19453a34 | Sanctuary AI | Machine Learning Engineer
+- [ ] https://jobs.lever.co/palantir/a90eb029-19cc-413c-bd51-b8411053d7d4 | Palantir-adjacent: Rebellion Defense | Forward Deployed Enablement Engineer - Customer Success
+- [ ] https://jobs.lever.co/palantir/b57f08e9-546c-4b9b-8d21-db0ebbc11363 | Palantir-adjacent: Rebellion Defense | Forward Deployed Infrastructure Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/2a817317-48a6-48b7-9a74-a98ccd2457d2 | Palantir-adjacent: Rebellion Defense | Forward Deployed Software Engineer
+- [ ] https://jobs.lever.co/palantir/ce8ca664-60dc-4f9a-8986-3c96673bcfdf | Palantir-adjacent: Rebellion Defense | Forward Deployed Software Engineer - US Government
+- [ ] https://job-boards.greenhouse.io/vectara/jobs/5188657008 | Vectara | Account Executive ( AE) 
+- [ ] https://job-boards.greenhouse.io/vectara/jobs/5188469008 | Vectara | Account Executive (AE)
+- [ ] https://job-boards.greenhouse.io/vectara/jobs/5179830008 | Vectara | Field Engineer
+- [ ] https://job-boards.greenhouse.io/vectara/jobs/4897601008 | Vectara | Senior Machine Learning Engineer
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-MN-Minneapolis/Large-Enterprise--Customer-Base-Account-Executive---oCFO--Healthcare_JR-0105648 | Workday | Large Enterprise- Customer Base Account Executive - oCFO- Healthcare
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-CA-Home-Office/Medium-Enterprise-Customer-Base-Account-Executive---Tech-Media_JR-0106321 | Workday | Medium Enterprise Customer Base Account Executive - Tech/Media
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-CA-Pleasanton/Senior-Manager--Partner-Sales--FSI--US-ME---Canada_JR-0105895 | Workday | Senior Manager, Partner Sales, FSI, US ME & Canada
+- [ ] https://workday.wd5.myworkdayjobs.com/job/Canada-QC-Montreal/Medium-Enterprise-Account-Executive_JR-0106527 | Workday | Medium Enterprise Account Executive
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-CO-Boulder/Software-Development-Engineer-MLOps-US-Federal_JR-0106247 | Workday | Software Development Engineer MLOps US Federal
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-GA-Atlanta/Commercial-Account-Executive_JR-0106230 | Workday | Commercial Account Executive
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-CA-Pleasanton/Senior-Principal-Machine-Learning-Engineer_JR-0102782 | Workday | Senior/Principal Machine Learning Engineer
+- [ ] https://intel.wd1.myworkdayjobs.com/job/US-Arizona-Phoenix/Sr-Infrastructure-Engineer---Storage_JR0281566 | Fourier Intelligence | Sr. Infrastructure Engineer – Storage
+- [ ] https://intel.wd1.myworkdayjobs.com/job/US-Oregon-Hillsboro/Senior-AI-Software-Engineer---Neuromorphic-Computing_JR0282751 | Fourier Intelligence | Senior AI Software Engineer - Neuromorphic Computing
+- [ ] https://intel.wd1.myworkdayjobs.com/job/US-California-Santa-Clara/Network-Systems-and-Solutions-Engineer_JR0283130 | Fourier Intelligence | Network Systems and Solutions Engineer
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Senior-Commercial-Product-Manager_JR0306186 | Fidelity National Information Services | Senior Commercial Product Manager
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/SWIFT-Technical-Consultant_JR0306400 | Fidelity National Information Services | SWIFT Technical Consultant
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-NY-NYC-OVA-FLR62/Sr-Manager--Commercial-Product-Management_JR0304926 | Fidelity National Information Services | Salesforce Product Manager
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-CHNN-32-AB-3FL-STE-C-D/AI-Architect_JR0305477 | Fidelity National Information Services | AI Architect
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-CHNN-32-AB-3FL-STE-C-D/Database-Architect--AI-Platform-_JR0305476 | Fidelity National Information Services | Database Architect (AI Platform)
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Commercial-Product-Manager-Lead-for-Risk-Analytics-and-Data-Quality_JR0305562 | Fidelity National Information Services | Commercial Product Manager Lead for Risk Analytics and Data Quality
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Digital-Senior-Product-Manager---Retail-Banking-Products_JR0302883 | Fidelity National Information Services | Digital Senior Product Manager - Retail Banking Products
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Commercial-Product-Manager_JR0305974 | Fidelity National Information Services | Commercial Product Manager
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-NY-NYC-OVA-FLR62/Pre-Sales-Representative-Sr-Lead--Solutions-Architecture_JR0306572 | Fidelity National Information Services | Pre-Sales Representative Sr Lead, Solutions Architecture
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-GA-ATL-201-STE-900/Solution-Product-Manager-AI-Lead_JR0302909 | Fidelity National Information Services | Solution Product Manager AI Lead
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-10-FLR-5/Engineer-Principal--Artificial-Intelligence---Machine-Learning_JR0305401 | Fidelity National Information Services | Head of AI Engineering, Commercial
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/Senior-Business-Development-Representative---French-Speaking_JR0305943 | Fidelity National Information Services | Senior Business Development Representative - French Speaking
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/Senior-Business-Development-Representative---German-Speaking_JR0305944-1 | Fidelity National Information Services | Senior Business Development Representative - German Speaking
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Principal-Product-Manager--Strategy-and-Operations_JR0306158 | Fidelity National Information Services | Principal Product Manager, Strategy and Operations
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Product-Manager-Principal--Enterprise-Data-Team_JR0306159 | Fidelity National Information Services | Senior Product Manager Principal, Enterprise Data Team
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL7/IT-Architect-Senior-Generative-AI-NLP-concepts--Python-API-integration--_JR0302959 | Fidelity National Information Services | IT Architect Senior(Generative AI/NLP concepts, Python/API integration )
+- [ ] https://fis.wd5.myworkdayjobs.com/job/SGP-SING-8/Product-Manager-II---Commercial_JR0305876 | Fidelity National Information Services | Product Manager, Enterprise Payment
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL7/Artificial-Intelligence---Machine-Learning-Engineer-Lead_JR0305572 | Fidelity National Information Services | Prompt Engineer
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Commercial-Product-Manager--Senior_JR0304878 | Fidelity National Information Services | Commercial Product Manager, Senior
+- [ ] https://fis.wd5.myworkdayjobs.com/job/AUS-SYDN-55/Senior-Sales-Solution-Consultant_JR0297386 | Fidelity National Information Services | Senior Solutions Engineer
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL7/Engineer-Lead--Artificial-Intelligence---Machine-Learning--GitHub-copilot-_JR0305475-1 | Fidelity National Information Services | Engineer Lead, Artificial Intelligence / Machine Learning (GitHub copilot)
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/Data-Scientist--Artificial-Intelligence---Machine-Learning-_JR0305540 | Fidelity National Information Services | Data Scientist (Artificial Intelligence / Machine Learning)
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/Account-Manager-Sr-Lead--Technical-Accounts--TAM-_JR0305669 | Fidelity National Information Services | Account Manager Sr Lead, Technical Accounts (TAM)
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL7/Engineer-Lead--Artificial-Intelligence---Machine-Learning---Data-Scientist-_JR0305573 | Fidelity National Information Services | Engineer Lead, Artificial Intelligence / Machine Learning ( Data Scientist)
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL2/Engineer-Lead---Artificial-Intelligence--Machine-Learning_JR0305592 | Fidelity National Information Services | Engineer Lead , Artificial Intelligence/ Machine Learning
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL2/Engineer-Lead---Artificial-Intelligence---Machine-Learning_JR0305561 | Fidelity National Information Services | Engineer Lead , Artificial Intelligence / Machine Learning
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IND-PUNE-FL2/Engineer-Lead--Artificial-Intelligence_JR0305560 | Fidelity National Information Services | Engineer Lead, Artificial Intelligence
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/AIML-Engineer-III---Treasury-and-Lending-Platforms_JR0305437 | Fidelity National Information Services | AIML Engineer III – Treasury and Lending Platforms
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-NY-NYC-OVA-FLR62/Principal-Product-Manager---Tax-Reporting-Compliance_JR0303424 | Fidelity National Information Services | Principal Product Manager - Tax Reporting Compliance
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-NY-NYC-OVA-FLR62/Senior-Data---AI-Product-Manager_JR0295831 | Fidelity National Information Services | Senior AI Product Manager
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Technical-Account-Manager_JR0303919-1 | Fidelity National Information Services | Technical Account Manager
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Product-Manager--Fraud-Solutions_JR0304335 | Fidelity National Information Services | Product Manager, Fraud Solutions
+- [ ] https://fis.wd5.myworkdayjobs.com/job/GBR-LNDN-25-Walbrook-FL56/Business-Development-Representative---German-Speaking_JR0303368 | Fidelity National Information Services | Business Development Representative - German Speaking
+- [ ] https://amadeus.wd502.myworkdayjobs.com/job/Barcelona/Lead-Product-Manager--E-commerce--Booking-and-Shopping-_R34463 | Amadeus IT Group | Lead Product Manager, E‑commerce (Booking and Shopping)
+- [ ] https://amadeus.wd502.myworkdayjobs.com/job/Bangalore/Principal-Product-Manager_R32842 | Amadeus IT Group | Principal Product Manager
+- [ ] https://amadeus.wd502.myworkdayjobs.com/job/Bangalore/Implementation-Engineer-3_R32075-1 | Amadeus IT Group | Implementation Engineer 3
+- [ ] https://amadeus.wd502.myworkdayjobs.com/job/Sydney-New-South-Wales/Commercial-Sales---Account-Executive_R30547 | Amadeus IT Group | Inside Sales & Account Executive (Travel Seller)
+- [ ] https://fico.wd1.myworkdayjobs.com/job/Work-from-Home-United-States/Technical-Account-Manager_31409 | Fair Isaac | Sr Principal Customer Engineer
+- [ ] https://fico.wd1.myworkdayjobs.com/job/Work-from-Home-United-States/Sr-Product-Manager--B2B-Scores-Mortgage_31568 | Fair Isaac | Sr Product Manager, B2B Scores-Mortgage
+- [ ] https://iqvia.wd1.myworkdayjobs.com/job/Mississauga-Ontario-Canada/Charge-de-comptes---Account-Executive_R1537348 | IQVIA | Chargé·e de comptes / Account Executive
+- [ ] https://complyadvantage.com/careers/jobs/8501343002?gh_jid=8501343002 | ComplyAdvantage | Business Development Representative 
+- [ ] https://complyadvantage.com/careers/jobs/8459016002?gh_jid=8459016002 | ComplyAdvantage | Business Development Representative - Calling all Graduates!
+- [ ] https://complyadvantage.com/careers/jobs/8456861002?gh_jid=8456861002 | ComplyAdvantage | Principal Product Manager - Agentic Case Remediation
+- [ ] https://complyadvantage.com/careers/jobs/8458908002?gh_jid=8458908002 | ComplyAdvantage | Principal Product Manager - Payment Screening
+- [ ] https://complyadvantage.com/careers/jobs/8458915002?gh_jid=8458915002 | ComplyAdvantage | Principal Product Manager - Transaction Fraud
+- [ ] https://complyadvantage.com/careers/jobs/8458933002?gh_jid=8458933002 | ComplyAdvantage | Principal Product Manager - Transaction Monitoring 
+- [ ] https://complyadvantage.com/careers/jobs/8454734002?gh_jid=8454734002 | ComplyAdvantage | Product Manager - Frontend & Design
+- [ ] https://complyadvantage.com/careers/jobs/8403511002?gh_jid=8403511002 | ComplyAdvantage | Product Manager - Transaction Services 
+- [ ] https://complyadvantage.com/careers/jobs/8500596002?gh_jid=8500596002 | ComplyAdvantage | Technical Account Manager 
+- [ ] https://kla.wd1.myworkdayjobs.com/job/Ann-Arbor-MI/AI-Ops-Engineer_2533269 | KLA | Senior AI Ops Engineer| Kubernetes/docker
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5689724004 | DevRev | Account Executive
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5970813004 | DevRev | Account Executive - Enterprise
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5578063004 | DevRev | Account Executive – Field Sales
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5648777004 | DevRev | Account Executive : Field Sales - Delhi NCR
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5817624004 | DevRev | Account Executive - Startups 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5821840004 | DevRev | Customer Solutions Architect (AI Platform)
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5831087004 | DevRev | Engineering Leader - Applied AI
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5840066004 | DevRev | Enterprise Sales Engineer - East
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5840086004 | DevRev | Enterprise Sales Engineer - West & Central
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5835453004 | DevRev | Forward Deployed AI Strategist 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5528192004 | DevRev | Forward Deployed Architect
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5671156004 | DevRev | Forward Deployed Architect 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5668875004 | DevRev | Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5668939004 | DevRev | Forward Deployed Engineer 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5837052004 | DevRev | Forward Deployed Engineer - Applied AI 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5823633004 | DevRev | Forward Deployed Engineer (Customer)
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5220510004 | DevRev | Fullstack Software Engineer (AI Platform)
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5832003004 | DevRev | Partner Solutions Engineer – Bangalore
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5775222004 | DevRev | Senior Forward Deployed Engineer 
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5742282004 | DevRev | Senior Product Manager - Voice
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5799854004 | DevRev | Solutions Engineer - Bengaluru
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5831999004 | DevRev | Solutions Engineer - Delhi
+- [ ] https://job-boards.greenhouse.io/devrev/jobs/5832002004 | DevRev | Solutions Engineer - Mumbai
+- [ ] https://job-boards.greenhouse.io/recursionpharmaceuticals/jobs/7488337 | Exscientia | Staff Product Manager, Agentic Systems
+- [ ] https://job-boards.greenhouse.io/harmonic/jobs/4293504005 | Harmonic | Account Executive
+- [ ] https://job-boards.greenhouse.io/harmonic/jobs/4660951005 | Harmonic | Solutions Engineer, New Grad (Class of 2026)
+- [ ] https://job-boards.greenhouse.io/opaquesystems/jobs/4093833009 | Opaque Systems | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/opaquesystems/jobs/4093835009 | Opaque Systems | Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/traba/45bd1679-dbf2-43b6-8d2d-0e4e2fb63c00 | Traba | Senior Product Manager
+- [ ] https://jobs.ashbyhq.com/traba/b01ff7d0-5234-4c0c-b71c-8610db4ead0e | Traba | Staff Product Manager
+- [ ] https://jobs.ashbyhq.com/supabase/69d1b2ec-9d9b-45b0-937a-a8454f66487e | Supabase | Enterprise Account Executive , Bay Area 
+- [ ] https://jobs.ashbyhq.com/supabase/0aba9686-a3f0-4459-be3e-337bc7b0f90c | Supabase | Account Executive (USA)
+- [ ] https://jobs.ashbyhq.com/supabase/a069c886-1107-408e-88b4-e1aa8d33d4bc | Supabase |  Account Executive, EMEA
+- [ ] https://jobs.ashbyhq.com/supabase/f035bda1-b5d3-4c5b-8736-b9c335fe1c3b | Supabase | Multigres Deployment Engineer
+- [ ] https://jobs.ashbyhq.com/supabase/04b01838-a907-4d43-be4e-956babde6102 | Supabase | Business Development Associate - Partnerships
+- [ ] https://jobs.ashbyhq.com/supabase/be8f22ff-2380-49ac-911b-c6dfabec4bad | Supabase | Enterprise Account Executive (EMEA, Sweden)
+- [ ] https://jobs.ashbyhq.com/supabase/4859464f-afab-4409-b295-4f4cbbfc41eb | Supabase | Account Executive ,  APAC 
+- [ ] https://jobs.ashbyhq.com/supabase/d1675ea0-359c-4b4e-a484-42f889e0ccf6 | Supabase |  Account Executive, LATAM
+- [ ] https://jobs.ashbyhq.com/supabase/48950725-e0d9-4025-92d9-f75e1b60ce45 | Supabase | Postgres Deployment Engineer (Nix)
+- [ ] https://jobs.ashbyhq.com/supabase/47282e37-34dc-401d-a1cd-dbe85fdd1c22 | Supabase | Product Manager - Pricing & Billing
+- [ ] https://jobs.ashbyhq.com/supabase/a5a5a35a-ff03-4777-bb05-6eaaf5e8a1a6 | Supabase | Strategic Customer Solutions Architect (AMER)
+- [ ] https://jobs.ashbyhq.com/supabase/dc8187e4-c799-48a9-a408-ad8393eec39f | Supabase | Strategic Customer Solutions Architect (APAC)
+- [ ] https://jobs.ashbyhq.com/supabase/64085bde-a5c2-4198-a2e1-d76f5a78f56f | Supabase | Strategic Customer Solutions Architect (EMEA)
+- [ ] https://jobs.ashbyhq.com/pinecone/7261adcb-026d-4552-8f89-7a46156c40c5 | Pinecone | Principal Product Manager, Database
+- [ ] https://jobs.ashbyhq.com/pinecone/24f9a4e3-472d-4e63-908c-2653c0d8b612 | Pinecone | Principal Product Manager, Knowledge
+- [ ] https://jobs.ashbyhq.com/pinecone/3d2a4732-6460-479f-b16b-12112c48ca5f | Pinecone | Associate Field Engineer
+- [ ] https://jobs.ashbyhq.com/pinecone/00e1245d-86d2-459b-af29-6203f7680e17 | Pinecone | Commercial Account Executive  
+- [ ] https://jobs.ashbyhq.com/Blossom-Health/7b7e3317-feab-4caf-9e6d-16d0a54aaf9f | Blossom | Applied AI Software Engineer (All Levels)
+- [ ] https://jobs.lever.co/zilliz/45c1ddc1-9797-411f-a672-52f4cace3449 | Zilliz | Enterprise Account Executive - EU (UK)
+- [ ] https://jobs.lever.co/zilliz/8144e236-2836-4980-92cf-b6501ce0f81c | Zilliz | Enterprise Account Executive - Japan
+- [ ] https://jobs.lever.co/zilliz/f9a2360d-f610-4fa7-8fa0-594a1cbf7ed3 | Zilliz | Enterprise Account Executive - New York
+- [ ] https://jobs.lever.co/zilliz/3cf825a1-a659-4686-b992-3bf03f5b082c | Zilliz | Enterprise Account Executive - SF Bay Area
+- [ ] https://jobs.lever.co/zilliz/a72bb831-5bd7-4ac4-b158-100be65185c5 | Zilliz | Enterprise Account Executive - South Korea
+- [ ] https://jobs.lever.co/zilliz/4339166e-d342-4058-a4fe-4faaf97454ad | Zilliz | Enterprise Account Executive - Texas
+- [ ] https://jobs.lever.co/zilliz/92bf6649-1fc2-4614-a463-304114d82499 | Zilliz | Solutions Architect - Japan
+- [ ] https://jobs.lever.co/palantir/492a16bb-6b9f-457e-82c3-294e1a2c565d | Palantir-adjacent: Primer | Forward Deployed Software Engineer
+- [ ] https://jobs.lever.co/palantir/d83fac1c-353e-4b77-a586-3276b1090b6e | Palantir-adjacent: Primer | Forward Deployed Software Engineer - US Government
+- [ ] https://jobs.ashbyhq.com/joyfulhealth/73c903d1-5d43-4cce-8e68-4fd3a4388b53 | Joyful Health | AI Engineer 
+- [ ] https://jobs.ashbyhq.com/joyfulhealth/79d31dbc-da96-4124-96e8-d260afa6de92 | Joyful Health | Account Executive 
+- [ ] https://cadence.wd1.myworkdayjobs.com/job/No-Seat-Req-United-States/SI-PI-for-3DIC-Sr-Principle-Solutions-Engineer_R53590 | Cadence Design Systems | SI/PI for 3DIC Sr Principle Solutions Engineer
+- [ ] https://cadence.wd1.myworkdayjobs.com/job/SAN-JOSE/Senior-AI-Engineer_R53468-1 | Cadence Design Systems | Senior AI Engineer
+- [ ] https://cadence.wd1.myworkdayjobs.com/job/SAN-JOSE/IT-Staff-Storage-Engineer_R53945 | Cadence Design Systems | IT Staff Storage Engineer
+- [ ] https://cadence.wd1.myworkdayjobs.com/job/SAN-JOSE/GenAI-Tools-Support-Engineer_R54166-1 | Cadence Design Systems | GenAI Tools Support Engineer
+- [ ] https://nxp.wd3.myworkdayjobs.com/job/Brno/Senior-AI-Software-Developer_R-10062896 | NXP Semiconductors | Senior AI Software Developer
+- [ ] https://nxp.wd3.myworkdayjobs.com/job/Munich/Business-Development-Manager--f-m-d-_R-10061610 | NXP Semiconductors | Business Development Manager (f/m/d)
+- [ ] https://jobs.ashbyhq.com/suno/b4add3f2-9d7b-4b5d-8a39-ad35c47abd0b | Suno | Machine Learning Engineering Manager, Recommendations
+- [ ] https://jobs.ashbyhq.com/suno/a1aab30d-0e81-4ef3-b162-97770f8e40d2 | Suno | Director, Business Development, Music Industry Partnerships
+- [ ] https://jobs.ashbyhq.com/suno/275eaa39-e1d5-4007-9164-d63aaf45dd1c | Suno | Senior Product Manager, Payments Platform
+- [ ] https://jobs.ashbyhq.com/suno/0740427c-6afa-4f3f-a3e1-1675fa23301c | Suno | Product Manager, Artists & Creators 
+- [ ] https://jobs.ashbyhq.com/omnea/7afe97a2-a00d-4238-89bd-8bcc46be34f4 | Omnea | Senior Product Manager
+- [ ] https://jobs.ashbyhq.com/omnea/84aeafa8-0361-455f-b99e-07c64e06f7be | Omnea | Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/omnea/75e7b393-414a-496b-b250-86811865ebf4 | Omnea | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/omnea/7927c473-9cc3-45c8-b114-0848f2be65c8 | Omnea | Founding Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/omnea/e23527e1-2f87-4213-97e5-2835c338c476 | Omnea | Enterprise Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/omnea/d105c3ae-5e97-409b-945c-b7919664243f | Omnea | Founding Sales Engineer - US
+- [ ] https://jobs.ashbyhq.com/omnea/b1159bdd-81be-428e-a01c-5d691ea32f82 | Omnea | Client Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/omnea/5494036d-7702-4193-be60-aef9cbaa3f02 | Omnea | Senior Client Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/omnea/3020334e-5a12-4340-a1f6-262fad35f84b | Omnea | Founding Account Executive - US
+- [ ] https://ats.rippling.com/galileo/jobs/4b61b0a5-793c-4886-a261-08bceb5b5488 | Galileo AI | AI Engineer
+- [ ] https://ats.rippling.com/galileo/jobs/557ce7a8-a892-40a9-a8a0-c57e0ce954dc | Galileo AI | Account Executive
+- [ ] https://www.wiz.io/careers/job/4667217006/account-executive-federal-civilian?gh_jid=4667217006 | CrowdStrike-adjacent: Wiz | Account Executive, Federal CivilianSales/Field SalesWashington, D.C.
+- [ ] https://www.wiz.io/careers/job/4603280006/account-executive-public-defense-sector?gh_jid=4603280006 | CrowdStrike-adjacent: Wiz | Account Executive Public & Defense SectorSales/Field SalesTel Aviv
+- [ ] https://www.wiz.io/careers/job/4664554006/account-executive-sled-west?gh_jid=4664554006 | CrowdStrike-adjacent: Wiz | Account Executive, SLED WestSales/Field SalesLos Angeles, California
+- [ ] https://www.wiz.io/careers/job/4665086006/associate-solutions-engineer-growth-west?gh_jid=4665086006 | CrowdStrike-adjacent: Wiz | Associate Solutions Engineer, Growth - WestSales/SERemote - USA
+- [ ] https://www.wiz.io/careers/job/4668806006/business-development-representative?gh_jid=4668806006 | CrowdStrike-adjacent: Wiz | Business Development RepresentativeMarketing/BDRRemote - Germany
+- [ ] https://www.wiz.io/careers/job/4629035006/business-development-representative?gh_jid=4629035006 | CrowdStrike-adjacent: Wiz | Business Development RepresentativeMarketing/BDRAmsterdam, Netherlands
+- [ ] https://www.wiz.io/careers/job/4629037006/business-development-representative-india?gh_jid=4629037006 | CrowdStrike-adjacent: Wiz | Business Development Representative - IndiaMarketing/BDRRemote - India
+- [ ] https://www.wiz.io/careers/job/4643532006/director-solutions-engineering-southern-europe?gh_jid=4643532006 | CrowdStrike-adjacent: Wiz | Director, Solutions Engineering (Southern Europe)Sales/SEParis, France
+- [ ] https://www.wiz.io/careers/job/4671486006/enterprise-account-executive?gh_jid=4671486006 | CrowdStrike-adjacent: Wiz | Enterprise Account ExecutiveSales/Field SalesMadrid, Spain
+- [ ] https://www.wiz.io/careers/job/4671760006/enterprise-account-executive?gh_jid=4671760006 | CrowdStrike-adjacent: Wiz | Enterprise Account ExecutiveSales/Field SalesRemote - South Korea
+- [ ] https://www.wiz.io/careers/job/4669878006/enterprise-account-executive-canada?gh_jid=4669878006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive, CanadaSales/Field SalesOttawa, Ontario
+- [ ] https://www.wiz.io/careers/job/4669303006/enterprise-account-executive-central?gh_jid=4669303006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive, CentralSales/Field SalesChicago, Illinois
+- [ ] https://www.wiz.io/careers/job/4672269006/enterprise-account-executive-central?gh_jid=4672269006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive, CentralSales/Field SalesDetroit, Michigan
+- [ ] https://www.wiz.io/careers/job/4652658006/enterprise-account-executive-central-bf?gh_jid=4652658006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive, Central (BF)Sales/Field SalesMinneapolis, Minnesota
+- [ ] https://www.wiz.io/careers/job/4668815006/enterprise-account-executive-north-india?gh_jid=4668815006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive - North IndiaSales/Field SalesDelhi, India
+- [ ] https://www.wiz.io/careers/job/4590784006/enterprise-account-executive-philippines-thailand?gh_jid=4590784006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive - Philippines & ThailandSales/Field SalesRemote - Singapore
+- [ ] https://www.wiz.io/careers/job/4665186006/enterprise-account-executive-pnw?gh_jid=4665186006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive, PNWSales/Field SalesSeattle, Washington
+- [ ] https://www.wiz.io/careers/job/4666593006/enterprise-account-executive-south-india?gh_jid=4666593006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive - South IndiaSales/SalesBengaluru, India
+- [ ] https://www.wiz.io/careers/job/4668802006/enterprise-account-executive-west-india?gh_jid=4668802006 | CrowdStrike-adjacent: Wiz | Enterprise Account Executive - West IndiaSales/Field SalesMumbai, India
+- [ ] https://www.wiz.io/careers/job/4671492006/growth-account-executive?gh_jid=4671492006 | CrowdStrike-adjacent: Wiz | Growth Account ExecutiveSales/Field SalesRemote - Italy
+- [ ] https://www.wiz.io/careers/job/4665280006/growth-account-executive?gh_jid=4665280006 | CrowdStrike-adjacent: Wiz | Growth Account ExecutiveSales/Field SalesRemote - Australia
+- [ ] https://www.wiz.io/careers/job/4671498006/growth-account-executive?gh_jid=4671498006 | CrowdStrike-adjacent: Wiz | Growth Account ExecutiveSales/Field SalesMadrid, Spain
+- [ ] https://www.wiz.io/careers/job/4627309006/growth-account-executive-east?gh_jid=4627309006 | CrowdStrike-adjacent: Wiz | Growth Account Executive - EastSales/Field SalesRemote - USA
+- [ ] https://www.wiz.io/careers/job/4654701006/growth-account-executive-japan-smb?gh_jid=4654701006 | CrowdStrike-adjacent: Wiz | Growth Account Executive, Japan (SMB)Sales/Field SalesRemote - Japan
+- [ ] https://www.wiz.io/careers/job/4665098006/major-account-executive-central-government?gh_jid=4665098006 | CrowdStrike-adjacent: Wiz | Major Account Executive (Central Government) Sales/Field SalesLondon, UK
+- [ ] https://www.wiz.io/careers/job/4671758006/majors-account-executive?gh_jid=4671758006 | CrowdStrike-adjacent: Wiz | Majors Account ExecutiveSales/Field SalesRemote - South Korea
+- [ ] https://www.wiz.io/careers/job/4657309006/majors-account-executive-dmv?gh_jid=4657309006 | CrowdStrike-adjacent: Wiz | Majors Account Executive, DMVSales/Field SalesWashington, D.C.
+- [ ] https://www.wiz.io/careers/job/4627232006/majors-account-executive-ntt?gh_jid=4627232006 | CrowdStrike-adjacent: Wiz | Majors Account Executive (NTT担当）Sales/Field SalesRemote - Japan
+- [ ] https://www.wiz.io/careers/job/4626719006/majors-account-executive-seak?gh_jid=4626719006 | CrowdStrike-adjacent: Wiz | Majors Account Executive - SEAKSales/Field SalesRemote - Singapore
+- [ ] https://www.wiz.io/careers/job/4667821006/majors-account-executive-so-cal?gh_jid=4667821006 | CrowdStrike-adjacent: Wiz | Majors Account Executive, SoCal Sales/Field SalesRemote - USA
+- [ ] https://www.wiz.io/careers/job/4656325006/manager-business-development-representative?gh_jid=4656325006 | CrowdStrike-adjacent: Wiz | Manager, Business Development RepresentativeMarketing/BDRLondon, UK
+- [ ] https://www.wiz.io/careers/job/4667234006/manager-business-development-representative?gh_jid=4667234006 | CrowdStrike-adjacent: Wiz | Manager, Business Development RepresentativeMarketing/BDRRemote - USA
+- [ ] https://www.wiz.io/careers/job/4627267006/manager-solutions-engineering?gh_jid=4627267006 | CrowdStrike-adjacent: Wiz | Manager, Solutions EngineeringSales/SERemote - Japan
+- [ ] https://www.wiz.io/careers/job/4671793006/manager-solutions-engineering?gh_jid=4671793006 | CrowdStrike-adjacent: Wiz | Manager, Solutions EngineeringSales/SERemote - South Korea
+- [ ] https://www.wiz.io/careers/job/4627167006/manager-solutions-engineering?gh_jid=4627167006 | CrowdStrike-adjacent: Wiz | Manager, Solutions EngineeringSales/SERemote - Australia
+- [ ] https://www.wiz.io/careers/job/4659646006/manager-solutions-engineering-western-canada?gh_jid=4659646006 | CrowdStrike-adjacent: Wiz | Manager, Solutions Engineering, Western CanadaSales/SECalgary, Alberta
+- [ ] https://www.wiz.io/careers/job/4643703006/manager-solutions-engineering-western-canada?gh_jid=4643703006 | CrowdStrike-adjacent: Wiz | Manager, Solutions Engineering, Western CanadaSales/SEVancouver, British Columbia
+- [ ] https://www.wiz.io/careers/job/4664263006/manager-technical-account-management-west?gh_jid=4664263006 | CrowdStrike-adjacent: Wiz | Manager, Technical Account Management (West)Technical Solutions Management/Technical Solutions Management Remote - USA
+- [ ] https://www.wiz.io/careers/job/4671762006/mid-enterprise-account-executive?gh_jid=4671762006 | CrowdStrike-adjacent: Wiz | Mid-Enterprise Account ExecutiveSales/Field SalesRemote - South Korea
+- [ ] https://www.wiz.io/careers/job/4577092006/mid-enterprise-account-executive-north-india?gh_jid=4577092006 | CrowdStrike-adjacent: Wiz | Mid-Enterprise Account Executive - North IndiaSales/Field SalesDelhi, India
+- [ ] https://www.wiz.io/careers/job/4665285006/mid-enterprise-account-executive-nsw-state-government?gh_jid=4665285006 | CrowdStrike-adjacent: Wiz | Mid-Enterprise Account Executive, NSW State GovernmentSales/Field SalesRemote - Australia
+- [ ] https://www.wiz.io/careers/job/4654743006/mid-enterprise-account-executive-public-sector?gh_jid=4654743006 | CrowdStrike-adjacent: Wiz | Mid-Enterprise Account Executive, (Public Sector)Sales/Field SalesLondon, UK
+- [ ] https://www.wiz.io/careers/job/4670153006/mid-enterprise-account-executive-tola?gh_jid=4670153006 | CrowdStrike-adjacent: Wiz | Mid-Enterprise Account Executive, TOLASales/Field SalesAustin, Texas
+- [ ] https://www.wiz.io/careers/job/4650055006/mid-market-account-executive-japan?gh_jid=4650055006 | CrowdStrike-adjacent: Wiz | Mid-Market Account Executive, JapanSales/Field SalesRemote - Japan
+- [ ] https://www.wiz.io/careers/job/4671775006/partner-solutions-architect?gh_jid=4671775006 | CrowdStrike-adjacent: Wiz | Partner Solutions ArchitectSales/SERemote - Spain
+- [ ] https://www.wiz.io/careers/job/4673938006/partner-solutions-architect?gh_jid=4673938006 | CrowdStrike-adjacent: Wiz | Partner Solutions ArchitectSales/SERemote - Italy
+- [ ] https://www.wiz.io/careers/job/4629061006/partner-solutions-architect-csp?gh_jid=4629061006 | CrowdStrike-adjacent: Wiz | Partner Solutions Architect - CSPSales/SERemote - United Kingdom
+- [ ] https://www.wiz.io/careers/job/4627180006/principal-solutions-engineer?gh_jid=4627180006 | CrowdStrike-adjacent: Wiz | Principal Solutions EngineerSales/SERemote - Germany
+- [ ] https://www.wiz.io/careers/job/4663859006/principal-solutions-engineer-eastern-canada?gh_jid=4663859006 | CrowdStrike-adjacent: Wiz | Principal Solutions Engineer, Eastern CanadaSales/SERemote - Canada
+- [ ] https://www.wiz.io/careers/job/4627195006/principal-solutions-engineer-india?gh_jid=4627195006 | CrowdStrike-adjacent: Wiz | Principal Solutions Engineer - IndiaSales/SERemote - India
+- [ ] https://www.wiz.io/careers/job/4626695006/principal-solutions-engineer-spanish-portuguese-speaker?gh_jid=4626695006 | CrowdStrike-adjacent: Wiz | Principal Solutions Engineer - Spanish/Portuguese speakerSales/SERemote - United Kingdom
+- [ ] https://www.wiz.io/careers/job/4643915006/principal-solutions-engineer-spanish-portuguese-speaker?gh_jid=4643915006 | CrowdStrike-adjacent: Wiz | Principal Solutions Engineer - Spanish/Portuguese speakerSales/SERemote - Netherlands
+- [ ] https://www.wiz.io/careers/job/4643914006/principal-solutions-engineer-spanish-portuguese-speaker?gh_jid=4643914006 | CrowdStrike-adjacent: Wiz | Principal Solutions Engineer - Spanish/Portuguese speakerSales/SERemote - Germany
+- [ ] https://www.wiz.io/careers/job/4651489006/senior-partner-solutions-architect?gh_jid=4651489006 | CrowdStrike-adjacent: Wiz | Senior Partner Solutions ArchitectSales/SERemote - USA
+- [ ] https://www.wiz.io/careers/job/4626685006/senior-partner-solutions-architect?gh_jid=4626685006 | CrowdStrike-adjacent: Wiz | Senior Partner Solutions ArchitectSales/SELondon, UK
+- [ ] https://www.wiz.io/careers/job/4665287006/senior-partner-solutions-architect-japan?gh_jid=4665287006 | CrowdStrike-adjacent: Wiz | Senior Partner Solutions Architect, JapanSales/SERemote - Japan
+- [ ] https://www.wiz.io/careers/job/4665304006/senior-solutions-engineer?gh_jid=4665304006 | CrowdStrike-adjacent: Wiz | Senior Solutions EngineerSales/SERemote - Japan
+- [ ] https://www.wiz.io/careers/job/4670829006/senior-solutions-engineer-melbourne?gh_jid=4670829006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer, MelbourneSales/SERemote - Australia
+- [ ] https://www.wiz.io/careers/job/4669569006/senior-solutions-engineer-north-india?gh_jid=4669569006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer - North IndiaSales/SEDelhi, India
+- [ ] https://www.wiz.io/careers/job/4670519006/senior-solutions-engineer-ny-nj-ct-strategic?gh_jid=4670519006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer, NY/NJ/CT StrategicSales/SENew York City
+- [ ] https://www.wiz.io/careers/job/4644320006/senior-solutions-engineer-public-sector?gh_jid=4644320006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer, Public SectorSales/SEWashington, D.C.
+- [ ] https://www.wiz.io/careers/job/4665295006/senior-solutions-engineer-south-india?gh_jid=4665295006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer - South IndiaSales/SEBengaluru, India
+- [ ] https://www.wiz.io/careers/job/4671788006/senior-solutions-engineer-south-korea?gh_jid=4671788006 | CrowdStrike-adjacent: Wiz | Senior Solutions Engineer, South KoreaSales/SERemote - South Korea
+- [ ] https://www.wiz.io/careers/job/4665474006/senior-technical-account-manager?gh_jid=4665474006 | CrowdStrike-adjacent: Wiz | Senior Technical Account ManagerTechnical Solutions Management/Technical Solutions Management Remote - Japan
+- [ ] https://www.wiz.io/careers/job/4657672006/senior-technical-account-manager-sydney?gh_jid=4657672006 | CrowdStrike-adjacent: Wiz | Senior Technical Account Manager, SydneyTechnical Solutions Management/Technical Solutions Management Remote - Australia
+- [ ] https://www.wiz.io/careers/job/4665302006/solutions-engineer?gh_jid=4665302006 | CrowdStrike-adjacent: Wiz | Solutions EngineerSales/SERemote - Japan
+- [ ] https://www.wiz.io/careers/job/4665292006/solutions-engineer?gh_jid=4665292006 | CrowdStrike-adjacent: Wiz | Solutions EngineerSales/SERemote - Switzerland
+- [ ] https://www.wiz.io/careers/job/4665622006/solutions-engineer-growth-west?gh_jid=4665622006 | CrowdStrike-adjacent: Wiz | Solutions Engineer, Growth - WestSales/SERemote - USA
+- [ ] https://www.wiz.io/careers/job/4401485006/solutions-engineer-israel?gh_jid=4401485006 | CrowdStrike-adjacent: Wiz | Solutions Engineer, Israel Sales/SETel Aviv
+- [ ] https://www.wiz.io/careers/job/4629453006/solutions-engineer-mid-enterprise-bay-area?gh_jid=4629453006 | CrowdStrike-adjacent: Wiz | Solutions Engineer, Mid-Enterprise (Bay Area)Sales/SESan Francisco Bay Area
+- [ ] https://www.wiz.io/careers/job/4670187006/solutions-engineer-mid-enterprise-pac-nw?gh_jid=4670187006 | CrowdStrike-adjacent: Wiz | Solutions Engineer, Mid-Enterprise (PacNW)Sales/SESeattle, Washington
+- [ ] https://www.wiz.io/careers/job/4668817006/solutions-engineer-west-india?gh_jid=4668817006 | CrowdStrike-adjacent: Wiz | Solutions Engineer - West IndiaSales/SEMumbai, India
+- [ ] https://www.wiz.io/careers/job/4645902006/technical-account-manager?gh_jid=4645902006 | CrowdStrike-adjacent: Wiz | Technical Account ManagerTechnical Solutions Management/Technical Solutions Management Tel Aviv
+- [ ] https://www.wiz.io/careers/job/4648827006/technical-account-manager-central?gh_jid=4648827006 | CrowdStrike-adjacent: Wiz | Technical Account Manager (Central)Technical Solutions Management/Technical Solutions Management Remote - USA
+- [ ] https://www.wiz.io/careers/job/4672492006/technical-account-manager-french-speaking?gh_jid=4672492006 | CrowdStrike-adjacent: Wiz | Technical Account Manager, French speakingTechnical Solutions Management/Technical Solutions ManagementParis, France; Remote - France
+- [ ] https://www.wiz.io/careers/job/4666764006/technical-account-manager-mid-atlantic?gh_jid=4666764006 | CrowdStrike-adjacent: Wiz | Technical Account Manager (Mid-Atlantic)Technical Solutions Management/Technical Solutions ManagementRemote - USA
+- [ ] https://www.wiz.io/careers/job/4648829006/technical-account-manager-public-sector?gh_jid=4648829006 | CrowdStrike-adjacent: Wiz | Technical Account Manager - Public SectorTechnical Solutions Management/Technical Solutions Management Remote - USA
+- [ ] https://www.wiz.io/careers/job/4624342006/technical-account-manager-spanish-speaking?gh_jid=4624342006 | CrowdStrike-adjacent: Wiz | Technical Account Manager, Spanish speakingTechnical Solutions Management/Technical Solutions ManagementMadrid, Spain; Remote - Spain
+- [ ] https://www.wiz.io/careers/job/4627069006/technical-account-manager-swedish-speaking?gh_jid=4627069006 | CrowdStrike-adjacent: Wiz | Technical Account Manager, Swedish speakingTechnical Solutions Management/Technical Solutions ManagementRemote - Sweden; Stockholm, Sweden
+- [ ] https://www.wiz.io/careers/job/4673596006/technical-account-manager-tola?gh_jid=4673596006 | CrowdStrike-adjacent: Wiz | Technical Account Manager (TOLA)Technical Solutions Management/Technical Solutions ManagementRemote - USA
+- [ ] https://www.wiz.io/careers/job/4666817006/technical-account-manager-west?gh_jid=4666817006 | CrowdStrike-adjacent: Wiz | Technical Account Manager (West)Technical Solutions Management/Technical Solutions ManagementRemote - USA
+- [ ] https://www.poolside.ai/careers/forward-deployed-research-engineer-fdre-clearance--9b5e9618-5c7a-4d2f-89b3-60c0710fbd3e | Poolside | → Forward Deployed Research Engineer (FDRE - Clearance)
+- [ ] https://scale.com/careers/4631695005 | Scale AI-adjacent: Labelbox | Analytics Lead, GenAI MarketplaceNew York, NYApply Now
+- [ ] https://scale.com/careers/4636227005 | Scale AI-adjacent: Labelbox | Senior Forward Deployed Data Scientist/EngineerNew York, NYApply Now
+- [ ] https://scale.com/careers/4536659005 | Scale AI-adjacent: Labelbox | Applied AI Engineer, EnterpriseLondon, UKApply Now
+- [ ] https://scale.com/careers/4514173005 | Scale AI-adjacent: Labelbox | Applied AI Engineer, Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4413992005 | Scale AI-adjacent: Labelbox | Applied AI Engineer, Global Public SectorLondon, UKApply Now
+- [ ] https://scale.com/careers/4602177005 | Scale AI-adjacent: Labelbox | Forward Deployed AI Engineering Manager, Enterprise New York, NYApply Now
+- [ ] https://scale.com/careers/4589592005 | Scale AI-adjacent: Labelbox | Forward Deployed AI Engineering Manager, GenAI ApplicationsLondon, UKApply Now
+- [ ] https://scale.com/careers/4593571005 | Scale AI-adjacent: Labelbox | Forward Deployed Engineer, GenAI New York, NYApply Now
+- [ ] https://scale.com/careers/4676600005 | Scale AI-adjacent: Labelbox | Full-Stack Software Engineer, (Forward Deployed), GPSDoha, QatarApply Now
+- [ ] https://scale.com/careers/4676602005 | Scale AI-adjacent: Labelbox | Full-Stack Software Engineer, (Forward Deployed), GPSDubai, UAEApply Now
+- [ ] https://scale.com/careers/4665557005 | Scale AI-adjacent: Labelbox | Infrastructure Software Engineer, Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4671740005 | Scale AI-adjacent: Labelbox | Principal AI Ops Architect, GPSLondon, UKApply Now
+- [ ] https://scale.com/careers/4597399005 | Scale AI-adjacent: Labelbox | Senior Forward Deployed AI Engineer, Enterprise New York, NYApply Now
+- [ ] https://scale.com/careers/4676606005 | Scale AI-adjacent: Labelbox | Senior Full-Stack Software Engineer, (Forward Deployed), GPSDoha, QatarApply Now
+- [ ] https://scale.com/careers/4673310005 | Scale AI-adjacent: Labelbox | Senior Full-Stack Software Engineer, (Forward Deployed), GPSLondon, UKApply Now
+- [ ] https://scale.com/careers/4676608005 | Scale AI-adjacent: Labelbox | Senior Full-Stack Software Engineer, (Forward Deployed), GPSDubai, UAEApply Now
+- [ ] https://scale.com/careers/4653827005 | Scale AI-adjacent: Labelbox | Senior Software Engineer, Agentic Data ProductsSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4591298005 | Scale AI-adjacent: Labelbox | Senior Software Engineer, GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4676936005 | Scale AI-adjacent: Labelbox | Software Engineer, AI Developer ToolingNew York, NYApply Now
+- [ ] https://scale.com/careers/4683689005 | Scale AI-adjacent: Labelbox | Staff Applied AI Engineer, Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4676610005 | Scale AI-adjacent: Labelbox | Staff Full-Stack Software Engineer, (Forward Deployed), GPSLondon, UKApply Now
+- [ ] https://scale.com/careers/4673314005 | Scale AI-adjacent: Labelbox | Staff FullStack Software Engineer, (Forward Deployed), GPSDoha, QatarApply Now
+- [ ] https://scale.com/careers/4518088005 | Scale AI-adjacent: Labelbox | Staff Software Engineer, AI Developer Tooling New York, NYApply Now
+- [ ] https://scale.com/careers/4569678005 | Scale AI-adjacent: Labelbox | Staff Software Engineer, Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4670805005 | Scale AI-adjacent: Labelbox | Technical Accounting and Reporting ManagerSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4675758005 | Scale AI-adjacent: Labelbox | Product Marketing Lead, GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4282118005 | Scale AI-adjacent: Labelbox | Strategic Projects Lead, Generative AINew York, NYApply Now
+- [ ] https://scale.com/careers/4609736005 | Scale AI-adjacent: Labelbox | AI Product ManagerSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4651491005 | Scale AI-adjacent: Labelbox | AI Product Manager, InsightsSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4673051005 | Scale AI-adjacent: Labelbox | Forward Deployed Product Manager, EnterpriseNew York, NYApply Now
+- [ ] https://scale.com/careers/4644742005 | Scale AI-adjacent: Labelbox | Product ManagerLondon, UKApply Now
+- [ ] https://scale.com/careers/4589749005 | Scale AI-adjacent: Labelbox | Product Manager of AI Applications, Global Public SectorDubai, UAEApply Now
+- [ ] https://scale.com/careers/4650514005 | Scale AI-adjacent: Labelbox | Product Manager of AI Applications, Global Public SectorRiyadh, Saudi ArabiaApply Now
+- [ ] https://scale.com/careers/4675842005 | Scale AI-adjacent: Labelbox | Product Manager, Gen AI PlatformSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4612403005 | Scale AI-adjacent: Labelbox | Staff Product Manager, Agentic PlatformWashington, DCApply Now
+- [ ] https://scale.com/careers/4683446005 | Scale AI-adjacent: Labelbox | Staff Technical Product ManagerSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4636248005 | Scale AI-adjacent: Labelbox | Engagement Manager (Homeland Layered Defense), Public SectorColorado Springs, COApply Now
+- [ ] https://scale.com/careers/4667833005 | Scale AI-adjacent: Labelbox | Engagement Manager, Public SectorColorado Springs, COApply Now
+- [ ] https://scale.com/careers/4518690005 | Scale AI-adjacent: Labelbox | Field Engineer, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4674529005 | Scale AI-adjacent: Labelbox | Field Engineering Manager, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4648363005 | Scale AI-adjacent: Labelbox | GenAI Strategic Projects Lead, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4670064005 | Scale AI-adjacent: Labelbox | Product Manager, Data EngineWashington, DCApply Now
+- [ ] https://scale.com/careers/4631848005 | Scale AI-adjacent: Labelbox | Senior Machine Learning Engineer - Model Evaluations, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4281519005 | Scale AI-adjacent: Labelbox | Senior Machine Learning Engineer, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4363623005 | Scale AI-adjacent: Labelbox | Software Engineer, Frontier AI InfrastructureWashington, DCApply Now
+- [ ] https://scale.com/careers/4663481005 | Scale AI-adjacent: Labelbox | Solutions Engineer (Clearance Required)Washington, DCApply Now
+- [ ] https://scale.com/careers/4667852005 | Scale AI-adjacent: Labelbox | Technical Program Manager, Public SectorColorado Springs, COApply Now
+- [ ] https://scale.com/careers/4625345005 | Scale AI-adjacent: Labelbox | Machine Learning Research Engineer, Agent Data Foundation - Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4629589005 | Scale AI-adjacent: Labelbox | Evals Engineer, Applied AINew York, NYApply Now
+- [ ] https://scale.com/careers/4413274005 | Scale AI-adjacent: Labelbox | Machine Learning Engineer, Global Public SectorLondon, UKApply Now
+- [ ] https://scale.com/careers/4625344005 | Scale AI-adjacent: Labelbox | Machine Learning Research Engineer, Agents - Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4490301005 | Scale AI-adjacent: Labelbox | Machine Learning Research Engineer, GenAI Applied MLNew York, NYApply Now
+- [ ] https://scale.com/careers/4625341005 | Scale AI-adjacent: Labelbox | Machine Learning Systems Research Engineer, Agent Post-training - Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4520320005 | Scale AI-adjacent: Labelbox | Senior AI Infrastructure Engineer, Model Serving PlatformNew York, NYApply Now
+- [ ] https://scale.com/careers/4658162005 | Scale AI-adjacent: Labelbox | Senior/Staff Machine Learning Engineer, General Agents, Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4625337005 | Scale AI-adjacent: Labelbox | Staff Machine Learning Research Engineer, Agent Post-training - Enterprise GenAINew York, NYApply Now
+- [ ] https://scale.com/careers/4640096005 | Scale AI-adjacent: Labelbox | Solutions Engineer, RoboticsSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4686014005 | Scale AI-adjacent: Labelbox | Account Executive, Saudi ArabiaRiyadh, Saudi ArabiaApply Now
+- [ ] https://scale.com/careers/4646946005 | Scale AI-adjacent: Labelbox | Enterprise Account ExecutiveSan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4554440005 | Scale AI-adjacent: Labelbox | Solutions Engineer, EnterpriseNew York, NYApply Now
+- [ ] https://scale.com/careers/4642876005 | Scale AI-adjacent: Labelbox | Solutions Engineer, EnterpriseLondon, UKApply Now
+- [ ] https://www.weareroku.com/jobs/senior-product-manager-data-onboarding-integration-seattle-washington-united-states | Roku | Senior Product Manager, Data Onboarding & Integration
+- [ ] https://www.weareroku.com/jobs/associate-product-manager-ad-experiences-austin-texas-united-states | Roku | Associate Product Manager, Ad Experiences
+- [ ] https://www.lifeatcanva.com/en/jobs/6000000001003945/machine-learning-engineer-training-optimization/ | Canva | Machine Learning Engineer (Training Optimization)
+- [ ] https://grab.careers/en/jobs/744000121639307/senior-machine-learning-engineer/ | Grab Holdings | Senior Machine Learning Engineer
+- [ ] https://helsing.ai/jobs/4334849101 | Helsing | PositionAI Research Engineer - AI SafetyTypeFull-timeLocationBerlin; London; Munich
+- [ ] https://helsing.ai/jobs/4334842101 | Helsing | PositionAI Research Engineer - Computer VisionTypeFull-timeLocationBerlin; London; Munich
+- [ ] https://helsing.ai/jobs/4766708101 | Helsing | PositionAI Research Engineer - Foundation ModelsTypeFull-timeLocationBerlin; London; Munich; Paris
+- [ ] https://helsing.ai/jobs/4778869101 | Helsing | PositionAI Research Engineer - ML EngineeringTypeFull-timeLocationBerlin; London; Munich
+- [ ] https://helsing.ai/jobs/4676357101 | Helsing | PositionAI Research Engineer - Reinforcement LearningTypeFull-timeLocationBerlin; London; Munich
+- [ ] https://helsing.ai/jobs/4423924101 | Helsing | PositionAI Research Engineer - RoboticsTypeFull-timeLocationBarcelona; Paris
+- [ ] https://helsing.ai/jobs/4372802101 | Helsing | PositionAI Research Engineer - Signal ProcessingTypeFull-timeLocationBerlin; Munich
+- [ ] https://careers.snowflake.com/us/en/job/SNCOUSA2A02CF01A5B4E4CB7C940E1C384EE3BEXTERNALENUSB6E0F4A77E694C92B3CC13D018BBABE9/Principal-Software-Engineer-AI-Poland | Databricks-adjacent: Snowflake AI | Principal Software Engineer - AI Poland
+- [ ] https://careers.snowflake.com/us/en/job/SNCOUSB8EFD01DFD044326973FEF3B36968FD0EXTERNALENUS15390CE2D71D44C7BF55E9D7CFCF11A5/Enterprise-Account-Executive-Expansion | Databricks-adjacent: Snowflake AI | Enterprise Account Executive - Expansion
+- [ ] https://www.revolut.com/careers/team/business-development/ | Revolut | Business Development17 open positions
+- [ ] https://block.xyz/careers/jobs/5146407008 | Block | Business Development Manager Remote Melbourne, Australia
+- [ ] https://block.xyz/careers/jobs/5163992008 | Block | Business Development Manager Remote New York, NY, US
+- [ ] https://block.xyz/careers/jobs/5146351008 | Block | Business Development Manager Remote San Francisco, CA, US
+- [ ] https://block.xyz/careers/jobs/5175618008 | Block | Business Development Rep - AfterPay Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5191704008 | Block | Business Development Rep Associate Saint Louis, MO, US
+- [ ] https://block.xyz/careers/jobs/5191688008 | Block | Business Development Rep Associate Los Angeles, CA, US
+- [ ] https://block.xyz/careers/jobs/5191657008 | Block | Business Development Rep Associate Atlanta, GA, US
+- [ ] https://block.xyz/careers/jobs/5191728008 | Block | Business Development Rep Associate Seattle, WA, US
+- [ ] https://block.xyz/careers/jobs/5191716008 | Block | Business Development Rep Associate Scottsdale, AZ, US
+- [ ] https://block.xyz/careers/jobs/5191675008 | Block | Business Development Rep Associate DC Metro, US
+- [ ] https://block.xyz/careers/jobs/5123801008 | Block | Business Development Rep Associate Remote Toronto, Ontario, Canada
+- [ ] https://block.xyz/careers/jobs/5191576008 | Block | Business Development Rep Associate Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5191557008 | Block | Business Development Rep Associate, New York City New York, NY, US
+- [ ] https://block.xyz/careers/jobs/4746707008 | Block | Enterprise Account Executive Remote New York, NY, US
+- [ ] https://block.xyz/careers/jobs/5123515008 | Block | Enterprise Account Executive Remote Toronto, Ontario, Canada
+- [ ] https://block.xyz/careers/jobs/5183214008 | Block | Field Sales Account Executive, Adelaide Remote Adelaide, Australia
+- [ ] https://block.xyz/careers/jobs/4987169008 | Block | Field Sales Account Executive, Brisbane Remote Brisbane, Australia
+- [ ] https://block.xyz/careers/jobs/5113920008 | Block | Field Sales Account Executive, Hobart Remote Hobart, Australia
+- [ ] https://block.xyz/careers/jobs/5175767008 | Block | Field Sales Account Executive: Kelowna, Okanagan BC Remote Vancouver, British Columbia, Canada
+- [ ] https://block.xyz/careers/jobs/5175755008 | Block | Field Sales Account Executive: Vancouver Island, Victoria, BC Remote Vancouver, British Columbia, Canada
+- [ ] https://block.xyz/careers/jobs/5108431008 | Block | Head of Enterprise Sales, North America Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/4977068008 | Block | Inside Sales Account Executive Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5183383008 | Block | Inside Sales Account Executive, Melbourne Remote Melbourne, Australia
+- [ ] https://block.xyz/careers/jobs/5183164008 | Block | Inside Sales Account Executive, Sydney Remote Sydney, Australia
+- [ ] https://block.xyz/careers/jobs/5181755008 | Block | Lead Solutions Engineer Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5166097008 | Block | Senior Account Executive Remote New York, NY, US
+- [ ] https://block.xyz/careers/jobs/5158242008 | Block | Senior Account Executive Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5190091008 | Block | Senior Sales Account Executive Remote Baltimore, MD, US
+- [ ] https://block.xyz/careers/jobs/5190095008 | Block | Senior Sales Account Executive Remote Washington, DC, US
+- [ ] https://block.xyz/careers/jobs/5190181008 | Block | Senior Sales Account Executive Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5190086008 | Block | Senior Sales Account Executive Remote Boston, MA, US
+- [ ] https://block.xyz/careers/jobs/5190085008 | Block | Senior Sales Account Executive Remote Hoboken, NJ, US
+- [ ] https://block.xyz/careers/jobs/5190083008 | Block | Senior Sales Account Executive Remote New York, NY, US
+- [ ] https://block.xyz/careers/jobs/5188521008 | Block | Senior Sales Account Executive Remote Philadelphia, PA, US
+- [ ] https://block.xyz/careers/jobs/5188514008 | Block | Senior Sales Account Executive Remote Atlanta, GA, US
+- [ ] https://block.xyz/careers/jobs/5192738008 | Block | Senior Sales Account Executive Remote Seattle, WA, US
+- [ ] https://block.xyz/careers/jobs/5192754008 | Block | Senior Sales Account Executive Remote Phoenix, AZ, US
+- [ ] https://block.xyz/careers/jobs/5192759008 | Block | Senior Sales Account Executive Remote Chicago, IL, US
+- [ ] https://block.xyz/careers/jobs/5192760008 | Block | Senior Sales Account Executive Remote Los Angeles, CA, US
+- [ ] https://block.xyz/careers/jobs/5192764008 | Block | Senior Sales Account Executive Remote Miami, FL, US
+- [ ] https://block.xyz/careers/jobs/5172117008 | Block | Senior Solutions Engineer Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5183191008 | Block | SMB Sales Account Executive - Canada Toronto, Ontario, Canada
+- [ ] https://block.xyz/careers/jobs/5181690008 | Block | Solutions Engineer Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5187354008 | Block | Solutions Engineer Remote London, UK
+- [ ] https://block.xyz/careers/jobs/4684349008 | Block | Staff Solutions Engineer Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/4918639008 | Block | Staff Solutions Engineer Remote New York, NY, US
+- [ ] https://block.xyz/careers/jobs/5012298008 | Block | Staff Solutions Engineer Remote Melbourne, Australia
+- [ ] https://block.xyz/careers/jobs/5038746008 | Block | Staff Solutions Engineer Remote Sydney, Australia
+- [ ] https://block.xyz/careers/jobs/5183719008 | Block | Strategic Account Manager, Food and Beverage Salt Lake City, UT, US
+- [ ] https://block.xyz/careers/jobs/5146424008 | Block | Strategic Technical Account Specialist Remote Bay Area, CA, US
+- [ ] https://block.xyz/careers/jobs/5183263008 | Block | Territory Account Executive Remote Quebec City, Quebec, Canada
+- [ ] https://block.xyz/careers/jobs/5183373008 | Block | Territory Account Executive Remote Halifax, Nova Scotia, Canada
+- [ ] https://block.xyz/careers/jobs/5146241008 | Block | Territory Account Executive Remote Atlanta, GA, US
+- [ ] https://block.xyz/careers/jobs/5175249008 | Block | Territory Account Executive, Belfast Remote Belfast, UK
+- [ ] https://block.xyz/careers/jobs/5174855008 | Block | Territory Account Executive, Birmingham Remote Birmingham, UK
+- [ ] https://block.xyz/careers/jobs/5183178008 | Block | Territory Account Executive, Brisbane Remote Brisbane, Australia
+- [ ] https://block.xyz/careers/jobs/5188371008 | Block | Territory Account Executive - Calgary, Alberta Remote Calgary, Alberta, Canada
+- [ ] https://block.xyz/careers/jobs/5183403008 | Block | Territory Account Executive, Canberra Remote Sydney, Australia
+- [ ] https://block.xyz/careers/jobs/5120012008 | Block | Territory Account Executive, Central South Remote Lake Charles, LA, US
+- [ ] https://block.xyz/careers/jobs/5181631008 | Block | Territory Account Executive, Chicago Remote Chicago, IL, US
+- [ ] https://block.xyz/careers/jobs/4987029008 | Block | Territory Account Executive, Denver Remote Denver, CO, US
+- [ ] https://www.ai21.com/careers/deep-learning-engineer/A7.058/ | AI21 Labs | Deep Learning Engineer Full-time Tel Aviv-Yafo
+- [ ] https://www.twilio.com/careers/job/1099553117162 | Twilio | Strategic Account Executive 3SalesRemote - USRemotePosted 4 days ago
+- [ ] https://www.twilio.com/careers/job/1099553114060 | Twilio | Staff, Product ManagerProduct ManagementRemote - USRemotePosted 5 days ago
+- [ ] https://www.twilio.com/careers/job/1099553019247 | Twilio | Technical Administrator 2Solutions EngineeringRemote - IndiaRemotePosted 9 days ago
+- [ ] https://www.twilio.com/careers/job/1099552854134 | Twilio | Salesforce Technical AdministratorSolutions EngineeringRemote - CanadaRemotePosted 13 days ago
+- [ ] https://www.twilio.com/careers/job/1099549995199 | Twilio | Senior Product Manager - Enterprise AIService OperationsRemote - USRemotePosted 7 months ago
+- [ ] https://careers.qnityelectronics.com/us/en/job/249057W/Technical-Sales | Qnity Electronics | Technical Sales
+- [ ] https://www.besi.com/fileadmin/data/Jobs/Switzerland/Computer_Vision_Machine_Learning_Engineer_Maerz_2026.pdf | BE Semiconductor | Computer Vision & Machine Learning Engineer
+- [ ] https://elevenlabs.io/careers/3466ba20-f61f-4a51-a1ee-5a24a2217fa8/enterprise-solutions-engineer-brazil | ElevenLabs | Enterprise Solutions Engineer - Brazil RemoteBrazil
+- [ ] https://elevenlabs.io/careers/b95f7f0b-f22f-4fc4-9d9f-87f5485b0a1f/enterprise-solutions-engineer-eu-german-speaking | ElevenLabs | Enterprise Solutions Engineer - EU (German Speaking)RemoteGermany+9 more
+- [ ] https://elevenlabs.io/careers/4509df6f-b839-44d6-b31f-d7f364cec949/enterprise-solutions-engineer-europe | ElevenLabs | Enterprise Solutions Engineer - EuropeRemoteUnited Kingdom+7 more
+- [ ] https://elevenlabs.io/careers/ce00fe7b-a93a-436b-bd5e-2eff87c48f23/enterprise-solutions-engineer-france | ElevenLabs | Enterprise Solutions Engineer - FranceFrance
+- [ ] https://elevenlabs.io/careers/46bad7dc-c8d7-403d-8b10-a2d71c005384/enterprise-solutions-engineer-latam | ElevenLabs | Enterprise Solutions Engineer - LATAM RemoteMexico
+- [ ] https://elevenlabs.io/careers/81f53be2-dd0e-433d-94bf-d506973be1ed/enterprise-solutions-engineer-mexico | ElevenLabs | Enterprise Solutions Engineer - MexicoRemoteMexico
+- [ ] https://elevenlabs.io/careers/275f43d0-b62d-401d-830c-7c1ac0e688aa/enterprise-solutions-engineer-north-america | ElevenLabs | Enterprise Solutions Engineer - North AmericaRemoteUnited States+3 more
+- [ ] https://elevenlabs.io/careers/5d01b08d-a300-4f29-93e4-039147d7ddd7/enterprise-solutions-engineer-oceania | ElevenLabs | Enterprise Solutions Engineer - OceaniaRemoteAustralia+1 more
+- [ ] https://elevenlabs.io/careers/b081fafb-3659-4bf6-8e87-eb5ccc3ff234/enterprise-solutions-engineer-spain | ElevenLabs | Enterprise Solutions Engineer - SpainRemoteSpain
+- [ ] https://elevenlabs.io/careers/6c4c57c1-ec72-42ba-af3a-eb7aebbde2e6/forward-deployed-engineer-software-engineer | ElevenLabs | Forward Deployed Engineer - Software EngineerRemoteSan Francisco+4 more
+- [ ] https://elevenlabs.io/careers/7664e3c4-2336-4d1a-90cf-91d1268de10d/forward-deployed-engineer-software-engineer-spain | ElevenLabs | Forward Deployed Engineer - Software Engineer - SpainRemoteSpain
+- [ ] https://elevenlabs.io/careers/fb1fd9cc-bd6d-4895-be29-4bc37d0c31a0/solutions-engineer-india | ElevenLabs | Solutions Engineer - IndiaRemoteIndia
+- [ ] https://elevenlabs.io/careers/ecc3677a-c09a-4a8e-8afa-11dbfbf08b1c/account-executive-australia-new-zealand | ElevenLabs | Account Executive - Australia & New Zealand RemoteAustralia
+- [ ] https://elevenlabs.io/careers/b16fee34-782a-47e3-85f4-7b3d683fc938/account-executive-dach-commercial | ElevenLabs | Account Executive - DACH - CommercialRemoteGermany+2 more
+- [ ] https://elevenlabs.io/careers/90873fda-95c3-4d21-bae8-c5a30f5b7ac8/account-executive-india | ElevenLabs | Account Executive - India RemoteIndia
+- [ ] https://elevenlabs.io/careers/592954c4-0c40-4198-9fa3-2ed82a84518f/account-executive-korea | ElevenLabs | Account Executive - Korea RemoteKorea
+- [ ] https://elevenlabs.io/careers/3953e70b-86e8-47a0-9300-3113f64f5d44/account-executive-latam | ElevenLabs | Account Executive - LATAMRemoteMexico+1 more
+- [ ] https://elevenlabs.io/careers/997098bc-5047-4929-ae0f-74ff4d61d362/account-executive-middle-east | ElevenLabs | Account Executive - Middle EastRemoteUAE
+- [ ] https://elevenlabs.io/careers/144dafdb-03aa-46ff-8555-a16ffec52abc/account-executive-north-america-corporate | ElevenLabs | Account Executive - North America - CorporateRemoteSan Francisco+1 more
+- [ ] https://elevenlabs.io/careers/aa87b7bf-2fd5-4d94-9673-142f6349cf9e/account-executive-north-america-mid-market | ElevenLabs | Account Executive - North America - Mid-MarketRemoteUnited States+2 more
+- [ ] https://elevenlabs.io/careers/b89ff518-824e-4736-a4c7-c68ea3b6b62f/account-executive-north-america-strategic | ElevenLabs | Account Executive - North America - StrategicNew YorkSan Francisco
+- [ ] https://elevenlabs.io/careers/b647ad26-3e3a-4e0b-8ef4-6bab2cacd5c7/account-executive-north-asia | ElevenLabs | Account Executive - North Asia RemoteSingapore
+- [ ] https://elevenlabs.io/careers/f0d1e869-4874-45af-9bc3-81479d88565b/account-executive-southeast-asia | ElevenLabs | Account Executive - Southeast Asia Singapore
+- [ ] https://elevenlabs.io/careers/d961d827-4529-4c70-9eff-c521b8923744/account-executive-uki-enterprise | ElevenLabs | Account Executive - UK/I - EnterpriseRemoteUnited Kingdom+1 more
+- [ ] https://elevenlabs.io/careers/979a591e-8767-4141-aadb-357ec1ce96df/account-executive-uki-mid-market | ElevenLabs | Account Executive - UK/I - Mid-MarketRemoteUnited Kingdom+1 more
+- [ ] https://elevenlabs.io/careers/38c67306-4f88-452a-b956-a941e4c2e65e/enterprise-account-executive-france | ElevenLabs | Enterprise Account Executive - FranceFrance
+- [ ] https://elevenlabs.io/careers/7a4b3411-7e0f-4197-82bd-0a4017146d19/enterprise-account-executive-mexico | ElevenLabs | Enterprise Account Executive - MexicoRemoteMexico
+- [ ] https://elevenlabs.io/careers/1034a604-b714-428b-a9fd-fa8c0cd795cf/enterprise-account-executive-spain | ElevenLabs | Enterprise Account Executive - SpainRemoteSpain
+- [ ] https://elevenlabs.io/careers/68a1ad0b-d74e-4ebe-b6d0-877c53c9df7f/enterprise-account-executive-united-states-government | ElevenLabs | Enterprise Account Executive - United States - GovernmentRemoteWashington, D.C.
+- [ ] https://elevenlabs.io/careers/0f27b962-8ff2-4e1b-b138-769a50391800/gtm-agentic-enablement-lead | ElevenLabs | GTM Agentic Enablement LeadRemoteUnited Kingdom+1 more
+- [ ] https://www.qodo.ai/careers/co/tel-aviv/A6.868/account-executive/all | Codium | Account Executive Sales Tel-Aviv
+- [ ] https://www.qodo.ai/careers/co/united-states/94.46C/account-executive-commercial-accounts/all | Codium | Account Executive – Commercial Accounts Sales United States
+- [ ] https://www.qodo.ai/careers/co/united-states/7C.46A/account-executive-enterprise/all | Codium | Account Executive – Enterprise Sales United States
+- [ ] https://www.qodo.ai/careers/co/united-states/49.56E/solutions-engineer/all | Codium | Solutions Engineer Sales United States
+- [ ] https://www.qodo.ai/careers/co/tel-aviv/2E.66D/solutions-engineer/all | Codium | Solutions Engineer Sales Tel-Aviv
+- [ ] https://www.deel.com/careers/position/?ashby_jid=21f3bffc-314a-4b45-86be-4f152342babb | Deel | Account Executive, EnterpriseUKNew Business SalesFullTime
+- [ ] https://www.deel.com/careers/position/?ashby_jid=269e6266-838b-4cb5-85f9-290549e885e0 | Deel | Senior Product Manager - People List & Org ChartEMEAProductFullTime
+- [ ] https://www.deel.com/careers/position/?ashby_jid=1266ddd2-1ea4-4f36-8c5e-07782219575b | Deel | Account Executive, MM | Greater ChinaMultiple LocationsSalesFullTime
+- [ ] https://www.deel.com/careers/position/?ashby_jid=6417d7c8-803e-4afd-9c83-cef64c00ab7a | Deel | Technical Sales Solutions Consultant | Ingénieur(e...CanadaSolution EngineeringFullTime
+- [ ] https://www.deel.com/careers/position/?ashby_jid=28e0c257-a733-4f3f-82c8-454607763d9f | Deel | Solutions Engineer AMERUSASolution EngineeringFullTime
+- [ ] https://www.blip.pt/jobs/jr138379/product-manager/ | Blip.ai | Product Manager
+- [ ] https://www.onetrust.com/careers/account-executive-enterprise-6348012/ | OneTrust | Account Executive, Enterprise Sales New York, New York Learn More & Apply
+- [ ] https://www.onetrust.com/careers/senior-principal-software-engineer-ai-governance-7407242/ | OneTrust | Senior Principal Software Engineer - AI Governance Engineering San Francisco, California Learn More & Apply
+- [ ] https://www.onetrust.com/careers/senior-principal-software-engineer-ai-governance-7350546/ | OneTrust | Senior Principal Software Engineer - AI Governance Engineering Atlanta, Georgia Learn More & Apply
+- [ ] https://www.onetrust.com/careers/account-executive-enterprise-dach-7444203/ | OneTrust | Account Executive, Enterprise DACH Sales Munich, Germany Learn More & Apply
+- [ ] https://www.onetrust.com/careers/senior-solution-engineer-7597340/ | OneTrust | Senior Solution Engineer Sales Engineering Madrid, Spain Learn More & Apply
+- [ ] https://jobs.ashbyhq.com/runway-ml/3eca3297-ef53-4226-bad0-1292940f7103 | Runway-adjacent: Lumen Orbis | Technical Accounting Manager
+- [ ] https://jobs.ashbyhq.com/runway-ml/5e8d6c9b-0d30-4bb2-90a9-df7d937aa44e | Runway-adjacent: Lumen Orbis | Research Science Manager, Foundation Models
+- [ ] https://jobs.ashbyhq.com/runway-ml/0a79e4be-d7ea-4d43-9400-33a23f552b81 | Runway-adjacent: Lumen Orbis | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/runway-ml/8656971e-a80c-4882-8cc3-62b92b162077 | Runway-adjacent: Lumen Orbis | Enterprise Account Executive, London
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/4626694007 | Together AI | Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/4385540007 | Together AI | Machine Learning Engineer - Inference
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/5028862007 | Together AI | Senior AI Infrastructure Engineer
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/5088817007 | Together AI | Senior Machine Learning Engineer, Voice AI 
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/5073769007 | Together AI | Software Engineer - Storage & Observability (Early Career)
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/4627491007 | Together AI | Solutions Architect 
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/5028749007 | Together AI | Staff Engineer, Distributed Storage,HPC & AI Infrastructure
+- [ ] https://jobs.ashbyhq.com/decagon/67c794bd-e423-44b2-8b80-d7b759994cde | Decagon | Enterprise Account Executive 
+- [ ] https://jobs.ashbyhq.com/decagon/ca69cd40-646d-44a8-a052-6f40294b123b | Decagon | Director, Enterprise Sales
+- [ ] https://jobs.ashbyhq.com/decagon/dcf9b561-f2fb-422b-88a9-33ce76e96608 | Decagon | Senior Agent Product Manager
+- [ ] https://jobs.ashbyhq.com/decagon/63dd8fb8-8c5b-44e4-8371-5ad453b56eb8 | Decagon | Senior Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/decagon/d790a2a2-958d-4f49-96ed-adbd68d2e6ce | Decagon | Product Manager
+- [ ] https://jobs.ashbyhq.com/decagon/60f9082c-5ab9-49ef-8731-c86707b45dfa | Decagon | Associate Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/decagon/9ffd6359-d0ff-4ab6-b210-0fb05d2c459c | Decagon | Field Engineer
+- [ ] https://jobs.ashbyhq.com/decagon/0563a376-0881-48c6-92ae-d1ac4ee58765 | Decagon | Product Manager, Voice Agent
+- [ ] https://jobs.ashbyhq.com/decagon/a81a1a50-d497-4dff-8105-c7a890310396 | Decagon | Solutions Architect - Infrastructure 
+- [ ] https://jobs.ashbyhq.com/decagon/c6201aeb-a752-4187-ac7f-654fc86bcdf8 | Decagon | Director of Solutions Engineering, Strategic
+- [ ] https://jobs.ashbyhq.com/decagon/a60722ec-7a38-4d1b-a603-568f1cec92c4 | Decagon | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/decagon/83267854-2ea8-4322-8ba3-88c2dcb086a5 | Decagon | Solutions Architect - Salesforce 
+- [ ] https://jobs.ashbyhq.com/decagon/3aa855e4-164b-4246-aaa0-b602339bfe06 | Decagon | Director of Customer Engineering, Agent Builder
+- [ ] https://jobs.ashbyhq.com/decagon/8c40fb7a-5f25-4112-a1df-f1c22b81042c | Decagon | Customer Engineer, Agent Builder
+- [ ] https://jobs.ashbyhq.com/decagon/6321ea2f-4e21-4c18-8859-b4ef5489b6fe | Decagon | Product Manager, Research
+- [ ] https://jobs.ashbyhq.com/decagon/6f5de35a-e051-4c30-8acb-b01df8be6f54 | Decagon | Director of Solutions Engineering, Enterprise West
+- [ ] https://jobs.ashbyhq.com/decagon/7b1120a8-7973-4966-adb8-ea138a5d8062 | Decagon | Director of Solutions Engineering, Enterprise East
+- [ ] https://jobs.ashbyhq.com/decagon/6431a6f9-2ebe-4b68-beb6-200b42aeeca8 | Decagon | Strategic Solutions Engineer, East
+- [ ] https://jobs.ashbyhq.com/decagon/78745829-74ee-41cb-836c-480ca7bf9edc | Decagon | Strategic Solutions Engineer, West
+- [ ] https://jobs.ashbyhq.com/decagon/70102c75-0209-4818-aa93-ad009579e514 | Decagon | Business Development, Strategic Growth Lead
+- [ ] https://jobs.ashbyhq.com/decagon/502dbac0-66f2-4196-9dd7-c10bb4752b71 | Decagon | Business Development, Private Equity Lead
+- [ ] https://jobs.ashbyhq.com/decagon/95dadea4-8bd2-421a-bf3f-51c04e102ee2 | Decagon | Enterprise Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/decagon/060b5fd4-9962-491f-8116-4faa778500d7 | Decagon | Enterprise Solutions Engineer - LATAM
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4617438006 | Gong | Area Vice President, Enterprise Sales
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4619904006 | Gong | Commercial Account Executive
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4594118006 | Gong | Commercial Account Executive, DACH
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4655748006 | Gong | Commercial Account Executive - Financial Services & Healthcare
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4664543006 | Gong | Commercial Account Executive, Nordics
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4655626006 | Gong | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4618840006 | Gong | Enterprise Account Executive, ANZ
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4661626006 | Gong | Enterprise Account Executive - Financial Services
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4661344006 | Gong | Enterprise Account Executive, Financial Services
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4671828006 | Gong | Enterprise Account Executive - Healthcare 
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4660754006 | Gong | Global Head of Solutions Engineering
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4629232006 | Gong | Group Product Manager
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4627237006 | Gong | Mid-Market Account Executive
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4611310006 | Gong | Mid-Market Account Executive, DACH
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4591408006 | Gong | Mid Market Account Executive, Financial Services
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4655714006 | Gong | Mid-Market Account Executive - Financial Services & Healthcare
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4395205006 | Gong | Sales Engineer
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4610980006 | Gong | Senior Manager, Enterprise Sales EMEA
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4646101006 | Gong | Senior Manager, Enterprise Sales, EMEA
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4616751006 | Gong | Senior Product Manager
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4668011006 | Gong | Senior Product Manager - Enterprise & User Management
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4635849006 | Gong | Senior Product Manager - Forecast 
+- [ ] https://job-boards.greenhouse.io/gongio/jobs/4649057006 | Gong | Sr. Technical Accounting & Reporting Manager
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4970396008 | Cresta | Associate Conversational AI Designer
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4789124008 | Cresta | Director, Enterprise Sales, West
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4494927008 | Cresta | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5114438008 | Cresta | Enterprise Account Executive, APAC
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4981775008 | Cresta | Enterprise Account Executive, EMEA
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4906900008 | Cresta | Enterprise Solutions Engineer 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5099068008 | Cresta | Forward Deployed Engineering Manager
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4738837008 | Cresta | Forward Deployed Product Manager, AI Agent
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5068157008 | Cresta | Forward Deployed Product Manager - AI Agent (EMEA)
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4093613008 | Cresta | Machine Learning Engineer (AI Agents) 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5114374008 | Cresta | Platform Product Manager
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4759347008 | Cresta | Senior Forward Deployed Engineer (AI Agent)
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4595480008 | Cresta | Senior Forward Deployed Engineer (AI Agent) 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5137369008 | Cresta | Senior Forward Deployed Engineer (AI Agent) - Germany 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5097513008 | Cresta | Senior Forward Deployed Engineer (AI Agent) - UK
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4741283008 | Cresta | Senior Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4249943008 | Cresta | Senior Machine Learning Engineer 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5082808008 | Cresta | Senior Machine Learning Engineer -  Automatic Speech Recognition (ASR)
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5155675008 | Cresta | Senior Machine Learning Engineer - Automatic Speech Recognition (ASR)
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5082821008 | Cresta | Senior Machine Learning Engineer Automatic Speech Recognition (ASR)
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4964429008 | Cresta | Senior Solutions Architect
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5021027008 | Cresta | Solutions Engineer, EMEA
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4741284008 | Cresta | Staff Machine Learning Engineer 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/5106219008 | Cresta | Strategic Solutions Engineer, APAC 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4985070008 | Cresta | Strategic Solutions Engineer, East 
+- [ ] https://job-boards.greenhouse.io/cresta/jobs/4983651008 | Cresta | Strategic Solutions Engineer, West
+- [ ] https://coreweave.com/careers/job?4602115006&board=coreweave&gh_jid=4602115006 | CoreWeave | AI Engineer- Gen AI/SWE- Weights & Biases
+- [ ] https://coreweave.com/careers/job?4647796006&board=coreweave&gh_jid=4647796006 | CoreWeave | AI Native Account Executive
+- [ ] https://coreweave.com/careers/job?4651439006&board=coreweave&gh_jid=4651439006 | CoreWeave | AI Solutions Engineer, Post Sales Scale - W&B
+- [ ] https://coreweave.com/careers/job?4651106006&board=coreweave&gh_jid=4651106006 | CoreWeave | AI Solutions Engineer, Post Sales- W&B
+- [ ] https://coreweave.com/careers/job?4648208006&board=coreweave&gh_jid=4648208006 | CoreWeave | AI Solutions Engineer, Pre-Sales- W&B
+- [ ] https://coreweave.com/careers/job?4647802006&board=coreweave&gh_jid=4647802006 | CoreWeave | Enterprise Account Executive
+- [ ] https://coreweave.com/careers/job?4600646006&board=coreweave&gh_jid=4600646006 | CoreWeave | Global Account Executive, Weights & Biases
+- [ ] https://coreweave.com/careers/job?4670034006&board=coreweave&gh_jid=4670034006 | CoreWeave | Integration Engineer, People Technologies
+- [ ] https://coreweave.com/careers/job?4646276006&board=coreweave&gh_jid=4646276006 | CoreWeave | Principal Engineer, Storage
+- [ ] https://coreweave.com/careers/job?4611874006&board=coreweave&gh_jid=4611874006 | CoreWeave | Senior Engineer, Storage Control Plane
+- [ ] https://coreweave.com/careers/job?4647988006&board=coreweave&gh_jid=4647988006 | CoreWeave | Senior Enterprise Account Executive, UK + Benelux
+- [ ] https://coreweave.com/careers/job?4650861006&board=coreweave&gh_jid=4650861006 | CoreWeave | Senior Enterprise Account Executive - W&B
+- [ ] https://coreweave.com/careers/job?4673532006&board=coreweave&gh_jid=4673532006 | CoreWeave | Senior Product Manager, Compliance
+- [ ] https://coreweave.com/careers/job?4649824006&board=coreweave&gh_jid=4649824006 | CoreWeave | Senior Product Manager, Data
+- [ ] https://coreweave.com/careers/job?4673536006&board=coreweave&gh_jid=4673536006 | CoreWeave | Senior Product Manager, GTM
+- [ ] https://coreweave.com/careers/job?4652655006&board=coreweave&gh_jid=4652655006 | CoreWeave | Senior Product Manager, Security & Infra 
+- [ ] https://coreweave.com/careers/job?4671525006&board=coreweave&gh_jid=4671525006 | CoreWeave | Senior Software Engineer, Applied AI
+- [ ] https://coreweave.com/careers/job?4622652006&board=coreweave&gh_jid=4622652006 | CoreWeave | Senior Software Engineer (Full-Stack + Agentic AI)
+- [ ] https://coreweave.com/careers/job?4643524006&board=coreweave&gh_jid=4643524006 | CoreWeave | Senior Software Engineer, Storage Engineer
+- [ ] https://coreweave.com/careers/job?4622845006&board=coreweave&gh_jid=4622845006 | CoreWeave | Senior Solutions Architect - Weights & Biases
+- [ ] https://coreweave.com/careers/job?4649044006&board=coreweave&gh_jid=4649044006 | CoreWeave | Solutions Architect - HPC/AI/ML
+- [ ] https://coreweave.com/careers/job?4649036006&board=coreweave&gh_jid=4649036006 | CoreWeave | Solutions Architect - Kubernetes
+- [ ] https://coreweave.com/careers/job?4568528006&board=coreweave&gh_jid=4568528006 | CoreWeave | Solutions Architect- Networking
+- [ ] https://coreweave.com/careers/job?4568555006&board=coreweave&gh_jid=4568555006 | CoreWeave | Solutions Architect - Security
+- [ ] https://coreweave.com/careers/job?4568531006&board=coreweave&gh_jid=4568531006 | CoreWeave | Solutions Architect - Storage
+- [ ] https://coreweave.com/careers/job?4664429006&board=coreweave&gh_jid=4664429006 | CoreWeave | Sr. Engineer, Storage
+- [ ] https://coreweave.com/careers/job?4638816006&board=coreweave&gh_jid=4638816006 | CoreWeave | Staff AI & Agents Growth Product Manager
+- [ ] https://coreweave.com/careers/job?4669836006&board=coreweave&gh_jid=4669836006 | CoreWeave | Staff Engineer, Storage Control Plane
+- [ ] https://coreweave.com/careers/job?4612047006&board=coreweave&gh_jid=4612047006 | CoreWeave | Staff Engineer, Storage Engine
+- [ ] https://coreweave.com/careers/job?4663670006&board=coreweave&gh_jid=4663670006 | CoreWeave | Staff Engineer, Storage Engine 
+- [ ] https://coreweave.com/careers/job?4651535006&board=coreweave&gh_jid=4651535006 | CoreWeave | Staff Product Manager, Insights
+- [ ] https://coreweave.com/careers/job?4642612006&board=coreweave&gh_jid=4642612006 | CoreWeave | Staff Product Manager, Networking
+- [ ] https://coreweave.com/careers/job?4661474006&board=coreweave&gh_jid=4661474006 | CoreWeave | Storage Reliability Engineer
+- [ ] https://www.agilityrobotics.com/about/job-post?gh_jid=5830827004 | Agility Robotics | Systems Integration Engineer - SW Focused Issue Triage & RCA
+- [ ] https://boards.greenhouse.io/neuralink/jobs/5663271003?gh_jid=5663271003 | Neuralink | Machine Learning Engineer
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4674403006 | Figure AI | Deployment Engineer - Commercial Site Team
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4615918006 | Figure AI | Electrical Systems Integration Engineer – Head Subsystem
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4612710006 | Figure AI | Electrical Systems Integration Engineer – Power Systems
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4659175006 | Figure AI | Helix AI Engineer, Agentic Systems
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4345915006 | Figure AI | Helix AI Engineer, Data Infrastructure 
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4671699006 | Figure AI | Helix AI Engineer, Generative AI
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4671712006 | Figure AI | Helix AI Engineer, Modeling
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4671704006 | Figure AI | Helix AI Engineer, Pretraining
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4671707006 | Figure AI | Helix AI Engineer, Reinforcement Learning
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4649851006 | Figure AI | Helix AI Engineer, Robot Learning
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4660876006 | Figure AI | Helix AI Engineer, Tooling 
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4431092006 | Figure AI | Helix AI Engineer, Training Infrastructure
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4671703006 | Figure AI | Helix AI Engineer, Video Pretraining
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4618234006 | Figure AI | Software Integration Engineer
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4626247006 | Figure AI | Systems Integration Engineer - Actuation Systems
+- [ ] https://job-boards.greenhouse.io/figureai/jobs/4612612006 | Figure AI | Systems Integration Engineer - Hand Subsystem
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4660539005 | Glean | Commercial Account Executive, Australia
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4595937005 | Glean | Commercial Account Executive, Benelux
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4635139005 | Glean | Commercial Account Executive, Canada
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4595940005 | Glean | Commercial Account Executive, DACH
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4644028005 | Glean | Commercial Account Executive, Israel
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4671954005 | Glean | Commercial Account Executive, Japan
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4667175005 | Glean | Commercial Account Executive, Singapore
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4654572005 | Glean | Commercial Account Executive, UK/CEE
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4526633005 | Glean | Commercial Account Executive, West
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4672972005 | Glean | Corporate Account Executive
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4673564005 | Glean | Corporate Account Executive, Nashville
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4619072005 | Glean | Enterprise Account Executive
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4680477005 | Glean | Enterprise Account Executive, Atlanta
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4595900005 | Glean | Enterprise Account Executive, Benelux
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4677723005 | Glean | Enterprise Account Executive, Canada
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4680474005 | Glean | Enterprise Account Executive, Charlotte
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4595895005 | Glean | Enterprise Account Executive, DACH
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4644018005 | Glean | Enterprise Account Executive, Italy
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4672064005 | Glean | Enterprise Account Executive, Japan
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4676773005 | Glean | Enterprise  Account Executive, LATAM
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4680473005 | Glean | Enterprise Account Executive, Mid-Atlantic
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4595930005 | Glean | Enterprise Account Executive, Nordics
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4665752005 | Glean | Enterprise Account Executive, North Central
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4615117005 | Glean | Enterprise Account Executive, NYC
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4615635005 | Glean | Enterprise Account Executive, Ohio Valley
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4667184005 | Glean | Enterprise Account Executive, Singapore
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4652361005 | Glean | Enterprise Account Executive, UKI
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4651950005 | Glean | Forward Deployed Product Manager
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4659412005 | Glean | Founding Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4605215005 | Glean | Machine Learning Engineer, AI Assistant & Autonomous AI Agents
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4669417005 | Glean | Machine Learning Engineer, LLM Evals & Observability 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4006735005 | Glean | Machine Learning Engineer, Search Quality
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4685464005 | Glean | Partner Sales Manager 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4663045005 | Glean | Partner Solutions Architect
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4549192005 | Glean | Partner Solutions Engineer 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4007711005 | Glean | Product Manager
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4525297005 | Glean | Product Manager, Agent Security & Governance
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4525518005 | Glean | Product Manager, AI Quality
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4482380005 | Glean | Product Manager, Connectors
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4641940005 | Glean | Product Manager, Glean Protect (Security & Governance)
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4591195005 | Glean | Public Sector Solutions Engineer, SLED
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4636294005 | Glean | Senior Solutions Engineer, LATAM
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4616929005 | Glean | Software Engineer, Agentic Runtime 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4501783005 | Glean | Software Engineer, AI Infrastructure
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4605446005 | Glean | Software Engineer, AI & Security
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4508312005 | Glean | Solutions Architect 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4434258005 | Glean | Solutions Architect (PST/EST Customer hours)
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4676087005 | Glean | Solutions Engineering Manager
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4665150005 | Glean | Sr. Cloud Partner Sales Manager 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4633563005 | Glean | Strategic Account Executive
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4669991005 | Glean | Strategic Account Executive, New England
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4681664005 | Glean |  Strategic Account Executive, North Central
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4667186005 | Glean | Strategic Account Executive, Singapore
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4670095005 | Glean | Strategic Account Executive, Southeast 
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4676728005 | Glean | Strategic Account Executive, Switzerland
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4588653005 | Glean | Strategic Account Executive, Texas
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4664302005 | Glean | Strategic Federal Account Executive, Public Sector (DIB)
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4620264005 | Glean | Strategic Solutions Engineer, East
+- [ ] https://job-boards.greenhouse.io/gleanwork/jobs/4677083005 | Glean | Tech Lead Manager, Agentic Runtime 
+- [ ] https://jobs.ashbyhq.com/doppel/6dade527-6835-445f-b16b-a1c7f739077f | Doppel | Machine Learning Engineer, Detection
+- [ ] https://jobs.ashbyhq.com/doppel/de977d6f-43f4-4b20-9296-0ce052baac3c | Doppel | Product Manager
+- [ ] https://jobs.ashbyhq.com/doppel/4d333e57-490a-422a-a3db-100a1409c983 | Doppel | Field Solutions Architect
+- [ ] https://jobs.ashbyhq.com/doppel/1252e4d1-51b1-4782-86a2-6a51ef209caa | Doppel | Technical Account Manager
+- [ ] https://jobs.ashbyhq.com/listenlabs/46575790-384e-467b-8d5d-b78fa5485ee4 | Listen Labs | Account Executive, Enterprise GTM
+- [ ] https://jobs.ashbyhq.com/listenlabs/5f4cb358-f592-45fd-a196-2cd7b6abd0b6 | Listen Labs | Account Executive,  Emerging GTM
+- [ ] https://jobs.ashbyhq.com/listenlabs/f67f1521-ed0b-4185-94c1-fe60aef923f9 | Listen Labs | Founding Product Manager
+- [ ] https://jobs.ashbyhq.com/listenlabs/c5ac0e6f-2824-40c9-b10f-8370c3d53f59 | Listen Labs | Member of Technical Staff, Applied AI
+- [ ] https://careers.nebius.com/?gh_jid=4831149101 | Nebius Group | Account Executive AI Natives - DACH
+- [ ] https://careers.nebius.com/?gh_jid=4752553101 | Nebius Group | Account Executive - Benelux
+- [ ] https://careers.nebius.com/?gh_jid=4749482101 | Nebius Group | Account Executive - Middle East
+- [ ] https://careers.nebius.com/?gh_jid=4523348101 | Nebius Group | AI/ML Specialist Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4610654101 | Nebius Group | Business Development Representative 
+- [ ] https://careers.nebius.com/?gh_jid=4774590101 | Nebius Group | Business Development Representative - Israel
+- [ ] https://careers.nebius.com/?gh_jid=4775053101 | Nebius Group | Business Development Representative - Singapore
+- [ ] https://careers.nebius.com/?gh_jid=4775077101 | Nebius Group | Business Development Representative - UKI
+- [ ] https://careers.nebius.com/?gh_jid=4754143101 | Nebius Group | Customer Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4791850101 | Nebius Group | Field Engineer (Hardware Delivery) 
+- [ ] https://careers.nebius.com/?gh_jid=4825218101 | Nebius Group | Forward Deployed Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4812141101 | Nebius Group | Full Stack Developer (AI Infrastructure) Early Career
+- [ ] https://careers.nebius.com/?gh_jid=4785349101 | Nebius Group | Group Product Manager - Security
+- [ ] https://careers.nebius.com/?gh_jid=4835711101 | Nebius Group | Head of NA Partner Sales (NVIDIA)
+- [ ] https://careers.nebius.com/?gh_jid=4767844101 | Nebius Group | HPC Specialist Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4639672101 | Nebius Group |  Lead Cloud Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4812144101 | Nebius Group | ML Engineer - Life Sciences (Early Talent)   
+- [ ] https://careers.nebius.com/?gh_jid=4763927101 | Nebius Group | Partner Business Development Manager - ISV 
+- [ ] https://careers.nebius.com/?gh_jid=4776108101 | Nebius Group | Partner Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4773806101 | Nebius Group | Principal, Business Development - Physical AI
+- [ ] https://careers.nebius.com/?gh_jid=4774588101 | Nebius Group | Principal Solutions Architect - DACH 
+- [ ] https://careers.nebius.com/?gh_jid=4754102101 | Nebius Group | Principal Solutions Architect - France
+- [ ] https://careers.nebius.com/?gh_jid=4774468101 | Nebius Group | Principal Solutions Architect - UKI
+- [ ] https://careers.nebius.com/?gh_jid=4784791101 | Nebius Group | Product Manager - Channel Partners
+- [ ] https://careers.nebius.com/?gh_jid=4711796101 | Nebius Group | Product Manager - Security
+- [ ] https://careers.nebius.com/?gh_jid=4829977101 | Nebius Group | RVP, Enterprise Sales
+- [ ] https://careers.nebius.com/?gh_jid=4761591101 | Nebius Group | Senior Analyst (Agentic Search)
+- [ ] https://careers.nebius.com/?gh_jid=4809236101 | Nebius Group | Senior Applied AI Solutions Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4826233101 | Nebius Group | Senior Applied ML Engineer (Search)
+- [ ] https://careers.nebius.com/?gh_jid=4784782101 | Nebius Group | Senior Data Center Deployment Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4817254101 | Nebius Group | Senior Data Scientist (Applied AI / LLM)
+- [ ] https://careers.nebius.com/?gh_jid=4704805101 | Nebius Group | Senior ML Engineer (AI Research)
+- [ ] https://careers.nebius.com/?gh_jid=4754617101 | Nebius Group | Senior ML Engineer (Token Factory)
+- [ ] https://careers.nebius.com/?gh_jid=4790283101 | Nebius Group | Senior ML Engineer (Token Factory) 
+- [ ] https://careers.nebius.com/?gh_jid=4797092101 | Nebius Group | Senior ML Solutions Architect - Token Factory
+- [ ] https://careers.nebius.com/?gh_jid=4727805101 | Nebius Group | Senior Security Solutions Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4781733101 | Nebius Group | Senior Software Engineer (Storage Virtualization Team)
+- [ ] https://careers.nebius.com/?gh_jid=4812146101 | Nebius Group | Site Reliability Engineer (SRE) AI Infrastructure (Early Career)
+- [ ] https://careers.nebius.com/?gh_jid=4376580101 | Nebius Group | Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4774435101 | Nebius Group | Solutions Architect - DACH 
+- [ ] https://careers.nebius.com/?gh_jid=4774449101 | Nebius Group | Solutions Architect - France / Iberia
+- [ ] https://careers.nebius.com/?gh_jid=4774460101 | Nebius Group | Solutions Architect - United Kingdom
+- [ ] https://careers.nebius.com/?gh_jid=4778901101 | Nebius Group | Sr. Technical Product Manager - Databases
+- [ ] https://careers.nebius.com/?gh_jid=4826618101 | Nebius Group | Staff / Principal Applied AI Researcher – Agentic Search
+- [ ] https://careers.nebius.com/?gh_jid=4703401101 | Nebius Group | Strategic Account Executive - Enterprise
+- [ ] https://careers.nebius.com/?gh_jid=4770163101 | Nebius Group | Technical Product Manager - AI Cloud Network
+- [ ] https://careers.nebius.com/?gh_jid=4737052101 | Nebius Group | Technical Product Manager - Soperator
+- [ ] https://careers.nebius.com/?gh_jid=4829984101 | Nebius Group | Technical Sales Enablement Manager
+- [ ] https://careers.nebius.com/?gh_jid=4387617101 | Foxconn-adjacent: Nebius | AI/ML Specialist Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4791848101 | Foxconn-adjacent: Nebius | Field Engineer (Hardware Delivery) 
+- [ ] https://careers.nebius.com/?gh_jid=4766703101 | Foxconn-adjacent: Nebius | Partner Business Development Manager - ISV 
+- [ ] https://careers.nebius.com/?gh_jid=4773256101 | Foxconn-adjacent: Nebius | Partner Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4780713101 | Foxconn-adjacent: Nebius | Senior ML Engineer (Token Factory)
+- [ ] https://careers.nebius.com/?gh_jid=4648728101 | Foxconn-adjacent: Nebius | Senior ML Solutions Architect - Token Factory
+- [ ] https://jobs.ashbyhq.com/openrouter/22d85a56-5500-40a5-9913-c98558d77f41 | OpenRouter | Account Executive
+- [ ] https://jobs.ashbyhq.com/zapier/70a9e6aa-e054-4528-9308-0e473ff672aa | Zapier | Sales Engineer
+- [ ] https://jobs.ashbyhq.com/zapier/68b635ca-0d12-4b3c-9404-3cc2a2f99274 | Zapier | Account Executive, Enterprise
+- [ ] https://jobs.ashbyhq.com/zapier/48b2e343-dd61-474b-95b0-549626fb070e | Zapier | Account Executive, Large Enterprise
+- [ ] https://jobs.ashbyhq.com/zapier/f2ef6c5f-2e0a-4040-b259-1de66b77814e | Zapier | Sr. Manager, Enterprise Sales
+- [ ] https://jobs.ashbyhq.com/zapier/de99b0f0-bdb9-4969-a9c5-a5d0bc2722b2 | Zapier | Sr. Director, Engineering - Applied AI
+- [ ] https://jobs.ashbyhq.com/zapier/d4576c10-a27e-47fa-a056-30c898b9e672 | Zapier | Account Executive, Mid Market
+- [ ] https://jobs.ashbyhq.com/zapier/2b57e91a-725f-4e57-aa49-716e0f26eead | Zapier | Staff Engineer, Applied AI
+- [ ] https://jobs.ashbyhq.com/synthesia/8a09fe17-c01c-4e35-9394-abd339bbfdf3 | Synthesia | Senior Research Engineer - Video Foundation Models (Pre - Training)
+- [ ] https://jobs.ashbyhq.com/synthesia/11cac93d-fea6-4f22-add1-d4e3bb904b94 | Synthesia | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/synthesia/81fbed84-4d11-491c-8659-6a96d5ad4e77 | Synthesia | Strategic Account Executive (German Speaking)
+- [ ] https://jobs.ashbyhq.com/synthesia/fd3617a1-b117-417d-bee5-416ea9193150 | Synthesia | Product Manager, Video Creation & Editing (Principal-level)
+- [ ] https://jobs.ashbyhq.com/synthesia/74f2a81d-0240-49f0-91bf-2f6d0850fc17 | Synthesia | Software Engineer, Back End - Video Generation (Tech Lead Level)
+- [ ] https://jobs.ashbyhq.com/synthesia/497cc4cf-a6e7-4165-852f-e65bc817dc9b | Synthesia | Enterprise Account Executive DACH
+- [ ] https://jobs.ashbyhq.com/synthesia/163816a3-11d0-4f20-b138-6629c73e3886 | Synthesia | Solutions Architect
+- [ ] https://jobs.ashbyhq.com/synthesia/30e9bca5-32ce-4609-8546-47772b6315a1 | Synthesia | Strategic Account Executive
+- [ ] https://jobs.ashbyhq.com/Crusoe/6cc6dcf0-e3a2-49f7-8ac5-2ecf691d346f | Crusoe | Staff Product Manager, Managed Intelligence (SF/Sunnyvale)
+- [ ] https://jobs.ashbyhq.com/Crusoe/36991347-adf7-4fd2-b0fb-b48bbf07d5ea | Crusoe | Senior+ Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/Crusoe/06620324-00c0-4b16-ae45-2956fea23306 | Crusoe | Senior to Senior Staff Solutions Engineer
+- [ ] https://jobs.ashbyhq.com/Crusoe/d957b171-6c62-4c69-9e34-4fbd4a366601 | Crusoe | Senior Software Engineer, Storage
+- [ ] https://jobs.ashbyhq.com/Crusoe/d6a78556-dc38-45ef-b8c9-43198feb9263 | Crusoe | Group Product Manager, Storage (SF, Sunnyvale, Seattle)
+- [ ] https://jobs.ashbyhq.com/Crusoe/16d96420-c0eb-4e88-b2f0-3de0dfc1a535 | Crusoe | Group Product Manager, Storage (Denver)
+- [ ] https://jobs.ashbyhq.com/Crusoe/3dffdca3-5f70-4857-aa5f-225c89fae144 | Crusoe | Infrastructure Deployment Engineer
+- [ ] https://jobs.ashbyhq.com/Crusoe/886fed28-e3fe-4198-b4f3-beeac6f75c7c | Crusoe | Senior Category Manager, Storage
+- [ ] https://jobs.ashbyhq.com/Crusoe/fdf9214a-d0ce-4fb8-99e6-92cbc0c549a1 | Crusoe | Senior API Integration Engineer
+- [ ] https://jobs.ashbyhq.com/Crusoe/7850833a-3ec1-435f-9e7d-ab43d7740f61 | Crusoe | Principal Software Engineer, AI Model LifeCycle
+- [ ] https://jobs.ashbyhq.com/Crusoe/e77bd8f0-6490-459c-b222-e8fb8d36d7bd | Crusoe | Staff Software Engineer, AI Model LifeCycle
+- [ ] https://jobs.ashbyhq.com/Crusoe/e726109d-5c4f-478b-a80f-cb277455484a | Crusoe | Senior Software Engineer, AI Model LifeCycle
+- [ ] https://jobs.ashbyhq.com/Crusoe/f28a39ed-6b2e-42ff-9f3a-23cab436abbe | Crusoe | Senior Staff Software Engineer, Storage
+- [ ] https://jobs.ashbyhq.com/Crusoe/68cbbe99-8fd8-4923-ad2b-f119206e274b | Crusoe | Staff Product Manager, Compute (SF, Sunnyvale)
+- [ ] https://jobs.ashbyhq.com/Crusoe/71d28215-cd90-4dc0-9113-df1dbb1afa26 | Crusoe | Senior Staff Software Engineer, AI Model LifeCycle
+- [ ] https://jobs.ashbyhq.com/Crusoe/dc109d9d-a08a-4f48-9d54-374070ede068 | Crusoe | Staff Software Engineer, Storage
+- [ ] https://jobs.ashbyhq.com/Crusoe/4c62b1b5-6598-445d-96b8-95a2da97da6a | Crusoe | Staff Network Deployment Engineer, Lab
+- [ ] https://jobs.ashbyhq.com/Crusoe/00fb8ce3-aaee-41c3-8016-18829f6b80ff | Crusoe | Software Engineer II, Storage
+- [ ] https://jobs.ashbyhq.com/Crusoe/ed9d0936-5f34-42a5-bd41-f64c14451267 | Crusoe | Staff Product Manager, Orchestration
+- [ ] https://jobs.ashbyhq.com/Crusoe/60417d4a-e972-4973-ba51-ef6e3fadb7c2 | Crusoe | Enterprise Account Executive
+- [ ] https://jobs.ashbyhq.com/Crusoe/95347434-cb96-426e-b1d7-b15bb327c4fd | Crusoe | Electrical Field Engineer - Data Center
+
 ## Procesadas
