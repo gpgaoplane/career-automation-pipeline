@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-29T00:38:20-04:00
+last-updated: 2026-04-29T10:35:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -11,47 +11,27 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/multi-agent-collab`
-**Active task:** Codex review of implementation plan integrated. Implementation plan v2 published with all 5 Codex findings fixed + Step 8.5 (sample run on 100 companies) added per user proposal (QI-6).
-**Pause point:** Implementation plan v2 ready at `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md`. Design plan §12 #12 wording also corrected. Awaiting user signal on (a) optional Codex re-review of implementation plan v2, (b) confirm sample size 100 vs different number, OR (c) proceed straight to Step 1 execution.
-**Blockers:** None. Ready for execution on user signal.
+**Active task:** Phase 2.7 implementation plan EXECUTED end-to-end. 10 atomic commits land Steps 0, 1, 2, 3+4, 5, 6, 7+8, 8.5, 11 (Step 9 skipped per user direction). All 18 design acceptance criteria pass via `scripts/acceptance-audit.py`.
+**Pause point:** Implementation complete on `feat/multi-agent-collab`. Awaiting user signal to either (a) merge to main, (b) execute Phase 2.6 clean rescan (out of scope this session), or (c) review specific outputs (e.g., `docs/design/companies-roster.md`, sample-run findings).
+**Blockers:** None. Working tree clean except for untracked `AI_HANDOFF.md`, `RESUME_PROMPT.md`, `.claude/settings.local.json`.
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
-1. ~~**Codex review of design plan v1**~~ — DONE 2026-04-28; review at design plan §17, commit `021efb5`.
-2. ~~**Integrate review feedback into design plan v2**~~ — DONE 2026-04-28T23:00; commit `781fba1`.
-3. ~~**Write implementation plan**~~ — DONE 2026-04-28T22:51; `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` (commit pending).
-4. **(Optional) Codex re-review of implementation plan** OR proceed straight to execution — user's call.
-5. **Execute Step 1**: portals.yml audit cleanup (re-enable 14 mis-drops, disable Foxconn + Skydio, add notes to 20). Verification: `448 / 428 / 20 / 0 missing notes`. Commit "refine: portals.yml audit cleanup ...".
-6. **Execute Step 2**: title_filter rewrite (positives removal + negatives addition + YAML group split for CREATIVE).
-7. **Execute Steps 3+4**: config/profile.yml + modes/_profile.md mid-level reframing.
-8. **Execute Step 5**: generate docs/design/companies-roster.md.
-9. **Execute Step 6**: build career-ops/enrich-jobs.mjs.
-10. **Execute Step 7+8**: refactor career-ops/export-jobs.mjs + wire into npm full-scan.
-11. **Execute Step 9** (optional): calibration pass against scan-v1-unfiltered baseline.
-12. **Execute Step 10**: run all 18 acceptance criteria. No commit if any gate fails.
-13. **Execute Step 11**: commit hygiene + final collab-check + (optional) Codex re-review.
-14. **Phase 2.6** clean rescan (deferred): tag scan-v1-unfiltered → reset → scan → custom-scrape → enrich → export → P-1 audit.
-15. **Phase 3**: open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
-4. **Execute implementation plan** atomically:
-   - Edit `career-ops/portals.yml`: re-enable 14 mis-drops, disable 2 inversions (Foxconn rank 65, Skydio rank 437), add `note:` to all 20 disabled rows, rewrite `title_filter` (remove Senior AI / Principal AI / Senior PM from positives; add Senior/Sr/Sr./Principal/Junior/Jr/Jr./Associate to negatives)
-   - Edit `career-ops/modes/_profile.md`: archetype levels → "Mid-level"
-   - Edit `career-ops/config/profile.yml`: archetype levels → "Mid-level"
-   - Build `career-ops/enrich-jobs.mjs` per design plan §10
-   - Refactor `career-ops/export-jobs.mjs` per design plan §11
-   - Generate `docs/design/companies-roster.md`
-   - Verify acceptance criteria §12
-5. **Verify root `CLAUDE.md` `@import` shim** — confirm Claude Code resolves imports correctly on next session start.
-6. **Merge `feat/multi-agent-collab` → `main`** after implementation lands.
-7. **Phase 2.6** (deferred): clean rescan — tag `scan-v1-unfiltered` on `06bf430`, reset pipeline.md + scan-history.tsv, run scan.mjs (18 direct ATS) → custom-scraper.mjs (410 branded) → enrich-jobs.mjs → export-jobs.mjs → P-1 audit.
-8. **Phase 3** — open xlsx, review S-tier jobs, run `/career-ops pipeline` for LLM eval, write reports + tracker entries.
+1. ~~Steps 0-11 of implementation plan~~ — DONE 2026-04-29 (8 atomic commits a13b9a5 → 9ff216a).
+2. ~~Step 8.5 sample run~~ — DONE; 8/9 SR criteria pass; SR-6 affected by sample-script bug (yaml.dump loses comment groups → trackMap empty). NOT a production bug; documented in commit eacb2c3.
+3. ~~Step 10 verification gates (18 criteria)~~ — DONE 18/18 PASS via `scripts/acceptance-audit.py`.
+4. ~~Step 11 commit hygiene + final collab-check + INDEX registration~~ — DONE (commit 9ff216a; collab-check OK aligned).
+5. **Pending user signal:** merge to main? Phase 2.6 clean rescan? Review specific outputs?
+6. **Phase 2.6 (deferred — next session):** clean rescan tag scan-v1-unfiltered → reset pipeline.md + scan-history.tsv → run full-scan against all 428 enabled → custom-scraper Tier 1/2 ATS discovery → enrich → export → P-1 audit + landing-page issue triage for any company returning empty.
+7. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
-- **Q:** Does Claude Code resolve `@AI_AGENTS.md` and `@.claude/CLAUDE.md` imports in root `CLAUDE.md`? **Verification:** start a fresh Claude session and check the `claudeMd` system reminder shows both files' contents loaded. If imports don't resolve, replace shim with inlined content.
-- **Q:** Open questions in design plan §14 (Q-1 through Q-8) — all defaulted; confirm or override during Codex review.
-- **Q:** Will Codex's review surface design issues that require a v2 of the design plan, or is v1 mergeable as-is?
+- **Q:** Should the next session merge `feat/multi-agent-collab` to `main` before Phase 2.6, or merge after Phase 2.6 produces clean rescan data? **Default:** merge first (the framework + design + implementation work is independently valuable).
+- **Q:** Sample-script bug fix needed: `scripts/sample-portals-50.py` was deleted (yaml.dump lost comment groups → trackMap empty during sample run). For future sample runs, use `ruamel.yaml` or string-based preservation of `title_filter` section. Not blocking; only matters if Step 8.5 is repeated.
+- **Q:** Root `CLAUDE.md` `@import` shim — confirm Claude Code resolves `@AI_AGENTS.md` and `@.claude/CLAUDE.md` correctly on next session start.
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-29T00:38:20-04:00
+Last read INDEX at: 2026-04-29T10:35:00-04:00
 <!-- section:read-watermark:end -->

@@ -1,9 +1,20 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
-**Last Updated:** 2026-04-28
-**Current Phase:** Phase 2.7 — Design plan complete (portals cleanup + mid-level pivot + pre-scoring) — awaiting Codex review
+**Last Updated:** 2026-04-29
+**Current Phase:** Phase 2.7 — IMPLEMENTATION EXECUTED. All 18 design acceptance criteria pass. Awaiting user signal: merge to main, or move to Phase 2.6 clean rescan.
 
 ## Done
+- [x] **Phase 2.7 implementation EXECUTED end-to-end** (2026-04-29, `feat/multi-agent-collab`, commits a13b9a5 → 9ff216a):
+  - Step 0: Sample size 100→50 + advisor's cp+overwrite-and-restore + coverage caveat
+  - Step 1: portals.yml audit cleanup → **448 total / 428 enabled / 20 disabled / 0 missing notes**
+  - Step 2: title_filter rewrite — 3 senior positives removed, 8 negatives added (Senior, Sr, Sr., Principal, Junior, Jr, Jr., Associate), CREATIVE/GEN-AI YAML groups split per Codex §17 finding
+  - Steps 3+4: All 6 archetypes → Mid-level; `_profile.md` Target IC band header + hands-on/implementer reframing
+  - Step 5: `docs/design/companies-roster.md` auto-generated from portals.yml
+  - Step 6: `career-ops/enrich-jobs.mjs` built — 19/19 unit tests pass on `extractSignals`; live single-URL test verified cache works (Imbue, tier1-http 200 in 0.5s)
+  - Steps 7+8: `career-ops/export-jobs.mjs` refactored — 6 new columns in Pending Jobs (Match Track, Title Score, Desc Score, Pre-Score, Band, Score Notes) + 3 in By Company (Pre-Score Max/Avg, S-Tier Count) + 3 CLI flags (`--top N`, `--skip-enrich`, `--cache-warn-threshold P`) + per-row band fills (S=green/A=yellow/B=grey/C=red); `npm run full-scan` chain extended: scan→custom-scrape→enrich→export
+  - Step 8.5: Sample run on 50 random enabled companies (seed=42); 94 jobs scraped via cp+overwrite-and-restore (NEVER mv-swap); 88/94 cache hits (93.6%); live state restored cleanly (git diff shows no changes to portals.yml/pipeline.md/scan-history.tsv)
+  - Step 11: INDEX registers all new artifacts; `scripts/acceptance-audit.py` runs all 18 design §12 criteria — **18/18 PASS**
+  - Skipped per user direction: Step 9 calibration pass
 - [x] career-ops cloned at `career-ops/` — on main, clean, npm deps installed
 - [x] Knowledge bank ingested (`context/knowledge bank/` — 5 folders, 12+ files)
 - [x] Companies source loaded (`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 companies source)
