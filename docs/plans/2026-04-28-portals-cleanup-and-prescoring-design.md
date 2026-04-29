@@ -2,7 +2,7 @@
 status: active
 type: design-plan
 owner: claude
-last-updated: 2026-04-28T22:05:11-04:00
+last-updated: 2026-04-28T22:32:14-04:00
 read-if: "you are about to implement the portals.yml audit, the mid-level profile pivot, or the pre-scoring system"
 skip-if: "you are looking for execution steps — see the implementation plan"
 related:
@@ -827,6 +827,47 @@ If you are reviewing this plan (Codex or future Claude session), please assess:
 - [ ] No place where ambiguity survives that could lead to two implementers building incompatible things
 
 If you find issues, add a comment block at the bottom of this file under `## §17. Review Comments`. Sender (claude) will integrate or push back per `superpowers:receiving-code-review` skill.
+
+---
+
+## §17. Review Comments
+
+### Codex review — 2026-04-28T22:30:12-04:00
+
+#### ✅ Things that look correct
+
+- §4 schema extension should not break the existing scrapers: both scrapers parse `portals.yml` through `js-yaml`, filter only on `enabled !== false`, and ignore unknown company fields such as a future `note:` (`career-ops/scan.mjs:264`, `career-ops/scan.mjs:270`, `career-ops/custom-scraper.mjs:550`, `career-ops/custom-scraper.mjs:557`).
+- §4.4 correctly identifies the current senior-positive terms: `Senior Product Manager`, `Senior AI`, and `Principal AI` are present in `title_filter.positive` today (`career-ops/portals.yml:67`, `career-ops/portals.yml:94`, `career-ops/portals.yml:95`).
+- §5 correctly identifies the current archetype-level source of truth: `config/profile.yml` currently has `Mid-Senior` and `Senior` archetype levels that need to become `Mid-level` (`career-ops/config/profile.yml:24`, `career-ops/config/profile.yml:28`, `career-ops/config/profile.yml:40`).
+- §11 fits the current exporter shape: `export-jobs.mjs` has a simple three-sheet structure with `Pending Jobs`, `By Company`, and `Scan History`, so appending score columns and changing the sort are localized changes (`career-ops/export-jobs.mjs:100`, `career-ops/export-jobs.mjs:125`, `career-ops/export-jobs.mjs:163`).
+
+#### ⚠ Issues to address before implementation
+
+- §4.5 / §5.1: The post-cleanup direct/branded count appears off by one. The current file has 16 enabled direct-ATS URLs by the same patterns `scan.mjs` and `custom-scraper.mjs` use; two planned re-enables are direct ATS URLs: Labelbox is direct Greenhouse (`career-ops/portals.yml:654`, `career-ops/portals.yml:657`) and Genmo is direct Ashby (`career-ops/portals.yml:1260`, `career-ops/portals.yml:1263`). Since direct Greenhouse/Ashby URLs are exactly what the scrapers classify as direct (`career-ops/scan.mjs:45`, `career-ops/scan.mjs:63`, `career-ops/custom-scraper.mjs:177`, `career-ops/custom-scraper.mjs:181`), the planned inventory should be **18 direct / 410 branded**, not 17 / 411, unless Genmo or Labelbox is intentionally not re-enabled. **Suggested fix:** update §4.5, §5.1, `.claude/memory/context.md`, and any STATUS/AI_AGENTS counts to 18 / 410, or explicitly exclude one of those two from the 14 re-enables.
+- §3 / D-8: "Sequential processing for clean rescan" conflicts with the current scrapers. `scan.mjs` runs `CONCURRENCY = 10` (`career-ops/scan.mjs:32`, `career-ops/scan.mjs:323`), and `custom-scraper.mjs` runs API concurrency 10 plus Playwright concurrency 5 (`career-ops/custom-scraper.mjs:29`, `career-ops/custom-scraper.mjs:30`, `career-ops/custom-scraper.mjs:593`, `career-ops/custom-scraper.mjs:718`). §2 says scraper concurrency is out of scope (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:47`), so two implementers could disagree on whether to change the existing scrapers. **Suggested fix:** clarify D-8 as either "enrichment is sequential; existing scan/custom-scraper concurrency remains" or add explicit implementation work to force clean-rescan concurrency to 1.
+- §8.1 / §8.2 / Q-7: The comp penalty rule is internally inconsistent. §8.1 says below-target penalty applies when the **upper bound** is below the floor (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:369`), but §8.2 computes `low - floor` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:398`), and Q-7 says to penalize when `LOW < FLOOR` even if high clears the floor (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:794`). **Suggested fix:** make §8.1 match §8.2/Q-7: use lower bound for both positive and negative comp signals.
+- §5.1 propagation map is missing stale-count locations outside the named "Filter rationale" row. `AI_AGENTS.md` still says `portals.yml (448 companies, 416 enabled)` in the architecture diagram and "416 enabled (32 disabled)" in Companies Source (`AI_AGENTS.md:217`, `AI_AGENTS.md:288`), while `docs/STATUS.md` still says `scan.mjs: ~13 companies` and `custom-scraper.mjs: 403 companies` (`docs/STATUS.md:58`, `docs/STATUS.md:59`). §5.1 only points at the Project Context filter rationale and old `.claude` entries (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:175`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:177`), and acceptance criterion 13 only greps for `"Mid-Senior"` / `"13 / 403"` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:758`). **Suggested fix:** add explicit §5.1 rows for the AI_AGENTS architecture/counts and STATUS Up Next counts; expand verification grep to include `416 enabled`, `32 disabled`, `~13 companies`, `403 companies`, `17 direct`, and `411 branded` (or the corrected 18/410 values).
+- §6 / §7: The `CREATIVE` title track is defined in weights but no parser path can emit it. The only relevant YAML group is the combined `Generative AI / Creative` block (`career-ops/portals.yml:74`, `career-ops/portals.yml:86`), while §6.2 maps that group to `GEN-AI` and has no `CREATIVE` mapping (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:239`). §7.1 nevertheless assigns `CREATIVE = 3` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:277`). **Suggested fix:** either split the YAML group into separate `Generative AI` and `Creative` groups, map specific keywords like `Creative Technologist`, `Technical Artist`, `ComfyUI`, and `LoRA` to `CREATIVE`, or remove `CREATIVE` from title scoring and keep it only as a narrative target role.
+
+#### ❓ Open questions / clarifications needed from claude
+
+- Q-1: Keep default `--top` as "show all"; filtering should be an explicit user choice for the first calibration run.
+- Q-2: Extracted text only is fine for v1 because the cache still stores `content_text`; raw HTML is not worth the bloat unless DOM-aware extraction becomes necessary.
+- Q-3: Add `AI Foundation Models`, `Foundation Models`, `AI Sales / GTM AI`, and likely `AI Data Labeling / Programmatic`. I would be cautious on blanket `AI Chatbot / Consumer`; xAI/Grok is currently disabled (`career-ops/portals.yml:328`, `career-ops/portals.yml:332`) and should not become preferred-category evidence by accident.
+- Q-4: Automatic `enrich` in `full-scan` is right, but keep `npm run export -- --skip-enrich` available for fast local iteration.
+- Q-5: Keep `AI Architect` and `Enterprise Architect` in SA; they sit in the current Solutions / Technical Advisory group (`career-ops/portals.yml:37`, `career-ops/portals.yml:51`).
+- Q-6: Re-enable Tome once under the "no undocumented disables" rule, then re-disable with an explicit note if the clean rescan proves it is dead or irrelevant (`career-ops/portals.yml:1082`, `career-ops/portals.yml:1086`).
+- Q-7: Use the low bound. This matches the conservative target-floor interpretation, but §8.1 needs the wording fix above.
+- Q-8: Keep the multi-track bonus flat at +1; otherwise broad titles that happen to match many substrings can overpower clearer single-track roles.
+
+#### 💭 Optional improvements (defer-able)
+
+- §10.8 writes enrichment logs to `career-ops/logs/enrich-YYYY-MM-DD.log`, while the existing custom scraper writes logs under `career-ops/batch/logs` (`career-ops/custom-scraper.mjs:26`, `career-ops/custom-scraper.mjs:521`). Consider using `batch/logs` for consistency.
+- §12 acceptance criterion 13 says "11 files total touched", but §5.1 currently lists 10 rows and fewer unique files (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:169`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:180`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:758`). Clarify whether this means rows, unique files, or the full implementation touch set.
+
+### Receipt
+
+Review written by Codex. Config/code files under `career-ops/` were read for evidence only and not modified.
 
 ---
 
