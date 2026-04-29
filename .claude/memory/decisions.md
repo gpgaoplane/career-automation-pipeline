@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-28T23:00:00-04:00
+last-updated: 2026-04-29T00:38:20-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -334,5 +334,47 @@ Append new decisions below. Format:
 **Implementation impact:**
 - Implementation plan must include the YAML group split (5 + 7 keywords moved into two new groups) at the same time as the senior/principal positive removal — same `portals.yml` commit.
 - Implementation plan grep audit now expanded; criterion #13 of acceptance must pass for ALL stale strings listed.
+
+## D-13 — Integrate Codex review of implementation plan v1 + add sample-run step — 2026-04-29T00:38:20-04:00
+
+**Context:** Codex reviewed implementation plan v1 (commit `05f6bfc`) and surfaced 5 findings in §20 of the implementation plan. User also proposed running a 100-company sample BEFORE the full Phase 2.6 clean rescan to de-risk the new scripts.
+
+**Choice:** Integrate all 5 Codex findings into implementation plan v2 + add new Step 8.5 (sample run on 100 random companies) per user proposal.
+
+**Findings + integration:**
+1. §13 missing criterion #10 + #12 mismatch — ACCEPT. §13.2 gate script now includes a cache-hit-rate ≥0.9 check via `--company` re-run; criterion #12 revised in DESIGN PLAN v2.1 to "static chain verified; live invocation deferred to Phase 2.6" (running full-scan triggers a real scrape, not an implementation acceptance test).
+2. §13 grep audit narrower than design — ACCEPT. Added `416 enabled` and `32 disabled` to the term loop, plus `Phase 1 complete|historical|Audited all 32` to the exclusion regex (Phase-1 historical entries legitimately retain those numbers).
+3. enrich-jobs.mjs CLI contract incomplete + undocumented `--limit` — ACCEPT. §9.2 module structure now lists all 6 design flags explicitly (`--dry-run`, `--force`, `--company <name>`, `--rate-limit-ms <N>`, `--ttl-days <N>`, `--skip-stale`). §9.5 verification uses `--company "Anthropic"` instead of `--limit`. Added explicit "do NOT introduce a --limit flag" note.
+4. export-jobs.mjs missing `--cache-warn-threshold P` — ACCEPT. §10.6 expanded to 3 flags with full pseudocode for the threshold warning logic (warns to stderr, doesn't fail run).
+5. Preferred categories placeholder — ACCEPT. §10.3 preferred-categories Set fully spelled out per QI-3 + Codex Q-3: includes `AI Foundation Models`, `Foundation Models`, `AI Sales / GTM AI`, `AI Data Labeling / Programmatic`. EXCLUDES `AI Chatbot / Consumer` (xAI/Grok disabled; consumer chatbots not target track) — explicit comment in source.
+
+**User proposal — Step 8.5 sample run:**
+- Random 100 enabled companies (deterministic seed=42 for reproducibility)
+- File-swap technique avoids modifying scan.mjs (preserves D-3 invariant): generate `portals-sample-100.yml`, backup live data, swap config, run `npm run full-scan`, inspect, restore
+- 9 Sample Run criteria (SR-1..SR-9) covering: scripts complete, pipeline populated, cache writes, Excel structure, banding, --cache-warn-threshold trigger, SIGINT cleanup, reversibility
+- ~30-40 min wall-clock
+- Validates new scripts end-to-end before committing scan-history.tsv to a real 1000+-job scrape
+- Skip condition: user can opt out; plan still functions
+
+**Codex's 2 questions answered:**
+- Q1 (revise design crit #12 vs add dry-run target): revised wording to "static chain verified". Live invocation = Phase 2.6 work.
+- Q2 (`--limit` test-only flag vs `--company`): use `--company`. Don't expand script surface; design contract is source of truth.
+
+**Codex's optional Foxconn note suggestion:** ACCEPT-defer. Implementation plan already addresses with inline parenthetical. Renaming taxonomy "duplicate-of: <enabled twin>" → "<canonical twin>" is minor stylistic cleanup; defer to future polish pass.
+
+**Rationale:**
+- All 5 Codex findings verified against primary sources (path:line citations in implementation plan §20). Each was a real defect: missing acceptance gate, narrower grep, undocumented flag, missing flag, placeholder.
+- Sample run de-risks the first end-to-end execution; aligns with engineering practice of "test small before going big". Cost (30-40 min) << value (catch script bugs before they pollute scan-history.tsv).
+- File-swap technique preserves D-3 (scan.mjs untouched) — better than adding a `--config <path>` flag to upstream code.
+
+**Tradeoffs:**
+- Implementation plan v2 grew with §11A (Step 8.5) — total step count is now 12 instead of 11. Wall-clock estimate increases ~30-40 min.
+- Step 8.5 adds a script (`scripts/sample-portals-100.py`) but it's transient (used once per de-risk validation). Not registered in INDEX since it's not a managed file long-term.
+- Design plan §12 #12 was revised — first design plan revision since v2. Marked v2.1.
+
+**Implementation impact:**
+- Step 8.5 inserted between Step 8 (npm full-scan chain) and Step 9 (calibration). Calibration can use the sample data as additional input.
+- §13 verification gates updated to be stricter (cache-hit-rate criterion #10 added; grep #13 list expanded).
+- §10 export pseudocode now spells out concrete preferred categories — implementer doesn't choose differently.
 
 <!-- section:entries:end -->

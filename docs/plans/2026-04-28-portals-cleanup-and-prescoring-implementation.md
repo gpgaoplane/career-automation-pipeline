@@ -2,7 +2,7 @@
 status: active
 type: implementation-plan
 owner: claude
-last-updated: 2026-04-28T22:51:26-04:00
+last-updated: 2026-04-29T00:24:25-04:00
 read-if: "you are about to execute the portals cleanup, mid-level pivot, and pre-scoring system implementation"
 skip-if: "you are looking for design rationale — see the design plan"
 related:
@@ -716,9 +716,17 @@ Design plan §10 (full component design with cache schema, fetch policy, failure
 career-ops/enrich-jobs.mjs (single file, ~250 lines)
   ├── imports: fs, path, fileURLToPath, fetch (built-in node 18+),
   │             playwright, cheerio, yaml
-  ├── constants: PIPELINE_PATH, CACHE_PATH, LOG_DIR, TTL_DAYS,
-  │             RATE_LIMIT_MS, MAX_TEXT_CHARS, FETCH_TIMEOUT_MS
-  ├── parseArgs() — flags from §10.1
+  ├── constants: PIPELINE_PATH, CACHE_PATH, LOG_DIR, TTL_DAYS (default 7),
+  │             RATE_LIMIT_MS (default 500), MAX_TEXT_CHARS (default 50000),
+  │             FETCH_TIMEOUT_MS (default 30000)
+  ├── parseArgs() — explicit flag set per design §10.1 + §10.3:
+  │     --dry-run            preview without writing
+  │     --force              refresh cache for already-cached URLs
+  │     --company <name>     single-company enrichment (used for subset tests)
+  │     --rate-limit-ms <N>  override default 500ms between requests
+  │     --ttl-days <N>       override default 7-day cache TTL
+  │     --skip-stale         skip URLs whose cache is older than TTL (don't re-fetch)
+  │     NOTE: do NOT introduce a --limit flag. Subset testing uses --company
   ├── loadCache() / saveCache() — JSON read/write atomic
   ├── parsePipelineMd() — reuse from export-jobs.mjs
   ├── isStale(entry, ttl) — check fetched_at against now
@@ -787,16 +795,22 @@ const TECH_STACK = [
 
 ```bash
 cd "D:/Projects/career ops/career-ops"
-# Subset test: enrich first 5 URLs from pipeline.md (limit via flag)
-node enrich-jobs.mjs --limit 5
+# Subset test: enrich a single company's URLs (using design's --company contract,
+# NOT an undocumented --limit flag). Pick a company that's likely to have URLs
+# in the current pipeline.md or scan-v1-unfiltered baseline.
+node enrich-jobs.mjs --company "Anthropic"
 
 # Verify cache file exists and has valid JSON
 test -f data/job-descriptions-cache.json && python -c "import json; print(len(json.load(open('data/job-descriptions-cache.json'))))"
-# Expected: ≥1 entries
+# Expected: ≥1 entries (number of Anthropic URLs in pipeline)
 
 # Verify second run is mostly cache hits
-node enrich-jobs.mjs --limit 5 2>&1 | grep -c "cached, skip"
-# Expected: ≥4 of 5
+node enrich-jobs.mjs --company "Anthropic" 2>&1 | grep -c "cached, skip"
+# Expected: ≥80% of URLs return "cached, skip" (criterion #10: cache hit rate ≥ 0.9)
+
+# --dry-run smoke test
+node enrich-jobs.mjs --dry-run --company "Anthropic" 2>&1 | grep -c "would fetch\|cached, skip"
+# Expected: ≥1; no actual network calls; no cache file written
 ```
 
 Spot-check: open `data/job-descriptions-cache.json`, pick one entry, verify `extracted_signals` contains expected fields (location_match, comp_low_thousands, etc.).
@@ -897,8 +911,26 @@ function computeTitleScore(job, trackMap, companyMap) {
   const rank = companyMap.get(job.company)?.rank ?? 9999;
   const rankTier = rank <= 50 ? 4 : rank <= 150 ? 3 : rank <= 300 ? 2 : 1;
   const category = companyMap.get(job.company)?.category ?? '';
+  // Preferred categories — finalized per QI-3 + Codex Q-3 design review.
+  // Includes the design §7.3 base list plus QI-3 additions (AI Foundation
+  // Models, AI Sales / GTM AI, AI Data Labeling / Programmatic) and EXCLUDES
+  // AI Chatbot / Consumer (xAI/Grok is disabled; consumer chatbots are not
+  // the target track).
   const PREFERRED = new Set([
-    'AI Agents', 'AI 3D Generation', 'AI Video Generation', /* ... full list per design §7.3 */
+    'AI Agents', 'AI 3D Generation', 'AI Video Generation', 'AI Video Understanding',
+    'AI Video / Avatar Generation', 'AI Video/Audio Editing',
+    'AI Coding Tools', 'AI Coding Assistant', 'AI Coding / Vibe-Coding', 'AI Coding CLI',
+    'AI Embeddings', 'AI Embeddings / Open-Source',
+    'AI Cloud Infrastructure',
+    'AI Healthcare', 'AI Financial Planning',
+    'Data Cloud / AI Features', 'Data Integration / AI Pipeline',
+    'AI Data Labeling', 'AI Data Labeling / Programmatic',
+    // Added per QI-3 + Codex design Q-3
+    'AI Foundation Models', 'Foundation Models',
+    'AI Sales / GTM AI',
+    // INTENTIONALLY NOT INCLUDED: 'AI Chatbot / Consumer' (consumer chatbots
+    // are not Will's target track; xAI/Grok is disabled and shouldn't accidentally
+    // become preferred-category evidence).
   ]);
   const categoryBonus = PREFERRED.has(category) ? 2 : 0;
   // Title Strength Signal
@@ -1033,18 +1065,31 @@ pendingSheet.eachRow({ includeEmpty: false }, (row, rowNum) => {
 
 ### §10.6 New CLI flags
 
+Three flags per design §11.2 contract: `--top N`, `--skip-enrich`, `--cache-warn-threshold P` (default 80). Codex review caught that the third was missing from my v1 draft.
+
 ```javascript
 const args = process.argv.slice(2);
 const FLAGS = {
   topN: null,
   skipEnrich: args.includes('--skip-enrich'),
+  cacheWarnThreshold: 80,
 };
 const topIdx = args.indexOf('--top');
 if (topIdx >= 0 && args[topIdx + 1]) FLAGS.topN = parseInt(args[topIdx + 1], 10);
+const cwtIdx = args.indexOf('--cache-warn-threshold');
+if (cwtIdx >= 0 && args[cwtIdx + 1]) FLAGS.cacheWarnThreshold = parseInt(args[cwtIdx + 1], 10);
 ```
 
-If `FLAGS.topN`, slice `jobsScored` to first N before populating.
-If `FLAGS.skipEnrich`, force `cache = {}` (don't load enrichment cache).
+Apply:
+- If `FLAGS.topN`, slice `jobsScored` to first N before populating.
+- If `FLAGS.skipEnrich`, force `cache = {}` (don't load enrichment cache).
+- AFTER export completes, compute cache hit rate = `(jobs with cache entry) / (total jobs) * 100`. If hit rate < `FLAGS.cacheWarnThreshold`, write a warning to stderr but do NOT fail the run:
+  ```javascript
+  const hitRate = jobs.length > 0 ? (jobs.filter(j => cache[j.url]?.extracted_signals).length / jobs.length) * 100 : 100;
+  if (hitRate < FLAGS.cacheWarnThreshold) {
+    console.warn(`[WARN] Cache hit rate ${hitRate.toFixed(1)}% < threshold ${FLAGS.cacheWarnThreshold}%. Run 'npm run enrich' to populate.`);
+  }
+  ```
 
 ### §10.7 By Company sheet additions
 
@@ -1156,6 +1201,132 @@ banding renders, --top filters, npm scripts present.
 
 See decisions.md D-9 and design plan §11.
 ```
+
+---
+
+## §11A. Step 8.5 — Sample Run on 100 Companies (per QI-6, user-requested)
+
+> Added in implementation plan v2 per Codex review integration + user proposal. De-risks the first end-to-end test of the new scripts (`enrich-jobs.mjs`, refactored `export-jobs.mjs`, `npm run full-scan` chain) against a small subset BEFORE committing 1000+ jobs to scan-history.tsv via the real Phase 2.6 clean rescan.
+
+### §11A.1 Source
+
+- User request (2026-04-29): "100 companies randomly selected from our companies list to run through on a small scale ... see how everything works ... before we do a full skill test"
+- QI-6 (added to §17 in this v2 revision)
+
+### §11A.2 Approach: temporary file swap (does NOT modify scan.mjs upstream code)
+
+Per D-3 invariant, `scan.mjs` is upstream-vendored and untouched. We avoid modifying it via a file-swap technique:
+
+1. Generate `career-ops/portals-sample-100.yml` from current `portals.yml` — same `title_filter`, but `tracked_companies` is a random 100-of-428 sample of `enabled: true` entries (disabled entries excluded).
+2. **Backup live state**: `cp career-ops/portals.yml career-ops/portals-full-backup.yml`. Also `cp career-ops/data/pipeline.md{,.full-backup}` and `cp career-ops/data/scan-history.tsv{,.full-backup}` — sample run will produce its own pipeline+history that we'll throw away.
+3. **Reset the data files** (sample run starts from clean slate): write empty pipeline.md (`## Pendientes\n\n## Procesadas\n`), write scan-history.tsv with header row only.
+4. **Swap config**: `mv portals.yml portals.yml.unused && mv portals-sample-100.yml portals.yml`.
+5. **Run the chain**: `npm run scan && npm run custom-scrape && npm run enrich && npm run export`. This validates all four scripts work end-to-end on real but small data.
+6. **Inspect outputs**: open `output/jobs-YYYY-MM-DD.xlsx`. Spot-check Pending Jobs sheet — does sort look right? Are the new pre-score columns populated? Does banding render? Does `--cache-warn-threshold` warn appropriately?
+7. **Restore live state**: `mv portals.yml.unused portals.yml` (un-swap config); restore data files from backups; delete sample artifacts.
+8. **Audit findings**: any P-1 landing-page issues from the 100? Any new pitfalls? Any unexpected behavior from the new scripts?
+
+### §11A.3 Sample selection script
+
+```python
+#!/usr/bin/env python3
+"""Generate career-ops/portals-sample-100.yml — random 100 enabled companies."""
+import yaml, random, sys
+from pathlib import Path
+
+RANDOM_SEED = 42  # deterministic; change to re-sample
+SAMPLE_SIZE = 100
+
+src = Path('career-ops/portals.yml')
+dst = Path('career-ops/portals-sample-100.yml')
+
+with open(src, encoding='utf-8') as f:
+    data = yaml.safe_load(f)
+enabled = [c for c in data['tracked_companies'] if c.get('enabled', True)]
+random.seed(RANDOM_SEED)
+sample = random.sample(enabled, min(SAMPLE_SIZE, len(enabled)))
+
+# Preserve title_filter and search_queries; replace only tracked_companies
+data['tracked_companies'] = sample
+with open(dst, 'w', encoding='utf-8') as f:
+    yaml.dump(data, f, sort_keys=False, allow_unicode=True)
+
+print(f"Wrote {dst} with {len(sample)} companies (seed={RANDOM_SEED})")
+```
+
+Saved as `scripts/sample-portals-100.py`. Reproducible via `RANDOM_SEED`.
+
+### §11A.4 Wall-clock estimate
+
+| Sub-step | Time |
+|---|---|
+| Generate sample-100.yml | <1 min |
+| Backup files + reset data | 2 min |
+| Swap config | <1 min |
+| `npm run scan` (16-20 of 100 are direct ATS, fast) | ~1 min |
+| `npm run custom-scrape` (~80-90 branded pages, sequential? actually concurrent at 10 — will take ~5-8 min) | 5-8 min |
+| `npm run enrich` (sequential per D-8, ~100 URLs assuming each company yields ~1-3 jobs = ~150-300 URLs × 2s = 5-10 min) | 5-10 min |
+| `npm run export` | <1 min |
+| Inspect output | 10-15 min (manual) |
+| Restore live state + cleanup | 2 min |
+| **Total** | **~30-40 minutes** |
+
+### §11A.5 Acceptance criteria for the sample run
+
+| # | Criterion | Pass/fail check |
+|---|---|---|
+| SR-1 | All 4 npm scripts complete without errors (exit code 0) | `npm run full-scan` returns 0 |
+| SR-2 | `pipeline.md` populated with at least 50 jobs (sanity check — 100 companies should yield ≥50 jobs) | `grep -c "^- \[ \]" career-ops/data/pipeline.md` returns ≥50 |
+| SR-3 | `data/job-descriptions-cache.json` has entries for at least 80% of pipeline URLs (cache write succeeds) | python diff between pipeline URLs and cache keys |
+| SR-4 | Excel `Pending Jobs` sheet has all 11 columns (5 original + 6 new) | openpyxl check |
+| SR-5 | Excel sorted by `pre_score` descending (top row has highest score) | openpyxl check |
+| SR-6 | At least one S-tier job present (validates banding logic emits S) | openpyxl filter |
+| SR-7 | `--cache-warn-threshold 99` triggers warning when run with current cache (validates warn logic) | run + grep stderr |
+| SR-8 | No orphaned chrome.exe processes after Ctrl-C during a re-run (validates SIGINT handler) | manual: Task Manager check after Ctrl-C |
+| SR-9 | Restore step puts `portals.yml`, `pipeline.md`, `scan-history.tsv` back to pre-sample state | `git diff` shows no changes to those files |
+
+If any SR-N fails: STOP, debug, fix the responsible script, re-run. Don't proceed to Step 9 until all 9 pass.
+
+### §11A.6 What the sample run validates
+
+| Concern | Validated by |
+|---|---|
+| New scripts compile and run on Node ≥18 + Windows + Git Bash | SR-1 |
+| `enrich-jobs.mjs` cache writes work; resume-on-failure works | SR-3 + SR-8 |
+| `export-jobs.mjs` refactor doesn't break 3-sheet output; new columns render | SR-4 |
+| Pre-scoring formula produces sensible distribution (S/A/B/C tiers all populated) | SR-5 + SR-6 |
+| `--cache-warn-threshold` works end-to-end | SR-7 |
+| Reversibility of the operation (no data corruption) | SR-9 |
+
+### §11A.7 What the sample run does NOT validate
+
+- Behavior at scale (rate limits, edge cases at 1000+ jobs) — only the full Phase 2.6 rescan tests this
+- P-1 landing-page issues across the full 410 branded pages — only the full rescan exposes the long tail
+- Calibration band thresholds against the real distribution — that's Step 9 (calibration uses scan-v1 baseline OR the post-Phase-2.6 fresh data)
+- Enrichment cache TTL / expiry behavior — needs a 7-day test to validate
+- Real-world description signal extraction quality across 100+ companies — only spot-checking 10-20 reveals patterns
+
+### §11A.8 Decision: keep or skip Step 8.5
+
+Recommended: **KEEP**. The de-risk value (catch script bugs before they pollute scan-history.tsv on the real run) outweighs the 30-40 min cost. User explicitly asked for this approach.
+
+Skip condition: if user explicitly says "skip the sample run, go straight to full-scale", we drop Step 8.5 and proceed to Step 9 calibration directly. The implementation plan continues to function without Step 8.5.
+
+### §11A.9 Commit message template (only if code/data changes are committed)
+
+```
+test: sample run on 100 random companies — validates new scripts end-to-end
+
+Added scripts/sample-portals-100.py for reproducible sample generation
+(seed=42). Sample run executed and SR-1 through SR-9 all passed.
+Sample artifacts (portals-sample-100.yml, pre-run backup files,
+sample pipeline.md/scan-history.tsv) discarded after validation.
+No live-state files modified (verified via git diff).
+
+Findings / observations from spot-check: <fill in actual findings>
+```
+
+If sample run is purely validation with no commits: no commit needed; Step 8.5 is a transient gate before Step 9.
 
 ---
 
@@ -1295,6 +1466,28 @@ grep "Target IC band" career-ops/modes/_profile.md && echo "OK: criterion 8 (lin
 # 9: enrich-jobs.mjs runs
 test -f career-ops/enrich-jobs.mjs && echo "OK: criterion 9 (file exists; runtime test in calibration step)"
 
+# 10: cache hit rate ≥ 90% on second run (per design criterion #10)
+# Depends on Step 6 having run with at least one --company test producing cache entries.
+# This gate REQUIRES enrichment cache to exist; if cache doesn't exist, the gate fails
+# (which means Step 6 wasn't completed properly).
+cd career-ops
+if [ ! -f data/job-descriptions-cache.json ]; then
+  echo "FAIL #10: data/job-descriptions-cache.json missing — Step 6 not run"
+  exit 1
+fi
+# Run a known-cached --company twice and measure cache hit rate
+SUBSET="Anthropic"
+node enrich-jobs.mjs --company "$SUBSET" >/dev/null 2>&1
+HITS=$(node enrich-jobs.mjs --company "$SUBSET" 2>&1 | grep -c "cached, skip")
+TOTAL=$(node enrich-jobs.mjs --company "$SUBSET" 2>&1 | grep -cE "cached, skip|tier1-http|tier2-playwright")
+if [ "$TOTAL" -gt 0 ]; then
+  RATIO=$(awk "BEGIN { printf \"%.2f\", $HITS / $TOTAL }")
+  awk "BEGIN { exit ($RATIO < 0.9) ? 1 : 0 }" && echo "OK: criterion 10 (hit rate $RATIO)" || { echo "FAIL #10: hit rate $RATIO < 0.9"; exit 1; }
+else
+  echo "SKIP #10: no enrichment runs to measure (subset $SUBSET produced 0 actions)"
+fi
+cd ..
+
 # 11: export-jobs.mjs Excel has new columns
 node career-ops/export-jobs.mjs --skip-enrich >/dev/null 2>&1
 python -c "
@@ -1307,20 +1500,25 @@ for col in ['Match Track', 'Pre-Score', 'Band']:
 print('OK: criterion 11')
 "
 
-# 12: full-scan script chain
+# 12: full-scan script chain — STATIC verification only.
+# Per design v2.1 §12 #12 (revised): "static chain verified; live invocation
+# deferred to Phase 2.6 clean rescan". Running `npm run full-scan` would
+# trigger an actual scrape against 428 companies which is Phase 2.6 work,
+# not a Phase 2.7 implementation acceptance test.
 node -e "
 const pkg = require('./career-ops/package.json');
 const fs = pkg.scripts['full-scan'];
 ['scan', 'custom-scrape', 'enrich', 'export'].forEach(s => {
-  if (!fs.includes(s)) { console.error('FAIL #12: full-scan missing', s); process.exit(1); }
+  if (!fs.includes(s)) { console.error('FAIL #12: full-scan chain missing', s); process.exit(1); }
 });
-console.log('OK: criterion 12');
+console.log('OK: criterion 12 (static chain verified)');
 "
 
-# 13: grep audit for stale strings
+# 13: grep audit for stale strings (full design v2 list, including 416/32 per Codex finding)
+# Excludes audit-trail / quoted / superseded / Phase-1-historical contexts.
 fail=0
-for term in "Mid-Senior" "13 / 403" "13 direct" "403 branded" "17 direct" "411 branded" "~13 companies" "403 companies"; do
-  hits=$(grep -rn --include="*.md" --include="*.yml" "$term" AI_AGENTS.md docs/STATUS.md .claude/memory/ 2>/dev/null | grep -vE "(audit trail|Earlier 2026-04|Codex caught|Codex review|earlier integration drafted|Codex correction|Replace with|all stale strings|Acceptance criterion|expanded to:|superseded)" | head -1)
+for term in "Mid-Senior" "13 / 403" "13 direct" "403 branded" "17 direct" "411 branded" "416 enabled" "32 disabled" "~13 companies" "403 companies"; do
+  hits=$(grep -rn --include="*.md" --include="*.yml" "$term" AI_AGENTS.md docs/STATUS.md .claude/memory/ 2>/dev/null | grep -vE "(audit trail|Earlier 2026-04|Codex caught|Codex review|earlier integration drafted|Codex correction|Replace with|all stale strings|Acceptance criterion|expanded to:|superseded|Phase 1 complete|historical|Phase 1 entry|Audited all 32)" | head -1)
   if [ -n "$hits" ]; then echo "FAIL #13: '$term' present in: $hits"; fail=1; fi
 done
 [ $fail -eq 0 ] && echo "OK: criterion 13"
@@ -1430,6 +1628,7 @@ If user wants to defer merge until after Phase 2.6 clean rescan validates the sy
 | QI-3 | Auto-include `AI Foundation Models` and `AI Sales / GTM AI` in preferred categories per Codex Q-3 confirmation? | Yes — add during Step 7 implementation | Implementer (no further design input needed) |
 | QI-4 | scripts/generate-roster.py — write frontmatter from script, or by hand after first generation? | Write from script (one less manual step) | Implementer |
 | QI-5 | Codex re-review of implementation outputs — yes or skip? | Skip if all 18 gates pass; user explicitly requests if desired | User direction at end of Step 11 |
+| QI-6 | User raised: do a 100-company sample run before full implementation? | YES — add Step 8.5 "Sample run on 100 randomly-selected enabled companies" between Step 8 (npm full-scan chain) and Step 9 (calibration). See §20 for design. | User confirms 100 vs different sample size |
 
 ---
 
@@ -1473,4 +1672,40 @@ If you find issues, add a comment block at the bottom under `## §20. Implementa
 
 ---
 
-*End of implementation plan. Codex (or future Claude) review comments go in §20 below if any.*
+## §20. Implementation Plan Review Comments
+
+### Codex review — 2026-04-29T00:24:25-04:00
+
+#### ✅ Correct
+
+- Prior finding #1 landed: design v2 now says post-cleanup direct/branded is **18 / 410**, with Labelbox and Genmo identified as the two direct-ATS re-enables (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:149`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:152`); the implementation plan includes both Labelbox and Genmo in the 14 re-enables (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:226`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:228`), matching the current primary URLs (`career-ops/portals.yml:657`, `career-ops/portals.yml:1263`).
+- Prior finding #2 landed: D-8 is clarified as enrichment-only sequential while existing scraper concurrency remains unchanged (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:60`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:47`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:49`), matching the current scraper constants (`career-ops/scan.mjs:32`, `career-ops/custom-scraper.mjs:29`, `career-ops/custom-scraper.mjs:30`).
+- Prior finding #3 landed: comp scoring now uses lower-bound logic consistently in the design (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:380`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:381`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:410`) and the implementation pseudocode computes `signals.comp_low_thousands - floor` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:927`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:930`).
+- Prior finding #4 landed at the design/status layer: design §5.1 now includes `AI_AGENTS.md` and `docs/STATUS.md` stale-count rows (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:180`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:187`), and the current project status has the corrected 18 / 410 counts (`docs/STATUS.md:46`, `docs/STATUS.md:58`, `docs/STATUS.md:59`).
+- Prior finding #5 landed: design §6.2 defines the required GEN-AI and CREATIVE split (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:248`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:249`), and implementation Step 2 mechanically moves the same 12 current keywords from the existing combined group (`career-ops/portals.yml:74`, `career-ops/portals.yml:86`) into 5 GEN-AI keywords and 7 CREATIVE keywords without introducing new positive keywords (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:361`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:375`).
+- Step 1 note prefixes match design §4.1 exactly: implementation uses `duplicate-of:`, `excluded:HW supply chain`, and `excluded:defense drones / maritime` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:241`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:257`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:258`), matching the design prefixes (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:75`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:76`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:77`).
+
+#### ⚠ Issues to address before implementation
+
+- §13 Step 10 does **not** cover all 18 acceptance criteria from design §12. Design criterion #10 requires a second `enrich-jobs.mjs` run with cache hit rate ≥90% (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:767`), but the final gate script jumps from #9 file existence to #11 Excel export (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1295`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1298`). Design criterion #12 says `npm run full-scan` invocation succeeds (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:769`), while the implementation plan explicitly says not to run it and only checks that the script string contains the four script names (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1130`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1310`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1318`). **Suggested fix:** either revise design criterion #12 to "static chain verified" or add a non-destructive full-scan dry-run/test target; add criterion #10 to §13.2 explicitly.
+- §13 criterion #13's grep audit is still narrower than design v2. Design criterion #13 includes stale strings `416 enabled` and `32 disabled` in addition to the direct/branded stale strings (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:770`), but the implementation gate omits both terms (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1320`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1322`). **Suggested fix:** add `416 enabled` and `32 disabled` to the §13.2 term list, preserving the historical-entry exclusions if needed.
+- §9 Step 6 does not fully carry forward the design's `enrich-jobs.mjs` CLI contract and introduces an undocumented `--limit` flag. The design requires `--dry-run`, `--force`, `--company <name>`, and `--rate-limit-ms <N>` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:536`), plus `--ttl-days` / `--skip-stale` behavior in cache TTL (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:570`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:572`). The implementation plan only says `parseArgs() — flags from §10.1` and then verifies with `--limit 5`, which is not in the design (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:721`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:791`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:798`). **Suggested fix:** explicitly list all design-required enrich flags in §9.2/§9.3 and either add `--limit` to design v2 as a test-only flag or replace the subset test with an existing design flag such as `--company`.
+- §10 Step 7 drops one export CLI flag from design §11.2. Design includes `--cache-warn-threshold P` with default 80% (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:698`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:704`), but implementation Step 7 only sketches `--top` and `--skip-enrich` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1036`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1048`). **Suggested fix:** add `cacheWarnThreshold` parsing and a cache-hit-rate warning, or revise design §11.2 to defer that flag.
+- §10 Step 7 leaves preferred categories as a placeholder while §17 QI-3 says category expansion is settled. The implementation pseudocode says `/* ... full list per design §7.3 */` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:900`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:902`), but QI-3 says to add `AI Foundation Models` and `AI Sales / GTM AI` during Step 7 (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:1430`), and Codex's design-review Q-3 also recommended `AI Data Labeling / Programmatic` while being cautious on `AI Chatbot / Consumer` (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:868`). **Suggested fix:** spell out the final preferred category set in Step 7 so implementers do not choose different category constants.
+
+#### ❓ Questions
+
+- Should the implementation plan revise design criterion #12 before execution, since "do not run `npm run full-scan`" is sensible for avoiding the clean rescan but conflicts with the current design acceptance wording?
+- Should `--limit` become an official test-only flag in design §10.1, or should subset testing be expressed through `--company <name>` to avoid expanding the script surface?
+
+#### 💭 Optional
+
+- Step 1's `Foxconn / Hon Hai` note is `duplicate-of: Foxconn` even though the parent Foxconn entry will also be disabled (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:247`, `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md:234`). This matches the selected 16/2/2 taxonomy, but the design's prefix meaning says duplicate rows are "identical to an enabled twin" (`docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md:75`). Consider softening the design wording to "canonical twin" if this wording bothers future reviewers.
+
+### Receipt
+
+Review written by Codex. `career-ops/*` files were read for evidence only and not modified.
+
+---
+
+*End of implementation plan.*

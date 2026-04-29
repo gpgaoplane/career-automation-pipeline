@@ -766,7 +766,7 @@ A reviewer (or future-us) declares this work complete when ALL the following hol
 | 9 | `enrich-jobs.mjs` exists, runs, produces valid `data/job-descriptions-cache.json` | invocation succeeds, cache file valid JSON, sample entry has `extracted_signals` |
 | 10 | `enrich-jobs.mjs` cache hit rate ≥ 90% on second run | run twice, second run reports ≥ 0.9 hits/total |
 | 11 | `export-jobs.mjs` produces Excel with new columns + sorted by `pre_score` desc | open xlsx, top-10 spot-check |
-| 12 | `npm run full-scan` chains scan + custom-scrape + enrich + export | invocation succeeds |
+| 12 | `npm run full-scan` chains scan + custom-scrape + enrich + export — STATIC chain verification only (no live invocation) | static check: `package.json` `full-scan` script string contains all four sub-commands. **Live invocation deferred to Phase 2.6 clean rescan** (running full-scan triggers a real scrape against 428 companies, which is rescan execution, not implementation acceptance). |
 | 13 | All cross-file propagations done (the §5.1 file list — **15 rows / 11 unique files** touched) | grep audit script: zero hits for any of these stale strings: `Mid-Senior`, `13 / 403`, `13 direct`, `403 branded`, `17 direct`, `411 branded`, `416 enabled`, `32 disabled` (in current-state contexts; historical Phase 1 entries may legitimately retain `416 enabled, 32 disabled` if annotated as historical), `~13 companies`, `403 companies`. Run before commit. |
 | 14 | `docs/design/companies-roster.md` exists and matches portals.yml live state | manual visual diff |
 | 15 | `.claude/memory/decisions.md` has D-7..D-11 entries | grep finds them |
