@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-29T10:35:00-04:00
+last-updated: 2026-04-29T15:00:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -300,6 +300,77 @@ Missing / intentionally skipped:
 - `.claude/memory/decisions.md` — no new D-N entry needed; this is execution of D-7..D-12.
 - `.claude/memory/pitfalls.md` — sample-script comment-loss is a one-off scripting gotcha, not a recurring pitfall worth promoting.
 - No new handoff written — user said execute, not hand off. Implementation is complete.
+
+## 2026-04-29 — Phase 2.8 Firecrawl pivot: design + decisions + verification
+
+**Goal:** After Phase 2.7 sample run revealed only ~26% scraper coverage (mostly because branded landing pages defeat the 3-tier ATS discovery in `custom-scraper.mjs`), pivot the scraping architecture to Firecrawl-first. Design the pivot, resolve open questions, verify baseline-knowledge claims against primary sources before writing the implementation plan.
+
+**Approach:**
+
+1. **Phase 2.8 design plan** (commit `0f9421a`): wrote `docs/plans/2026-04-29-firecrawl-pivot-design.md`. Architecture: 4-layer (Layer 0 direct-API in `scan.mjs` untouched per D-3 invariant; Layer 1 `firecrawl-discover.mjs` for ATS discovery on branded pages; Layer 2 `firecrawl-extract.mjs` for JD enrichment on auth-gated/custom systems; Layer 3 `custom-scraper.mjs` retained as Playwright fallback). Identified 5 risks, 4 open design questions (Q-FC-1..Q-FC-4), 9 acceptance criteria. Smoke test on 5 URLs (Jasper/SiFive/Expedia/Cloudflare/Shopify) + deep content inspection demonstrated Firecrawl handles SPA branded pages reliably and most "broken" companies actually use known ATSes hidden behind marketing landing pages.
+
+2. **Phase 2.8 decisions addendum + Web research project rule** (commit `d8e3921`): wrote `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` answering all 4 open questions (Q-FC-1: per-call inline JSON Schemas; Q-FC-2: Layer 1 discovery first then scan.mjs reads merged slugs; Q-FC-3: reserve `firecrawl_actions:` field but don't pre-populate; Q-FC-4: Firecrawl-first per-JD with HTTP fallback for static greenhouse/ashby pages). Same commit added "Web research" project rule to root `CLAUDE.md`: state intent + wait for explicit signal before web fetches; in-turn user authorization is the signal.
+
+3. **Verification research via forked agent** (this session): user noted I'd answered design questions with baseline knowledge in many places. Listed 12 specific claims that needed primary-source verification (Firecrawl API spec details, pricing, endpoint distinctions, ATS provider API availability for 11 ATSes, empirical claims). Forked a `general-purpose` agent with a tight prompt to verify all 12 against official docs. Agent's write tools were denied; agent returned full findings inline + summary. I persisted the agent's verification report to `docs/design/2026-04-29-firecrawl-ats-verification.md` (with frontmatter; not registered in INDEX yet at write time).
+
+4. **Material findings from verification** (architecture impact):
+   - **Workday CXS API is public + no-auth.** `POST {tenant}.wd{N}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` returns paginated jobs; `GET .../job/{externalPath}` returns full JD. Previously assumed Firecrawl-territory. Biggest single finding.
+   - **JSON-mode scrape costs 5 credits/page, not 1.** `formats:["json"]` adds +4 credits. With 101k credits, JSON-mode JD budget is ~20k, not ~100k. Material for budgeting.
+   - **`/v1/scrape` with `formats:["html","links"]` is the right tool for ATS discovery, NOT `/v1/map`.** Map returns URL lists only — can't see ATS hostnames in script tags / iframe src.
+   - **Modern Firecrawl JSON shape is `formats:["json"]` + `jsonOptions`**, NOT legacy `extract` / `extractorOptions`.
+   - **5 additional ATSes have no-auth public APIs:** Workday CXS, SmartRecruiters, Personio, Recruitee, Workable. 6 others need auth/HTML scraping (iCIMS, BambooHR, Pinpoint, Teamtailor, Phenom, Jobvite). JazzHR unverifiable.
+   - **`/v1/extract` is on a separate token-based subscription pool** (not per-page credit pool). Default to `/v1/scrape` + inline schema; `/agent` is the listed migration target for `/extract`.
+   - **`actions` parameter total wait time capped at 60 s.** SPAs needing longer settle time need `/interact` (2 credits/browser-minute).
+   - **No published throttles on Greenhouse/Ashby/Lever public APIs.** 428 weekly is well below any plausible cap.
+   - **30-day cache TTL acceptable; 60-day with fast-fail re-discovery on 4xx/5xx is also defensible.** Real ATS migrations are 12-week+ projects done rarely.
+
+5. **portals.yml ATS hostname grep** (this session): direct-ATS URLs in current portals.yml: Greenhouse 12, Ashby 10, Workday 4, Personio 1, Workable 1, Lever ≈1. Total ~29 of 428 enabled = ~7% direct-API coverage. The other ~400 are branded landing pages — Layer 1 Firecrawl discovery is the critical path. Eightfold/Avature/SuccessFactors/Taleo/Oracle Cloud HCM: zero direct hostnames in current portals.yml (may surface post-discovery).
+
+6. **Design checkpoint commit** (this session, in progress): per user request, did NOT commit during the design or research turns; consolidated update at the end:
+   - INDEX registers 3 new docs (Phase 2.8 design plan, decisions addendum, verification research)
+   - decisions.md appends D-14 (Firecrawl pivot architecture), D-15 (5-ATS direct-API tier expansion), D-16 (project rules added: Web research authorization + Surface uncertainty over baseline knowledge)
+   - state.md refreshed (active task, pause point, next steps, open questions, watermark)
+   - STATUS.md adds Phase 2.8 Done block + revised Up Next + revised handoff note
+   - Root CLAUDE.md adds second project rule "Surface uncertainty over baseline knowledge" — lean toward proposing a web fetch when uncertainty will shape design decisions; complements (does not replace) the autonomy-governing "Web research" rule
+   - This work-log entry + Receipt
+
+**Files touched this arc:**
+
+- New (committed): `docs/plans/2026-04-29-firecrawl-pivot-design.md` (commit 0f9421a), `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (commit d8e3921), root `CLAUDE.md` Web research rule (commit d8e3921 — appended outside framework markers)
+- New (uncommitted, this session): `docs/design/2026-04-29-firecrawl-ats-verification.md`, `scripts/firecrawl-smoke-test.mjs`, `scripts/firecrawl-deep-test.mjs`, `scripts/inspect-firecrawl-links.mjs`, `scripts/firecrawl-smoke-out/` (raw markdown + summary JSON from smoke test runs)
+- Modified (uncommitted, this session): root `CLAUDE.md` (added "Surface uncertainty over baseline knowledge" rule), `.collab/INDEX.md` (registers 3 new docs + bumped timestamp), `.claude/memory/decisions.md` (D-14 + D-15 + D-16 + frontmatter timestamp), `.claude/memory/state.md` (current state, next steps, open questions, watermark), `docs/STATUS.md` (Phase 2.8 done block, up next, handoff note), `docs/agents/claude.md` (this entry + Receipt + frontmatter timestamp)
+- Untouched (per D-3 invariant + per "design before implementation" split): all `career-ops/*` config and code. New `firecrawl-discover.mjs`, `firecrawl-extract.mjs`, and 5 new ATS adapter scripts will land during Phase 2.8 implementation.
+
+**Watch out:**
+
+- **JSON-mode pricing correction is critical for Phase 2.8 budgeting.** Implementation plan must use 5 credits/page when `formats:["json"]` is set; default to plain markdown (1 credit/page) wherever fields are stable enough that local regex extraction works. Most JD signal extraction should stay in `enrich-jobs.mjs`'s markdown+regex lane.
+- **Workday CXS endpoint is the largest single Firecrawl-credit reduction available.** New Workday adapter sibling to scan.mjs (per D-3) handles ongoing fetches once Layer 1 surfaces a Workday tenant.
+- **`portals.yml` has only ~7% direct-ATS coverage today.** Most of the 5 new ATS adapters (D-15) will pick up volume only AFTER Layer 1 Firecrawl discovery surfaces their hostnames. The adapters and discovery are coupled — both must land in Phase 2.8 implementation for the architecture to deliver value.
+- **JazzHR public-feed status unverifiable** without dev-portal account — not in current portals.yml so probably moot, but flag if a JazzHR company appears post-discovery.
+- **`/v1/extract` migrating to `/agent`** per Firecrawl's own docs. Standardizing on `/v1/scrape` + inline schema sidesteps that migration.
+- **Per-plan rate caps (RPM, concurrency) for Firecrawl** not in retrieved sources. Worth checking the Firecrawl billing dashboard before high-concurrency batch design.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-design.md` ........ NEW (commit 0f9421a — earlier; not from this session)
+- `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` ........ NEW (commit d8e3921 — earlier)
+- root `CLAUDE.md` ........ Web research rule appended (commit d8e3921 — earlier); Surface uncertainty over baseline knowledge rule appended (this session)
+- `docs/design/2026-04-29-firecrawl-ats-verification.md` ........ NEW (this session) — verification research, 12 claims tested
+- `.collab/INDEX.md` ........ registers 3 new docs (design plan, decisions addendum, verification research) + bumped timestamp
+- `.claude/memory/decisions.md` ........ D-14 (Firecrawl pivot architecture) + D-15 (API-direct tier expansion 5 new ATSes) + D-16 (project rules) + frontmatter timestamp
+- `.claude/memory/state.md` ........ current state + next steps + open questions + watermark
+- `docs/STATUS.md` ........ Phase 2.8 done block + revised Up Next + revised handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt + frontmatter timestamp
+
+Missing / intentionally skipped:
+- `AI_AGENTS.md` Project Context — Pipeline Architecture diagram still reflects Phase 2.7 architecture. Holding for Phase 2.8 implementation when exact file paths are settled (avoid documenting planned-but-uncoded files).
+- `.claude/rules/architecture.md` — Layer separation table doesn't yet include `firecrawl-discover.mjs` / `firecrawl-extract.mjs` / new ATS adapters. Same reason as above; update post-implementation.
+- `.claude/memory/pitfalls.md` — no new pitfalls; the verification round caught baseline-knowledge errors before they became pitfalls.
+- `.claude/memory/context.md` — no new durable invariants; Phase 2.8 architecture is a decision (D-14/D-15) not yet a verified-in-production invariant.
+- `scripts/firecrawl-smoke-test.mjs`, `scripts/firecrawl-deep-test.mjs`, `scripts/inspect-firecrawl-links.mjs` — diagnostic/throwaway; not registered in INDEX (transient like `scripts/sample-portals-50.py` was).
+- `.firecrawl-key` — gitignored; never committed.
+- No new handoff written — user has not signaled Codex review of Phase 2.8 design plan; deferred to user's call.
 
 ## Handoff blocks
 

@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-29T10:35:00-04:00
+last-updated: 2026-04-29T15:00:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -11,27 +11,32 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/multi-agent-collab`
-**Active task:** Phase 2.7 implementation plan EXECUTED end-to-end. 10 atomic commits land Steps 0, 1, 2, 3+4, 5, 6, 7+8, 8.5, 11 (Step 9 skipped per user direction). All 18 design acceptance criteria pass via `scripts/acceptance-audit.py`.
-**Pause point:** Implementation complete on `feat/multi-agent-collab`. Awaiting user signal to either (a) merge to main, (b) execute Phase 2.6 clean rescan (out of scope this session), or (c) review specific outputs (e.g., `docs/design/companies-roster.md`, sample-run findings).
-**Blockers:** None. Working tree clean except for untracked `AI_HANDOFF.md`, `RESUME_PROMPT.md`, `.claude/settings.local.json`.
+**Active task:** Phase 2.8 (Firecrawl pivot) — design + decisions + verification all done. Phase 2.7 implementation remains complete (commits a13b9a5..9ff216a) and merged-ready. Phase 2.8 design plan: `docs/plans/2026-04-29-firecrawl-pivot-design.md` (commit 0f9421a). Decisions addendum: `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (commit d8e3921, also added "Web research" project rule). Verification research: `docs/design/2026-04-29-firecrawl-ats-verification.md` (this session). New project rule "Surface uncertainty over baseline knowledge" added to root CLAUDE.md (this session).
+**Pause point:** Phase 2.8 implementation plan not yet written. Verification surfaced 3 architecture corrections (Workday CXS API exists; JSON-mode is 5 credits/page not 1; `/v1/scrape` not `/v1/map` for ATS discovery) plus 5 newly-verified public ATSes. Decisions D-14 + D-15 + D-16 capture the new direction. Awaiting user signal to write Phase 2.8 implementation plan, or to hand off to Codex for design review first.
+**Blockers:** None. Working tree has uncommitted INDEX/decisions/state/STATUS/work-log/CLAUDE.md updates from this session — about to commit as a single "design checkpoint" commit per user request.
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
-1. ~~Steps 0-11 of implementation plan~~ — DONE 2026-04-29 (8 atomic commits a13b9a5 → 9ff216a).
-2. ~~Step 8.5 sample run~~ — DONE; 8/9 SR criteria pass; SR-6 affected by sample-script bug (yaml.dump loses comment groups → trackMap empty). NOT a production bug; documented in commit eacb2c3.
-3. ~~Step 10 verification gates (18 criteria)~~ — DONE 18/18 PASS via `scripts/acceptance-audit.py`.
-4. ~~Step 11 commit hygiene + final collab-check + INDEX registration~~ — DONE (commit 9ff216a; collab-check OK aligned).
-5. **Pending user signal:** merge to main? Phase 2.6 clean rescan? Review specific outputs?
-6. **Phase 2.6 (deferred — next session):** clean rescan tag scan-v1-unfiltered → reset pipeline.md + scan-history.tsv → run full-scan against all 428 enabled → custom-scraper Tier 1/2 ATS discovery → enrich → export → P-1 audit + landing-page issue triage for any company returning empty.
-7. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
+1. ~~Phase 2.7 implementation Steps 0-11~~ — DONE 2026-04-29 (commits a13b9a5 → 9ff216a). 18/18 acceptance criteria pass.
+2. ~~Phase 2.8 design plan~~ — DONE (commit 0f9421a, `docs/plans/2026-04-29-firecrawl-pivot-design.md`).
+3. ~~Phase 2.8 decisions addendum + Web research project rule~~ — DONE (commit d8e3921).
+4. ~~Phase 2.8 verification research~~ — DONE this session. `docs/design/2026-04-29-firecrawl-ats-verification.md` written. 3 corrections + 5 newly-verified public ATSes surfaced.
+5. ~~Phase 2.8 design-checkpoint commit~~ — IN PROGRESS this session. Adds D-14, D-15, D-16 to decisions; refreshes state.md, STATUS.md, work log; registers 3 new docs in INDEX; adds "Surface uncertainty over baseline knowledge" project rule to root CLAUDE.md.
+6. **Next step (user signal needed):** write Phase 2.8 implementation plan, OR hand off to Codex for design review of `2026-04-29-firecrawl-pivot-design.md` first. Implementation plan should incorporate: Step 0 URL triage (HTTP HEAD, 4-bucket classification), Step 1 firecrawl-discover.mjs, Step 2 API-direct tier expansion (5 new ATS adapters per D-15), Step 3 firecrawl-enrich.mjs, Step 4 npm full-scan chain wire-up, Step 5 acceptance audit + first scan.
+7. **Phase 2.6 (still deferred):** clean rescan once Phase 2.8 lands. tag scan-v1-unfiltered → reset pipeline.md + scan-history.tsv → run full-scan with new architecture → P-1 audit.
+8. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
-- **Q:** Should the next session merge `feat/multi-agent-collab` to `main` before Phase 2.6, or merge after Phase 2.6 produces clean rescan data? **Default:** merge first (the framework + design + implementation work is independently valuable).
-- **Q:** Sample-script bug fix needed: `scripts/sample-portals-50.py` was deleted (yaml.dump lost comment groups → trackMap empty during sample run). For future sample runs, use `ruamel.yaml` or string-based preservation of `title_filter` section. Not blocking; only matters if Step 8.5 is repeated.
-- **Q:** Root `CLAUDE.md` `@import` shim — confirm Claude Code resolves `@AI_AGENTS.md` and `@.claude/CLAUDE.md` correctly on next session start.
+- **Q:** Phase 2.8 next step — write the implementation plan directly, or hand off to Codex for design review of `2026-04-29-firecrawl-pivot-design.md` first? User's call.
+- **Q:** Where do the 5 new ATS adapters live? Options: `scripts/ats-adapters/{workday,smartrecruiters,personio,recruitee,workable}.mjs` (sibling to scan.mjs, per D-3); or fold into a single `ats-extra-scrape.mjs`. Recommend per-ATS files for clarity. Decide in implementation plan.
+- **Q:** Does any of the 428 enabled companies use **Eightfold / Avature / SuccessFactors / Taleo / Oracle Cloud HCM**? Hostname grep didn't find any in current `careers_url` values, but post-Layer-1-discovery may surface some. Defer until verification.
+- **Q:** Phase 2.6 clean rescan timing — execute right after Phase 2.8 lands, or merge to main first? Default: merge first (clean baseline split between architecture + data).
+- **Q:** Should the next session merge `feat/multi-agent-collab` to `main` before Phase 2.8 implementation, or after? Trade-off: merging first means Phase 2.8 gets its own branch (cleaner history); merging after means Phase 2.7 + 2.8 land together (less branch churn). Default: merge first.
+- **Q:** Sample-script bug fix still needed: `scripts/sample-portals-50.py` was deleted (yaml.dump lost comment groups). For future sample runs, use `ruamel.yaml` or string-based preservation. Not blocking; only matters if Step 8.5 is repeated under different scope.
+- **Q:** Root `CLAUDE.md` `@import` shim — confirmed working this session (system prompt shows both `AI_AGENTS.md` and `.claude/CLAUDE.md` content). Open Q closed.
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-29T10:35:00-04:00
+Last read INDEX at: 2026-04-29T15:00:00-04:00
 <!-- section:read-watermark:end -->

@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-29T00:38:20-04:00
+last-updated: 2026-04-29T15:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -376,5 +376,106 @@ Append new decisions below. Format:
 - Step 8.5 inserted between Step 8 (npm full-scan chain) and Step 9 (calibration). Calibration can use the sample data as additional input.
 - §13 verification gates updated to be stricter (cache-hit-rate criterion #10 added; grep #13 list expanded).
 - §10 export pseudocode now spells out concrete preferred categories — implementer doesn't choose differently.
+
+## D-14 — Phase 2.8 Firecrawl-first scraping pivot — 2026-04-29T15:00:00-04:00
+
+**Context:** Phase 2.7 sample run on 50 random enabled companies showed only ~26% scraper coverage. Investigation revealed the failures were not random — most "broken" companies (e.g., Jasper, SiFive, Cloudflare, Expedia) actually use known ATSes (Ashby, Workday, Greenhouse, custom) hidden behind branded landing pages. The 3-tier ATS discovery in `custom-scraper.mjs` (HTML regex → Playwright XHR intercept → generic DOM) is too brittle on modern SPA careers pages. User has 101k Firecrawl credits available and wants to leverage that capability.
+
+**Alternatives:**
+- Improve `custom-scraper.mjs` 3-tier discovery with more selectors / iframe handling / longer waits
+- Replace 3-tier discovery with Firecrawl as the primary scraper, keep `custom-scraper.mjs` as fallback only
+- Use Firecrawl for everything (replace `scan.mjs` too)
+- Hand-curate ATS slugs for the failing companies in `portals.yml`
+
+**Choice:** Firecrawl as **primary** for discovery + non-API extraction; existing direct-API tier (scan.mjs) **untouched** (D-3 invariant); `custom-scraper.mjs` retained as Layer 3 fallback only.
+
+**Architecture (4 layers):**
+- **Layer 0 — Direct ATS API** (`scan.mjs` untouched, plus new sibling scripts per D-15): hits documented JSON endpoints. Zero Firecrawl credits.
+- **Layer 1 — Firecrawl ATS discovery** (`firecrawl-discover.mjs`, NEW): for branded landing pages, calls `/v1/scrape` with `formats:["html","links"]` + `actions` for SPAs. Discovers ATS provider + slug, writes to `data/ats-discovery-cache.json` (60-day TTL with fast-fail re-discovery on 4xx/5xx). Slugs flow back into scan.mjs orchestration via a wrapper that merges portals.yml direct slugs + cached discovered slugs.
+- **Layer 2 — Firecrawl JD enrichment** (`firecrawl-enrich.mjs`, NEW): for JD pages on auth-gated ATSes (iCIMS/BambooHR/Pinpoint/Teamtailor/Phenom/Jobvite) and fully custom systems. Prefers plain markdown (1 credit/page) over JSON-mode (5 credits/page); JSON-mode reserved for messy custom pages.
+- **Layer 3 — Custom scraper fallback** (`custom-scraper.mjs`, retained): Playwright fallback for whatever Firecrawl can't handle. Heaviest tier.
+
+**Architecture corrections from verification research** (`docs/design/2026-04-29-firecrawl-ats-verification.md`):
+- Use `/v1/scrape` with `formats:["html","links"]` for ATS discovery, NOT `/v1/map` (map returns URL lists only — can't see ATS hostnames in script tags / iframe src).
+- Use `formats:["json"]` + `jsonOptions` (NOT legacy `extract` / `extractorOptions`).
+- Schemas are inline per-call (no pre-registration).
+- JSON-mode scrape is **5 credits/page** (1 base + 4 surcharge), not 1. Stealth/proxy adds another +4. With 101k credits, JSON-mode JD budget is ~20k, not ~100k.
+- `/v1/extract` is on a separate token-based subscription pool; default to `/v1/scrape` + inline schema.
+- `actions` parameter total wait time capped at 60 s; SPAs needing longer settle time need `/interact` (2 credits/browser-minute).
+- TTL extended from 30 days to 60 days with fast-fail re-discovery (real ATS migrations are rare).
+
+**Rationale:**
+- Firecrawl has documented success on JS-heavy SPAs and explicitly markets job-board scraping as a use case.
+- Per-call inline JSON Schema + `formats:["json"]` + `jsonOptions` is mature and production-ready.
+- 101k Firecrawl credits ≈ 50–100 full-scans available — comfortable budget headroom.
+- `scan.mjs` direct-ATS path is faster + free — preserve it; only use Firecrawl where it adds value.
+- ToS explicitly permits the use case; ~1,800 GETs/week is well below any plausible plan cap.
+
+**Tradeoffs:**
+- New external dependency (Firecrawl API key) adds a service outage risk; mitigation = Layer 3 custom-scraper fallback retained.
+- Credit consumption ongoing (~1–2k credits per full-scan post-warm-cache); user has 101k.
+- Layer 1 discovery accuracy depends on the seed URL pointing at the right company — see Phase 2.8 Step 0 URL triage.
+- Net coverage: previous 26% sample-coverage → expected substantial uplift, but exact number requires running the full pipeline.
+
+**Implementation impact:** see `docs/plans/2026-04-29-firecrawl-pivot-design.md` (architecture, risks, acceptance criteria) and `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (open-question resolutions). Implementation plan to be written next.
+
+## D-15 — API-direct tier expansion (5 new ATS adapters) — 2026-04-29T15:00:00-04:00
+
+**Context:** Verification research (`docs/design/2026-04-29-firecrawl-ats-verification.md`) revealed that 5 additional ATS providers expose **public no-auth job-listing APIs** beyond the 3 (Greenhouse / Ashby / Lever) currently covered by `scan.mjs`: **Workday CXS, SmartRecruiters, Personio, Recruitee, Workable**. Six others require auth or HTML scraping (iCIMS, BambooHR, Pinpoint, Teamtailor, Phenom, Jobvite); JazzHR is unverifiable.
+
+The largest single finding: **Workday's public CXS endpoint** at `POST {tenant}.wd{N}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` works on every Workday tenant without auth. This was previously assumed to be Firecrawl-territory.
+
+**Alternatives:**
+- Stay on 3 ATSes (GH/Ashby/Lever); use Firecrawl for everything else
+- Add only Workday (largest impact)
+- Add all 5 newly-verified ATSes (Workday, SmartRecruiters, Personio, Recruitee, Workable)
+- Modify `scan.mjs` to add the 5 ATSes (violates D-3)
+
+**Choice:** Add all 5 as **sibling scripts** to `scan.mjs` (`scan.mjs` itself remains untouched per D-3 invariant). Each adapter mirrors the `scan.mjs` pattern: read portals.yml, hit the documented public endpoint, write to `data/pipeline.md` and `data/scan-history.tsv` in identical format.
+
+**Adapter spec (each ~30–60 lines):**
+| ATS | Endpoint pattern | URL detection in portals.yml |
+|---|---|---|
+| Workday CXS | `POST {tenant}.wd{N}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs` then `GET .../job/{externalPath}` | `*.myworkdayjobs.com` in `careers_url` |
+| SmartRecruiters | `GET api.smartrecruiters.com/v1/companies/{id}/postings` | `careers.smartrecruiters.com/{id}` or branded → discover |
+| Personio | `GET {company}.jobs.personio.de/xml?language=en` | `*.jobs.personio.de` or branded → discover |
+| Recruitee | Public jobs feed (provider-specific URL pattern) | branded → discover |
+| Workable | `GET apply.workable.com/api/v1/widget/accounts/{slug}` | `apply.workable.com/{slug}` or branded → discover |
+
+**Rationale:**
+- All 5 are documented or de-facto-stable public APIs (verified primary sources in research doc).
+- Sibling-script pattern preserves D-3 invariant — `scan.mjs` upstream code unchanged.
+- After Layer 1 Firecrawl discovery surfaces ATS hostnames in branded pages, the relevant adapter takes over for ongoing fetches — Firecrawl burned only once per company per TTL.
+- Greenhouse/Ashby/Lever/Workday/SmartRecruiters/Personio/Recruitee/Workable = 8 ATSes covered by direct API, dramatically reducing Firecrawl credit burn over time.
+
+**Tradeoffs:**
+- 5 new scripts to maintain (each ~30-60 lines).
+- Direct-ATS coverage in portals.yml today is small (~7% of 428 enabled — see grep audit 2026-04-29) — most pickup will come AFTER Firecrawl Layer-1 discovery surfaces hidden ATSes.
+- Two Workable APIs exist (newer `apply.workable.com/api/v1/widget` + legacy `www.workable.com/api/accounts`); pick newer; document fallback if it returns 4xx.
+
+**Implementation impact:** new scripts in `scripts/ats-adapters/` (or a similar consolidated location TBD in implementation plan). Wired into `npm run full-scan` chain. Each adapter has an integration test against a known company (e.g., Workday adapter against an HPE-style test URL).
+
+## D-16 — Project rules added: Web research authorization + Surface uncertainty — 2026-04-29T15:00:00-04:00
+
+**Context:** Two project-level behavioral rules added to root `CLAUDE.md` during the Phase 2.8 design + verification arc:
+
+1. **Web research (commit `d8e3921`, 2026-04-29):** "Before running web searches or fetching online resources, briefly state what you plan to search for and what question it answers, then wait for explicit user signal to proceed. Do NOT search autonomously even if the question seems to require external info."
+
+2. **Surface uncertainty over baseline knowledge (added 2026-04-29):** "When you're uncertain about something whose answer will materially shape an approach, design decision, foundational assumption, or recommendation, surface the uncertainty explicitly — name what you don't know, why it matters, and what source could resolve it — and lean toward proposing a web fetch rather than papering over the gap with baseline knowledge."
+
+**Why this is a decision worth recording:** the verification round on 2026-04-29 surfaced 9+ baseline-knowledge claims I made during Phase 2.8 design that were factually wrong or partially-correct (e.g., JSON-mode pricing, `/v1/map` capability, Workday API existence). The rules are intended to prevent that pattern from recurring.
+
+**Together, these rules read as:**
+- *Honesty first*: surface uncertainty explicitly rather than asserting baseline-knowledge as fact.
+- *Autonomy second*: state intent, propose a search, wait for user go-ahead. Don't search without signal.
+- *Exception*: in-turn user authorization ("feel free to search") is the signal — proceed.
+
+**Rationale:** verified errors compound through design. Catching a wrong assumption early via web research costs minutes; catching it after the implementation plan is half-coded costs hours.
+
+**Tradeoffs:**
+- More user-friction turns (surfacing uncertainty + waiting for go-ahead).
+- Counter: the verification round saved a major design rework (Workday CXS finding alone reshapes Phase 2.8 architecture).
+
+**Cross-references:** root `CLAUDE.md` lines 15-25 (both rules); `docs/design/2026-04-29-firecrawl-ats-verification.md` (the verification work that motivated rule 2).
 
 <!-- section:entries:end -->
