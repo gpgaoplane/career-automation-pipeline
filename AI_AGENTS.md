@@ -214,7 +214,7 @@ node merge-tracker.mjs             # merge batch tracker additions
 ```
 Excel (450 companies)
     ↓ filter
-career-ops/portals.yml (448 companies, 416 enabled)
+career-ops/portals.yml (448 companies, 428 enabled)
     ↓
 scan.mjs ──────────────── Greenhouse/Ashby/Lever direct ATS URLs (zero token cost)
 custom-scraper.mjs ─────── 3-tier ATS discovery + Playwright for branded pages
@@ -285,7 +285,7 @@ career-ops/data/applications.md          ← master tracker
 
 ### Companies Source
 
-`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. 416 enabled (32 disabled in portals.yml as duplicates, acquired, or no real presence). Excluded categories: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
+`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. 428 enabled / 20 disabled in portals.yml (every disabled row carries an explicit `note:` per the 2026-04-28 audit cleanup). Disabled categories: 16 duplicate-suppression entries, 2 universal-exclusion HW supply chain (NVIDIA, Foxconn), 2 universal-exclusion defense drones / maritime (Skydio, Saronic). Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
 
 Excel columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
 

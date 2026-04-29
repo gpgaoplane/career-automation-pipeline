@@ -43,7 +43,7 @@
   - Audited all 32 disabled companies; classified 16 as duplicate-suppression (correct), 14 as mis-drops (no exclusion reason), 2 as universal-exclusion (NVIDIA HW, Saronic defense)
   - Identified 2 inversions: Foxconn rank 65 (HW) and Skydio rank 437 (defense) currently enabled but should be disabled
   - Final inventory committed in design plan: 448 total / **428 enabled / 20 disabled** with explicit `note:` on every disabled row
-  - ATS distribution post-cleanup: 17 direct (Greenhouse 7 + Ashby 6 + Workday 3 + Labelbox direct-Greenhouse) + 411 branded
+  - ATS distribution post-cleanup: **18 direct** (Greenhouse 8 + Ashby 7 + Workday 3) + **410 branded**. Two re-enabled companies have direct ATS URLs: Labelbox (Greenhouse) and Genmo (Ashby). Earlier draft said 17/411; corrected after Codex review of design plan.
 - [x] **Multi-agent-collab v0.4.1 framework installed** (2026-04-28, branch `feat/multi-agent-collab`):
   - Skill drop-in at `~/.claude/skills/multi-agent-collab` (commit `ebd67b8`, v0.4.1)
   - Bootstrapped via `collab-init.sh --agent claude` from repo root (fresh mode)
@@ -55,8 +55,8 @@
 
 ## In Progress / Up Next
 - [ ] **Clean rescan** — tag `scan-v1-unfiltered` on commit 06bf430, reset pipeline.md + scan-history.tsv, re-run scan.mjs + custom-scraper.mjs with updated filters
-  - scan.mjs: ~13 companies (only those with direct ATS URL in portals.yml)
-  - custom-scraper.mjs: 403 companies (branded pages — Tier 1/2 discovers hidden ATS for 100+ of them)
+  - scan.mjs: 18 companies (only those with direct ATS URL in portals.yml after audit cleanup)
+  - custom-scraper.mjs: 410 companies (branded pages — Tier 1/2 discovers hidden ATS for 100+ of them)
 - [ ] Investigate and correct portals.yml entries where `careers_url` points to a generic landing page rather than actual job listings (will show as empty Tier 3 results after scrape)
 - [ ] Re-run `export-jobs.mjs` after clean rescan to produce valid Excel
 

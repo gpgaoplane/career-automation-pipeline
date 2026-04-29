@@ -19,8 +19,8 @@ Audited 2026-04-28 against actual `portals.yml`:
 - 448 total entries (Excel minus 2 with no URL: Eternal, Treefera)
 - **Pre-cleanup state**: 416 enabled, 32 disabled. Of 32 disabled: 16 duplicate-suppression (URL matched an enabled twin) + 16 unique-URL of which only 2 (NVIDIA, Saronic) had clear universal-exclusion reasons. Audit revealed 14 unique-URL disables had no documented reason (likely mis-drops) and 2 enabled companies (Foxconn rank 65, Skydio rank 437) violated universal exclusions.
 - **Post-cleanup state** (per D-11): **428 enabled, 20 disabled** — all disabled rows carry explicit `note:` (16 `duplicate-of: <parent>`, 2 `excluded:HW supply chain`, 2 `excluded:defense drones / maritime`).
-- ATS distribution within enabled (post-cleanup): **17 direct-ATS** (Greenhouse 7 + Ashby 6 + Workday 3 + Labelbox direct-Greenhouse via re-enable = 17) + **411 branded career pages**.
-- The 411 branded pages secretly use Greenhouse/Ashby/Lever/Workday underneath in many cases. `custom-scraper.mjs` Tier 1/2 (HTML regex + Playwright XHR intercept) discovers and API-scrapes them automatically. The Excel source has 100+ companies with known ATS-compatible URLs that get re-discovered during custom-scraper runs.
+- ATS distribution within enabled (post-cleanup, corrected after Codex review of design plan v1): **18 direct-ATS** (Greenhouse 8 + Ashby 7 + Workday 3 + 0 Lever; Labelbox and Genmo are both re-enabled and both have direct ATS URLs — Labelbox via Greenhouse, Genmo via Ashby) + **410 branded career pages**.
+- The 410 branded pages secretly use Greenhouse/Ashby/Lever/Workday underneath in many cases. `custom-scraper.mjs` Tier 1/2 (HTML regex + Playwright XHR intercept) discovers and API-scrapes them automatically. The Excel source has 100+ companies with known ATS-compatible URLs that get re-discovered during custom-scraper runs.
 
 > Earlier 2026-04-20 entry stated "13 direct / 403 branded". That was incorrect (count drift / earlier data point that pre-dated full audit). Superseded by this entry.
 

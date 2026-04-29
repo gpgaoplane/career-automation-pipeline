@@ -2,13 +2,14 @@
 status: active
 type: design-plan
 owner: claude
-last-updated: 2026-04-28T22:32:14-04:00
+last-updated: 2026-04-28T23:00:00-04:00
 read-if: "you are about to implement the portals.yml audit, the mid-level profile pivot, or the pre-scoring system"
 skip-if: "you are looking for execution steps — see the implementation plan"
 related:
   - docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md
   - .claude/memory/decisions.md
   - AI_AGENTS.md
+revision: v2 — integrated Codex review feedback (commit 021efb5)
 ---
 
 # Design Plan — Portals Cleanup, Mid-Level Pivot, Pre-Scoring System
@@ -56,7 +57,7 @@ These decisions become the canonical record once committed; they will be added t
 | ID | Title | Status |
 |---|---|---|
 | D-7 | Profile pivot to mid-level (3-5 YoE) — reasoning: "Will wants to be reclassified into the mid-level pool to avoid senior/principal title inflation expectations" | locked |
-| D-8 | Sequential processing for clean rescan; bounded concurrency deferred until weekly cadence justifies dev investment | locked |
+| D-8 | **Enrichment is sequential**; existing `scan.mjs` (CONCURRENCY=10) and `custom-scraper.mjs` (CONCURRENCY_API=10, CONCURRENCY_PLAYWRIGHT=5) concurrency is **unchanged**. Adding bounded concurrency to existing scrapers deferred until weekly cadence justifies dev investment. | locked (clarified per Codex review) |
 | D-9 | Pre-scoring scheme: title-based component (track weight × rank tier × category alignment × title strength) + description-based component (location × comp delta × keywords × tech stack × YoE × deal-breakers); banded into S/A/B/C tiers | locked |
 | D-10 | Description enrichment as a separate step (`enrich-jobs.mjs`) between scrape and export, with 7-day per-URL cache | locked |
 | D-11 | portals.yml audit cleanup: 448 total → 428 enabled / 20 disabled; every disabled row gets explicit `note:` | locked |
@@ -145,8 +146,10 @@ All 14 receive `enabled: true` and no longer carry the implicit-disable. Their `
 | Total entries in `portals.yml` `tracked_companies` | 448 |
 | Enabled (`enabled: true`) | 428 |
 | Disabled (`enabled: false`) with explicit `note:` | 20 |
-| Direct-ATS URLs (`scan.mjs` handles) | 17 (Greenhouse 7 + Ashby 6 + Workday 3 + new direct = Labelbox via greenhouse + 0 Lever; Labelbox flips from disabled to enabled, adding 1 direct-Greenhouse) |
-| Branded career pages (`custom-scraper.mjs` handles) | 411 |
+| Direct-ATS URLs (`scan.mjs` handles) | **18** (Greenhouse 8 + Ashby 7 + Workday 3 + 0 Lever). Two re-enabled companies have direct ATS URLs: Labelbox (`job-boards.greenhouse.io/labelbox`) + Genmo (`jobs.ashbyhq.com/genmo`). |
+| Branded career pages (`custom-scraper.mjs` handles) | **410** |
+
+> Codex review correction (2026-04-28): earlier draft stated 17/411 — that missed Genmo's direct Ashby URL. Verified via python audit against current `portals.yml`.
 
 ### §4.6 Roster artifact: `docs/design/companies-roster.md`
 
@@ -166,18 +169,24 @@ The pivot from senior-target to mid-level-target (D-7) propagates across the fol
 
 ### §5.1 Files affected
 
-| File | Currently says | Change to |
+| File | Currently says (verified 2026-04-28) | Change to |
 |---|---|---|
 | `career-ops/modes/_profile.md` lines 7, 8, 9, 10, 11, 12 | archetype `Fit` cells reference "Senior" framing implicitly | reframe each archetype as mid-level fit; remove any explicit "senior IC" language in adaptive framing |
 | `career-ops/config/profile.yml` `target_roles.archetypes[].level` | `"Mid-Senior"` (4 archetypes), `"Senior"` (3 archetypes) | All archetypes set to `"Mid-level"` |
 | `career-ops/portals.yml` `title_filter.positive` | Includes `"Senior AI"`, `"Principal AI"`, `"Senior Product Manager"` | Remove these three entries |
 | `career-ops/portals.yml` `title_filter.negative` | Excludes Staff, Lead, Intern, etc. | Add Senior, Sr, Sr., Principal, Junior, Jr, Jr., Associate |
-| `AI_AGENTS.md` Project Context "Filter rationale" section | Currently says: "Will targets mid-to-senior IC roles (Senior, Principal), not the top IC band. Staff/Lead excluded." | Replace with: "Will targets mid-level IC roles (3-5 years experience). Senior, Principal, Junior, Associate, Lead, Staff, Intern all excluded at scrape time." |
-| `.claude/memory/context.md` 2026-04-20 "Filter rationale" entry | Same stale wording | Replace with mid-level wording |
-| `.claude/memory/context.md` 2026-04-20 "ATS URL distribution" entry | Says "13 direct / 403 branded" | Replace with "17 direct / 411 branded (after audit cleanup, Labelbox moves to direct)" |
-| `.claude/memory/decisions.md` | No D-7 yet | Add D-7 capturing the pivot reasoning |
-| `docs/STATUS.md` | Phase 2 listed; no audit/pivot entry | Add Phase 2.7 (audit cleanup design plan); update handoff note |
-| `docs/agents/claude.md` | First entry only | Append entry covering this design phase + Receipt |
+| `career-ops/portals.yml` `title_filter.positive` YAML comment groups | Single combined group `# ── Generative AI / Creative ──` (lines 74-86) | Split into two groups: `# ── Generative AI Engineering ──` and `# ── Creative ──` per §6.2 below (required for CREATIVE track to be parser-emittable) |
+| `AI_AGENTS.md` Project Context "Filter rationale" section | Says: "Will targets mid-to-senior IC roles (Senior, Principal), not the top IC band. Staff/Lead excluded." | Replace with: "Will targets mid-level IC roles (3-5 years experience). Senior, Principal, Junior, Associate, Lead, Staff, Intern all excluded at scrape time." |
+| `AI_AGENTS.md` line 217 (Pipeline Architecture diagram) | `career-ops/portals.yml (448 companies, 416 enabled)` | `career-ops/portals.yml (448 companies, 428 enabled)` |
+| `AI_AGENTS.md` line 288 (Companies Source) | `416 enabled (32 disabled in portals.yml as duplicates, acquired, or no real presence)` | `428 enabled (20 disabled in portals.yml — all with explicit `note:` per audit cleanup)` |
+| `.claude/memory/context.md` 2026-04-28 "ATS URL distribution" entry | Says "17 direct / 411 branded" (earlier integration drafted before Codex correction) | Replace with "18 direct / 410 branded" |
+| `.claude/memory/context.md` Filter rationale entry | covered above | mid-level wording |
+| `.claude/memory/decisions.md` | No D-7..D-11 yet | Add D-7..D-11 capturing pivot, sequential, pre-scoring, enrichment, audit |
+| `docs/STATUS.md` line 12 (Phase 1 entry) | `portals.yml (448 companies: 416 enabled, 32 disabled)` | annotate as historical; current state covered by Phase 2.7 entry below |
+| `docs/STATUS.md` line 46 (Phase 2.7 ATS distribution) | Says "17 direct + 411 branded" | Replace with "18 direct + 410 branded" |
+| `docs/STATUS.md` lines 58-59 ("Up Next" company counts) | `scan.mjs: ~13 companies` and `custom-scraper.mjs: 403 companies` | Replace with `scan.mjs: 18 companies` and `custom-scraper.mjs: 410 companies` |
+| `docs/STATUS.md` Phase 2.7 entry + handoff note | covered above | Phase 2.7 design plan v2 entry; handoff note reflects integration of Codex review |
+| `docs/agents/claude.md` | First entry + Phase 2.7 entry | Append v2 integration entry + Receipt |
 
 ### §5.2 Why ALL of these matter
 
@@ -236,8 +245,11 @@ This mapping lives in memory only (recomputed on each `export-jobs.mjs` run) —
 | `# ── Sales / Business Development ──` | `AE` |
 | `# ── Product Management ──` | `PM` |
 | `# ── Consulting / Advisory ──` | `CONSULT` |
-| `# ── Generative AI / Creative ──` | `GEN-AI` |
-| `# ── Broad AI roles ──` | `AI-ENG` (fallback to AI-ENG since broad AI implies engineering) |
+| `# ── Generative AI Engineering ──` (NEW group, split from old combined `Generative AI / Creative` block) | `GEN-AI` — assigns: `LoRA`, `Stable Diffusion`, `Video Generation`, `Content AI`, `Prompt Engineer` |
+| `# ── Creative ──` (NEW group, split from old combined block) | `CREATIVE` — assigns: `Creative Technologist`, `Technical Artist`, `AI Trainer`, `AI Model Trainer`, `Image Trainer`, `Video Trainer`, `ComfyUI` |
+| `# ── Broad AI roles ──` | `AI-ENG` (fallback — broad AI implies engineering) |
+
+> Codex review correction (2026-04-28): the old combined `# ── Generative AI / Creative ──` group mapped only to `GEN-AI`, leaving `CREATIVE` weight in §7.1 with no parser route. The fix is the YAML group split above; the title_filter rewrite during implementation does this restructure at the same time as removing senior/principal positives. 12 keywords total across the old group → 5 to GEN-AI, 7 to CREATIVE.
 
 Implementation note: regex `/^\s*#\s*──\s*(.+?)\s*──/` to detect a group header. Map by hand-coded lookup table from the human-readable header to the track code.
 
@@ -365,8 +377,8 @@ Adds bonuses/penalties based on the actual job description text. Requires `enric
 | **Hybrid Toronto** | match on `hybrid` AND (`Toronto` OR `GTA`) within ±200 chars | **+2** (same as above; not double-counted if both hit) |
 | **Canada-only** | match on `Canada-only`, `must be located in Canada`, `Canadian residents only` | **+2** |
 | **Fully remote US** (highest band) | match on `100% remote` OR `fully remote` AND (`US-based` OR `North America` OR `United States`) | **+4** |
-| **Comp visible AND above target** (USD ≥$120K, CAD ≥$110K) | regex extract numeric range; compare to target floor | **+1 per $10K above target floor, no cap** |
-| **Comp visible AND below target** | as above, comp range upper bound below target floor | **−1 per $10K below target floor, no cap** |
+| **Comp visible AND above target** (USD ≥$120K, CAD ≥$110K) | regex extract numeric range; **use lower bound** `low`; compute `delta = low − target_floor` (matching §8.2 + Q-7 per Codex review) | **+1 per $10K when delta > 0, no cap** |
+| **Comp visible AND below target** | use lower bound: comp range LOW < target floor (per Q-7 / Codex review) | **−1 per $10K below target floor, no cap. Penalty applies even when HIGH ≥ floor.** |
 | **Will's track keywords matched in body** | substring match on a curated list (see §8.3) | **+1 per unique keyword, capped at +3** |
 | **Will's tech-stack matches** | substring match on a curated list (see §8.4) | **+1 per unique match, capped at +2** |
 | **YoE indicator: 3-5 years** | regex: `\b(3|4|5|3-5|3 to 5|four|five) years?\b` near `experience`/`exp` | **+1** |
@@ -607,7 +619,7 @@ Per-job cache writes after each successful enrichment. If interrupted, next run 
 [2026-04-29T10:15:30-04:00] [Pigment]   tier1-http GET ... 404 → marked failed, P-1 candidate
 ```
 
-Output piped to `career-ops/logs/enrich-YYYY-MM-DD.log` for the audit step.
+Output piped to `career-ops/batch/logs/enrich-YYYY-MM-DD.log` for the audit step. (Path matches `custom-scraper.mjs` log convention at `career-ops/custom-scraper.mjs:521` per Codex review — keeps log artifacts in one place.)
 
 ### §10.9 Pseudocode
 
@@ -755,7 +767,7 @@ A reviewer (or future-us) declares this work complete when ALL the following hol
 | 10 | `enrich-jobs.mjs` cache hit rate ≥ 90% on second run | run twice, second run reports ≥ 0.9 hits/total |
 | 11 | `export-jobs.mjs` produces Excel with new columns + sorted by `pre_score` desc | open xlsx, top-10 spot-check |
 | 12 | `npm run full-scan` chains scan + custom-scrape + enrich + export | invocation succeeds |
-| 13 | All cross-file propagations done (the §5.1 file list — 11 files total touched) | grep audit script: zero hits for "Mid-Senior" or "13 / 403" stale strings |
+| 13 | All cross-file propagations done (the §5.1 file list — **15 rows / 11 unique files** touched) | grep audit script: zero hits for any of these stale strings: `Mid-Senior`, `13 / 403`, `13 direct`, `403 branded`, `17 direct`, `411 branded`, `416 enabled`, `32 disabled` (in current-state contexts; historical Phase 1 entries may legitimately retain `416 enabled, 32 disabled` if annotated as historical), `~13 companies`, `403 companies`. Run before commit. |
 | 14 | `docs/design/companies-roster.md` exists and matches portals.yml live state | manual visual diff |
 | 15 | `.claude/memory/decisions.md` has D-7..D-11 entries | grep finds them |
 | 16 | `.collab/INDEX.md` registers `enrich-jobs.mjs` and `companies-roster.md` and the design plan | collab-check passes |

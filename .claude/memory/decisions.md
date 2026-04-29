@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-28T22:05:11-04:00
+last-updated: 2026-04-28T23:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -284,5 +284,55 @@ Append new decisions below. Format:
 - scan-v1 baseline (1406 jobs) is now incomparable for "job quality" — only useful as a filter-effectiveness baseline.
 
 **Full file-by-file changes:** see `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` §4 and §5.1.
+
+## D-12 — Integrate Codex review of Phase 2.7 design plan — 2026-04-28T23:00:00-04:00
+
+**Context:** Codex reviewed the Phase 2.7 design plan v1 (commit `faa3a1a`) and surfaced five issues in §17 review comments + return handoff (commit `021efb5`). Each finding verified against primary sources before integration.
+
+**Alternatives:**
+- Reject Codex's findings (would be wrong; all 5 verify against primary sources)
+- Defer integration to implementation plan (would mean shipping known-incorrect design)
+- Integrate all 5 fixes into design plan v2 + propagate corrections across project
+
+**Choice:** Integrate all 5 fixes into the design plan as v2 + propagate corrections. Design plan revised in-place; Codex's §17 review preserved as the audit trail.
+
+**Findings + fixes:**
+
+1. **Direct/branded count: 17/411 → 18/410.** Codex caught that Genmo (`jobs.ashbyhq.com/genmo`) is direct Ashby and was missed in the count. Verified via python audit. Updated §4.5 of the design plan, AI_AGENTS.md (lines 217 and 288), `docs/STATUS.md` (lines 46, 58, 59), `.claude/memory/context.md` (this file's neighbor).
+
+2. **D-8 ambiguity: clarified as enrichment-only sequential.** scan.mjs has CONCURRENCY=10 and custom-scraper.mjs has CONCURRENCY_API=10/CONCURRENCY_PLAYWRIGHT=5. D-8 wording "sequential clean rescan" was ambiguous. Clarified: enrichment is sequential; existing scraper concurrency is unchanged (out-of-scope per design §2). Adding bounded concurrency to scrapers is still deferred.
+
+3. **Comp scoring inconsistency.** Original §8.1 said "upper bound below floor" → penalty; §8.2 computed `low - floor`; Q-7 said `LOW < FLOOR`. Three inconsistent rules. Fix: §8.1 now says "use lower bound" matching §8.2 + Q-7. Penalty applies even when comp HIGH ≥ floor as long as comp LOW < floor (e.g., $100K-$140K USD with floor $120K → −2 points).
+
+4. **§5.1 propagation map missed stale-count locations.** Codex caught that AI_AGENTS.md still had "416 enabled" at line 217 (Pipeline Architecture diagram) and line 288 (Companies Source); STATUS.md still had "13 companies" / "403 companies" at lines 58-59 (Up Next), and "17 direct + 411 branded" at line 46. §5.1 expanded with explicit rows for each. Acceptance criterion 13 grep expanded to: `Mid-Senior`, `13 / 403`, `13 direct`, `403 branded`, `17 direct`, `411 branded`, `416 enabled`, `32 disabled` (current-state contexts), `~13 companies`, `403 companies`. All stale strings now corrected in this commit.
+
+5. **CREATIVE track had no parser route.** §7.1 assigned `CREATIVE = 3` weight but §6.2 mapped the only relevant YAML group `# ── Generative AI / Creative ──` to GEN-AI only. Fix: split the YAML group during the title_filter rewrite into two new groups — `# ── Generative AI Engineering ──` (5 keywords: LoRA, Stable Diffusion, Video Generation, Content AI, Prompt Engineer) → GEN-AI track, and `# ── Creative ──` (7 keywords: Creative Technologist, Technical Artist, AI Trainer, AI Model Trainer, Image Trainer, Video Trainer, ComfyUI) → CREATIVE track. Added to §5.1 propagation map; documented in §6.2.
+
+**Q-1..Q-8 confirmations from Codex** (no design changes needed beyond §3..§8 fixes above):
+- Q-1: keep `--top` default to "show all" (filtering = explicit user choice)
+- Q-2: extracted text only in cache (no raw HTML bloat)
+- Q-3: add `AI Foundation Models`, `Foundation Models`, `AI Sales / GTM AI`, `AI Data Labeling / Programmatic`. Cautious on `AI Chatbot / Consumer` — xAI/Grok is disabled and shouldn't accidentally become preferred-category evidence.
+- Q-4: automatic enrich in `npm run full-scan`, with `--skip-enrich` flag for fast iteration (already locked in §11.2)
+- Q-5: keep AI Architect / Enterprise Architect in SA group
+- Q-6: re-enable Tome under "no undocumented disables" rule; re-disable later with note if proven defunct
+- Q-7: confirmed lower-bound interpretation (already integrated in fix #3)
+- Q-8: keep multi-track bonus flat at +1
+
+**Optional improvements integrated:**
+- §10.8 log path moved from `career-ops/logs/` to `career-ops/batch/logs/` (matches `custom-scraper.mjs:521` convention)
+- §12 #13 "11 files total" corrected to "15 rows / 11 unique files"
+
+**Rationale:**
+- All 5 issues verified against primary sources (`career-ops/portals.yml` line numbers, scan.mjs:32, custom-scraper.mjs:29-30, AI_AGENTS.md and STATUS.md greps). No performative agreement; Codex's findings are technically correct.
+- Integration in design plan v2 (in-place revision, frontmatter `revision: v2` field added) keeps the plan as a single canonical artifact while preserving Codex's review in §17 for audit.
+- Cross-doc propagation done now (decision-recording layer) so the implementation plan can execute the actual config/code edits with fully consistent context.
+
+**Tradeoffs:**
+- Adds an integration round-trip; total session count for this work increased from 1 to 2 (worth it for technical correctness).
+- Design plan v2 will require Codex re-review only if Codex flagged any "blocker" — the 5 issues were correctness fixes, not architectural challenges, so a full v2 review is optional. Flagging this as an open question for the user: do they want Codex to re-review v2, or proceed straight to implementation plan?
+
+**Implementation impact:**
+- Implementation plan must include the YAML group split (5 + 7 keywords moved into two new groups) at the same time as the senior/principal positive removal — same `portals.yml` commit.
+- Implementation plan grep audit now expanded; criterion #13 of acceptance must pass for ALL stale strings listed.
 
 <!-- section:entries:end -->

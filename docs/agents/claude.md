@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-28T22:32:14-04:00
+last-updated: 2026-04-28T23:00:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -127,6 +127,65 @@ Missing / intentionally skipped:
 - `career-ops/export-jobs.mjs` — refactored in implementation phase
 - `docs/design/companies-roster.md` — auto-generated during implementation
 - `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` — written AFTER Codex review of the design plan is integrated
+
+## 2026-04-28 — Integrated Codex review of Phase 2.7 design plan (design plan v2)
+
+**Goal:** Receive Codex's review of design plan v1, verify each finding against primary sources, integrate fixes into design plan v2 + propagate corrections across decision-recording files.
+
+**Approach:**
+
+1. Loaded `superpowers:receiving-code-review` skill before reading review.
+2. Read Codex's §17 review comments in design plan, Codex's work log, Codex's memory updates.
+3. **Verified each of Codex's 5 issues against primary sources** — all 5 verified correct:
+   - **Issue 1 (18/410 ATS count)**: python audit against current `career-ops/portals.yml` confirmed Genmo (`jobs.ashbyhq.com/genmo`) is direct Ashby. v1 count missed it. Real distribution post-cleanup is 18 direct / 410 branded.
+   - **Issue 2 (D-8 ambiguity)**: `grep -n` confirmed `scan.mjs:32` `CONCURRENCY=10` and `custom-scraper.mjs:29-30` `CONCURRENCY_API=10` / `CONCURRENCY_PLAYWRIGHT=5`. "Sequential clean rescan" was genuinely ambiguous — could mean enrich-only OR could mean changing existing scrapers.
+   - **Issue 3 (comp inconsistency)**: §8.1 said "upper bound below floor"; §8.2 computed `low - floor`; Q-7 said `LOW < FLOOR`. Three inconsistent rules.
+   - **Issue 4 (stale counts)**: `grep` against `AI_AGENTS.md` and `docs/STATUS.md` found stale "416 enabled" / "32 disabled" / "13 companies" / "403 companies" / "17 direct" / "411 branded" at multiple locations.
+   - **Issue 5 (CREATIVE no parser route)**: §7.1 assigned CREATIVE = 3 weight, but §6.2 mapped only "Generative AI / Creative" combined group to GEN-AI — no route emits CREATIVE.
+4. Committed Codex's review as a preserved contribution (commit `021efb5`) with co-author attribution.
+5. **Integrated all 5 fixes into design plan v2** (in-place revision; frontmatter `revision: v2` field added):
+   - §3 D-8 row reworded: "enrichment is sequential; existing scrapers (CONCURRENCY=10/CONCURRENCY_API=10/CONCURRENCY_PLAYWRIGHT=5) unchanged".
+   - §4.5 ATS counts: 17/411 → 18/410, with Codex review correction note inline.
+   - §5.1 propagation map expanded: added rows for AI_AGENTS.md lines 217/288, docs/STATUS.md lines 12/46/58-59, plus a new row for the portals.yml YAML group restructure (CREATIVE split).
+   - §6.2 comment-group → track table: split "Generative AI / Creative" into two new groups — "Generative AI Engineering" (5 keywords: LoRA, Stable Diffusion, Video Generation, Content AI, Prompt Engineer) → GEN-AI, and "Creative" (7 keywords: Creative Technologist, Technical Artist, AI Trainer, AI Model Trainer, Image Trainer, Video Trainer, ComfyUI) → CREATIVE.
+   - §8.1 comp signal rows: rewrote both above-target and below-target rows to use lower-bound logic consistently. Penalty applies when LOW < floor even if HIGH ≥ floor (per Q-7).
+   - §10.8 log path: `career-ops/logs/` → `career-ops/batch/logs/` (matches `custom-scraper.mjs:521` convention).
+   - §12 acceptance criterion #13: file count corrected (15 rows / 11 unique files); grep audit expanded to all stale strings.
+6. **Propagated corrections** across decision-recording files:
+   - `AI_AGENTS.md`: line 217 `(448 companies, 416 enabled)` → `(448 companies, 428 enabled)`; line 288 Companies Source rewritten to 428/20 with explicit note coverage.
+   - `docs/STATUS.md`: line 46 `17 direct + 411 branded` → `18 direct + 410 branded`; lines 58-59 `~13 companies` and `403 companies` → `18 companies` and `410 companies`.
+   - `.claude/memory/context.md` 2026-04-28 ATS distribution entry: `17/411` → `18/410` with Codex review attribution.
+7. **Recorded D-12** in `.claude/memory/decisions.md` capturing the integration with full reasoning and per-issue diff.
+8. **Updated state.md** with current state, next steps (Codex re-review of v2 OR proceed to implementation plan), open questions.
+
+**Files touched:**
+
+- Modified: `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` (v2 with 7 surgical fixes), `AI_AGENTS.md` (lines 217 + 288), `docs/STATUS.md` (lines 46, 58, 59), `.claude/memory/context.md` (ATS distribution entry), `.claude/memory/decisions.md` (added D-12 + timestamp), `.claude/memory/state.md` (current state, next steps), this work log
+- Untouched (still implementation territory): `career-ops/portals.yml`, `career-ops/modes/_profile.md`, `career-ops/config/profile.yml`, `career-ops/scan.mjs`, `career-ops/custom-scraper.mjs`, `career-ops/export-jobs.mjs`
+
+**Watch out:**
+
+- Design plan v2 is in-place revision; Codex's §17 review comments preserved at the bottom as audit trail.
+- The CREATIVE/GEN-AI YAML group split is now coupled to the title_filter rewrite. Implementation plan must do BOTH at the same time — splitting without removing senior/principal positives would leave portals.yml half-migrated.
+- All 5 issues were factual/textual corrections, not architectural challenges. v2 vs v1 is a correctness pass, not a redesign. User has the call: optional Codex re-review of v2 OR proceed straight to implementation plan.
+- No new handoff written yet — waiting for user's call.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` ........ v2 with 7 surgical fixes (frontmatter revision flag, D-8 reword, §4.5 18/410, §5.1 expanded, §6.2 YAML group split, §8.1 lower-bound, §10.8 log path, §12 #13 expanded grep)
+- `AI_AGENTS.md` ........ lines 217 + 288 stale-count corrections
+- `docs/STATUS.md` ........ lines 46, 58-59 stale-count corrections
+- `.claude/memory/context.md` ........ 17/411 → 18/410 with Codex review attribution
+- `.claude/memory/decisions.md` ........ D-12 integration record + frontmatter timestamp
+- `.claude/memory/state.md` ........ current state, next steps, open questions
+- `docs/agents/claude.md` ........ this entry + Receipt
+
+Missing / intentionally skipped:
+- `career-ops/*` — all config/code edits remain deferred to implementation plan execution (title_filter rewrite + YAML group split + audit cleanup land in the same implementation commit).
+- `docs/agents/codex.md` — Codex's work log is owner=codex; not modified per cross-agent courtesy.
+- `.codex/memory/*` — Codex's memory; not modified.
+- No new handoff written — waiting for user's direction on (a) Codex re-review of v2 vs (b) proceed to implementation plan.
 
 ## Handoff blocks
 
