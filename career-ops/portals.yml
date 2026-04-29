@@ -64,26 +64,26 @@ title_filter:
     - "Product Manager"
     - "Technical Product Manager"
     - "Technical PM"
-    - "Senior Product Manager"
     # ── Consulting / Advisory ────────────────────────────────────────────────
     - "AI Consultant"
     - "Technical Consultant"
     - "AI Advisor"
     - "AI Strategist"
     - "Technology Consultant"
-    # ── Generative AI / Creative ─────────────────────────────────────────────
+    # ── Generative AI Engineering ────────────────────────────────────────────
+    - "LoRA"
+    - "Stable Diffusion"
+    - "Video Generation"
+    - "Content AI"
+    - "Prompt Engineer"
+    # ── Creative ─────────────────────────────────────────────────────────────
     - "Creative Technologist"
     - "Technical Artist"
     - "AI Trainer"
     - "AI Model Trainer"
     - "Image Trainer"
     - "Video Trainer"
-    - "Prompt Engineer"
     - "ComfyUI"
-    - "LoRA"
-    - "Stable Diffusion"
-    - "Video Generation"
-    - "Content AI"
     # ── Broad AI roles ───────────────────────────────────────────────────────
     - "Artificial Intelligence"
     - "Deep Learning"
@@ -91,8 +91,6 @@ title_filter:
     - "AI Software Engineer"
     - "Software Engineer, AI"
     - "Software Engineer - AI"
-    - "Senior AI"
-    - "Principal AI"
 
   negative:
     # ── Too junior ───────────────────────────────────────────────────────────
@@ -102,6 +100,16 @@ title_filter:
     - "coop"
     - "PhD"
     - "postdoc"
+    # ── Too junior (below mid-level IC band) ─────────────────────────────────
+    - "Junior"
+    - "Jr"
+    - "Jr."
+    - "Associate"
+    # ── Too senior (above mid-level IC band) ─────────────────────────────────
+    - "Senior"
+    - "Sr"
+    - "Sr."
+    - "Principal"
     # ── Too senior (IC seniority band) ──────────────────────────────────────
     - "Staff"
     - "Lead"
@@ -264,6 +272,7 @@ tracked_companies:
     category: "AI 3D Generation"
     careers_url: "https://runwayml.com/careers/"
     enabled: false
+    note: "duplicate-of: Runway"
 
 
   # ── AI Agents ─────────────────────────────────────────────────
@@ -271,7 +280,7 @@ tracked_companies:
     rank: 234
     category: "AI Agents"
     careers_url: "https://sierra.ai/careers"
-    enabled: false
+    enabled: true
 
   - name: "Cresta"
     rank: 298
@@ -284,12 +293,13 @@ tracked_companies:
     category: "AI Agents"
     careers_url: "https://www.adept.ai/careers"
     enabled: false
+    note: "duplicate-of: Adept"
 
   - name: "Inworld AI"
     rank: 423
     category: "AI Agents"
     careers_url: "https://inworld.ai/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Agents / Reasoning ─────────────────────────────────────
@@ -330,6 +340,7 @@ tracked_companies:
     category: "AI Chatbot / Consumer"
     careers_url: "https://x.ai/careers"
     enabled: false
+    note: "duplicate-of: xAI"
 
 
   # ── AI Chips / Compute ────────────────────────────────────────
@@ -338,6 +349,7 @@ tracked_companies:
     category: "AI Chips / Compute"
     careers_url: "https://www.nvidia.com/en-us/about-nvidia/careers/"
     enabled: false
+    note: "excluded:HW supply chain"
 
   - name: "Broadcom"
     rank: 7
@@ -484,12 +496,13 @@ tracked_companies:
     category: "AI Cloud Infrastructure"
     careers_url: "https://careers.nebius.com/"
     enabled: false
+    note: "duplicate-of: Nebius Group"
 
   - name: "Nscale"
     rank: 217
     category: "AI Cloud Infrastructure"
     careers_url: "https://www.nscale.com/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Cloud Security ─────────────────────────────────────────
@@ -520,6 +533,7 @@ tracked_companies:
     category: "AI Coding / Vibe-Coding"
     careers_url: "https://lovable.dev/careers"
     enabled: false
+    note: "duplicate-of: Lovable"
 
 
   # ── AI Coding Assistant ───────────────────────────────────────
@@ -527,7 +541,7 @@ tracked_companies:
     rank: 350
     category: "AI Coding Assistant"
     careers_url: "https://www.tabnine.com/careers/"
-    enabled: false
+    enabled: true
 
 
   # ── AI Coding CLI ─────────────────────────────────────────────
@@ -536,6 +550,7 @@ tracked_companies:
     category: "AI Coding CLI"
     careers_url: "https://www.anthropic.com/careers"
     enabled: false
+    note: "duplicate-of: Anthropic"
 
 
   # ── AI Coding Tools ───────────────────────────────────────────
@@ -543,7 +558,7 @@ tracked_companies:
     rank: 141
     category: "AI Coding Tools"
     careers_url: "https://www.cursor.com/careers"
-    enabled: false
+    enabled: true
 
   - name: "Poolside"
     rank: 225
@@ -648,6 +663,7 @@ tracked_companies:
     category: "AI Data Center / Compute"
     careers_url: "https://x.ai/careers"
     enabled: false
+    note: "duplicate-of: xAI"
 
 
   # ── AI Data Labeling ──────────────────────────────────────────
@@ -655,7 +671,7 @@ tracked_companies:
     rank: 366
     category: "AI Data Labeling"
     careers_url: "https://job-boards.greenhouse.io/labelbox"
-    enabled: false
+    enabled: true
 
 
   # ── AI Data Labeling / Programmatic ───────────────────────────
@@ -784,6 +800,7 @@ tracked_companies:
     category: "AI Embeddings"
     careers_url: "https://cohere.com/careers"
     enabled: false
+    note: "duplicate-of: Cohere"
 
 
   # ── AI Embeddings / Open-Source ───────────────────────────────
@@ -791,7 +808,7 @@ tracked_companies:
     rank: 390
     category: "AI Embeddings / Open-Source"
     careers_url: "https://home.nomic.ai/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Enterprise Browser / Security ──────────────────────────
@@ -849,6 +866,7 @@ tracked_companies:
     category: "AI Finance / Spend Management"
     careers_url: "https://ramp.com/careers"
     enabled: false
+    note: "duplicate-of: Ramp"
 
 
   # ── AI Financial Planning ─────────────────────────────────────
@@ -856,7 +874,7 @@ tracked_companies:
     rank: 302
     category: "AI Financial Planning"
     careers_url: "https://www.pigment.com/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Hardware ───────────────────────────────────────────────
@@ -873,6 +891,7 @@ tracked_companies:
     category: "AI Hardware / Manufacturing"
     careers_url: "https://recruit.foxconn.com/"
     enabled: false
+    note: "duplicate-of: Foxconn"
 
 
   # ── AI Healthcare ─────────────────────────────────────────────
@@ -880,7 +899,7 @@ tracked_companies:
     rank: 239
     category: "AI Healthcare"
     careers_url: "https://www.tempus.com/careers/"
-    enabled: false
+    enabled: true
 
   - name: "Abridge"
     rank: 258
@@ -1076,6 +1095,7 @@ tracked_companies:
     category: "AI Payments / Fraud"
     careers_url: "https://stripe.com/jobs"
     enabled: false
+    note: "duplicate-of: Stripe"
 
 
   # ── AI Presentations / Content ────────────────────────────────
@@ -1083,7 +1103,7 @@ tracked_companies:
     rank: 344
     category: "AI Presentations / Content"
     careers_url: "https://tome.app/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Process Mining ─────────────────────────────────────────
@@ -1242,6 +1262,7 @@ tracked_companies:
     category: "AI Video / Avatar Generation"
     careers_url: "https://job-boards.greenhouse.io/heygen"
     enabled: false
+    note: "duplicate-of: HeyGen"
 
 
   # ── AI Video Generation ───────────────────────────────────────
@@ -1250,18 +1271,20 @@ tracked_companies:
     category: "AI Video Generation"
     careers_url: "https://runwayml.com/careers/"
     enabled: false
+    note: "duplicate-of: Runway"
 
   - name: "Pika"
     rank: 275
     category: "AI Video Generation"
     careers_url: "https://pika.art/careers"
     enabled: false
+    note: "duplicate-of: Pika Labs"
 
   - name: "Runway-adjacent: Genmo"
     rank: 387
     category: "AI Video Generation"
     careers_url: "https://jobs.ashbyhq.com/genmo"
-    enabled: false
+    enabled: true
 
 
   # ── AI Video Understanding ────────────────────────────────────
@@ -1269,7 +1292,7 @@ tracked_companies:
     rank: 377
     category: "AI Video Understanding"
     careers_url: "https://www.twelvelabs.io/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Video/Audio Editing ────────────────────────────────────
@@ -1277,7 +1300,7 @@ tracked_companies:
     rank: 325
     category: "AI Video/Audio Editing"
     careers_url: "https://www.descript.com/careers"
-    enabled: false
+    enabled: true
 
 
   # ── AI Visual Data / Enterprise ───────────────────────────────
@@ -1318,6 +1341,7 @@ tracked_companies:
     category: "Autonomous Drones"
     careers_url: "https://www.skydio.com/careers"
     enabled: false
+    note: "duplicate-of: Skydio"
 
 
   # ── Autonomous Maritime / Defense AI ──────────────────────────
@@ -1326,6 +1350,7 @@ tracked_companies:
     category: "Autonomous Maritime / Defense AI"
     careers_url: "https://www.saronic.com/careers"
     enabled: false
+    note: "excluded:defense drones / maritime"
 
 
   # ── Autonomous Vehicles ───────────────────────────────────────
@@ -1766,6 +1791,7 @@ tracked_companies:
     category: "Data Cloud / AI Features"
     careers_url: "https://careers.snowflake.com/"
     enabled: false
+    note: "duplicate-of: Snowflake"
 
 
   # ── Data Integration / AI Pipeline ────────────────────────────
@@ -1773,7 +1799,7 @@ tracked_companies:
     rank: 255
     category: "Data Integration / AI Pipeline"
     careers_url: "https://www.fivetran.com/careers"
-    enabled: false
+    enabled: true
 
 
   # ── Data Transformation / Analytics Engineering ───────────────
@@ -2510,7 +2536,8 @@ tracked_companies:
     rank: 437
     category: "Robotics"
     careers_url: "https://www.skydio.com/careers"
-    enabled: true
+    enabled: false
+    note: "excluded:defense drones / maritime"
 
   - name: "Zipline"
     rank: 450
@@ -2664,7 +2691,8 @@ tracked_companies:
     rank: 65
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://recruit.foxconn.com/"
-    enabled: true
+    enabled: false
+    note: "excluded:HW supply chain"
 
   - name: "MediaTek"
     rank: 66

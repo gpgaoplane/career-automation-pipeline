@@ -1,26 +1,28 @@
 # User Profile Context — Will (Xinyuan) Guo
 
+**Target IC band: mid-level (3-5 YoE).** Will is positioning into the mid-level pool to avoid senior/principal title-inflation expectations. All archetypes below are framed as **hands-on implementer / build-out** roles — not advisor, not management, not staff/principal. Roles tagged `Senior`, `Sr`, `Sr.`, `Principal`, `Junior`, `Jr`, `Jr.`, `Associate`, `Staff`, `Lead` are excluded at scrape time.
+
 ## Target Roles
 
 | Archetype | Thematic axes | What they buy | Fit |
 |-----------|---------------|---------------|-----|
-| **AI Engineer** | Agentic systems, RAG, multimodal, LLMOps, production ML | Someone who ships AI systems to production, not just prototypes | Primary |
-| **Solutions Architect / FDE** | Client-facing architecture, integrations, post-deployment, expansion | Someone who maps customer needs to AI architecture and owns the full lifecycle | Primary |
-| **Generative AI Engineer / Technical Artist** | ComfyUI, LoRA, multimodal pipelines, video generation | Someone who builds the infrastructure for creative AI at production scale | Primary |
+| **AI Engineer** | Agentic systems, RAG, multimodal, LLMOps, production ML | A hands-on builder who ships AI systems to production, not just prototypes | Primary |
+| **Solutions Architect / FDE** | Client-facing architecture, integrations, post-deployment, expansion | A hands-on implementer who maps customer needs to AI architecture and builds out the integration | Primary |
+| **Generative AI Engineer / Technical Artist** | ComfyUI, LoRA, multimodal pipelines, video generation | A hands-on builder of creative-AI infrastructure at production scale | Primary |
 | **Account Executive — AI** | Full-cycle sales, pipeline building, technical PoV, land-and-expand | Someone with technical credibility who can close AI deals consultatively | Secondary |
-| **AI Product Manager** | Discovery, stakeholder alignment, PRDs, KPI tracking, AI roadmaps | Someone who translates business problems into AI product requirements with hands-on deployment depth | Secondary |
-| **Consultant / Technical Advisory** | End-to-end AI deployment, client enablement, system design, executive communication | Someone who owns the full analytics value chain from ambiguous problem to production outcome | Adjacent |
+| **AI Product Manager** | Discovery, stakeholder alignment, PRDs, KPI tracking, AI roadmaps | A PM with hands-on AI deployment depth who translates business problems into product requirements | Secondary |
+| **Consultant / Technical Advisory** | End-to-end AI deployment, client enablement, system design, executive communication | A hands-on implementer who owns the analytics value chain from ambiguous problem to production outcome | Adjacent |
 
 ## Adaptive Framing — Emphasize by Role Type
 
 | If the role is... | Lead with... | Proof point priority |
 |-------------------|-------------|---------------------|
 | AI Engineer | LangGraph/ADK agentic architecture, RAG pipeline design, multimodal systems, observability | Dalamula 61 deployments, Agentic News Intelligence, Super Claude Framework |
-| Solutions Architect | Primary technical advisor across 50+ client engagements, architecture + integrations + enablement | Dalamula client lifecycle, 23 versioned workflow templates |
+| Solutions Architect | Hands-on technical implementer across 50+ client engagements, architecture + integrations + enablement | Dalamula client lifecycle, 23 versioned workflow templates |
 | Generative AI / Technical Artist | ComfyUI custom nodes, LoRA training pipeline (20+ identity, ~100 style), 4-axis video evaluation | 10%→80% image acceptance, 20%→50% video acceptance, neon-surrealism portfolio |
 | Account Executive | Full-cycle B2B sales from scratch, $125K+ revenue, 50+ closes, territory building, land-and-expand | HubSpot CRM execution, tiered segmentation |
 | AI Product Manager | Stakeholder discovery, AI use case requirements, KPI definition, change management, Agile delivery | 50+ discovery workshops, 61 deployment lifecycle management, Agentic Marketing Team |
-| Consultant | Full analytics value chain, Inception Capital (120+ evaluations, IC commitments), structured problem-solving | Multimodal Intelligence Platform system design, partner-level business case writing |
+| Consultant | Hands-on analytics value chain implementer, Inception Capital (120+ evaluations, IC commitments), structured problem-solving | Multimodal Intelligence Platform system design, partner-level business case writing |
 
 ## Exit Narrative (use in all summaries and cover letters)
 

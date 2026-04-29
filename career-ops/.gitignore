@@ -22,6 +22,7 @@ jds/*
 .resolved-prompt-*
 node_modules/
 data/ats-discovery-cache.json
+data/job-descriptions-cache.json
 bun.lock
 
 # OS
