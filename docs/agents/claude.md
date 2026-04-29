@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-29T18:00:00-04:00
+last-updated: 2026-04-29T18:30:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -447,6 +447,54 @@ Missing / intentionally skipped:
 - `.claude/rules/architecture.md` Layer separation table — same reason.
 - `.claude/memory/{context,pitfalls}.md` — no new durable invariants or pitfalls from a correctness-pass integration.
 - No new handoff written — Codex re-review is optional (correctness pass); next substantive work is Claude writing the Phase 2.8 implementation plan.
+
+## 2026-04-29 — Phase 2.8 implementation plan written
+
+**Goal:** Per user direction following the Codex-review integration ("then proceed toward the Phase 2.8 implementation plan"), translate design plan v2 §6 (12 steps) into an executable atomic-commit playbook with per-step verification gates and rollback procedures.
+
+**Approach:**
+
+1. Read design plan v2, decisions addendum, verification report, D-14/D-15/D-16/D-17 to ensure implementation plan reflects current source-of-truth state.
+2. Mirrored Phase 2.7 implementation plan structure (precedent at `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md`): pre-flight + branch strategy + per-step playbook + AC mapping + risks + deferred decisions + reviewer checklist + comments slot.
+3. Wrote `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` with 12 sections covering Step 0 through Step 12.
+4. Each step specifies: goal, file changes (paths + line counts), verification gate, manual gate (if any), commit message format, rollback command.
+5. §7 maps each of 11 ACs to specific verification step(s).
+6. §8 documents 8 implementation-specific risks (RI-1..RI-8) with mitigations.
+7. §9 lists 5 deferred decisions (QI-1..QI-5) with recommendations.
+8. §10 reviewer checklist for optional Codex re-review.
+9. §12 reserves a Comments slot for Codex review.
+
+**Files touched:**
+
+- New: `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` (~520 lines, ~22 KB).
+- Modified: `.collab/INDEX.md` (registers implementation plan + bumps timestamps); `.claude/memory/state.md` (current state + next steps); `docs/STATUS.md` (Phase 2.8 implementation plan done block + handoff note); this work log.
+- Untouched: all `career-ops/*` config and code; design plan v2 (no further changes since Codex review integration commit `73f6b2a`); decisions.md (no new D-N entry needed — implementation plan implements existing D-14..D-17).
+
+**Watch out:**
+
+- **Implementation plan is THE playbook for Phase 2.8 execution.** Do NOT shortcut verification gates; do NOT re-order steps; do NOT skip manual gates (Step 0 triage review / Step 5 smoke result review / Step 9 dashboard rate-cap / Step 10 full sample review).
+- **D-3 invariant verification is enforced at multiple steps** (pre-flight + Step 2 + Step 11 AC-8): `scan.mjs` is NOT modified throughout Phase 2.8.
+- **AC-5 (no `/v1/extract` or legacy schema keys) is enforced via grep audit at Step 1, Step 6, Step 7, Step 11.** This is a structural guard against drifting back into pre-verification baseline knowledge.
+- **Q-FC-4 pure Firecrawl-first** is non-negotiable per user direction. If implementation execution drifts back to "HTTP-first for static pages saves credits" — that's a regression.
+- **5 sibling adapters live in `scripts/ats-adapters/` (project root)**, NOT inside `career-ops/`. Per QI-1, this is the recommended location to avoid violating D-3 (`career-ops/` is vendored upstream).
+- **Phase 2.6 clean rescan execution remains out of scope.** Step 12 is a "ready signal" only — actual rescan execution is a separate session per user direction.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` ........ NEW; 12 sections, 12 ordered steps with verification gates + rollback, AC mapping, risks, deferred decisions, reviewer checklist
+- `.collab/INDEX.md` ........ registers implementation plan + bumps timestamps for design plan + decisions addendum
+- `.claude/memory/state.md` ........ current state + next steps + watermark
+- `docs/STATUS.md` ........ Phase 2.8 implementation plan done block + revised Up Next + handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt
+
+Missing / intentionally skipped:
+- `career-ops/*` — all config/code edits remain deferred to Phase 2.8 implementation execution per the plan itself.
+- `.claude/memory/decisions.md` — no new D-N entry needed; implementation plan implements existing D-14..D-17. New decisions only added if implementation surfaces something unexpected per the framework's PROTOCOL.md.
+- `.claude/memory/{context,pitfalls}.md` — no new durable invariants or pitfalls from a planning task.
+- No new handoff to Codex written — Codex review of the implementation plan is OPTIONAL (user said merge before implementation; review can happen after merge or be skipped per Phase 2.7 D-12 pattern).
+- `AI_AGENTS.md` Project Context Pipeline Architecture diagram — still holding until implementation actually lands.
+- `.claude/rules/architecture.md` Layer separation table — same.
 
 ## Handoff blocks
 

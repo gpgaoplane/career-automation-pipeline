@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-29T18:00:00-04:00
+last-updated: 2026-04-29T18:30:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -25,7 +25,8 @@ skip-if: "status != active or last-updated <= your watermark"
 6. ~~Codex handoff for Phase 2.8 design review~~ — DONE 2026-04-29 (commit ff12500, handoff `20260429-164715-2bcf`).
 7. ~~Smoke-test scripts deletion~~ — DONE 2026-04-29 (commit 626e1ce; precedent: sample-portals-50.py).
 8. ~~Codex review integration into design plan v2~~ — DONE 2026-04-29 (this session; about to commit). All 5 ⚠ Issues + 3 ❓ Questions + 2 💭 Optional accepted + integrated. D-17 records the integration; D-14 inline-corrected; decisions addendum Q-FC-4 rewritten.
-9. **Next step:** write Phase 2.8 implementation plan, then merge `feat/multi-agent-collab` to main, then branch `feat/phase-2.8-firecrawl` from main and execute. Implementation plan should follow design plan v2 §6 sequence (12 steps: URL triage → lib/firecrawl + lib/ats-clients → 5 sibling adapters → firecrawl-discover → smoke validation → firecrawl-extract → enrich-jobs refactor → wire full-scan → rate-cap manual gate → sample-50 verification → AC audit → Phase 2.6 clean rescan).
+9. ~~Phase 2.8 implementation plan write~~ — DONE 2026-04-29 (this session, about to commit). 12 sections covering pre-flight checks, branch+commit strategy, 12 ordered steps with verification gates per step, RI-1..RI-8 risks, QI-1..QI-5 deferred decisions, reviewer checklist for optional Codex re-review.
+10. **Next step:** merge `feat/multi-agent-collab` to main as one coherent unit (Phase 2.7 + 2.8 design v2 + 2.8 implementation plan); branch `feat/phase-2.8-firecrawl` from main; execute implementation plan Step 0 → Step 12. **Optional:** hand off implementation plan to Codex for review before execution (matches Phase 2.7 implementation-plan-review pattern via handoff `20260429-001531-cb9a`).
 10. **Phase 2.6 (still deferred):** clean rescan once Phase 2.8 implementation lands. Per design plan v2 §6 Step 12.
 11. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
 <!-- section:next-steps:end -->
@@ -41,5 +42,5 @@ skip-if: "status != active or last-updated <= your watermark"
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-29T18:00:00-04:00
+Last read INDEX at: 2026-04-29T18:30:00-04:00
 <!-- section:read-watermark:end -->
