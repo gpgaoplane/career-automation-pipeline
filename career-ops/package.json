@@ -16,8 +16,9 @@
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "custom-scrape": "node custom-scraper.mjs",
+    "enrich": "node enrich-jobs.mjs",
     "export": "node export-jobs.mjs",
-    "full-scan": "node scan.mjs && node custom-scraper.mjs && node export-jobs.mjs"
+    "full-scan": "node scan.mjs && node custom-scraper.mjs && node enrich-jobs.mjs && node export-jobs.mjs"
   },
   "keywords": [
     "ai",
