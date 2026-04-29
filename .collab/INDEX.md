@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-29T00:26:05-04:00
+last-updated: 2026-04-29T10:28:49-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -32,4 +32,6 @@ skip-if: "never"
 | .codex/memory/pitfalls.md | pitfalls | codex | active | 2026-04-28T22:32:14-04:00 |
 | docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md | design-plan | claude | active | 2026-04-28T23:00:00-04:00 |
 | docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md | implementation-plan | claude | active | 2026-04-29T00:26:05-04:00 |
+| career-ops/enrich-jobs.mjs | script | claude | active | 2026-04-29T10:28:49-04:00 |
+| docs/design/companies-roster.md | design-artifact | claude | active | 2026-04-29T10:28:49-04:00 |
 <!-- collab:index:end -->
