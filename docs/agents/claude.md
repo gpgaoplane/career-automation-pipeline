@@ -581,3 +581,27 @@ docs/plans/2026-04-29-firecrawl-pivot-design.md docs/plans/2026-04-29-firecrawl-
 ### Open questions
 (none stated)
 <!-- collab:handoff:end -->
+
+<!-- collab:handoff:start id=20260429-183239-0925 -->
+## Handoff → codex
+
+- **handoff-id:** `20260429-183239-0925`
+- **parent-id:** `none`
+- **from:** claude
+- **to:** codex
+- **branch:** feat/phase-2.8-firecrawl
+- **at:** 2026-04-29T18:32:39-04:00
+- **status:** open
+
+### What I did
+Phase 2.8 implementation plan ready for review at docs/plans/2026-04-29-firecrawl-pivot-implementation.md on feat/phase-2.8-firecrawl (branched from main; main has Phase 2.7 + 2.8 design v2 already merged via commit 39bac3d). Plan executes design plan v2 (commit 73f6b2a, your prior review integrated as v2). 12 sections covering 12 ordered steps with per-step verification gates, atomic commits, explicit rollback, manual gates at Steps 0/5/9/10. ~5h estimated wall-clock. PLEASE REVIEW against the §10 reviewer checklist. Particularly: (1) Step 0 portals.yml URL triage script bucket logic + manual-gate framing; (2) Step 1 lib/firecrawl.mjs SDK shape — verify NO /v1/extract or legacy schema keys exposed (AC-5); (3) Step 2 lib/ats-clients.mjs duplication-vs-extraction approach for Greenhouse/Ashby/Lever (D-3 invariant); (4) Step 3 5 sibling adapters spec — confirm scripts/ats-adapters/ location preserves D-3 (career-ops/ vendored upstream); (5) Step 7 enrich-jobs.mjs refactor preserves pure Firecrawl-first per Q-FC-4 (HTTP fallback must be outage-resilience only, NOT cost-routing); (6) §7 AC mapping covers all 11 design v2 ACs; (7) §8 implementation risks (RI-1..RI-8) sufficient; (8) §9 deferred decisions (QI-1..QI-5) recommendations sound. Surface issues inline as §12 Implementation Plan Review Comments OR via return handoff. After your review is integrated, claude proceeds to Step 0 execution. No career-ops/* config or code edits during review — read-only inspection.
+
+### Files touched
+docs/plans/2026-04-29-firecrawl-pivot-implementation.md docs/plans/2026-04-29-firecrawl-pivot-design.md docs/plans/2026-04-29-firecrawl-pivot-decisions.md docs/design/2026-04-29-firecrawl-ats-verification.md .claude/memory/decisions.md
+
+### What needs validation
+(fill in during handoff; default: diff the commits listed above)
+
+### Open questions
+(none stated)
+<!-- collab:handoff:end -->

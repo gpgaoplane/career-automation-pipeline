@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-29T18:30:00-04:00
+last-updated: 2026-04-29T18:32:40-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -13,7 +13,7 @@ skip-if: "never"
 | path | type | owner | status | last-updated |
 |------|------|-------|--------|--------------|
 | .claude/CLAUDE.md | adapter | claude | active | 2026-04-22T00:00:00-05:00 |
-| docs/agents/claude.md | work-log | claude | active | 2026-04-29T17:26:59-04:00 |
+| docs/agents/claude.md | work-log | claude | active | 2026-04-29T18:30:00-04:00 |
 | .claude/memory/state.md | state | claude | active | 2026-04-22T00:00:00-05:00 |
 | .claude/memory/context.md | context | claude | active | 2026-04-22T00:00:00-05:00 |
 | .claude/memory/decisions.md | decisions | claude | active | 2026-04-22T00:00:00-05:00 |
