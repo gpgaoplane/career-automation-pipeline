@@ -1,7 +1,7 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-28
-**Current Phase:** Phase 2 — Custom Scripts (clean rescan still pending; multi-agent-collab framework just installed)
+**Current Phase:** Phase 2.7 — Design plan complete (portals cleanup + mid-level pivot + pre-scoring) — awaiting Codex review
 
 ## Done
 - [x] career-ops cloned at `career-ops/` — on main, clean, npm deps installed
@@ -34,6 +34,16 @@
   - Sheet 1: Pending Jobs, Sheet 2: By Company, Sheet 3: Scan History
   - `exceljs` dep + `npm run export` script added
 - [x] `.claude/project-memory.md` created — architecture decisions and known issues
+- [x] **Phase 2.7 design plan committed** (2026-04-28, `feat/multi-agent-collab`):
+  - `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` — 16 sections covering portals.yml audit cleanup, mid-level profile pivot, sequential lock, pre-scoring scheme (title + description), description enrichment design
+  - Locked decisions: D-7 (mid-level pivot), D-8 (sequential), D-9 (pre-scoring), D-10 (enrichment design), D-11 (audit cleanup 428/20)
+  - Cross-doc propagation done: `AI_AGENTS.md` Project Context, `.claude/memory/{context,decisions,state}.md`, work log
+  - Awaiting Codex review per the framework's design-review flow
+- [x] **portals.yml audit completed** (2026-04-28):
+  - Audited all 32 disabled companies; classified 16 as duplicate-suppression (correct), 14 as mis-drops (no exclusion reason), 2 as universal-exclusion (NVIDIA HW, Saronic defense)
+  - Identified 2 inversions: Foxconn rank 65 (HW) and Skydio rank 437 (defense) currently enabled but should be disabled
+  - Final inventory committed in design plan: 448 total / **428 enabled / 20 disabled** with explicit `note:` on every disabled row
+  - ATS distribution post-cleanup: 17 direct (Greenhouse 7 + Ashby 6 + Workday 3 + Labelbox direct-Greenhouse) + 411 branded
 - [x] **Multi-agent-collab v0.4.1 framework installed** (2026-04-28, branch `feat/multi-agent-collab`):
   - Skill drop-in at `~/.claude/skills/multi-agent-collab` (commit `ebd67b8`, v0.4.1)
   - Bootstrapped via `collab-init.sh --agent claude` from repo root (fresh mode)
@@ -57,4 +67,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-Multi-agent-collab v0.4.1 framework installed and content migrated on `feat/multi-agent-collab` branch. Pending verification: confirm root `CLAUDE.md` `@import` shim resolves correctly on next session start (check `claudeMd` system reminder shows AI_AGENTS.md + .claude/CLAUDE.md content). After verification, commit migration and merge to main. Codex onboarding deferred until user explicitly triggers `bash ~/.claude/skills/multi-agent-collab/scripts/collab-init.sh --join codex` from a Codex session. Original Phase 2 work (clean rescan) still pending: tag `scan-v1-unfiltered` on commit 06bf430 → reset pipeline.md + scan-history.tsv → run scan.mjs → run custom-scraper.mjs (403 branded pages, Tier 1/2 discovers ATS for most) → re-run export-jobs.mjs. Watch for companies returning empty results — landing-page URL issue in portals.yml (P-1 in pitfalls.md), not a scraper bug.
+Phase 2.7 design plan committed on `feat/multi-agent-collab`: `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md`. Decisions D-7 through D-11 locked in `.claude/memory/decisions.md`. Codex pre-onboarded with adapter at `.codex/CODEX.md` and memory at `.codex/memory/`; handoff block targeting codex written in `docs/agents/claude.md`. **Next agent (Codex):** read the design plan, review against §16 reviewer checklist, surface issues in §17 Review Comments OR write a return handoff back to claude. Implementation plan will be written by claude after Codex review is integrated. Pending after that: actual portals.yml/_profile.md/profile.yml edits + enrich-jobs.mjs build + export-jobs.mjs refactor + clean rescan (tag scan-v1-unfiltered on 06bf430, reset pipeline.md + scan-history.tsv, run scan → custom-scrape → enrich → export). Open verification (still): root `CLAUDE.md` `@import` shim resolves correctly on next Claude session start.

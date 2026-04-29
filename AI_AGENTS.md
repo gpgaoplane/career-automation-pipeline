@@ -31,6 +31,7 @@ See **Project Context** section at the end of this file for the full project sum
 | Agent | Config file | Memory dir | Work log |
 |-------|-------------|------------|----------|
 | Claude | `.claude/CLAUDE.md` | `.claude/memory/` | `docs/agents/claude.md` |
+| Codex | `.codex/CODEX.md` | `.codex/memory/` | `docs/agents/codex.md` |
 <!-- collab:current-adapters:end -->
 
 ---
@@ -105,7 +106,7 @@ When creating your log (`docs/agents/<self>.md`), start from `templates/work-log
 
 > User content — outside all framework markers. Preserved on every re-init and upgrade. This section is the canonical project summary every agent reads.
 
-**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **416 enabled companies** (448 total in `career-ops/portals.yml`, 32 disabled).
+**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **428 enabled companies** (448 total in `career-ops/portals.yml`, 20 disabled — every disabled row carries an explicit `note:` after the 2026-04-28 audit cleanup. See `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` and `.claude/memory/decisions.md` D-11 for the audit details).
 
 **User contact:** `inquiry@dalamula.ai`. Targets remote roles from Toronto (no US presence viable for in-office roles).
 
@@ -242,6 +243,8 @@ career-ops/data/applications.md          ← master tracker
 3. **AI Product Manager** — discovery, roadmap, KPI ownership
 4. **Consultant / Technical Advisory** — enterprise AI deployment
 5. **Generative AI / Creative AI** — LoRA, ComfyUI, multimodal
+
+**IC band (per D-7, 2026-04-28):** Will targets **mid-level only (3-5 YoE)**. Senior, Sr, Principal, Junior, Jr, Associate, Lead, Staff, Intern all excluded at scrape time. Reasoning: Will wants to be reclassified into the mid-level pool to avoid senior/principal title-inflation expectations.
 
 ### Scoring Calibration
 
