@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-28T23:00:00-04:00
+last-updated: 2026-04-28T22:51:26-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -163,12 +163,16 @@ Missing / intentionally skipped:
 - Modified: `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` (v2 with 7 surgical fixes), `AI_AGENTS.md` (lines 217 + 288), `docs/STATUS.md` (lines 46, 58, 59), `.claude/memory/context.md` (ATS distribution entry), `.claude/memory/decisions.md` (added D-12 + timestamp), `.claude/memory/state.md` (current state, next steps), this work log
 - Untouched (still implementation territory): `career-ops/portals.yml`, `career-ops/modes/_profile.md`, `career-ops/config/profile.yml`, `career-ops/scan.mjs`, `career-ops/custom-scraper.mjs`, `career-ops/export-jobs.mjs`
 
-**Watch out:**
+**Watch out (cross-agent risk per ROUTING.md row 10):**
+
+- **portals.yml YAML group split is a coupled atomic change.** The CREATIVE track parser route depends on splitting the existing `# ── Generative AI / Creative ──` group (lines 74-86) into two new groups (`# ── Generative AI Engineering ──` and `# ── Creative ──`) AT THE SAME TIME as removing senior/principal positives and adding senior/principal negatives. Any agent (Claude or Codex) touching `career-ops/portals.yml` mid-implementation must do all four edits in the same commit — splitting without removing positives would leave portals.yml half-migrated and the title-track parser would silently emit the wrong tracks.
+- **Acceptance criterion #13 grep audit must pass for ALL stale strings before any merge to main.** A partial cleanup (e.g., updating AI_AGENTS.md but not STATUS.md) leaves drift that future agents would consume as truth.
+
+**Watch out (general):**
 
 - Design plan v2 is in-place revision; Codex's §17 review comments preserved at the bottom as audit trail.
-- The CREATIVE/GEN-AI YAML group split is now coupled to the title_filter rewrite. Implementation plan must do BOTH at the same time — splitting without removing senior/principal positives would leave portals.yml half-migrated.
-- All 5 issues were factual/textual corrections, not architectural challenges. v2 vs v1 is a correctness pass, not a redesign. User has the call: optional Codex re-review of v2 OR proceed straight to implementation plan.
-- No new handoff written yet — waiting for user's call.
+- All 5 Codex issues were factual/textual corrections, not architectural challenges. v2 vs v1 is a correctness pass, not a redesign. User chose to proceed straight to implementation plan.
+- No new handoff written yet — implementation plan write is in progress.
 
 ### Task Receipt
 
@@ -186,6 +190,47 @@ Missing / intentionally skipped:
 - `docs/agents/codex.md` — Codex's work log is owner=codex; not modified per cross-agent courtesy.
 - `.codex/memory/*` — Codex's memory; not modified.
 - No new handoff written — waiting for user's direction on (a) Codex re-review of v2 vs (b) proceed to implementation plan.
+
+## 2026-04-28 — Framework cleanup + implementation plan written
+
+**Goal:** Fix the framework adherence misses I flagged after the v2 integration (collab-catchup ack, watermark bump, ROUTING/PROTOCOL re-read, design plan re-register, Row 10 cross-agent risk Watch out block), then write the implementation plan per option B.
+
+**Approach:**
+
+1. Re-read `.collab/ROUTING.md` and `.collab/PROTOCOL.md` per onboarding checklist discipline.
+2. Ran `bash ~/.claude/skills/multi-agent-collab/scripts/collab-catchup.sh ack --agent claude` — watermark bumped from 2026-04-28T22:05:11-04:00 to 22:50:59-04:00. State.md `<!-- section:read-watermark -->` updated.
+3. Ran `bash ~/.claude/skills/multi-agent-collab/scripts/collab-register.sh "docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md"` — design plan v2 timestamp re-bumped in INDEX.
+4. Added explicit cross-agent risk `Watch out:` block to the v2 work log entry (Row 10 of fan-out matrix). Documented the YAML group split as a coupled atomic change requiring all four edits in one commit.
+5. Wrote `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` per design plan §15 cross-references and option B path. 20 sections covering: pre-flight checks, branch/commit strategy, 11 ordered steps with verification gates per step, implementation-specific risks (RI-1 through RI-7), open questions/deferred decisions (QI-1 through QI-5), reviewer checklist (§18), cross-references (§19), comments slot (§20).
+6. Registered implementation plan in INDEX. collab-check OK. INDEX = 20 managed files.
+
+**Files touched:**
+
+- New: `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` (~870 lines, ~24 KB)
+- Modified: `.claude/memory/state.md` (current state, next-steps for execution sequence, watermark), `.collab/INDEX.md` (auto-bumped by register), `docs/agents/claude.md` (this entry — work log + Receipt; cross-agent Watch out block in prior entry)
+- Untouched: still no `career-ops/*` config or code changes; those happen during implementation execution.
+
+**Watch out:**
+
+- The implementation plan is the playbook; the actual edits to `portals.yml`, `modes/_profile.md`, `config/profile.yml`, `enrich-jobs.mjs`, `export-jobs.mjs` happen during STEP-BY-STEP execution per §3.2 commit cadence. Don't shortcut the gate-checks.
+- §13 acceptance criterion #13 grep audit will fail if any new stale strings sneak in during implementation. Re-run after every commit that touches docs/.
+- The CREATIVE/GEN-AI YAML group split (Step 2) is coupled with the senior/principal positive removal — must land in the same commit (per cross-agent risk noted in prior entry).
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` ........ new file, 20 sections, full step-by-step playbook
+- `.claude/memory/state.md` ........ current state, full execution sequence in next-steps, watermark to 22:50:59
+- `.collab/INDEX.md` ........ implementation plan registered + design plan re-registered (timestamp bump)
+- `docs/agents/claude.md` ........ this entry + Receipt
+- prior entry `Watch out:` block ........ added explicit Row 10 cross-agent risk note for the YAML group split coupling
+
+Missing / intentionally skipped:
+- `career-ops/*` — all config/code edits remain deferred to implementation plan execution.
+- `.claude/memory/decisions.md` — no new decision in this task; the implementation plan implements existing D-7..D-12. New decisions only get added if implementation surfaces something unexpected (per §14.2).
+- `.claude/memory/context.md` — no new durable truth; implementation plan is procedure not new fact.
+- `docs/STATUS.md` — Phase 2.7 is in progress (design phase complete, implementation phase about to begin). STATUS update happens at Step 11 commit hygiene.
+- No new handoff to Codex written — user said "proceed to option B". Optional Codex re-review of implementation plan available at user's call before execution begins.
 
 ## Handoff blocks
 

@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-28T22:32:14-04:00
+last-updated: 2026-04-28T22:57:15-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -30,5 +30,6 @@ skip-if: "never"
 | .codex/memory/context.md | context | codex | active | 2026-04-28T22:32:14-04:00 |
 | .codex/memory/decisions.md | decisions | codex | active | 2026-04-28T22:32:14-04:00 |
 | .codex/memory/pitfalls.md | pitfalls | codex | active | 2026-04-28T22:32:14-04:00 |
-| docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md | design-plan | claude | active | 2026-04-28T22:32:14-04:00 |
+| docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md | design-plan | claude | active | 2026-04-28T23:00:00-04:00 |
+| docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md | implementation-plan | claude | active | 2026-04-28T22:51:26-04:00 |
 <!-- collab:index:end -->

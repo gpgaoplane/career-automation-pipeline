@@ -11,15 +11,27 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/multi-agent-collab`
-**Active task:** Codex review of Phase 2.7 design plan v1 received and integrated. Design plan v2 published with all 5 fixes (commit pending after this state save).
-**Pause point:** Codex's review (§17 of design plan, commit `021efb5`) flagged 5 issues — all verified against primary sources, all integrated into design plan v2. Cross-doc propagation done: AI_AGENTS.md (lines 217, 288), docs/STATUS.md (lines 46, 58, 59), .claude/memory/context.md ATS distribution entry — all corrected to 18/410. D-12 added to `.claude/memory/decisions.md` capturing the integration. Awaiting user direction on: (a) optional Codex re-review of v2, OR (b) proceed straight to implementation plan.
-**Blockers:** None. Path forward depends on user's call on (a) vs (b).
+**Active task:** Implementation plan written at `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` (option B chosen by user; design plan v2 finalized). 11 ordered steps with verification gates, atomic commits, explicit rollback per step, total ~5h focused work.
+**Pause point:** Implementation plan committed (pending). User cleanup misses corrected: collab-catchup ack ran (watermark bumped to 22:50:59), design plan re-registered, ROUTING/PROTOCOL re-read, cross-agent risk Watch out block added per Row 10. Awaiting user signal to begin Step 1 of execution OR optional Codex re-review of implementation plan first.
+**Blockers:** None. Ready to execute Step 1 (portals.yml audit cleanup) on user signal.
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
-1. ~~**Codex review of design plan**~~ — DONE 2026-04-28; review at design plan §17, commit `021efb5`.
-2. ~~**Integrate review feedback**~~ — DONE 2026-04-28T23:00. All 5 fixes integrated into design plan v2; cross-doc propagation done; D-12 recorded.
-3. **(Optional) Codex re-review of v2** OR **proceed to implementation plan** — user's call. The 5 fixes were correctness corrections, not architectural challenges, so a re-review is optional. If user picks (a), Claude writes a fresh handoff to Codex. If (b), Claude writes `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md`.
+1. ~~**Codex review of design plan v1**~~ — DONE 2026-04-28; review at design plan §17, commit `021efb5`.
+2. ~~**Integrate review feedback into design plan v2**~~ — DONE 2026-04-28T23:00; commit `781fba1`.
+3. ~~**Write implementation plan**~~ — DONE 2026-04-28T22:51; `docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md` (commit pending).
+4. **(Optional) Codex re-review of implementation plan** OR proceed straight to execution — user's call.
+5. **Execute Step 1**: portals.yml audit cleanup (re-enable 14 mis-drops, disable Foxconn + Skydio, add notes to 20). Verification: `448 / 428 / 20 / 0 missing notes`. Commit "refine: portals.yml audit cleanup ...".
+6. **Execute Step 2**: title_filter rewrite (positives removal + negatives addition + YAML group split for CREATIVE).
+7. **Execute Steps 3+4**: config/profile.yml + modes/_profile.md mid-level reframing.
+8. **Execute Step 5**: generate docs/design/companies-roster.md.
+9. **Execute Step 6**: build career-ops/enrich-jobs.mjs.
+10. **Execute Step 7+8**: refactor career-ops/export-jobs.mjs + wire into npm full-scan.
+11. **Execute Step 9** (optional): calibration pass against scan-v1-unfiltered baseline.
+12. **Execute Step 10**: run all 18 acceptance criteria. No commit if any gate fails.
+13. **Execute Step 11**: commit hygiene + final collab-check + (optional) Codex re-review.
+14. **Phase 2.6** clean rescan (deferred): tag scan-v1-unfiltered → reset → scan → custom-scrape → enrich → export → P-1 audit.
+15. **Phase 3**: open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
 4. **Execute implementation plan** atomically:
    - Edit `career-ops/portals.yml`: re-enable 14 mis-drops, disable 2 inversions (Foxconn rank 65, Skydio rank 437), add `note:` to all 20 disabled rows, rewrite `title_filter` (remove Senior AI / Principal AI / Senior PM from positives; add Senior/Sr/Sr./Principal/Junior/Jr/Jr./Associate to negatives)
    - Edit `career-ops/modes/_profile.md`: archetype levels → "Mid-level"
@@ -41,5 +53,5 @@ skip-if: "status != active or last-updated <= your watermark"
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-28T22:05:11-04:00
+Last read INDEX at: 2026-04-28T22:50:59-04:00
 <!-- section:read-watermark:end -->
