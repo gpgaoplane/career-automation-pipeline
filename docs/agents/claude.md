@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-29T15:00:00-04:00
+last-updated: 2026-04-29T18:00:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -372,6 +372,82 @@ Missing / intentionally skipped:
 - `.firecrawl-key` — gitignored; never committed.
 - No new handoff written — user has not signaled Codex review of Phase 2.8 design plan; deferred to user's call.
 
+## 2026-04-29 — Phase 2.8 Codex design review integrated (design plan v2)
+
+**Goal:** Take the baton on handoff `20260429-164715-2bcf` (Codex closed it after review). Reconcile Codex's §11 review of Phase 2.8 Firecrawl-pivot design analytically — verify each point against primary sources, decide accept/modify/defer/reject per technical merit, integrate fixes in-place to design plan v2, then proceed toward implementation plan.
+
+**Approach:**
+
+1. Loaded `superpowers:receiving-code-review` skill before reading review.
+2. Ran framework catchup (`collab-catchup.sh preview --agent claude --handoff`); confirmed handoff is closed (no open ones).
+3. Read review artifacts: `docs/plans/2026-04-29-firecrawl-pivot-design.md` §11 (Codex's review), `docs/agents/codex.md` latest entry, `.codex/memory/{context,decisions,state}.md`, `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (for Q-FC-4 ambiguity context).
+4. **Verified each Codex finding against primary sources:**
+   - All 5 ⚠ Issues: confirmed against design plan line numbers cited by Codex; cross-checked against verification doc + D-14/D-15. All 5 are real defects; ACCEPT.
+   - All 3 ❓ Questions: layer-2 naming (Q1) is a real architectural ambiguity in D-14; JazzHR exclusion (Q2) is a real gap not in §7; rate-cap softening (Q3) reflects verification doc's "rate caps not found in retrieved sources". ACCEPT all 3.
+   - Both 💭 Optional improvements: source-of-truth precedence note + provider matrix add clarity, no scope expansion. ACCEPT both.
+5. **Integrated all 10 points into design plan v2** (in-place revision with frontmatter `revision: v2`):
+   - Added §0 source-of-truth precedence note.
+   - §4.1 Layer 0 box rewritten to show 8-provider tier (3 existing in scan.mjs + 5 new sibling adapters). Added §4.1.1 ATS provider matrix (provider / detection signal / direct endpoint / output parser / status). Layer 2 box updated to use `formats:["json"]` + `jsonOptions` (NOT legacy `/v1/extract`/`extractorOptions`). Per-JD enrichment box clarified as refactor of `enrich-jobs.mjs` in-place (NOT a new file; D-14 typo "firecrawl-enrich.mjs" corrected here).
+   - §4.2 file list expanded with `lib/firecrawl.mjs` (no `extract()` wrapper), `lib/ats-clients.mjs`, 5 sibling adapters in `scripts/ats-adapters/`.
+   - §4.3 "Decision pending" removed; D-3 invariant locked; scan.mjs NOT modified.
+   - §5 cost model fully rewritten: §5.1 per-call cost matrix (markdown 1cr / JSON 5cr / stealth +4 / interact 2cr/min / `/v1/extract` excluded / direct API 0cr); §5.2 budget projection per mode; §5.3 60-day TTL with fast-fail; §5.4 dashboard rate-cap manual gate; §5.5 `--max-credits` cap.
+   - §6 migration sequence expanded from 9 to 12 steps (Step 0 URL triage; Step 9 dashboard rate-cap manual gate; Step 11 acceptance audit; Step 12 Phase 2.6 clean rescan).
+   - §7 acceptance criteria expanded from 6 placeholder to 11 final ACs covering: 5 adapter integration tests, no-`/v1/extract` grep audit, 60-day TTL behavior, cost log per mode, JazzHR explicit out-of-scope, dashboard rate-cap manual gate + `--max-credits` enforcement.
+   - §8 FC-R2 reworded to use modern `formats:["json"]+jsonOptions` shape.
+   - §9 all 4 Q-FC questions marked RESOLVED (Q-FC-1 verified inline; Q-FC-4 picked pure Firecrawl-first per user principle).
+   - §10 historical note added (smoke-test scripts deleted in 626e1ce).
+   - §12 Claude's reconciliation table added documenting disposition of each Codex point (5 issues + 3 questions + 2 optional improvements with verification + disposition + v2 location).
+6. **Updated decisions addendum** (`docs/plans/2026-04-29-firecrawl-pivot-decisions.md`): Q-FC-4 section rewritten to be unambiguously pure Firecrawl-first. The earlier draft had three contradictory paragraphs (Codex caught this in §11). Fallback HTTP is purely outage-resilience, NOT cost-routing. Override path documented as future tunable.
+7. **Updated D-14 in-place** (`.claude/memory/decisions.md`): firecrawl-enrich.mjs → firecrawl-extract.mjs naming typo corrected with reference to D-17; rate-cap claim softened from "well below any plausible plan cap" to "likely low volume but dashboard caps must be confirmed manually before high-concurrency batch design".
+8. **Recorded D-17** in `.claude/memory/decisions.md` documenting the full integration with full reasoning, per-issue verification + disposition, and implementation impact. Pattern matches D-12 (Phase 2.7 Codex review integration).
+9. **Updated state.md, STATUS.md, work log** (this entry).
+
+**Verification of each Codex point — disposition table:**
+
+| # | Codex finding | Verified against | Disposition |
+|---|---|---|---|
+| ⚠1 | Layer 0 sibling adapters not integrated; "Decision pending" stale | design plan §4.1/§4.2/§4.3 line citations + D-14/D-15 | ACCEPT |
+| ⚠2 | Stale `/v1/extract` and legacy schema language | design plan multiple `/v1/extract` references + verification doc Q1+Q2 | ACCEPT |
+| ⚠3 | Cost model assumes 1cr flat + 30-day TTL | design plan §5 lines 130-140 + verification doc + D-14 | ACCEPT |
+| ⚠4 | 6 placeholder ACs, handoff promised 9, gaps in coverage | design plan §7 lines 154-162 + handoff message | ACCEPT |
+| ⚠5 | Q-FC-4 enrichment policy internally inconsistent | decisions addendum lines 159-171 | ACCEPT (pure Firecrawl-first) |
+| ❓1 | Layer 2 naming convention | design plan vs decisions vs D-14 inconsistency | ACCEPT (firecrawl-extract.mjs for Layer 2; enrich-jobs.mjs refactored in-place) |
+| ❓2 | JazzHR explicit exclusion | verification doc UNVERIFIABLE marker | ACCEPT |
+| ❓3 | Soften "1,800 GETs/week below cap" claim | verification doc says caps not found | ACCEPT |
+| 💭1 | Source-of-truth precedence note | clarity / drift prevention | ACCEPT |
+| 💭2 | ATS provider matrix in §4.1 | 8-provider tier benefits from compact table | ACCEPT |
+
+**Files touched:**
+
+- Modified: `docs/plans/2026-04-29-firecrawl-pivot-design.md` (v2 with 12 sections of changes; Codex's §11 preserved as audit trail; new §12 Claude reconciliation table); `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (Q-FC-4 rewrite + frontmatter timestamp); `.claude/memory/decisions.md` (D-14 inline correction + D-17 added + frontmatter timestamp); `.claude/memory/state.md` (current state, next steps, watermark); `docs/STATUS.md` (Phase 2.8 v2 done block + revised Up Next + handoff note); this work log
+- Untouched: all `career-ops/*` config and code; `AI_AGENTS.md` Project Context (still holding for implementation phase); `.claude/rules/architecture.md` (same); `.claude/memory/{context,pitfalls}.md` (no new durable truths or pitfalls — review-integration is a correctness pass, not new architectural ground)
+
+**Watch out:**
+
+- **Design plan v2 is in-place revision; Codex's §11 review preserved at the bottom as audit trail.** Future readers should treat verification doc + D-14/D-15/D-16/D-17 as authoritative when in doubt (per §0 precedence note).
+- **All 10 Codex points were correctness-pass corrections, not architecture changes.** v2 vs v1 is doc-accuracy improvement; the architecture is unchanged. Codex re-review of v2 is OPTIONAL — matches Phase 2.7 D-12 pattern (no second review round needed).
+- **D-14's `firecrawl-enrich.mjs` → `firecrawl-extract.mjs` naming correction is more than a typo fix.** It clarifies that Layer 2 (structured listing extraction from custom careers pages) and per-JD enrichment (refactor of existing `enrich-jobs.mjs`) are different responsibilities. Implementation plan must respect this split.
+- **Q-FC-4 is now pure Firecrawl-first.** If the implementation plan or implementation execution drifts back to "HTTP-first for static pages saves credits" — that's a regression. The user's principle is "Firecrawl first, custom code as backup". Override path documented as a future tunable (`ENRICH_PRIORITIZE_HTTP=true` config flag) but explicitly out-of-scope for Phase 2.8.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-design.md` ........ revision: v2 with 12 sections of changes (precedence note + 8-provider Layer 0 + provider matrix + modern formats:json+jsonOptions language + mode-split cost model + 60-day TTL + 12-step migration sequence + 11 final ACs + reconciliation table)
+- `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` ........ Q-FC-4 rewritten as unambiguous pure Firecrawl-first; frontmatter timestamp bumped
+- `.claude/memory/decisions.md` ........ D-14 inline-corrected (firecrawl-enrich → firecrawl-extract typo; softened rate-cap claim); D-17 added documenting the full Codex review integration; frontmatter timestamp bumped
+- `.claude/memory/state.md` ........ current state + next steps (Phase 2.8 implementation plan write is next) + watermark
+- `docs/STATUS.md` ........ Phase 2.8 v2 done block + revised Up Next + new handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt
+
+Missing / intentionally skipped:
+- `career-ops/*` — all config/code edits remain deferred to Phase 2.8 implementation execution.
+- `docs/agents/codex.md` — Codex's work log is owner=codex; not modified per cross-agent courtesy.
+- `.codex/memory/*` — Codex's memory; not modified.
+- `AI_AGENTS.md` Project Context Pipeline Architecture diagram — still holding until implementation phase settles exact file paths.
+- `.claude/rules/architecture.md` Layer separation table — same reason.
+- `.claude/memory/{context,pitfalls}.md` — no new durable invariants or pitfalls from a correctness-pass integration.
+- No new handoff written — Codex re-review is optional (correctness pass); next substantive work is Claude writing the Phase 2.8 implementation plan.
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -442,7 +518,8 @@ docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md docs/plan
 - **to:** codex
 - **branch:** feat/multi-agent-collab
 - **at:** 2026-04-29T16:47:15-04:00
-- **status:** open
+- **status:** closed
+- **picked-up:** 2026-04-29T17:24:38-04:00 by codex
 
 ### What I did
 Phase 2.8 Firecrawl-pivot design ready for review. Three coupled artifacts on feat/multi-agent-collab: (1) docs/plans/2026-04-29-firecrawl-pivot-design.md — 4-layer architecture (Layer 0 direct-API in scan.mjs untouched + 5 new sibling adapters; Layer 1 firecrawl-discover; Layer 2 firecrawl-extract; Layer 3 custom-scraper fallback), 5 risks, 9 acceptance criteria; (2) docs/plans/2026-04-29-firecrawl-pivot-decisions.md — resolutions to Q-FC-1..Q-FC-4; (3) docs/design/2026-04-29-firecrawl-ats-verification.md — forked-agent verification of 12 baseline-knowledge claims against primary sources, surfaced 3 architecture corrections (Workday CXS API exists, JSON-mode is 5cr/page not 1, /v1/scrape with formats:html,links not /v1/map for ATS discovery) + 5 newly-verified no-auth ATSes (Workday CXS, SmartRecruiters, Personio, Recruitee, Workable). Decisions D-14, D-15, D-16 recorded. INDEX registers all 3 docs. No career-ops/* config or code touched. PLEASE REVIEW: (a) verify the design plan architecture fully integrates the verification doc's 3 corrections + 5 newly-verified ATSes; (b) check D-14/D-15 rationale against verification doc; (c) flag any place the design plan still asserts a baseline-knowledge claim that verification proved wrong; (d) review the 4 Q-FC resolutions for corner cases; (e) flag any architecture risk verification surfaced that we haven't addressed (Firecrawl per-plan rate caps, JazzHR unverifiable, /v1/extract migrating to /agent). Surface issues inline as Review Comments section, OR write a return handoff back to claude. After your review is integrated, claude writes the Phase 2.8 implementation plan.

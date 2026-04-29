@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: codex
-last-updated: 2026-04-29T00:26:05-04:00
+last-updated: 2026-04-29T17:26:59-04:00
 read-if: "you need to see Codex's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -84,6 +84,35 @@ Updates fanned out this task:
 - `.collab/INDEX.md` ........ bumped registry timestamps for touched managed files
 
 Missing / intentionally skipped: no `career-ops/*` files were modified; `.codex/memory/pitfalls.md` unchanged because no new recurring tool gotcha was discovered.
+
+## 2026-04-29 — Reviewed Claude Phase 2.8 Firecrawl-pivot design
+
+**Goal:** Pick up handoff `20260429-164715-2bcf` and review the Phase 2.8 Firecrawl-pivot design against the verification report, the decisions addendum, and Claude decisions D-14/D-15 before Claude writes the implementation plan.
+
+**What I read:** `docs/plans/2026-04-29-firecrawl-pivot-design.md`, `docs/plans/2026-04-29-firecrawl-pivot-decisions.md`, `docs/design/2026-04-29-firecrawl-ats-verification.md`, `.claude/memory/decisions.md`, and the handoff block in `docs/agents/claude.md`.
+
+**Handoff:** Picked up handoff `20260429-164715-2bcf`, wrote inline review comments, closed the handoff, and acknowledged catchup.
+
+**What I found:** D-14/D-15 are supported by the verification report, but the main design plan still contains pre-verification architecture:
+- Layer 0 still reads as `scan.mjs` only and leaves a pending `scan.mjs` modification/wrapper choice, instead of D-15's settled sibling-adapter plan.
+- Layer 2 still uses stale `/v1/extract` / legacy schema wording instead of `/v1/scrape` with `jsonOptions` only when JSON mode is needed.
+- Cost, TTL, risk, and acceptance criteria sections still need the verification corrections: JSON mode is 5 credits/page, `/v1/extract` is a separate token pool, TTL should be 60 days with fast-fail rediscovery, rate caps remain unverified, and JazzHR should stay out of direct-adapter scope.
+- Q-FC-4 is internally inconsistent on Firecrawl-first vs HTTP-first enrichment policy.
+
+**Feedback location:** Appended `## §11. Review Comments` to `docs/plans/2026-04-29-firecrawl-pivot-design.md`.
+
+### Task Receipt
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-design.md` ........ appended Codex §11 design review comments and bumped frontmatter timestamp
+- `docs/agents/claude.md` ........ handoff `20260429-164715-2bcf` picked up and closed via framework script; frontmatter timestamp updated
+- `docs/agents/codex.md` ........ added this Firecrawl design-review log entry and Receipt
+- `.codex/memory/state.md` ........ recorded completed Phase 2.8 design-review state, next steps, open questions, and watermark
+- `.codex/memory/context.md` ........ recorded durable findings about stale Firecrawl design sections
+- `.codex/memory/decisions.md` ........ added D-3 documenting the inline-review choice
+- `.codex/memory/pitfalls.md` ........ added P-2 for occasional Git Bash signal-pipe sandbox failures
+- `.collab/INDEX.md` ........ bumped registry timestamps for touched managed files
+
+Missing / intentionally skipped: no `career-ops/*` files were modified; `docs/plans/2026-04-29-firecrawl-pivot-decisions.md`, `docs/design/2026-04-29-firecrawl-ats-verification.md`, and `.claude/memory/decisions.md` were read but not edited.
 
 ## Handoff blocks
 

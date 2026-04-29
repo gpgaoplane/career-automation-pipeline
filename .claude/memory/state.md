@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-29T15:00:00-04:00
+last-updated: 2026-04-29T18:00:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -11,9 +11,9 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/multi-agent-collab`
-**Active task:** Phase 2.8 (Firecrawl pivot) — design + decisions + verification all done. Phase 2.7 implementation remains complete (commits a13b9a5..9ff216a) and merged-ready. Phase 2.8 design plan: `docs/plans/2026-04-29-firecrawl-pivot-design.md` (commit 0f9421a). Decisions addendum: `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (commit d8e3921, also added "Web research" project rule). Verification research: `docs/design/2026-04-29-firecrawl-ats-verification.md` (this session). New project rule "Surface uncertainty over baseline knowledge" added to root CLAUDE.md (this session).
-**Pause point:** Phase 2.8 implementation plan not yet written. Verification surfaced 3 architecture corrections (Workday CXS API exists; JSON-mode is 5 credits/page not 1; `/v1/scrape` not `/v1/map` for ATS discovery) plus 5 newly-verified public ATSes. Decisions D-14 + D-15 + D-16 capture the new direction. Awaiting user signal to write Phase 2.8 implementation plan, or to hand off to Codex for design review first.
-**Blockers:** None. Working tree has uncommitted INDEX/decisions/state/STATUS/work-log/CLAUDE.md updates from this session — about to commit as a single "design checkpoint" commit per user request.
+**Active task:** Phase 2.8 (Firecrawl pivot) — design + decisions + verification + Codex review + integration all done. Design plan now at v2 (`docs/plans/2026-04-29-firecrawl-pivot-design.md`) with all 5 Codex ⚠ Issues + 3 ❓ Questions + 2 💭 Optional improvements integrated. D-17 records the integration; D-14 inline-corrected for the firecrawl-enrich → firecrawl-extract naming typo and softened rate-cap claim. Decisions addendum Q-FC-4 rewritten to be unambiguous (pure Firecrawl-first per user principle).
+**Pause point:** Implementation plan write is the next substantive task. Codex re-review is OPTIONAL (matches Phase 2.7 D-12 pattern: v2 in-place revisions are correctness passes, not architecture changes). User indicated merge-to-main happens after review integration → before implementation. Working tree has uncommitted v2 design plan + decisions addendum + decisions.md (D-14 patch + D-17) + state.md + STATUS.md + work log Receipt — about to commit as a single "Phase 2.8 design v2 (review integration)" commit.
+**Blockers:** None.
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
@@ -21,10 +21,13 @@ skip-if: "status != active or last-updated <= your watermark"
 2. ~~Phase 2.8 design plan~~ — DONE (commit 0f9421a, `docs/plans/2026-04-29-firecrawl-pivot-design.md`).
 3. ~~Phase 2.8 decisions addendum + Web research project rule~~ — DONE (commit d8e3921).
 4. ~~Phase 2.8 verification research~~ — DONE this session. `docs/design/2026-04-29-firecrawl-ats-verification.md` written. 3 corrections + 5 newly-verified public ATSes surfaced.
-5. ~~Phase 2.8 design-checkpoint commit~~ — IN PROGRESS this session. Adds D-14, D-15, D-16 to decisions; refreshes state.md, STATUS.md, work log; registers 3 new docs in INDEX; adds "Surface uncertainty over baseline knowledge" project rule to root CLAUDE.md.
-6. **Next step (user signal needed):** write Phase 2.8 implementation plan, OR hand off to Codex for design review of `2026-04-29-firecrawl-pivot-design.md` first. Implementation plan should incorporate: Step 0 URL triage (HTTP HEAD, 4-bucket classification), Step 1 firecrawl-discover.mjs, Step 2 API-direct tier expansion (5 new ATS adapters per D-15), Step 3 firecrawl-enrich.mjs, Step 4 npm full-scan chain wire-up, Step 5 acceptance audit + first scan.
-7. **Phase 2.6 (still deferred):** clean rescan once Phase 2.8 lands. tag scan-v1-unfiltered → reset pipeline.md + scan-history.tsv → run full-scan with new architecture → P-1 audit.
-8. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
+5. ~~Phase 2.8 design-checkpoint commit~~ — DONE 2026-04-29 (commit 23676b2). Added D-14/D-15/D-16, registered 3 new docs in INDEX, added uncertainty rule.
+6. ~~Codex handoff for Phase 2.8 design review~~ — DONE 2026-04-29 (commit ff12500, handoff `20260429-164715-2bcf`).
+7. ~~Smoke-test scripts deletion~~ — DONE 2026-04-29 (commit 626e1ce; precedent: sample-portals-50.py).
+8. ~~Codex review integration into design plan v2~~ — DONE 2026-04-29 (this session; about to commit). All 5 ⚠ Issues + 3 ❓ Questions + 2 💭 Optional accepted + integrated. D-17 records the integration; D-14 inline-corrected; decisions addendum Q-FC-4 rewritten.
+9. **Next step:** write Phase 2.8 implementation plan, then merge `feat/multi-agent-collab` to main, then branch `feat/phase-2.8-firecrawl` from main and execute. Implementation plan should follow design plan v2 §6 sequence (12 steps: URL triage → lib/firecrawl + lib/ats-clients → 5 sibling adapters → firecrawl-discover → smoke validation → firecrawl-extract → enrich-jobs refactor → wire full-scan → rate-cap manual gate → sample-50 verification → AC audit → Phase 2.6 clean rescan).
+10. **Phase 2.6 (still deferred):** clean rescan once Phase 2.8 implementation lands. Per design plan v2 §6 Step 12.
+11. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
@@ -38,5 +41,5 @@ skip-if: "status != active or last-updated <= your watermark"
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-29T15:00:00-04:00
+Last read INDEX at: 2026-04-29T18:00:00-04:00
 <!-- section:read-watermark:end -->

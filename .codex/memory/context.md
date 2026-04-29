@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: codex
-last-updated: 2026-04-29T00:26:05-04:00
+last-updated: 2026-04-29T17:26:59-04:00
 read-if: "you need durable project truths as understood by Codex"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -28,4 +28,12 @@ Codex reviewed Claude's implementation plan against design plan v2 and primary s
 - Claude integrated the previous five design-plan findings correctly at the design layer: 18/410 ATS distribution, enrichment-only sequential wording, lower-bound comp scoring, expanded cross-file propagation, and CREATIVE parser route.
 - The implementation plan still needs a v2 before execution because Step 10 final verification does not cover all design §12 acceptance criteria: criterion #10 cache-hit validation is absent, criterion #12 is reduced from "invoke full-scan succeeds" to static script-string inspection, and criterion #13 omits `416 enabled` / `32 disabled` from the stale-string grep.
 - The implementation plan's enrich/export CLI contracts are incomplete relative to design v2: enrich omits explicit `--dry-run`, `--company`, `--rate-limit-ms`, `--ttl-days`, `--skip-stale` handling while using undocumented `--limit`; export omits `--cache-warn-threshold P`.
+
+## 2026-04-29T17:26:59-04:00 — Firecrawl pivot design review findings
+
+Codex reviewed the Phase 2.8 Firecrawl design, decisions addendum, verification report, and Claude D-14/D-15. Durable findings:
+
+- The verification report supports D-14/D-15: use `/v1/scrape` with `formats:["html","links"]` for discovery; use `formats:["json"]` + `jsonOptions` only when JSON mode is needed; avoid `/v1/extract` by default; JSON mode costs 5 credits/page; Workday CXS, SmartRecruiters, Personio, Recruitee, and Workable have no-auth paths worth direct adapters.
+- The main design plan still has stale pre-verification content: Layer 0 is `scan.mjs` only, five sibling adapters are missing, `/v1/extract` language remains, cost/TTL assumptions are outdated, and acceptance criteria are still placeholders.
+- Q-FC-4 needs one settled enrichment fetch policy before implementation: pure Firecrawl-first vs HTTP-first for static ATS JD pages with Firecrawl fallback.
 <!-- section:entries:end -->

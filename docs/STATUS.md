@@ -1,9 +1,16 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-29
-**Current Phase:** Phase 2.8 — Firecrawl pivot DESIGNED + VERIFIED. Implementation plan pending. Phase 2.7 implementation remains complete (18/18 acceptance criteria pass) and merge-ready.
+**Current Phase:** Phase 2.8 — Firecrawl pivot DESIGN v2 (Codex-reviewed + integrated). Implementation plan pending. Phase 2.7 implementation remains complete (18/18 acceptance criteria pass) and merge-ready.
 
 ## Done
+- [x] **Phase 2.8 design v2 — Codex review integrated** (2026-04-29, `feat/multi-agent-collab`):
+  - Codex reviewed Phase 2.8 design via handoff `20260429-164715-2bcf`; surfaced 5 ⚠ Issues + 3 ❓ Questions + 2 💭 Optional improvements in `docs/plans/2026-04-29-firecrawl-pivot-design.md` §11
+  - Each Codex point verified against primary sources (verification doc + D-14/D-15) before integration; no performative agreement
+  - All 10 points ACCEPTED; design plan revised in-place to revision: v2
+  - §0 source-of-truth precedence note added (verification doc + D-14..D-17 supersede earlier baseline-knowledge sections); §4.1 Layer 0 box rewritten for 8-provider tier; §4.1.1 ATS provider matrix added; §4.2 file list expanded with 5 sibling adapters; §4.3 "Decision pending" removed (D-3 invariant locked); §5 cost model fully rewritten with mode-split matrix (markdown 1cr / JSON 5cr / direct API 0cr / interact / extract excluded); §5.3 60-day TTL with fast-fail; §5.4 dashboard rate-cap manual gate; §5.5 `--max-credits` cap; §6 migration sequence expanded to 12 steps; §7 acceptance criteria expanded from 6 placeholder to 11 final ACs; §8 FC-R2 reworded to use modern `formats:["json"]+jsonOptions` shape; §9 all 4 Q-FC questions marked RESOLVED; §10 historical note added (smoke-test scripts deleted in 626e1ce); §12 Claude's reconciliation table added documenting disposition of each Codex point
+  - D-17 recorded in `.claude/memory/decisions.md` documenting the full integration; D-14 inline-corrected for the firecrawl-enrich → firecrawl-extract naming typo and the rate-cap claim softened
+  - `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` Q-FC-4 rewritten to be unambiguously pure Firecrawl-first (matches user's stated principle "Firecrawl first, custom code as backup"); HTTP fallback purely for outage-resilience, NOT cost-routing
 - [x] **Phase 2.8 design + verification EXECUTED** (2026-04-29, `feat/multi-agent-collab`):
   - Firecrawl smoke test on 5 URLs (Jasper, SiFive, Expedia, Cloudflare, Shopify) confirmed Firecrawl handles SPA branded pages — most "broken" companies actually use known ATSes (Ashby, Workday, Greenhouse) hidden behind marketing landing pages
   - Phase 2.8 design plan written: `docs/plans/2026-04-29-firecrawl-pivot-design.md` (commit 0f9421a) — 4-layer architecture (direct-API → Firecrawl discover → Firecrawl extract → custom-scraper fallback), 5 risks, 9 acceptance criteria, 4 open design questions
@@ -73,10 +80,10 @@
   - Codex onboarding deferred — user triggers `--join codex` from a Codex session
 
 ## In Progress / Up Next
-- [ ] **Phase 2.8 implementation plan** — write atomic step-by-step playbook for: Step 0 URL triage (HTTP HEAD, 4-bucket classification, no Firecrawl credits), Step 1 firecrawl-discover.mjs (Firecrawl `/v1/scrape` + `formats:["html","links"]` + actions for SPAs), Step 2 API-direct tier expansion (5 new sibling adapters: Workday CXS, SmartRecruiters, Personio, Recruitee, Workable), Step 3 firecrawl-enrich.mjs (markdown-first 1cr/page; JSON-mode 5cr/page reserved for messy custom pages), Step 4 npm full-scan chain wire-up, Step 5 acceptance audit + first real scan
-- [ ] **Optional: Codex review of Phase 2.8 design plan** before implementation plan write
-- [ ] **Phase 2.6 clean rescan** (deferred until Phase 2.8 lands — running rescan with current scraper would just reproduce 26% sample-coverage)
-- [ ] Re-run `export-jobs.mjs` after clean rescan to produce valid Excel
+- [ ] **Phase 2.8 implementation plan** — write atomic step-by-step playbook per design plan v2 §6 (12 steps): Step 0 portals.yml URL triage, Step 1 lib/firecrawl.mjs + tests, Step 2 lib/ats-clients.mjs, Step 3 5 sibling adapters in scripts/ats-adapters/, Step 4 firecrawl-discover.mjs, Step 5 smoke validation on 50 sample, Step 6 firecrawl-extract.mjs, Step 7 enrich-jobs.mjs Firecrawl-first refactor, Step 8 wire full-scan chain, Step 9 dashboard rate-cap manual gate, Step 10 sample-50 verification, Step 11 acceptance audit (11 ACs), Step 12 Phase 2.6 clean rescan
+- [ ] **Merge `feat/multi-agent-collab` to main** before starting Phase 2.8 implementation (per user direction; matches Phase 2.7 pattern of merging review-integrated design state as a coherent unit)
+- [ ] **Optional: Codex re-review of design plan v2** — same pattern as Phase 2.7 (correctness-pass v1→v2 didn't need re-review). Defer unless user requests.
+- [ ] **Phase 2.6 clean rescan** (deferred until Phase 2.8 implementation lands)
 
 ## Blockers
 None
@@ -85,4 +92,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-**Phase 2.7** is complete (commits a13b9a5 → 9ff216a, 18/18 acceptance criteria pass). **Phase 2.8** (Firecrawl pivot) design + decisions + verification all committed on `feat/multi-agent-collab`. Architecture: 4-layer (direct-API including 5 new ATS adapters → Firecrawl Layer-1 discovery → Firecrawl Layer-2 enrichment → custom-scraper fallback). Verification round on 2026-04-29 surfaced 3 corrections to baseline-knowledge claims (Workday CXS API exists, JSON-mode is 5cr/page not 1, `/v1/scrape` not `/v1/map` for discovery) plus 5 newly-verified public ATSes. Decisions D-14, D-15, D-16 locked. INDEX registers all 3 new docs. Two new project rules in root CLAUDE.md: "Web research" (state intent + wait for signal before fetches) and "Surface uncertainty over baseline knowledge" (lean toward proposing a fetch when uncertainty would shape design decisions). **Next:** user signal to (a) write Phase 2.8 implementation plan, (b) hand off to Codex for design review of `2026-04-29-firecrawl-pivot-design.md` first, (c) merge `feat/multi-agent-collab` to main before continuing. Phase 2.6 clean rescan still deferred until Phase 2.8 implementation lands (running rescan with current scraper would reproduce 26% sample-coverage). Open verification: root `CLAUDE.md` `@import` shim CONFIRMED working this session (system prompt shows both files' contents).
+**Phase 2.7** is complete (commits a13b9a5 → 9ff216a, 18/18 ACs pass). **Phase 2.8 design v2** Codex-reviewed and integrated (`feat/multi-agent-collab`): all 5 ⚠ Issues + 3 ❓ Questions + 2 💭 Optional improvements verified against primary sources and accepted. Design plan now at v2 with §0 precedence note, §4.1.1 8-provider matrix, §5 mode-split cost model, §6 12-step migration sequence, §7 11 final ACs, §12 reconciliation table. D-17 records the integration; D-14 inline-corrected (firecrawl-enrich → firecrawl-extract naming typo + softened rate-cap claim); decisions addendum Q-FC-4 rewritten as pure Firecrawl-first. **Next sequence:** (1) write Phase 2.8 implementation plan; (2) merge `feat/multi-agent-collab` to main as one coherent unit (Phase 2.7 + 2.8 design v2); (3) branch `feat/phase-2.8-firecrawl` from main; (4) execute implementation plan; (5) Phase 2.6 clean rescan. Codex re-review of v2 is OPTIONAL (correctness pass, not architecture change — matches Phase 2.7 D-12 pattern). Open verification (closed): root `CLAUDE.md` `@import` shim confirmed working.

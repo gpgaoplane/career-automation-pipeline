@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-29T15:00:00-04:00
+last-updated: 2026-04-29T18:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -392,7 +392,7 @@ Append new decisions below. Format:
 **Architecture (4 layers):**
 - **Layer 0 — Direct ATS API** (`scan.mjs` untouched, plus new sibling scripts per D-15): hits documented JSON endpoints. Zero Firecrawl credits.
 - **Layer 1 — Firecrawl ATS discovery** (`firecrawl-discover.mjs`, NEW): for branded landing pages, calls `/v1/scrape` with `formats:["html","links"]` + `actions` for SPAs. Discovers ATS provider + slug, writes to `data/ats-discovery-cache.json` (60-day TTL with fast-fail re-discovery on 4xx/5xx). Slugs flow back into scan.mjs orchestration via a wrapper that merges portals.yml direct slugs + cached discovered slugs.
-- **Layer 2 — Firecrawl JD enrichment** (`firecrawl-enrich.mjs`, NEW): for JD pages on auth-gated ATSes (iCIMS/BambooHR/Pinpoint/Teamtailor/Phenom/Jobvite) and fully custom systems. Prefers plain markdown (1 credit/page) over JSON-mode (5 credits/page); JSON-mode reserved for messy custom pages.
+- **Layer 2 — Firecrawl structured listing extraction** (`firecrawl-extract.mjs`, NEW; **D-14 originally said "firecrawl-enrich.mjs" — naming typo corrected post-Codex review per D-17**): for genuinely custom careers pages (Shopify, Expedia-style) where no ATS provider is detectable. Uses `/v1/scrape` + `formats:["json"]` + `jsonOptions` (5 credits/page) to extract a structured `{jobs:[{title,location,url}]}` list. **Per-JD enrichment is a separate concern** handled by refactoring existing `enrich-jobs.mjs` in-place (NOT a new file) to be pure Firecrawl-first per Q-FC-4 — markdown mode (1 credit/page) is enough for `extractSignals()` regex extraction.
 - **Layer 3 — Custom scraper fallback** (`custom-scraper.mjs`, retained): Playwright fallback for whatever Firecrawl can't handle. Heaviest tier.
 
 **Architecture corrections from verification research** (`docs/design/2026-04-29-firecrawl-ats-verification.md`):
@@ -409,7 +409,7 @@ Append new decisions below. Format:
 - Per-call inline JSON Schema + `formats:["json"]` + `jsonOptions` is mature and production-ready.
 - 101k Firecrawl credits ≈ 50–100 full-scans available — comfortable budget headroom.
 - `scan.mjs` direct-ATS path is faster + free — preserve it; only use Firecrawl where it adds value.
-- ToS explicitly permits the use case; ~1,800 GETs/week is well below any plausible plan cap.
+- ToS explicitly permits the use case. **Per-plan rate caps (RPM, concurrency) for Firecrawl could not be verified from public docs** (per verification report); ~1,800 GETs/week is likely low volume but **dashboard caps must be confirmed manually before high-concurrency batch design** (added as AC-10 in design plan v2 + tracked as a manual gate in the implementation plan). Default to sequential for Layer 1 + Layer 2 until cap is confirmed.
 
 **Tradeoffs:**
 - New external dependency (Firecrawl API key) adds a service outage risk; mitigation = Layer 3 custom-scraper fallback retained.
@@ -477,5 +477,56 @@ The largest single finding: **Workday's public CXS endpoint** at `POST {tenant}.
 - Counter: the verification round saved a major design rework (Workday CXS finding alone reshapes Phase 2.8 architecture).
 
 **Cross-references:** root `CLAUDE.md` lines 15-25 (both rules); `docs/design/2026-04-29-firecrawl-ats-verification.md` (the verification work that motivated rule 2).
+
+## D-17 — Integrate Codex review of Phase 2.8 Firecrawl-pivot design — 2026-04-29T18:00:00-04:00
+
+**Context:** Codex reviewed Phase 2.8 design plan (handoff `20260429-164715-2bcf`) and surfaced 5 issues + 3 questions + 2 optional improvements in §11 of `docs/plans/2026-04-29-firecrawl-pivot-design.md`. User asked Claude to be analytical: verify each Codex point against primary sources (verification doc + D-14/D-15) and decide accept/modify/defer/reject for each.
+
+**Alternatives:**
+- Reject Codex's findings (would be wrong; all verify against primary sources)
+- Accept all blindly without verification
+- **Verify each finding against primary sources, then accept/modify/defer/reject per technical merit**
+
+**Choice:** Third option — analytical reconciliation. All 5 ⚠ Issues, all 3 ❓ Questions, both 💭 Optional improvements verified and ACCEPTED. Design plan revised in-place to revision: v2. Codex's §11 review preserved as audit trail. Claude's reconciliation documented in design plan §12 with disposition table.
+
+**Verifications + dispositions:**
+
+1. **Issue 1 — Layer 0 sibling adapters not integrated.** Verified against design plan §4.1 lines 51-55, §4.2 lines 96-100, §4.3 "Decision pending" line 105. Conflicts confirmed with D-14 (locked Layer 0 wording) and D-15 (locked 5 sibling adapters). **ACCEPT.** Rewrote §4.1 Layer 0 box; added §4.1.1 provider matrix; updated §4.2 file list to include 5 new adapter scripts in `scripts/ats-adapters/`; removed "Decision pending" from §4.3.
+
+2. **Issue 2 — Stale `/v1/extract` and legacy schema language.** Verified against verification doc Q1+Q2 ("canonical shape is `formats:["json"]` + `jsonOptions`, not legacy `extract`/`extractorOptions`"; "/v1/extract is on a separate token-based subscription pool"). **ACCEPT.** Layer 2 box updated; `lib/firecrawl.mjs` exports list now `scrape(url, opts)` + `scrapeJson(url, schema, prompt)` with explicit "no `extract()` wrapper"; FC-R2 reworded; Q-FC-1 marked RESOLVED. AC-5 added to §7 enforcing grep audit.
+
+3. **Issue 3 — Cost & TTL stale.** Verified §5 said "Per-scrape ≈ 1 credit" and 30-day TTL; verification doc says JSON-mode is 5 credits/page; D-14 says 60-day TTL with fast-fail. **ACCEPT.** Rewrote §5 entirely with mode-split cost matrix (markdown 1cr / JSON 5cr / stealth +4 / interact 2cr/min / direct API 0cr); 60-day TTL with fast-fail in §5.3; §5.4 dashboard rate-cap manual gate; §5.5 `--max-credits` cap. AC-7 + AC-10 added to §7.
+
+4. **Issue 4 — Acceptance criteria placeholder, gaps in coverage.** Verified design plan had 6 ACs while handoff promised 9 + Codex listed gaps (D-15 adapter correctness, no-legacy-extract enforcement, JSON-mode cost guards, plan-cap verification, JazzHR exclusion). **ACCEPT.** Expanded to 11 final ACs covering all the gaps: AC-4 (5 adapter integration tests), AC-5 (no `/v1/extract` grep audit), AC-6 (60-day TTL behavior), AC-7 (cost log per mode), AC-9 (JazzHR explicit out-of-scope), AC-10 (rate-cap manual gate + `--max-credits`).
+
+5. **Issue 5 — Q-FC-4 enrichment policy internally inconsistent.** Verified `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` lines 159-171 had three contradictory paragraphs (Firecrawl-primary + HTTP-fallback / HTTP-first for static / pure Firecrawl-first). User's stated principle is "Firecrawl first, custom code as backup". **ACCEPT — pure Firecrawl-first.** Rewrote Q-FC-4 in decisions addendum to be unambiguous: primary = Firecrawl `/v1/scrape` markdown (1 credit); fallback = plain HTTP **only on Firecrawl outage** (5xx, timeout, `--max-credits` exhaustion). NOT a cost-routing optimization. §9 Q-FC-4 in design plan updated to match.
+
+6. **Question Q1 — Layer 2 naming convention.** Resolved: keep `firecrawl-extract.mjs` for Layer 2 (structured listing extraction from custom careers pages); refactored `enrich-jobs.mjs` (NOT renamed) for per-JD enrichment. **D-14's reference to "firecrawl-enrich.mjs" is a naming typo** — corrected inline in D-14 with reference to D-17. The two are distinct responsibilities: listing extraction (find which jobs exist on a custom careers page) vs per-JD detail (extract signals from one job's description page).
+
+7. **Question Q2 — JazzHR exclusion.** ACCEPT. AC-9 added making the exclusion enforceable; §4.1.1 provider matrix marks JazzHR out-of-scope (UNVERIFIABLE per verification doc).
+
+8. **Question Q3 — Soften "1,800 GETs/week below cap" claim.** ACCEPT. D-14 wording (this file, above) corrected to "likely low volume but dashboard caps must be confirmed manually before high-concurrency batch design". Design plan §5.4 + AC-10 reflect the verification gate.
+
+9. **Optional O1 — Source-of-truth precedence note.** ACCEPT. Added §0 to design plan stating verification doc + D-14/D-15/D-16/D-17 supersede earlier baseline-knowledge sections.
+
+10. **Optional O2 — ATS provider matrix.** ACCEPT. Added as §4.1.1 with full columns (provider / detection signal / direct endpoint / output parser / status).
+
+**Rationale:**
+
+- All 5 ⚠ Issues verified against primary sources (verification doc + D-14/D-15) — Codex was right on each. No performative agreement; technical correctness drives the integration.
+- The naming typo correction in D-14 (firecrawl-enrich.mjs → firecrawl-extract.mjs) is a small but real architectural clarification: Layer 2 and per-JD enrichment are different concerns. Conflating them in D-14 was a drafting error caught by Codex Q1.
+- Q-FC-4 reconciliation (pure Firecrawl-first) restores alignment with user's stated principle. The earlier "HTTP-first for cost savings" framing was my own elaboration not the user's direction — Codex caught the drift.
+- Codex re-review is OPTIONAL: all integrations were correctness-pass corrections, not architecture changes. Matches Phase 2.7 D-12 pattern (in-place v2 revision; no second review round needed).
+
+**Tradeoffs:**
+
+- Design plan v2 grew significantly (added §0 precedence note, §4.1.1 provider matrix, expanded §5 cost model, expanded §7 to 11 ACs, added §12 reconciliation). Wall-clock implementation impact: same — the architecture is unchanged from v1, only the documentation accuracy improved.
+- D-14 + Decisions addendum + design plan all needed coordinated edits to keep the three artifacts in sync. Cost: ~1 hour of edits. Counter: future implementation-plan writer (and Codex on re-review) gets a clean source of truth.
+
+**Implementation impact:**
+
+- Implementation plan can now be written from a clean v2 design plan + corrected addendum + amended D-14 + D-17 audit trail.
+- 11 ACs in §7 are now the verification gate set (was 6 placeholder).
+- File list for Phase 2.8 includes `lib/firecrawl.mjs`, `firecrawl-discover.mjs`, `firecrawl-extract.mjs`, refactored `enrich-jobs.mjs`, 5 sibling adapters in `scripts/ats-adapters/`, plus `lib/ats-clients.mjs`.
 
 <!-- section:entries:end -->

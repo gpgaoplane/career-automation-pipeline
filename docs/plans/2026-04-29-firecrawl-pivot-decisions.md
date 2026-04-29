@@ -2,7 +2,7 @@
 status: active
 type: design-addendum
 owner: claude
-last-updated: 2026-04-29T11:58:00-04:00
+last-updated: 2026-04-29T18:00:00-04:00
 read-if: "you are about to write the Phase 2.8 implementation plan or execute it"
 ---
 
@@ -158,17 +158,13 @@ Firecrawl is purpose-built to solve exactly these problems:
 
 **What stays the same:** `extractSignals()` is a pure function — runs on text input. We feed it Firecrawl markdown instead of cheerio-stripped HTML. Same regexes, same output schema, same cache format.
 
-**What changes:** the fetch wrapper inside `enrichOne()`. Replace `fetchTier1` + `fetchTier2` with `fetchFirecrawl` (primary) + `fetchHttp` (fallback for free static greenhouse JDs). Cache schema unchanged.
+**What changes (RESOLVED 2026-04-29 post-Codex review — pure Firecrawl-first):** the fetch wrapper inside `enrichOne()`. Replace `fetchTier1` + `fetchTier2` with **`fetchFirecrawl` (primary, always tried first) + `fetchHttp` (fallback ONLY on Firecrawl outage — 5xx, timeout, or `--max-credits` exhaustion)**. NOT a cost-routing optimization. Cache schema unchanged.
 
-**Cost trade-off:** ~1 credit per JD enrichment. With 1000-1500 JDs in pipeline, ~1-1.5k credits per full enrichment run. Within the 101k budget. Caching means you only pay once per JD per 7 days.
+**Cost trade-off:** ~1 credit per JD enrichment via Firecrawl markdown mode (verified 1 credit/page baseline; JSON-mode would be 5 credits but we don't use JSON-mode for per-JD — markdown + `extractSignals()` regex is enough). With 500-1500 JDs surviving title filter, ~500-1500 credits per full enrichment run. Within the 101k budget; caching means we only pay once per JD per 7 days.
 
-**Why fallback to HTTP for static pages:** ~30-40% of JDs are static greenhouse/ashby pages where plain `fetch()` returns full content immediately, no Playwright needed. Routing these through Firecrawl wastes credits. Logic: try free HTTP first; if response is short or fails, escalate to Firecrawl.
+**Why pure Firecrawl-first (not HTTP-first cost-routing):** matches the user's stated principle — "Firecrawl first, custom code as backup". The earlier draft of this section flagged a hybrid "HTTP-first for static greenhouse/ashby pages saves ~40% credits" trade-off; that contradicted the user's stated direction and was internally inconsistent with this same section's other paragraphs (Codex caught this in §11 review). Resolved here: HTTP fallback exists purely for resilience (Firecrawl outage), not as a routing-by-static-detection layer. We have ample quota (101k credits), and the simplicity wins.
 
-This INVERTS the philosophy you stated ("Firecrawl first, custom code as backup"). I want to flag this trade-off explicitly so you can override:
-- **Pure Firecrawl-first:** simpler mental model, ~1500 credits/run, robust against any JD format. Cost: ~1.5% of monthly quota per run.
-- **HTTP-first → Firecrawl fallback:** ~600-900 credits/run (40% savings). Adds one branch in code.
-
-**My recommendation: pure Firecrawl-first for enrich-jobs.mjs.** The simplicity is worth the marginal cost. We have plenty of quota. Override only if quota becomes tight.
+**Override path:** if quota becomes constrained, flip the policy via a single config flag (`ENRICH_PRIORITIZE_HTTP=true`) without architectural change. Out of scope for Phase 2.8; document as a future tunable.
 
 ---
 
