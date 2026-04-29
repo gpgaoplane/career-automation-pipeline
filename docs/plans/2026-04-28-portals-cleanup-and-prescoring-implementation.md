@@ -1204,41 +1204,45 @@ See decisions.md D-9 and design plan §11.
 
 ---
 
-## §11A. Step 8.5 — Sample Run on 100 Companies (per QI-6, user-requested)
+## §11A. Step 8.5 — Sample Run on 50 Companies (per QI-6, user-requested)
 
 > Added in implementation plan v2 per Codex review integration + user proposal. De-risks the first end-to-end test of the new scripts (`enrich-jobs.mjs`, refactored `export-jobs.mjs`, `npm run full-scan` chain) against a small subset BEFORE committing 1000+ jobs to scan-history.tsv via the real Phase 2.6 clean rescan.
+>
+> **Coverage caveat (advisor finding 2026-04-29):** With 18 direct ATS + 410 branded in the enabled pool, a uniform 50-company sample is statistically biased toward branded (~48 branded / ~2 direct). This is acceptable for end-to-end script validation (which is the goal of Step 8.5) but does NOT exercise the direct-ATS scan.mjs path proportionally. If the sample yields 0 direct-ATS companies, drop the seed=42 constraint and re-roll until at least 1 direct-ATS appears, OR explicitly stratify (e.g., 5 direct + 45 branded). For the v1 sample run, accept the bias and document direct-ATS coverage as "validated separately via existing scan.mjs golden-set tests."
 
 ### §11A.1 Source
 
-- User request (2026-04-29): "100 companies randomly selected from our companies list to run through on a small scale ... see how everything works ... before we do a full skill test"
+- User request (2026-04-29): "50 companies randomly selected from our companies list to run through on a small scale ... see how everything works ... before we do a full skill test" (originally 100; reduced to 50 by user mid-planning)
 - QI-6 (added to §17 in this v2 revision)
 
-### §11A.2 Approach: temporary file swap (does NOT modify scan.mjs upstream code)
+### §11A.2 Approach: cp + overwrite-and-restore (does NOT modify scan.mjs upstream code)
 
-Per D-3 invariant, `scan.mjs` is upstream-vendored and untouched. We avoid modifying it via a file-swap technique:
+Per D-3 invariant, `scan.mjs` is upstream-vendored and untouched. We avoid modifying it via cp+overwrite — NEVER `mv` the live `portals.yml` because a crash mid-run would leave no `portals.yml` on disk. Instead, the live file always exists; we copy it to backup then overwrite in place.
 
-1. Generate `career-ops/portals-sample-100.yml` from current `portals.yml` — same `title_filter`, but `tracked_companies` is a random 100-of-428 sample of `enabled: true` entries (disabled entries excluded).
-2. **Backup live state**: `cp career-ops/portals.yml career-ops/portals-full-backup.yml`. Also `cp career-ops/data/pipeline.md{,.full-backup}` and `cp career-ops/data/scan-history.tsv{,.full-backup}` — sample run will produce its own pipeline+history that we'll throw away.
+1. Generate `career-ops/portals-sample-50.yml` from current `portals.yml` — same `title_filter`, but `tracked_companies` is a random 50-of-428 sample of `enabled: true` entries (disabled entries excluded).
+2. **Backup live state via cp (NOT mv)**: `cp career-ops/portals.yml career-ops/portals-full-backup.yml`. Also `cp career-ops/data/pipeline.md career-ops/data/pipeline.md.full-backup` and `cp career-ops/data/scan-history.tsv career-ops/data/scan-history.tsv.full-backup`. Live `portals.yml` and data files remain in place at all times.
 3. **Reset the data files** (sample run starts from clean slate): write empty pipeline.md (`## Pendientes\n\n## Procesadas\n`), write scan-history.tsv with header row only.
-4. **Swap config**: `mv portals.yml portals.yml.unused && mv portals-sample-100.yml portals.yml`.
+4. **Overwrite portals.yml in place**: `cp career-ops/portals-sample-50.yml career-ops/portals.yml` (overwrite, don't mv-rename). At this point `portals.yml` contains the sample, but `portals-full-backup.yml` is still the canonical live config.
 5. **Run the chain**: `npm run scan && npm run custom-scrape && npm run enrich && npm run export`. This validates all four scripts work end-to-end on real but small data.
 6. **Inspect outputs**: open `output/jobs-YYYY-MM-DD.xlsx`. Spot-check Pending Jobs sheet — does sort look right? Are the new pre-score columns populated? Does banding render? Does `--cache-warn-threshold` warn appropriately?
-7. **Restore live state**: `mv portals.yml.unused portals.yml` (un-swap config); restore data files from backups; delete sample artifacts.
-8. **Audit findings**: any P-1 landing-page issues from the 100? Any new pitfalls? Any unexpected behavior from the new scripts?
+7. **Restore live state via cp (overwrite back)**: `cp career-ops/portals-full-backup.yml career-ops/portals.yml`; `cp career-ops/data/pipeline.md.full-backup career-ops/data/pipeline.md`; `cp career-ops/data/scan-history.tsv.full-backup career-ops/data/scan-history.tsv`. Then delete sample artifacts (`portals-sample-50.yml`, `portals-full-backup.yml`, `pipeline.md.full-backup`, `scan-history.tsv.full-backup`). Verify with `git diff` — must show NO changes to live files.
+8. **Audit findings**: any P-1 landing-page issues from the 50? Any new pitfalls? Any unexpected behavior from the new scripts?
+
+**Recovery model**: If the chain crashes between steps 4 and 7, the live `portals.yml` is the sample (not corrupted, just wrong contents) and backup is at `portals-full-backup.yml`. Recovery: `cp portals-full-backup.yml portals.yml`, restore data files from `*.full-backup`, then debug. The atomic per-step commits in §3.2 mean the implementation plan can resume from any prior commit if needed.
 
 ### §11A.3 Sample selection script
 
 ```python
 #!/usr/bin/env python3
-"""Generate career-ops/portals-sample-100.yml — random 100 enabled companies."""
+"""Generate career-ops/portals-sample-50.yml — random 50 enabled companies."""
 import yaml, random, sys
 from pathlib import Path
 
 RANDOM_SEED = 42  # deterministic; change to re-sample
-SAMPLE_SIZE = 100
+SAMPLE_SIZE = 50
 
 src = Path('career-ops/portals.yml')
-dst = Path('career-ops/portals-sample-100.yml')
+dst = Path('career-ops/portals-sample-50.yml')
 
 with open(src, encoding='utf-8') as f:
     data = yaml.safe_load(f)
@@ -1254,29 +1258,29 @@ with open(dst, 'w', encoding='utf-8') as f:
 print(f"Wrote {dst} with {len(sample)} companies (seed={RANDOM_SEED})")
 ```
 
-Saved as `scripts/sample-portals-100.py`. Reproducible via `RANDOM_SEED`.
+Saved as `scripts/sample-portals-50.py`. Reproducible via `RANDOM_SEED`.
 
 ### §11A.4 Wall-clock estimate
 
 | Sub-step | Time |
 |---|---|
-| Generate sample-100.yml | <1 min |
+| Generate sample-50.yml | <1 min |
 | Backup files + reset data | 2 min |
-| Swap config | <1 min |
-| `npm run scan` (16-20 of 100 are direct ATS, fast) | ~1 min |
-| `npm run custom-scrape` (~80-90 branded pages, sequential? actually concurrent at 10 — will take ~5-8 min) | 5-8 min |
-| `npm run enrich` (sequential per D-8, ~100 URLs assuming each company yields ~1-3 jobs = ~150-300 URLs × 2s = 5-10 min) | 5-10 min |
+| Overwrite portals.yml in place | <1 min |
+| `npm run scan` (~2 of 50 are direct ATS, fast) | <1 min |
+| `npm run custom-scrape` (~48 branded pages, concurrent at 10 → ~3-5 min) | 3-5 min |
+| `npm run enrich` (sequential per D-8, ~50 jobs assuming each company yields ~1-3 = ~50-150 URLs × 2s = 2-5 min) | 2-5 min |
 | `npm run export` | <1 min |
 | Inspect output | 10-15 min (manual) |
 | Restore live state + cleanup | 2 min |
-| **Total** | **~30-40 minutes** |
+| **Total** | **~20-30 minutes** |
 
 ### §11A.5 Acceptance criteria for the sample run
 
 | # | Criterion | Pass/fail check |
 |---|---|---|
 | SR-1 | All 4 npm scripts complete without errors (exit code 0) | `npm run full-scan` returns 0 |
-| SR-2 | `pipeline.md` populated with at least 50 jobs (sanity check — 100 companies should yield ≥50 jobs) | `grep -c "^- \[ \]" career-ops/data/pipeline.md` returns ≥50 |
+| SR-2 | `pipeline.md` populated with at least 25 jobs (sanity check — 50 companies should yield ≥25 jobs) | `grep -c "^- \[ \]" career-ops/data/pipeline.md` returns ≥25 |
 | SR-3 | `data/job-descriptions-cache.json` has entries for at least 80% of pipeline URLs (cache write succeeds) | python diff between pipeline URLs and cache keys |
 | SR-4 | Excel `Pending Jobs` sheet has all 11 columns (5 original + 6 new) | openpyxl check |
 | SR-5 | Excel sorted by `pre_score` descending (top row has highest score) | openpyxl check |
@@ -1304,7 +1308,7 @@ If any SR-N fails: STOP, debug, fix the responsible script, re-run. Don't procee
 - P-1 landing-page issues across the full 410 branded pages — only the full rescan exposes the long tail
 - Calibration band thresholds against the real distribution — that's Step 9 (calibration uses scan-v1 baseline OR the post-Phase-2.6 fresh data)
 - Enrichment cache TTL / expiry behavior — needs a 7-day test to validate
-- Real-world description signal extraction quality across 100+ companies — only spot-checking 10-20 reveals patterns
+- Real-world description signal extraction quality across 100+ companies — only spot-checking 10-20 of the 50 reveals patterns; full distribution needs the Phase 2.6 rescan
 
 ### §11A.8 Decision: keep or skip Step 8.5
 
@@ -1315,11 +1319,11 @@ Skip condition: if user explicitly says "skip the sample run, go straight to ful
 ### §11A.9 Commit message template (only if code/data changes are committed)
 
 ```
-test: sample run on 100 random companies — validates new scripts end-to-end
+test: sample run on 50 random companies — validates new scripts end-to-end
 
-Added scripts/sample-portals-100.py for reproducible sample generation
+Added scripts/sample-portals-50.py for reproducible sample generation
 (seed=42). Sample run executed and SR-1 through SR-9 all passed.
-Sample artifacts (portals-sample-100.yml, pre-run backup files,
+Sample artifacts (portals-sample-50.yml, pre-run backup files,
 sample pipeline.md/scan-history.tsv) discarded after validation.
 No live-state files modified (verified via git diff).
 
@@ -1628,7 +1632,7 @@ If user wants to defer merge until after Phase 2.6 clean rescan validates the sy
 | QI-3 | Auto-include `AI Foundation Models` and `AI Sales / GTM AI` in preferred categories per Codex Q-3 confirmation? | Yes — add during Step 7 implementation | Implementer (no further design input needed) |
 | QI-4 | scripts/generate-roster.py — write frontmatter from script, or by hand after first generation? | Write from script (one less manual step) | Implementer |
 | QI-5 | Codex re-review of implementation outputs — yes or skip? | Skip if all 18 gates pass; user explicitly requests if desired | User direction at end of Step 11 |
-| QI-6 | User raised: do a 100-company sample run before full implementation? | YES — add Step 8.5 "Sample run on 100 randomly-selected enabled companies" between Step 8 (npm full-scan chain) and Step 9 (calibration). See §20 for design. | User confirms 100 vs different sample size |
+| QI-6 | User raised: do a sample run before full implementation? | YES — add Step 8.5 "Sample run on 50 randomly-selected enabled companies" between Step 8 (npm full-scan chain) and Step 9 (calibration). See §11A for design. | RESOLVED — user reduced 100 → 50 mid-planning |
 
 ---
 
