@@ -10,7 +10,11 @@
 // URL patterns. First capture group is the slug (or tenant for Workday).
 // Workday additionally captures instance digits + site path.
 export const PROVIDER_PATTERNS = {
-  greenhouse: /(?:boards|job-boards|boards-api)\.greenhouse\.io\/([^/?#"'\s]+)/i,
+  // Greenhouse: handles both direct boards URLs AND the embed/job_board JS library URL.
+  // - Direct: boards.greenhouse.io/{slug} or job-boards.greenhouse.io/{slug}
+  // - Embed library: boards.greenhouse.io/embed/job_board.js?for={slug} or boards.greenhouse.io/embed/job_board?for={slug}
+  // Per pitfall P-6 (2026-04-30) — slug "embed" is the library path, not a company.
+  greenhouse: /(?:boards|job-boards|boards-api)\.greenhouse\.io\/(?:embed\/job_board(?:\.js)?\?(?:[^&\s"']*&)*for=([^&\s"']+)|([^/?#"'\s]+))/i,
   ashby: /jobs\.ashbyhq\.com\/([^/?#"'\s]+)/i,
   lever: /jobs\.lever\.co\/([^/?#"'\s]+)/i,
   // Workday: {tenant}.wd{N}.myworkdayjobs.com/[locale/]{site}
@@ -44,6 +48,13 @@ export function detectProvider(url) {
           site,
         };
       }
+      if (provider === "greenhouse") {
+        // Either embed-form (capture group 1) OR direct (capture group 2)
+        const slug = m[1] || m[2];
+        // Filter out synthetic "embed" slugs that slipped through somehow
+        if (slug === "embed") return null;
+        return { provider, slug };
+      }
       return { provider, slug: m[1] };
     }
   }
@@ -70,6 +81,11 @@ export function detectAllInText(text) {
       if (provider === "workday-cxs") {
         entry.host = `${m[1]}.wd${m[2]}.myworkdayjobs.com`;
         entry.site = m[3];
+      } else if (provider === "greenhouse") {
+        // Either embed (m[1]) OR direct (m[2])
+        const slug = m[1] || m[2];
+        if (slug === "embed") continue; // P-6 filter
+        entry.slug = slug;
       } else {
         entry.slug = m[1];
       }

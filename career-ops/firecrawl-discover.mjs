@@ -102,11 +102,29 @@ function normalizeForAgreement(s) {
   return s.toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+// Dedup candidates by identity tuple (provider, slug, host, site). Same
+// page often links the same Workday tenant from multiple footer/header
+// positions — without dedup, resolveAmbiguous would see N copies and
+// flag false ambiguity. Per pitfall P-5 (2026-04-30).
+function dedupCandidates(candidates) {
+  const seen = new Set();
+  const out = [];
+  for (const c of candidates) {
+    const key = `${c.provider}|${c.slug || ""}|${c.host || ""}|${c.site || ""}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(c);
+  }
+  return out;
+}
+
 // RI-4 ambiguity resolution: given multiple candidate ATS detections from
 // one page, pick the best match if any candidate has strong company-name
 // agreement (Levenshtein ≤2 against normalized company name). Otherwise
 // return null + flag ambiguous.
-function resolveAmbiguous(candidates, companyName) {
+function resolveAmbiguous(rawCandidates, companyName) {
+  // Dedup first (P-5 fix) — N footer-links to same tenant should count as 1
+  const candidates = dedupCandidates(rawCandidates);
   if (candidates.length === 0) return { winner: null, ambiguous: false, candidates };
   if (candidates.length === 1) return { winner: candidates[0], ambiguous: false, candidates };
 
