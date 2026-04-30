@@ -1,0 +1,14 @@
+{
+  "name": "career-ops-workspace",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Repo-root workspace for Phase 2.8+ scripts that live outside career-ops/ (vendored upstream). career-ops itself has its own package.json.",
+  "type": "module",
+  "scripts": {
+    "ats-adapters": "node scripts/ats-adapters/run-all.mjs",
+    "ats-adapters:dry": "node scripts/ats-adapters/run-all.mjs --dry-run"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
