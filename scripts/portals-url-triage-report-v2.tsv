@@ -1,0 +1,389 @@
+company	careers_url	final_url	bucket	status_code	error
+1X Technologies	https://www.1x.tech/careers	https://www.1x.tech/careers	branded-page-OK	200	
+Abnormal Security	https://abnormalsecurity.com/careers	https://abnormal.ai/careers	branded-page-OK	200	
+Abnormal-adjacent: Halcyon	https://www.halcyon.ai/careers	https://www.halcyon.ai/careers	branded-page-OK	200	
+Abnormal-adjacent: Island	https://www.island.io/careers	https://www.island.io/careers	branded-page-OK	200	
+Abnormal-adjacent: Material Security	https://material.security/careers	https://material.security/careers	branded-page-OK	200	
+Abridge	https://www.abridge.com/careers	https://jobs.ashbyhq.com/Abridge	direct-ATS:ashby	200	
+Adobe	https://www.adobe.com/careers.html	https://www.adobe.com/careers.html	dead		ReadTimeout: HTTPSConnectionPool(host='www.adobe.com', port=443): Read timed out. (read timeo
+Advantest	https://www.advantest.com/en/about/career-na/jobs/	https://www.advantest.com/en/about/career-na/jobs/	branded-page-OK	200	
+Adyen	https://careers.adyen.com/	https://careers.adyen.com/	branded-page-OK	200	
+Agility Robotics	https://www.agilityrobotics.com/careers	https://www.agilityrobotics.com/careers	branded-page-OK	200	
+AI coding: Tabnine	https://www.tabnine.com/careers/	https://www.tabnine.com/careers/	branded-page-OK	200	
+AI21 Labs	https://www.ai21.com/careers	https://www.ai21.com/careers/	branded-page-OK	200	
+Airbnb	https://careers.airbnb.com/	https://careers.airbnb.com/	branded-page-OK	200	
+Airia	https://airia.com/careers	https://airia.com/	branded-page-OK	200	
+Aleph Alpha	https://jobs.ashbyhq.com/AlephAlpha	https://jobs.ashbyhq.com/AlephAlpha	direct-ATS:ashby	200	
+Alibaba	https://talent.alibaba.com/	https://talent.alibaba.com/	branded-page-OK	200	
+Alphabet (Google)	https://www.google.com/about/careers/applications/	https://www.google.com/about/careers/applications/	branded-page-OK	200	
+Amadeus IT Group	https://amadeus.com/en/careers/overview	https://amadeus.com/en/careers/overview	branded-page-OK	200	
+Amazon	https://www.amazon.jobs/	https://www.amazon.jobs/	branded-page-OK	200	
+Ambience Healthcare	https://www.ambiencehealthcare.com/careers	https://www.ambiencehealthcare.com/careers	branded-page-OK	200	
+AMD	https://www.amd.com/en/corporate/careers.html	https://www.amd.com/en/corporate/careers.html	branded-page-OK	200	
+AMEC	https://www.amec-inc.com/en/index/Lists/index/catid/100.html	https://www.amec-inc.com/en/index/Lists/index/catid/100.html	branded-page-OK	200	
+Amkor Technology	https://amkor.com/careers/	https://amkor.com/careers/	branded-page-OK	200	
+Analog Devices	https://www.analog.com/en/about-adi/careers.html	https://www.analog.com/en/about-adi/careers.html	dead		ReadTimeout: HTTPSConnectionPool(host='www.analog.com', port=443): Read timed out. (read time
+Anduril Industries	https://www.anduril.com/careers/	https://www.anduril.com/careers	branded-page-OK	200	
+Anduril-adjacent: AeroVironment	https://www.avinc.com/careers/	https://www.avinc.com/careers/	wrong-company-suspect	200	hostname-mismatch
+Anthropic	https://www.anthropic.com/careers	https://www.anthropic.com/careers	branded-page-OK	200	
+Anyscale	https://www.anyscale.com/careers	https://www.anyscale.com/careers	branded-page-OK	200	
+Anysphere (Cursor)	https://www.cursor.com/careers	https://cursor.com/careers	branded-page-OK	200	
+Apple	https://jobs.apple.com/	https://www.apple.com/careers/us/	branded-page-OK	200	
+Applied Materials	https://www.appliedmaterials.com/company/careers	https://www.appliedmaterials.com/company/careers	dead	403	http-403
+AppLovin	https://www.applovin.com/careers/	https://www.applovin.com/en/careers	branded-page-OK	200	
+Apptronik	https://apptronik.com/careers	https://apptronik.com/careers	branded-page-OK	200	
+Arista Networks	https://www.arista.com/en/careers	https://www.arista.com/en/careers	branded-page-OK	200	
+Arize AI	https://job-boards.greenhouse.io/arizeai	https://job-boards.greenhouse.io/arizeai	direct-ATS:greenhouse	200	
+Arm Holdings	https://careers.arm.com/	https://careers.arm.com/	branded-page-OK	200	
+ASE Group	https://ase.aseglobal.com/about-ase/careers/	https://ase.aseglobal.com/about-ase/careers/	dead	403	http-403
+ASM International	https://www.asm.com/careers	https://www.asm.com/careers	branded-page-OK	200	
+ASML	https://www.asml.com/en/careers	https://www.asml.com/en/careers	branded-page-OK	200	
+AssemblyAI	https://www.assemblyai.com/careers	https://www.assemblyai.com/careers	branded-page-OK	200	
+AST SpaceMobile	https://ast-science.com/company/careers/	https://ast-science.com/company/careers/	branded-page-OK	200	
+Astera Labs	https://www.asteralabs.com/careers/	https://www.asteralabs.com/careers/	branded-page-OK	200	
+Atlassian	https://www.atlassian.com/company/careers	https://www.atlassian.com/company/careers	branded-page-OK	200	
+Aurora Innovation	https://aurora.tech/careers	https://aurora.tech/careers	branded-page-OK	200	
+Autodesk	https://www.autodesk.com/careers	https://www.autodesk.com/careers	dead		ReadTimeout: HTTPSConnectionPool(host='www.autodesk.com', port=443): Read timed out. (read ti
+Automatic Data Processing	https://careers.adp.com/	https://careers.adp.com/	dead		ReadTimeout: HTTPSConnectionPool(host='careers.adp.com', port=443): Read timed out. (read tim
+Automation Anywhere	https://www.automationanywhere.com/company/careers	https://www.automationanywhere.com/company/careers	branded-page-OK	200	
+Avoca	https://www.avoca.ai/careers	https://www.avoca.ai/careers	branded-page-OK	200	
+Baichuan AI	https://cq6qe6bvfr6.jobs.feishu.cn/	https://cq6qe6bvfr6.jobs.feishu.cn/	wrong-company-suspect	200	hostname-mismatch
+Baidu	https://talent.baidu.com/	https://talent.baidu.com/jobs/social	branded-page-OK	200	
+Bandai Namco	https://www.bandainamcoent.com/careers	https://www.bandainamcoent.com/careers	branded-page-OK	200	
+Baseten	https://www.baseten.co/careers/	https://www.baseten.co/resources/careers/	branded-page-OK	200	
+BE Semiconductor	https://www.besi.com/careers/jobs/	https://www.besi.com/careers/jobs/	wrong-company-suspect	200	hostname-mismatch
+BigBear.ai	https://careers.bigbear.ai/jobs	https://careers.bigbear.ai/jobs	branded-page-OK	200	
+BioNTech AI	https://www.biontech.com/us/en/home/careers.html	https://www.biontech.com/us/en/home/careers.html	branded-page-OK	200	
+Black Forest Labs	https://bfl.ai/careers	https://bfl.ai/careers	wrong-company-suspect	200	hostname-mismatch
+Blip.ai	https://www.blip.pt/jobs/	https://www.blip.pt/jobs/	branded-page-OK	200	
+Block	https://block.xyz/careers	https://block.xyz/careers/jobs	branded-page-OK	200	
+Blossom	https://www.joinblossomhealth.com/careers	https://www.joinblossomhealth.com/careers	branded-page-OK	200	
+Booking Holdings	https://careers.bookingholdings.com/	https://careers.bookingholdings.com/	dead		ConnectionError: HTTPSConnectionPool(host='careers.bookingholdings.com', port=443): Max retries e
+Brex AI	https://www.brex.com/careers	https://www.brex.com/careers	branded-page-OK	200	
+Broadcom	https://www.broadcom.com/company/careers	https://www.broadcom.com/company/careers	branded-page-OK	200	
+ByteDance	https://jobs.bytedance.com/en/	https://joinbytedance.com	branded-page-OK	200	
+C3.ai	https://c3.ai/careers/	https://c3.ai/careers/	branded-page-OK	200	
+Cadence Design Systems	https://www.cadence.com/en_US/home/company/careers.html	https://www.cadence.com/en_US/home/company/life-at-cadence/careers.html	branded-page-OK	200	
+Cambricon Technologies	https://www.cambricon.com/index.php?s=/English/Recruitment/index.html	https://www.cambricon.com/index.php?s=/English/Recruitment/index.html	branded-page-OK	200	
+Canva	https://www.lifeatcanva.com/en/jobs/	https://www.lifeatcanva.com/en/jobs/	branded-page-OK	200	
+Cato Networks	https://www.catonetworks.com/careers/	https://www.catonetworks.com/careers/	branded-page-OK	200	
+Celonis	https://careers.celonis.com	https://careers.celonis.com/	branded-page-OK	200	
+Cera	https://www.cerahq.com/jobs	https://www.cerahq.com/jobs	branded-page-OK	200	
+Cerebras Systems	https://www.cerebras.net/careers/	https://www.cerebras.ai/join-us	branded-page-OK	200	
+Cerebras-adjacent: Etched	https://www.etched.com/careers	https://www.etched.com/careers	branded-page-OK	200	
+Character.AI	https://character.ai/careers	https://policies.character.ai/careers	branded-page-OK	200	
+Check Point Software	https://www.checkpoint.com/careers/	https://www.checkpoint.com/careers/	branded-page-OK	200	
+Circle Internet Group	https://careers.circle.com/	https://careers.circle.com/us/en	branded-page-OK	200	
+Cisco	https://jobs.cisco.com/	https://careers.cisco.com/global/en	branded-page-OK	200	
+Cleanlab	https://cleanlab.ai/careers/	https://cleanlab.ai/careers/	branded-page-OK	200	
+Cloudflare	https://www.cloudflare.com/careers/	https://www.cloudflare.com/careers/	branded-page-OK	200	
+CloudNC	https://www.cloudnc.com/careers	https://www.cloudnc.com/careers	branded-page-OK	200	
+Coactive AI	https://coactive.ai/careers	https://www.coactive.ai/careers	branded-page-OK	200	
+Codeium	https://codeium.com/careers	https://jobs.ashbyhq.com/cognition	direct-ATS:ashby	200	
+Codium	https://www.qodo.ai/careers/	https://www.qodo.ai/careers/	wrong-company-suspect	200	hostname-mismatch
+Cognition AI	https://www.cognition.ai/careers	https://cognition.ai/careers	branded-page-OK	200	
+Cohere	https://cohere.com/careers	https://cohere.com/careers	branded-page-OK	200	
+Cohere-adjacent: MindsDB	https://job-boards.greenhouse.io/mindsdb	https://job-boards.greenhouse.io/mindsdb	direct-ATS:greenhouse	200	
+Coherent Corp.	https://www.coherent.com/careers	https://www.coherent.com/careers	branded-page-OK	200	
+Coinbase	https://www.coinbase.com/careers	https://www.coinbase.com/en-ca/careers	branded-page-OK	200	
+ComplyAdvantage	https://complyadvantage.com/careers/	https://complyadvantage.com/careers/jobs/	branded-page-OK	200	
+Contextual AI	https://contextual.ai/careers	https://contextual.ai/careers	branded-page-OK	200	
+CoreWeave	https://www.coreweave.com/careers	https://www.coreweave.com/careers	branded-page-OK	200	
+CoStar Group	https://www.costargroup.com/careers	https://www.costargroup.com/careers	dead	403	http-403
+Coupang	https://www.coupang.jobs/en/	https://www.coupang.jobs/en/	branded-page-OK	200	
+Covariant	https://covariant.ai/careers/	https://covariant.ai/careers/	branded-page-OK	200	
+Cradle	https://cradle.bio/careers	https://www.cradle.bio/careers	branded-page-OK	200	
+Credo Technology	https://credosemi.com/about-credo/careers/	https://credosemi.com/about-credo/careers/	branded-page-OK	200	
+Cresta	https://www.cresta.com/careers	https://cresta.com/careers	branded-page-OK	200	
+CrowdStrike	https://www.crowdstrike.com/careers/	https://www.crowdstrike.com/en-us/careers/	branded-page-OK	200	
+CrowdStrike-adjacent: Wiz	https://www.wiz.io/careers	https://www.wiz.io/careers	branded-page-OK	200	
+Crusoe	https://crusoe.ai/careers	https://www.crusoe.ai/about/careers	branded-page-OK	200	
+D-Matrix	https://www.d-matrix.ai/careers/	https://www.d-matrix.ai/careers/	branded-page-OK	200	
+Darktrace	https://darktrace.com/careers	https://www.darktrace.com/careers	branded-page-OK	200	
+Dassault Systèmes	https://www.3ds.com/careers/jobs	https://www.3ds.com/careers/jobs	wrong-company-suspect	200	hostname-mismatch
+Databricks	https://www.databricks.com/company/careers	https://www.databricks.com/company/careers	branded-page-OK	200	
+Databricks-adjacent: dbt Labs	https://job-boards.greenhouse.io/dbtlabsinc	https://job-boards.greenhouse.io/dbtlabsinc	direct-ATS:greenhouse	200	
+Databricks-adjacent: Fivetran	https://www.fivetran.com/careers	https://www.fivetran.com/careers	branded-page-OK	200	
+Datadog	https://careers.datadoghq.com/	https://careers.datadoghq.com/	branded-page-OK	200	
+Dataiku	https://www.dataiku.com/company/careers/	https://www.dataiku.com/company/careers/	branded-page-OK	200	
+DataRobot	https://www.datarobot.com/careers/	https://www.datarobot.com/careers/	branded-page-OK	200	
+Decagon	https://decagon.ai/careers	https://decagon.ai/careers	branded-page-OK	200	
+Deel	https://www.deel.com/careers	https://www.deel.com/careers/	branded-page-OK	200	
+Deepgram	https://deepgram.com/careers	https://deepgram.com/careers	branded-page-OK	200	
+DeepL	https://www.deepl.com/en/careers	https://www.deepl.com/en/careers	branded-page-OK	200	
+DeepL-adjacent: Phrase	https://phrase.com/careers/	https://phrase.com/careers/	branded-page-OK	200	
+DeepL-adjacent: Translated	https://translated.applytojob.com/	https://translated.applytojob.com/	branded-page-OK	200	
+DeepMind-adjacent: Isomorphic Labs	https://www.isomorphiclabs.com/work-with-us	https://www.isomorphiclabs.com/work-with-us	branded-page-OK	200	
+Delfina Care	https://www.delfina.com/careers	https://www.delfina.com/careers	branded-page-OK	200	
+Dell	https://jobs.dell.com/	https://jobs.dell.com/en	branded-page-OK	200	
+Delta Electronics	https://www.deltaww.com/en-US/careers	https://www.deltaww.com/en-US/careers	branded-page-OK	200	
+Descript	https://www.descript.com/careers	https://www.descript.com/careers	branded-page-OK	200	
+DevRev	https://devrev.ai/careers	https://devrev.ai/careers	branded-page-OK	200	
+DiDi	https://careers.didiglobal.com/	https://careers.didiglobal.com/	branded-page-OK	200	
+Disco Corp.	https://www.disco.co.jp/eg/recruit/	https://www.disco.co.jp/index.html	branded-page-OK	200	
+Docusign AI	https://careers.docusign.com/	https://careers.docusign.com/	branded-page-OK	200	
+Domino Data Lab	https://domino.ai/careers	https://domino.ai/careers	branded-page-OK	200	
+DoorDash	https://careers.doordash.com/	https://careersatdoordash.com/	dead	403	http-403
+Doppel	https://www.doppel.com/careers	https://www.doppel.com/company/careers	branded-page-OK	200	
+eBay	https://careers.ebayinc.com/	https://jobs.ebayinc.com/us/en	branded-page-OK	200	
+Electronic Arts	https://www.ea.com/careers	https://www.ea.com/careers	wrong-company-suspect	200	hostname-mismatch
+ElevenLabs	https://elevenlabs.io/careers	https://elevenlabs.io/careers	branded-page-OK	200	
+Entegris	https://www.entegris.com/careers	https://www.entegris.com/careers	branded-page-OK	200	
+Equinix	https://careers.equinix.com/	https://careers.equinix.com/	branded-page-OK	200	
+Ericsson	https://www.ericsson.com/en/careers	https://www.ericsson.com/en/careers	branded-page-OK	200	
+EvenUp	https://www.evenuplaw.com/careers/	https://www.evenuplaw.com/careers/	branded-page-OK	200	
+Exactly.ai	https://exactly.ai/career	https://exactly.ai/career	branded-page-OK	200	
+Expedia Group	https://careers.expediagroup.com/	https://careers.expediagroup.com/	branded-page-OK	200	
+F5	https://www.f5.com/company/careers	https://www.f5.com/company/careers	branded-page-OK	200	
+Fair Isaac	https://www.fico.com/en/careers	https://www.fico.com/en/careers	wrong-company-suspect	200	hostname-mismatch
+Fidelity National Information Services	https://fis.wd5.myworkdayjobs.com/SearchJobs	https://fis.wd5.myworkdayjobs.com/SearchJobs	direct-ATS:workday-cxs	200	
+Figure AI	https://www.figure.ai/careers	https://www.figure.ai/careers	branded-page-OK	200	
+Fireworks AI	https://fireworks.ai/careers	https://fireworks.ai/careers	branded-page-OK	200	
+Fiserv	https://careers.fiserv.com/	https://careers.fiserv.com/us/en	branded-page-OK	200	
+Five AI-adjacent: Oxa	https://oxa.tech/careers/	https://oxa.tech/careers/	branded-page-OK	200	
+Fortinet	https://www.fortinet.com/corporate/careers	https://www.fortinet.com/corporate/careers	branded-page-OK	200	
+Fourier Intelligence	https://www.fourierintelligence.com/careers	https://www.fourierintelligence.com/careers	dead	526	http-526
+Futu Holdings	https://career.futuhk.com/	https://career.futuhk.com/	branded-page-OK	200	
+Gamma	https://gamma.app/careers	https://gamma.app/careers	dead	403	http-403
+Garmin	https://careers.garmin.com/jobs	https://careers.garmin.com/jobs	branded-page-OK	200	
+GitLab	https://about.gitlab.com/jobs/	https://about.gitlab.com/jobs/	branded-page-OK	200	
+Glean	https://www.glean.com/careers	https://www.glean.com/careers	branded-page-OK	200	
+Global Payments	https://jobs.globalpayments.com/	https://jobs.globalpayments.com/	branded-page-OK	200	
+GlobalFoundries	https://gf.com/about-us/careers/	https://gf.com/careers/	wrong-company-suspect	200	hostname-mismatch
+Gong	https://www.gong.io/careers	https://www.gong.io/careers	branded-page-OK	200	
+Grab Holdings	https://grab.careers/	https://grab.careers/	branded-page-OK	200	
+Groq	https://groq.com/careers/	https://groq.com/careers-at-groq	branded-page-OK	200	
+H2O.ai	https://h2o.ai/company/careers/	https://h2o.ai/company/careers/	branded-page-OK	200	
+HANMI Semiconductor	https://www.hanmisemi.com/	https://www.hanmisemi.com/	branded-page-OK	200	
+Harmonic	https://www.harmonic.ai/careers	https://harmonic.ai/careers	branded-page-OK	200	
+Harvey	https://www.harvey.ai/careers	https://www.harvey.ai/company#company-careers	branded-page-OK	200	
+Harvey-adjacent: Legora	https://jobs.ashbyhq.com/legora	https://jobs.ashbyhq.com/legora	direct-ATS:ashby	200	
+Hebbia	https://www.hebbia.com/careers	https://www.hebbia.com/careers	branded-page-OK	200	
+Helsing	https://helsing.ai/careers	https://helsing.ai/careers	dead	429	http-429
+Hewlett Packard Enterprise	https://careers.hpe.com/	https://careers.hpe.com/us/en	wrong-company-suspect	200	hostname-mismatch
+HeyGen	https://job-boards.greenhouse.io/heygen	https://job-boards.greenhouse.io/heygen	direct-ATS:greenhouse	200	
+Hippocratic AI	https://hippocraticai.com/careers/	https://hippocraticai.com/careers/	branded-page-OK	200	
+HP	https://jobs.hp.com/	https://jobs.hp.com/	branded-page-OK	200	
+Hua Hong Semiconductor Limited	https://www.huahonggrace.com/en/careers/	https://www.huahonggrace.com/en/careers/	dead	403	http-403
+Hugging Face	https://huggingface.co/jobs	https://huggingface.co/settings/jobs	dead	401	http-401
+Hugging Face-adjacent: Lightning AI	https://job-boards.greenhouse.io/lightningai	https://job-boards.greenhouse.io/lightningai	direct-ATS:greenhouse	200	
+Hugging Face-adjacent: Ollama	https://www.workatastartup.com/companies/ollama	https://www.workatastartup.com/companies/ollama	wrong-company-suspect	200	hostname-mismatch
+Huma	https://www.huma.com/careers	https://www.huma.com/careers	branded-page-OK	200	
+IBM	https://www.ibm.com/careers	https://www.ibm.com/careers	branded-page-OK	200	
+iFlytek	https://hr.iflytek.com/	https://hr.iflytek.com/	branded-page-OK	200	
+Imbue	https://imbue.com/careers/	https://imbue.com/careers/	branded-page-OK	200	
+Infineon Technologies	https://www.infineon.com/careers	https://www.infineon.com/careers	branded-page-OK	200	
+Inflection AI	https://www.inflection.io/careers	https://www.inflection.io/careers	branded-page-OK	200	
+Innowise	https://innowise.com/careers/	https://innowise.com/careers/	branded-page-OK	200	
+Inspur	https://en.inspur.com/	https://en.inspur.com/	branded-page-OK	200	
+Intel	https://jobs.intel.com/	https://corpredirect.intel.com/Redirector/404Redirector.aspx?404;https://jobs.intel.com/	dead	403	http-403
+Intercom AI	https://www.intercom.com/careers	https://www.intercom.com/careers	branded-page-OK	200	
+Intuit	https://www.intuit.com/careers/	https://www.intuit.com/careers/	branded-page-OK	200	
+Inworld AI	https://inworld.ai/careers	https://inworld.ai/careers	branded-page-OK	200	
+IQVIA	https://jobs.iqvia.com/	https://jobs.iqvia.com/en	branded-page-OK	200	
+Jasper	https://www.jasper.ai/careers	https://www.jasper.ai/careers	branded-page-OK	200	
+JD Health	https://zhaopin.jd.com/	https://zhaopin.jd.com/home;jsessionid=B9EFF02B83A857A9102D89F9BBF279EC.s1	wrong-company-suspect	200	hostname-mismatch
+JD.com	https://campus.jd.com/	https://campus.jd.com/	wrong-company-suspect	200	hostname-mismatch
+Joyful Health	https://www.joyfulhealth.com/careers	https://www.joyfulhealth.com/careers	branded-page-OK	200	
+JusBrasil	https://www.jusbrasil.com.br/carreiras	https://www.jusbrasil.com.br/noticias/	branded-page-OK	200	
+Kaspi.kz Joint Stock Company	https://job.kaspi.kz/	https://job.kaspi.kz/	branded-page-OK	200	
+Keysight	https://jobs.keysight.com/	https://jobs.keysight.com/	branded-page-OK	200	
+KIOXIA Holdings Corporation	https://www.kioxia-holdings.com/en-jp/careers.html	https://www.kioxia-holdings.com/en-jp/careers.html	branded-page-OK	200	
+KLA	https://www.kla.com/careers	https://www.kla.com/careers	branded-page-OK	200	
+Konami Holdings	https://www.konami.com/jobs/en/	https://www.konami.com/jobs/en/	branded-page-OK	200	
+Krutrim	https://olacabs.com/careers	https://www.olacabs.com:443	wrong-company-suspect	200	hostname-mismatch
+Kuaishou Technology	https://usrdc.kuaishou.com/join-us	https://usrdc.kuaishou.com/join-us	branded-page-OK	200	
+Lam Research	https://www.lamresearch.com/careers/	https://www.lamresearch.com/careers/careers-overview/?utm_source=vanity&utm_campaign=lam_careers_vanity&utm_medium=vanity&utm_content=careers_vanity	branded-page-OK	200	
+Lambda Labs	https://lambdalabs.com/careers	https://lambda.ai/careers	branded-page-OK	200	
+LangChain	https://www.langchain.com/careers	https://www.langchain.com/careers	branded-page-OK	200	
+Lasertec	https://www.lasertec.co.jp/en/recruit/	https://www.lasertec.co.jp/en/recruit/	branded-page-OK	200	
+Lattice Semiconductor	https://www.latticesemi.com/en/About/Jobs	https://www.latticesemi.com/en/About/Jobs	branded-page-OK	200	
+Leidos	https://careers.leidos.com/	https://careers.leidos.com/	dead	403	http-403
+Lendable	https://careers.lendable.com/	https://careers.lendable.com/	branded-page-OK	200	
+Lenovo	https://jobs.lenovo.com/	https://jobs.lenovo.com/en_US/careers	branded-page-OK	200	
+LG Electronics	https://lge-careers.com/	https://lge-careers.com/	wrong-company-suspect	200	hostname-mismatch
+Lightmatter	https://lightmatter.co/people/careers/	https://lightmatter.co/people/careers/	branded-page-OK	200	
+Listen Labs	https://listenlabs.ai/careers	https://listenlabs.ai/careers	branded-page-OK	200	
+LMArena	https://jobs.ashbyhq.com/lmarena	https://jobs.ashbyhq.com/lmarena	direct-ATS:ashby	200	
+Locus Robotics	https://locusrobotics.com/company/careers	https://locusrobotics.com/company/careers	branded-page-OK	200	
+Lovable	https://lovable.dev/careers	https://lovable.dev/careers	branded-page-OK	200	
+Luma AI	https://lumalabs.ai/careers	https://lumalabs.ai/careers	dead	500	http-500
+Luma-adjacent: Ideogram	https://jobs.ashbyhq.com/ideogram	https://jobs.ashbyhq.com/ideogram	direct-ATS:ashby	200	
+Lumentum	https://www.lumentum.com/en/careers	https://www.lumentum.com/en/careers	branded-page-OK	200	
+MACOM Technology Solutions	https://www.macom.com/about-macom/careers	https://www.macom.com/about-macom/careers	branded-page-OK	200	
+Marvell Technology	https://www.marvell.com/company/careers.html	https://www.marvell.com/company/careers.html	dead	403	http-403
+MediaTek	https://careers.mediatek.com/	https://careers.mediatek.com/en	branded-page-OK	200	
+Meituan	https://zhaopin.meituan.com/	https://zhaopin.meituan.com/web/home	branded-page-OK	200	
+MercadoLibre	https://careers.mercadolibre.com/	https://careers.mercadolibre.com/	dead		ConnectionError: HTTPSConnectionPool(host='careers.mercadolibre.com', port=443): Max retries exce
+Mercor	https://www.mercor.com/careers	https://www.mercor.com/careers/	branded-page-OK	200	
+Meta Platforms	https://www.metacareers.com/	https://www.metacareers.com/	branded-page-OK	200	
+Microchip Technology	https://www.microchip.com/en-us/about/careers	https://www.microchip.com/en-us/about/careers	dead	403	http-403
+Micron Technology	https://www.micron.com/careers	https://www.micron.com/about/careers	branded-page-OK	200	
+Microsoft	https://careers.microsoft.com/	https://careers.microsoft.com/v2/global/en/home.html	branded-page-OK	200	
+Midjourney	https://www.midjourney.com/careers	https://www.midjourney.com/careers	dead	403	http-403
+MiniMax	https://www.minimax.io/careers	https://www.minimax.io/careers	branded-page-OK	200	
+Mistral AI	https://mistral.ai/careers/	https://mistral.ai/careers/	branded-page-OK	200	
+Mistral-adjacent: Reka	https://reka.ai/careers	https://reka.ai/careers	branded-page-OK	200	
+Mobileye	https://careers.mobileye.com/	https://careers.mobileye.com/	branded-page-OK	200	
+Modal	https://modal.com/careers	https://modal.com/careers	branded-page-OK	200	
+MongoDB	https://www.mongodb.com/careers	https://www.mongodb.com/company/careers	branded-page-OK	200	
+Monolithic Power Systems	https://www.monolithicpower.com/en/about-mps/careers.html	https://www.monolithicpower.com/en/about-mps/careers.html	branded-page-OK	200	
+Moonshot AI	https://www.moonshot.cn/careers	https://www.moonshot.cn/careers	branded-page-OK	200	
+Moore Threads	https://www.mthreads.com/jobs	https://www.mthreads.com/jobs	wrong-company-suspect	200	hostname-mismatch
+Moveworks	https://www.moveworks.com/us/en/company/careers	https://www.moveworks.com/us/en/company/careers	branded-page-OK	200	
+Murata Manufacturing	https://recruit.murata.com/en-us/careers/	https://recruit.murata.com/en-us/careers/	branded-page-OK	200	
+Nanya Technology	https://www.nanya.com/en/Jobs	https://www.nanya.com/en/Jobs	branded-page-OK	200	
+Navan	https://navan.com/careers	https://navan.com/careers	branded-page-OK	200	
+Naver	https://recruit.navercorp.com/	https://recruit.navercorp.com/	branded-page-OK	200	
+Nebius Group	https://careers.nebius.com/	https://careers.nebius.com/	branded-page-OK	200	
+NEC Corp	https://careers.nec.com/	https://careers.nec.com/	branded-page-OK	200	
+NetApp	https://careers.netapp.com/	https://careers.netapp.com/	branded-page-OK	200	
+NetEase	https://hr.163.com/	https://hr.163.com/	wrong-company-suspect	200	hostname-mismatch
+Netflix	https://jobs.netflix.com/	https://jobs.netflix.com/	branded-page-OK	200	
+Neuralink	https://neuralink.com/careers/	https://neuralink.com/careers/	branded-page-OK	200	
+Nextdoor AI	https://about.nextdoor.com/careers/	https://about.nextdoor.com/careers/	branded-page-OK	200	
+Nintendo	https://careers.nintendo.com/	https://careers.nintendo.com/	branded-page-OK	200	
+Nokia	https://jobs.nokia.com/	https://jobs.nokia.com/en/sites/CX_1	branded-page-OK	200	
+Nomic AI	https://home.nomic.ai/careers	https://home.nomic.ai/careers	dead		ConnectTimeout: HTTPSConnectionPool(host='home.nomic.ai', port=443): Max retries exceeded with u
+Notion AI	https://www.notion.so/careers	https://www.notion.so/careers	branded-page-OK	200	
+Notion-adjacent: Mem	https://get.mem.ai/careers	https://get.mem.ai/careers	branded-page-OK	200	
+Nova Ltd.	https://www.novami.com/careers/	https://www.novami.com/careers/working-at-nova/	branded-page-OK	200	
+Nscale	https://www.nscale.com/careers	https://www.nscale.com/careers	branded-page-OK	200	
+Nuro	https://www.nuro.ai/careers	https://www.nuro.ai/careers	branded-page-OK	200	
+NXP Semiconductors	https://www.nxp.com/company/about-nxp/careers:CAREERS	https://www.nxp.com/company/about-nxp/careers:CAREERS	dead	404	404
+Observe.AI	https://www.observe.ai/careers	https://www.observe.ai/careers	branded-page-OK	200	
+Omnea	https://www.omnea.co/careers	https://www.omnea.co/careers	branded-page-OK	200	
+ON Semiconductor	https://www.onsemi.com/careers	https://www.onsemi.com/careers	dead	403	http-403
+OneTrust	https://www.onetrust.com/careers/	https://www.onetrust.com/careers/	branded-page-OK	200	
+Opaque Systems	https://www.opaque.co/careers	https://job-boards.greenhouse.io/opaquesystems	direct-ATS:greenhouse	200	
+OpenAI	https://openai.com/careers/	https://openai.com/careers/	branded-page-OK	200	
+OpenRouter	https://openrouter.ai/careers	https://openrouter.ai/careers	branded-page-OK	200	
+Oracle	https://www.oracle.com/careers/	https://www.oracle.com/careers/	branded-page-OK	200	
+Palantir	https://www.palantir.com/careers/	https://www.palantir.com/careers/	branded-page-OK	200	
+Palantir-adjacent: Dataminr	https://dataminr.wd12.myworkdayjobs.com/Dataminr	https://dataminr.wd12.myworkdayjobs.com/Dataminr	direct-ATS:workday-cxs	200	
+Palantir-adjacent: Primer	https://job-boards.greenhouse.io/primerai	https://job-boards.greenhouse.io/primerai	direct-ATS:greenhouse	200	
+Palantir-adjacent: Rebellion Defense	https://rebelliondefense.com/careers/	https://rebelliondefense.com/careers/	branded-page-OK	200	
+Palo Alto Networks	https://jobs.paloaltonetworks.com/	https://jobs.paloaltonetworks.com/en	branded-page-OK	200	
+Panasonic	https://careers.na.panasonic.com/	https://careers.na.panasonic.com/careers-home	branded-page-OK	200	
+PayPal	https://careers.pypl.com/	https://careers.pypl.com/home/default.aspx	wrong-company-suspect	200	hostname-mismatch
+PDD Holdings	https://careers.pinduoduo.com/	https://careers.pinduoduo.com/campus/	wrong-company-suspect	200	hostname-mismatch
+Perplexity AI	https://www.perplexity.ai/hub/careers	https://www.perplexity.ai/hub/careers	branded-page-OK	200	
+Perplexity-adjacent: You.com	https://you.com/careers	https://you.com/careers	branded-page-OK	200	
+Physical Intelligence	https://jobs.ashbyhq.com/physicalintelligence	https://jobs.ashbyhq.com/physicalintelligence	direct-ATS:ashby	200	
+Pigment	https://www.pigment.com/careers	https://www.pigment.com/careers	branded-page-OK	200	
+Pika Labs	https://pika.art/careers	https://pika.art/careers	branded-page-OK	200	
+Pinecone	https://www.pinecone.io/careers/	https://www.pinecone.io/careers/	branded-page-OK	200	
+Pony.ai	https://apply.workable.com/pony-dot-ai/	https://apply.workable.com/pony-dot-ai/	direct-ATS:workable	200	
+Poolside	https://www.poolside.ai/careers	https://www.poolside.ai/careers	branded-page-OK	200	
+Positron	https://www.positron.ai/careers	https://www.positron.ai/careers	branded-page-OK	200	
+Presight AI	https://careers.g42.ai/presight/global/en/home	https://careers.g42.ai/presight/global/en/home	wrong-company-suspect	200	hostname-mismatch
+PTC	https://www.ptc.com/en/careers	https://www.ptc.com/en/careers	branded-page-OK	200	
+Pure Storage	https://www.purestorage.com/company/careers.html	https://www.purestorage.com/company/careers.html	branded-page-OK	200	
+Qnity Electronics	https://careers.qnityelectronics.com/	https://careers.qnityelectronics.com/us/en	branded-page-OK	200	
+Qualcomm	https://www.qualcomm.com/company/careers	https://www.qualcomm.com/company/careers	branded-page-OK	200	
+Quanta Computer	https://www.quantatw.com/Careers	https://validate.perfdrive.com/6fa53483cd5458e994c3c063c20fdd97/?ssa=4420b9bd-6893-48ed-9450-4bb3a66b7749&ssb=50955342457&ssc=https%3A%2F%2Fwww.quantatw.com%2FCareers&ssi=96e1be5b-d27q-4c30-82ac-cdcc2886f95d&ssk=botmanager_support@radware.com&ssm=89378248632192801105369115687163&ssn=26827e6e707af0ed57b60bc6399d7f8d4b9885386914-51b3-4e90-b0dd97&sso=140a231e-733b64791e3f0ea97aa2e63c4051de5e4a9303e1b3a32d30&ssp=31995526061777581401177753380158831&ssq=39659951373691768284013736826747924171411&ssr=MTczLjM0LjQ0Ljg1&sst=career-ops-triage/1.0%20(+phase%202.8%20url%20triage;%20HEAD+GET%20fallback)&ssu=&ssv=&ssw=&ssx=eyJ1em14IjoiN2Y5MDAwYTgzYTk3YmQtY2U2Yy00NWJhLWExMTUtMzZkMTJjMjE2ZWQxMS0xNzc3NTEzNzM2MDg0MC1hYWY3M2EyNDM3ZTMwNjVmMTAiLCJfX3V6bWYiOiI3ZjkwMDA4NTM4NjkxNC01MWIzLTRlOTAtYjMxZS03MzNiNjQ3OTFlM2YxLTE3Nzc1MTM3MzYwODQwLTAwM2E4MTM4ZmJiODVkM2U2NDkxMCIsInJkIjoicXVhbnRhdHcuY29tIn0=	wrong-company-suspect	200	hostname-mismatch
+Quantexa	https://www.quantexa.com/careers/	https://www.quantexa.com/careers/	branded-page-OK	200	
+QXO, Inc.	https://jobs.qxo.com/	https://jobs.qxo.com/careers-home	branded-page-OK	200	
+Ramp	https://ramp.com/careers	https://ramp.com/careers	branded-page-OK	200	
+Recursion Pharmaceuticals	https://www.recursion.com/careers	https://www.recursion.com/careers	branded-page-OK	200	
+Reddit	https://www.redditinc.com/careers	https://redditinc.com/careers	branded-page-OK	200	
+Reflection AI	https://reflection.ai/careers/	https://reflection.ai/careers/	branded-page-OK	200	
+Renesas Electronics	https://www.renesas.com/us/en/about/careers	https://www.renesas.com/us/en/about/careers	dead	403	http-403
+Replicate	https://replicate.com/careers	https://replicate.com/about#open-roles	branded-page-OK	200	
+Replit	https://replit.com/site/careers	https://replit.com/careers	branded-page-OK	200	
+Resilience	https://resilience.com/careers/	https://resilience.com/careers	branded-page-OK	200	
+Resolve AI	https://resolve.ai/careers	https://resolve.ai/careers	branded-page-OK	200	
+Revolut	https://www.revolut.com/careers/	https://www.revolut.com/careers/	branded-page-OK	200	
+Robinhood	https://careers.robinhood.com/	https://careers.robinhood.com/	branded-page-OK	200	
+Rogo	https://www.rogodata.com/careers	https://rogo.ai/careers	branded-page-OK	200	
+Roku	https://www.weareroku.com/jobs/search	https://www.weareroku.com/jobs/search	branded-page-OK	200	
+Roper Technologies	https://www.ropertech.com/careers	https://www.ropertech.com/careers	dead		ReadTimeout: HTTPSConnectionPool(host='www.ropertech.com', port=443): Read timed out. (read t
+Runway	https://runwayml.com/careers/	https://runwayml.com/careers	branded-page-OK	200	
+Runway-adjacent: Genmo	https://jobs.ashbyhq.com/genmo	https://jobs.ashbyhq.com/genmo	direct-ATS:ashby	200	
+Sakana AI	https://sakana.ai/careers/	https://sakana.ai/careers/	branded-page-OK	200	
+Salesforce	https://careers.salesforce.com/	https://www.salesforce.com/company/careers/	branded-page-OK	200	
+SambaNova Systems	https://sambanova.ai/company/careers/	https://sambanova.ai/company/careers	branded-page-OK	200	
+Samsara	https://www.samsara.com/company/careers	https://www.samsara.com/company/careers	branded-page-OK	200	
+Samsung	https://www.samsung.com/us/careers/	https://www.samsung.com/us/careers/	branded-page-OK	200	
+Sanctuary AI	https://www.sanctuary.ai/careers	https://www.sanctuary.ai/careers	branded-page-OK	200	
+SAP	https://jobs.sap.com/	https://jobs.sap.com/	branded-page-OK	200	
+Scale AI	https://scale.com/careers	https://scale.com/careers	branded-page-OK	200	
+Scale AI-adjacent: Labelbox	https://job-boards.greenhouse.io/labelbox	https://job-boards.greenhouse.io/labelbox	direct-ATS:greenhouse	200	
+Scale AI-adjacent: Surge AI	https://surgehq.ai/careers	https://surgehq.ai/careers	branded-page-OK	200	
+Schneider Electric	https://www.se.com/ww/en/about-us/careers/	https://www.se.com/ww/en/about-us/careers/	dead	503	http-503
+Sea Limited	https://www.sea.com/careers	https://www.sea.com/careers	branded-page-OK	200	
+Seagate Technology	https://www.seagate.com/jobs/	https://www.seagate.com/jobs/	dead		SSLError: HTTPSConnectionPool(host='www.seagate.com', port=443): Max retries exceeded with
+SentinelOne	https://www.sentinelone.com/careers/	https://www.sentinelone.com/careers/	branded-page-OK	200	
+ServiceNow	https://www.servicenow.com/careers.html	https://www.servicenow.com/careers.html	dead		ReadTimeout: HTTPSConnectionPool(host='www.servicenow.com', port=443): Read timed out. (read 
+Shield AI	https://www.shield.ai/careers	https://shield.ai/careers/	branded-page-OK	200	
+Shield AI-adjacent: Joby Aviation	https://www.jobyaviation.com/careers/	https://www.jobyaviation.com/careers	branded-page-OK	200	
+Shopify	https://www.shopify.com/careers	https://www.shopify.com/careers	branded-page-OK	200	
+Sierra	https://sierra.ai/careers	https://sierra.ai/careers	branded-page-OK	200	
+SiFive	https://www.sifive.com/careers	https://www.sifive.com/careers	branded-page-OK	200	
+Snorkel AI	https://snorkel.ai/join-us/	https://snorkel.ai/join-us/	branded-page-OK	200	
+Snowflake	https://careers.snowflake.com/	https://careers.snowflake.com/us/en	branded-page-OK	200	
+Snyk	https://snyk.io/careers/	https://snyk.io/careers/	branded-page-OK	200	
+SoFi	https://www.sofi.com/careers/	https://www.sofi.com/careers/	dead	403	http-403
+Sony	https://www.sonyjobs.com/	https://www.sonyjobs.com/	branded-page-OK	200	
+SoundHound AI	https://www.soundhound.com/careers/	https://www.soundhound.com/careers/	branded-page-OK	200	
+SpaceX	https://www.spacex.com/careers	https://www.spacex.com/careers	branded-page-OK	200	
+Spotify	https://www.lifeatspotify.com/jobs	https://www.lifeatspotify.com/jobs	branded-page-OK	200	
+SS&C Technologies	https://www.ssctech.com/careers/join-ssc	https://www.ssctech.com/careers/join-ssc	branded-page-OK	200	
+Stability AI	https://stability.ai/careers	https://stability.ai/careers	branded-page-OK	200	
+STMicroelectronics	https://www.st.com/content/st_com/en/about/careers.html	https://www.st.com/content/st_com/en/about/careers.html	dead		ReadTimeout: HTTPSConnectionPool(host='www.st.com', port=443): Read timed out. (read timeout=
+Strategy	https://www.strategy.com/careers	https://www.strategy.com/careers	branded-page-OK	200	
+Stripe	https://stripe.com/jobs	https://stripe.com/en-ca/jobs	branded-page-OK	200	
+Suffescom Solutions	https://www.suffescom.com/jobs	https://www.suffescom.com/jobs	branded-page-OK	200	
+Suno	https://suno.com/careers	https://jobs.ashbyhq.com/suno	direct-ATS:ashby	200	
+Supabase	https://supabase.com/careers	https://supabase.com/careers	branded-page-OK	200	
+Supermicro	https://jobs.supermicro.com/	https://jobs.supermicro.com/	branded-page-OK	200	
+Symbotic	https://www.symbotic.com/careers/	https://www.symbotic.com/careers/	branded-page-OK	200	
+Synopsys	https://www.synopsys.com/careers.html	https://careers.synopsys.com	branded-page-OK	200	
+Synthesia	https://www.synthesia.io/careers	https://www.synthesia.io/careers	branded-page-OK	200	
+Take-Two Interactive	https://careers.take2games.com/	https://careers.take2games.com/	branded-page-OK	200	
+TE Connectivity	https://careers.te.com/	https://careers.te.com/	branded-page-OK	200	
+Tempus AI	https://www.tempus.com/careers/	https://www.tempus.com/about-us/careers/	branded-page-OK	200	
+Tencent	https://careers.tencent.com/en-us/home.html	https://careers.tencent.com/en-us/home.html	branded-page-OK	200	
+Tennr	https://www.tennr.com/careers	https://www.tennr.com/careers	branded-page-OK	200	
+Tenstorrent	https://tenstorrent.com/careers	https://tenstorrent.com/careers	branded-page-OK	200	
+Tesla	https://www.tesla.com/careers	https://www.tesla.com/careers	dead	403	http-403
+Texas Instruments	https://careers.ti.com/	https://careers.ti.com/en/sites/CX	wrong-company-suspect	200	hostname-mismatch
+Thought Machine	https://jobs.ashbyhq.com/thought-machine	https://jobs.ashbyhq.com/thought-machine	direct-ATS:ashby	200	
+Toast	https://careers.toasttab.com/	https://careers.toasttab.com/	branded-page-OK	200	
+Together AI	https://www.together.ai/careers	https://www.together.ai/careers	branded-page-OK	200	
+Tokyo Electron	https://www.tel.com/careers/	https://www.tel.com/careers/	wrong-company-suspect	200	hostname-mismatch
+Traba	https://traba.work/company/careers	https://traba.work/company/careers	branded-page-OK	200	
+Trimble	https://www.trimble.com/en/careers	https://www.trimble.com/en/careers	branded-page-OK	200	
+Trip.com	https://careers.trip.com/	https://careers.trip.com/	branded-page-OK	200	
+Twelve Labs	https://www.twelvelabs.io/careers	https://www.twelvelabs.io/careers	branded-page-OK	200	
+Twilio	https://www.twilio.com/company/jobs	https://jobs.twilio.com/careers	branded-page-OK	200	
+Typeface	https://www.typeface.ai/careers	https://www.typeface.ai/careers	branded-page-OK	200	
+Uber	https://www.uber.com/us/en/careers/	https://www.uber.com/us/en/careers/	dead	406	http-406
+Udio	https://www.udio.com/careers	https://job-boards.greenhouse.io/udio	direct-ATS:greenhouse	200	
+UiPath	https://www.uipath.com/careers	https://www.uipath.com/careers	branded-page-OK	200	
+Unimicron	https://www.unimicron.com/en/hr01.html	https://www.unimicron.com/en/hr01.html	dead		SSLError: HTTPSConnectionPool(host='www.unimicron.com', port=443): Max retries exceeded wi
+United Microelectronics	https://careers.umc.com/	https://careers.umc.com/	dead		SSLError: HTTPSConnectionPool(host='careers.umc.com', port=443): Max retries exceeded with
+Unstructured	https://unstructured.io/careers	https://unstructured.io/careers	branded-page-OK	200	
+Vectara	https://vectara.com/careers/	https://www.vectara.com/company/careers-and-culture	branded-page-OK	200	
+Vectra AI	https://www.vectra.ai/about/careers	https://www.vectra.ai/about/careers	branded-page-OK	200	
+Veeva Systems	https://careers.veeva.com/	https://careers.veeva.com/	branded-page-OK	200	
+Vercel	https://vercel.com/careers	https://vercel.com/careers	branded-page-OK	200	
+VeriSilicon Microelectronics	https://www.verisilicon.com/en/Careers	https://www.verisilicon.com/en/Careers	branded-page-OK	200	
+Veritone	https://veritone.wd1.myworkdayjobs.com/Veritone_Career_Site	https://veritone.wd1.myworkdayjobs.com/Veritone_Career_Site	direct-ATS:workday-cxs	200	
+Viz.ai	https://www.viz.ai/careers	https://www.viz.ai/careers	branded-page-OK	200	
+Waymo	https://waymo.com/careers/	https://careers.withwaymo.com	branded-page-OK	200	
+Wayve	https://wayve.ai/careers/	https://wayve.ai/careers/	branded-page-OK	200	
+Weaviate	https://weaviate.io/company/careers	https://weaviate.io/company/careers	branded-page-OK	200	
+Weights & Biases	https://wandb.ai/site/careers/	https://wandb.ai/site/careers/	wrong-company-suspect	200	hostname-mismatch
+Wiwynn	https://www.wiwynn.com/careers	https://www.wiwynn.com/careers	branded-page-OK	200	
+Wolters Kluwer	https://careers.wolterskluwer.com/	https://careers.wolterskluwer.com/	branded-page-OK	200	
+Workday	https://www.workday.com/en-us/company/careers/overview.html	https://www.workday.com/en-us/company/careers/overview.html	branded-page-OK	200	
+World Labs	https://job-boards.greenhouse.io/worldlabs	https://job-boards.greenhouse.io/worldlabs	direct-ATS:greenhouse	200	
+Writer	https://writer.com/careers/	https://writer.com/company/careers/	branded-page-OK	200	
+xAI	https://x.ai/careers	https://x.ai/careers	branded-page-OK	200	
+XBOW	https://jobs.ashbyhq.com/xbowcareers	https://jobs.ashbyhq.com/xbowcareers	direct-ATS:ashby	200	
+Zapier	https://zapier.com/jobs	https://zapier.com/jobs	branded-page-OK	200	
+Zilliz	https://zilliz.com/careers	https://zilliz.com/careers	branded-page-OK	200	
+Zipline	https://www.zipline.com/careers	https://www.zipline.com/careers	branded-page-OK	200	
+Zoom	https://careers.zoom.us/	https://careers.zoom.us/	branded-page-OK	200	
+Zscaler	https://www.zscaler.com/careers	https://www.zscaler.com/careers	branded-page-OK	200	

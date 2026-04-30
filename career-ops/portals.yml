@@ -471,7 +471,8 @@ tracked_companies:
     rank: 428
     category: "AI Cloud"
     careers_url: "https://octo.ai/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by NVIDIA 2024-09; product team folded into NVIDIA inference stack"
 
 
   # ── AI Cloud / GPU Infrastructure ─────────────────────────────
@@ -791,7 +792,8 @@ tracked_companies:
     rank: 395
     category: "AI Email Security"
     careers_url: "https://www.tessian.com/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by Proofpoint 2024-10; redirected to proofpoint.com"
 
 
   # ── AI Embeddings ─────────────────────────────────────────────
@@ -833,7 +835,8 @@ tracked_companies:
     rank: 385
     category: "AI Evaluation / LLM Testing"
     careers_url: "https://ats.rippling.com/galileo/jobs"
-    enabled: true
+    enabled: false
+    note: "uses-rippling-ats 2026-04-29; future scope: add Rippling adapter (9th provider); revisit"
 
 
   # ── AI Feature Store / ML Infrastructure ──────────────────────
@@ -841,7 +844,8 @@ tracked_companies:
     rank: 355
     category: "AI Feature Store / ML Infrastructure"
     careers_url: "https://www.tecton.ai/careers/"
-    enabled: true
+    enabled: false
+    note: "acquired by Databricks 2024; redirected to databricks.com"
 
 
   # ── AI Finance / Corporate Cards ──────────────────────────────
@@ -995,7 +999,8 @@ tracked_companies:
     rank: 373
     category: "AI Inference Platform"
     careers_url: "https://www.lepton.ai/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by NVIDIA 2025-Q1; folded into DGX Cloud Lepton; redirected to nvidia.com"
 
 
   # ── AI Infrastructure ─────────────────────────────────────────
@@ -1003,7 +1008,8 @@ tracked_companies:
     rank: 138
     category: "AI Infrastructure"
     careers_url: "https://www.vastdata.com/company/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Scale AI"
     rank: 143
@@ -1053,7 +1059,8 @@ tracked_companies:
     rank: 370
     category: "AI Marketing / GTM"
     careers_url: "https://www.copy.ai/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── AI Media / Enterprise AI ──────────────────────────────────
@@ -1103,7 +1110,8 @@ tracked_companies:
     rank: 344
     category: "AI Presentations / Content"
     careers_url: "https://tome.app/careers"
-    enabled: true
+    enabled: false
+    note: "validated empty 2026-04-29: company likely defunct; URL 404"
 
 
   # ── AI Process Mining ─────────────────────────────────────────
@@ -1159,7 +1167,8 @@ tracked_companies:
     rank: 221
     category: "AI SaaS"
     careers_url: "https://www.grammarly.com/careers"
-    enabled: true
+    enabled: false
+    note: "redirect-to-superhuman 2026-04-29; Superhuman acquisition; revisit unified careers page"
 
   - name: "Harvey"
     rank: 230
@@ -1205,7 +1214,8 @@ tracked_companies:
     rank: 381
     category: "AI Search / Embeddings"
     careers_url: "https://jina-ai.jobs.personio.com/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── AI Security ───────────────────────────────────────────────
@@ -1221,7 +1231,8 @@ tracked_companies:
     rank: 352
     category: "AI Surgical / AR"
     careers_url: "https://www.augmedics.com/careers/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── AI Translation ────────────────────────────────────────────
@@ -1237,7 +1248,8 @@ tracked_companies:
     rank: 384
     category: "AI Translation / Customer Service"
     careers_url: "https://careers.unbabel.com/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── AI Translation / Localization ─────────────────────────────
@@ -1536,7 +1548,8 @@ tracked_companies:
     rank: 58
     category: "Consumer electronics, devices & gaming"
     careers_url: "https://www.mi.com/global/careers/"
-    enabled: true
+    enabled: false
+    note: "site not connecting 2026-04-29; revisit"
 
   - name: "Nintendo"
     rank: 86
@@ -1572,7 +1585,8 @@ tracked_companies:
     rank: 165
     category: "Consumer electronics, devices & gaming"
     careers_url: "https://global.canon/en/employ/"
-    enabled: true
+    enabled: false
+    note: "redirect-to-root-no-careers 2026-04-29; revisit"
 
   - name: "Konami Holdings"
     rank: 192
@@ -1981,7 +1995,8 @@ tracked_companies:
     rank: 122
     category: "Enterprise software & developer tools"
     careers_url: "https://www.csisoftware.com/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Roper Technologies"
     rank: 125
@@ -2137,7 +2152,8 @@ tracked_companies:
     rank: 292
     category: "Frontier AI / Fine-Tuning"
     careers_url: "https://thinkingmachines.ai/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── Frontier AI / Indian AI ───────────────────────────────────
@@ -2199,7 +2215,8 @@ tracked_companies:
     rank: 132
     category: "Frontier Model Labs"
     careers_url: "https://ssi.inc/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Mistral AI"
     rank: 219
@@ -2217,7 +2234,8 @@ tracked_companies:
     rank: 280
     category: "Frontier Model Labs"
     careers_url: "https://www.zhipuai.cn/en/job"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Baichuan AI"
     rank: 291
@@ -2235,7 +2253,8 @@ tracked_companies:
     rank: 313
     category: "Frontier Model Labs"
     careers_url: "https://www.01.ai/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Aleph Alpha"
     rank: 345
@@ -2248,7 +2267,8 @@ tracked_companies:
     rank: 393
     category: "Frontier Model Labs"
     careers_url: "https://www.deepseek.com/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── Generative Video ──────────────────────────────────────────
@@ -2282,7 +2302,8 @@ tracked_companies:
     rank: 283
     category: "Humanoid Robotics"
     careers_url: "https://www.ubtrobot.com/pages/join-us"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Agility Robotics"
     rank: 288
@@ -2318,7 +2339,8 @@ tracked_companies:
     rank: 232
     category: "Multimodal AI"
     careers_url: "https://www.sensetime.com/en/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "MiniMax"
     rank: 286
@@ -2368,7 +2390,8 @@ tracked_companies:
     rank: 62
     category: "Other tech"
     careers_url: "https://www.keyence.com/company/recruit/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "TE Connectivity"
     rank: 77
@@ -2428,7 +2451,8 @@ tracked_companies:
     rank: 147
     category: "Other tech"
     careers_url: "https://dci-indonesia.com/careers/"
-    enabled: true
+    enabled: false
+    note: "no career page found 2026-04-29; revisit"
 
   - name: "Amadeus IT Group"
     rank: 161
@@ -2551,7 +2575,8 @@ tracked_companies:
     rank: 305
     category: "Robotics / Humanoid"
     careers_url: "https://www.unitree.com/joinus/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
 
   # ── Robotics AI / Foundation Models ───────────────────────────
@@ -2583,7 +2608,8 @@ tracked_companies:
     rank: 6
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.tsmc.com/english/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Samsung"
     rank: 11
@@ -2601,7 +2627,8 @@ tracked_companies:
     rank: 16
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.skhynix.com/eng/recruit/Main.do"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Micron Technology"
     rank: 17
@@ -2649,7 +2676,8 @@ tracked_companies:
     rank: 44
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.westerndigital.com/careers"
-    enabled: true
+    enabled: false
+    note: "redirect-to-westerndigital 2026-04-29; spun out from WD 2025-02; revisit when separate careers site"
 
   - name: "Qualcomm"
     rank: 46
@@ -2672,7 +2700,7 @@ tracked_companies:
   - name: "Advantest"
     rank: 53
     category: "Semiconductors & hardware supply chain"
-    careers_url: "https://www.advantest.com/careers"
+    careers_url: "https://www.advantest.com/en/about/career-na/jobs/"
     enabled: true
 
   - name: "Seagate Technology"
@@ -2716,7 +2744,8 @@ tracked_companies:
     rank: 72
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.smics.com/en/site/recruit"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Monolithic Power Systems"
     rank: 78
@@ -2758,7 +2787,8 @@ tracked_companies:
     rank: 95
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.naura.com/en/JoinUs"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Disco Corp."
     rank: 100
@@ -2824,7 +2854,8 @@ tracked_companies:
     rank: 149
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://www.gigadevice.com/about/careers/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "GlobalFoundries"
     rank: 151
@@ -2836,7 +2867,8 @@ tracked_companies:
     rank: 157
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://towersemi.com/careers/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Credo Technology"
     rank: 158
@@ -2934,7 +2966,8 @@ tracked_companies:
     rank: 331
     category: "Serverless Postgres / AI Data"
     careers_url: "https://neon.tech/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by Databricks 2025-05; redirected to databricks.com"
 
 
   # ── Space, comms & AI infrastructure ──────────────────────────
@@ -3004,7 +3037,8 @@ tracked_companies:
     rank: 227
     category: "Uncategorized"
     careers_url: "https://www.openevidence.com/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "OneTrust"
     rank: 264
@@ -3016,7 +3050,8 @@ tracked_companies:
     rank: 396
     category: "Uncategorized"
     careers_url: "https://www.adept.ai/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by Amazon AGI 2024-06; product team licensed; no standalone hiring"
 
   - name: "Airia"
     rank: 397
@@ -3028,7 +3063,8 @@ tracked_companies:
     rank: 398
     category: "Uncategorized"
     careers_url: "https://www.aurascape.ai/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Avoca"
     rank: 399
@@ -3106,13 +3142,15 @@ tracked_companies:
     rank: 414
     category: "Uncategorized"
     careers_url: "https://www.exscientia.ai/careers"
-    enabled: true
+    enabled: false
+    note: "acquired by Recursion Pharmaceuticals 2024; redirected to recursion.com"
 
   - name: "Fathom"
     rank: 415
     category: "Uncategorized"
     careers_url: "https://fathom.video/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Gamma"
     rank: 416
@@ -3202,7 +3240,8 @@ tracked_companies:
     rank: 436
     category: "Uncategorized"
     careers_url: "https://www.skild.ai/careers"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Suffescom Solutions"
     rank: 438
@@ -3219,7 +3258,7 @@ tracked_companies:
   - name: "Thought Machine"
     rank: 440
     category: "Uncategorized"
-    careers_url: "https://www.thoughtmachine.net/careers"
+    careers_url: "https://jobs.ashbyhq.com/thought-machine"
     enabled: true
 
   - name: "Traba"
@@ -3259,7 +3298,8 @@ tracked_companies:
     rank: 433
     category: "Vector Databases"
     careers_url: "https://qdrant.tech/careers/"
-    enabled: true
+    enabled: false
+    note: "404 2026-04-29; revisit"
 
   - name: "Zilliz"
     rank: 449

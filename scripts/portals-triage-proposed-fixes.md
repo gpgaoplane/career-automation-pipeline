@@ -19,10 +19,10 @@ For each: change `careers_url` in `career-ops/portals.yml`.
 
 | Company | Current URL | Proposed URL | Reason |
 |---|---|---|---|
-| Advantest | `https://www.advantest.com/careers` | `https://www.advantest.com/en/careers/` | Triage redirect chain confirms `/en/` prefix is live URL |
-| NXP Semiconductors | `https://www.nxp.com/company/about-nxp/careers:CAREERS` | `https://www.nxp.com/company/about-nxp/careers` | Adobe AEM `:CAREERS` suffix is invalid; bare path works |
+| Advantest | `https://www.advantest.com/careers` | `https://www.advantest.com/en/about/career-na/jobs/` | Triage redirect chain confirms `/en/` prefix is live URL |
+| NXP Semiconductors | `https://www.nxp.com/company/about-nxp/careers:CAREERS` | `https://www.nxp.com/company/about-nxp/careers:CAREERS` | Adobe AEM `:CAREERS` suffix is invalid; bare path works |
 | PT DCI Indonesia Tbk | `https://dci-indonesia.com/careers/` | `https://dci-indonesia.com/careers` | Trailing slash returns 404; no-slash variant likely works |
-| Thought Machine | `https://www.thoughtmachine.net/careers` | `https://www.thoughtmachine.net/jobs` | Triage shows redirect to `/jobs` then 404; `/jobs` is the live path |
+| Thought Machine | `https://www.thoughtmachine.net/careers` | `https://jobs.ashbyhq.com/thought-machine` | Triage shows redirect to `/jobs` then 404; `/jobs` is the live path |
 | Xiaomi | `https://www.mi.com/global/careers/` | `https://career.mi.com/` | Triage error reveals different subdomain `career.mi.com` is the actual host |
 | Hugging Face | `https://huggingface.co/jobs` | (keep URL; flag for special handling) | URL is correct but redirects to `/settings/jobs` which requires login. Step 4 Firecrawl with `actions:[click "View Jobs"]` would work. Reserve `firecrawl_actions` for this case |
 

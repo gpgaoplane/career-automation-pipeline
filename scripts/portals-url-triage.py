@@ -37,6 +37,15 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PORTALS_YML = REPO_ROOT / "career-ops" / "portals.yml"
 OUTPUT_TSV = REPO_ROOT / "scripts" / "portals-url-triage-report.tsv"
 
+# If primary output is locked (e.g., open in Excel), fall back to a v2 filename
+import os
+if OUTPUT_TSV.exists():
+    try:
+        with open(OUTPUT_TSV, "a"):
+            pass
+    except PermissionError:
+        OUTPUT_TSV = REPO_ROOT / "scripts" / "portals-url-triage-report-v2.tsv"
+
 # 8-provider direct-ATS detection patterns (matches design v2 §4.1.1 + D-15).
 ATS_PATTERNS = {
     "greenhouse": [
