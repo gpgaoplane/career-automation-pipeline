@@ -23,6 +23,10 @@ jds/*
 node_modules/
 data/ats-discovery-cache.json
 data/job-descriptions-cache.json
+data/firecrawl-cost.tsv
+data/firecrawl-cache.json
+data/firecrawl-fallback-queue.tsv
+data/firecrawl-plan-caps.tsv
 bun.lock
 
 # OS
