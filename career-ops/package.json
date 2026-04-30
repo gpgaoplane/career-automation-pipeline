@@ -16,9 +16,14 @@
     "liveness": "node check-liveness.mjs",
     "scan": "node scan.mjs",
     "custom-scrape": "node custom-scraper.mjs",
+    "firecrawl-discover": "node firecrawl-discover.mjs",
+    "firecrawl-extract": "node firecrawl-extract.mjs",
+    "ats-adapters": "node ../scripts/ats-adapters/run-all.mjs",
     "enrich": "node enrich-jobs.mjs",
     "export": "node export-jobs.mjs",
-    "full-scan": "node scan.mjs && node custom-scraper.mjs && node enrich-jobs.mjs && node export-jobs.mjs"
+    "full-scan": "node ../scripts/full-scan-orchestrator.mjs",
+    "full-scan:dry-run": "node ../scripts/full-scan-orchestrator.mjs --dry-run",
+    "full-scan:list": "node ../scripts/full-scan-orchestrator.mjs --list"
   },
   "keywords": [
     "ai",
