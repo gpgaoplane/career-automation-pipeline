@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-29T19:30:00-04:00
+last-updated: 2026-04-29T23:24:10-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -13,7 +13,7 @@ skip-if: "never"
 | path | type | owner | status | last-updated |
 |------|------|-------|--------|--------------|
 | .claude/CLAUDE.md | adapter | claude | active | 2026-04-22T00:00:00-05:00 |
-| docs/agents/claude.md | work-log | claude | active | 2026-04-29T18:37:38-04:00 |
+| docs/agents/claude.md | work-log | claude | active | 2026-04-30T00:00:00-04:00 |
 | .claude/memory/state.md | state | claude | active | 2026-04-22T00:00:00-05:00 |
 | .claude/memory/context.md | context | claude | active | 2026-04-22T00:00:00-05:00 |
 | .claude/memory/decisions.md | decisions | claude | active | 2026-04-22T00:00:00-05:00 |
@@ -38,4 +38,18 @@ skip-if: "never"
 | docs/plans/2026-04-29-firecrawl-pivot-decisions.md | design-plan | claude | active | 2026-04-29T19:30:00-04:00 |
 | docs/design/2026-04-29-firecrawl-ats-verification.md | research | claude | active | 2026-04-29T15:00:00-04:00 |
 | docs/plans/2026-04-29-firecrawl-pivot-implementation.md | implementation-plan | claude | active | 2026-04-29T19:30:00-04:00 |
+| career-ops/lib/firecrawl.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/lib/ats-clients.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/lib/ats-detect.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/firecrawl-discover.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/test-firecrawl-wrapper.mjs | test | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/test-ats-clients.mjs | test | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/test-firecrawl-discover.mjs | test | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/ats-adapters/_lib.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/ats-adapters/run-all.mjs | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/ats-adapters/README.md | docs | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/portals-url-triage.py | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/portals-apply-triage-fixes.py | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/sample-portals-50-v2.py | script | claude | active | 2026-04-30T00:00:00-04:00 |
+| scripts/portals-triage-proposed-fixes.md | docs | claude | active | 2026-04-30T00:00:00-04:00 |
 <!-- collab:index:end -->

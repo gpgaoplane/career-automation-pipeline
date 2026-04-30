@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-29T19:30:00-04:00
+last-updated: 2026-04-30T00:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -586,5 +586,36 @@ The largest single finding: **Workday's public CXS endpoint** at `POST {tenant}.
 - Step 2 verification adds Workday CXS pagination assertion.
 - Step 0 method adds GET fallback after HEAD.
 - §6.5 Step 5 sample-run command updated to use `../scripts/ats-adapters/run-all.mjs` per cwd convention.
+
+## D-19 — Cached-discovery adapter pattern (extend ats-adapters from 5 to 8) — 2026-04-30T00:00:00-04:00
+
+**Context:** Phase 2.8 Step 5 sample-50 smoke run revealed a real architectural gap. Layer 1 firecrawl-discover.mjs successfully discovered 22 new ATS slugs across the smoke sample (8 Greenhouse + 10 Ashby + 2 Lever + 4 Workday CXS), but only 4 of these 22 (the Workday CXS ones) had a downstream consumer:
+
+- `scan.mjs` (vendored upstream, D-3 invariant) only reads portals.yml; does NOT read `data/ats-discovery-cache.json`. So the 8+10+2 = 20 newly-discovered Greenhouse/Ashby/Lever slugs were never fetched.
+- `scripts/ats-adapters/run-all.mjs` originally orchestrated only the 5 NEW providers from D-15 (Workday CXS, SmartRecruiters, Personio, Recruitee, Workable), so it picked up the 4 Workday discoveries but not the 20 GH/Ashby/Lever ones.
+
+**Alternatives:**
+- Modify scan.mjs to read the cache (violates D-3)
+- Create a single "scan-discovered" wrapper invoking scan.mjs with a synthetic portals.yml (complex; risks D-3)
+- Add 3 more sibling adapter scripts (greenhouse-cached.mjs / ashby-cached.mjs / lever-cached.mjs) using a `runAdapterCacheOnly` variant that skips portals.yml direct entries and only consumes cache discoveries
+
+**Choice:** Third option. Added `runAdapterCacheOnly()` to `scripts/ats-adapters/_lib.mjs`. Added 3 new adapter scripts. Extended `run-all.mjs` ADAPTERS array from 5 to 8 entries (5 D-15 providers + 3 cached-discovery providers).
+
+**Rationale:**
+- Preserves D-3 invariant — scan.mjs still untouched.
+- Reuses the same `runAdapter`-pattern infrastructure (loadPortals, loadDiscoveryCache, buildTitleFilter, appendPipelineRow, appendHistoryRow) — minimal new code (~10 lines per adapter + 1 new helper).
+- Cache-only filter ensures no overlap with scan.mjs's portals.yml direct-ATS handling — no double-fetching, no duplicate jobs.
+- Smoke validation confirmed impact: cached-discovery adapters added 225 jobs (51 GH + 120 Ashby + 54 Lever) on top of the 12 jobs from D-15 adapters and 11 jobs from scan.mjs direct.
+
+**Tradeoffs:**
+- 3 more adapter scripts to maintain. Counter: identical pattern to existing 5; cost is negligible.
+- Naming convention (`-cached.mjs` suffix) clarifies that these handle cache-only, but introduces an asymmetry with the 5 D-15 adapters (which handle BOTH portals.yml + cache). Acceptable; documented in `scripts/ats-adapters/README.md`.
+
+**Implementation impact:**
+- `scripts/ats-adapters/_lib.mjs` exports new `runAdapterCacheOnly()`.
+- New files: `scripts/ats-adapters/greenhouse-cached.mjs`, `ashby-cached.mjs`, `lever-cached.mjs`.
+- `scripts/ats-adapters/run-all.mjs` ADAPTERS array now has 8 entries.
+
+**Cross-references:** Phase 2.8 Step 5 smoke results in `docs/STATUS.md` + `docs/agents/claude.md` work log. Commit `5b5fcf9`.
 
 <!-- section:entries:end -->

@@ -1,9 +1,21 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
-**Last Updated:** 2026-04-29
-**Current Phase:** Phase 2.8 — Firecrawl pivot DESIGN v2 + IMPLEMENTATION PLAN v2 (Codex-reviewed + integrated) on `feat/phase-2.8-firecrawl` branch. Awaiting user signal to begin Step 0 execution. Phase 2.7 implementation remains complete (18/18 ACs).
+**Last Updated:** 2026-04-30
+**Current Phase:** Phase 2.8 IMPLEMENTATION IN-PROGRESS on `feat/phase-2.8-firecrawl`. **Steps 0-5 complete + Jasper safeEncode fix.** Sample-50 smoke run achieved 37/50 (74%) coverage = +2.85x baseline, narrowly under AC-2 ≥75%; 3 bugs identified for Codex to fix in next session. **Handoff to Codex active** (handoff id 20260430-XXXXXX-XXXX); Claude is paused.
 
 ## Done
+- [x] **Phase 2.8 implementation Steps 0-5 EXECUTED** (2026-04-29 → 2026-04-30, `feat/phase-2.8-firecrawl`, commits e721305 → 8c4a443):
+  - **Step 0** — portals.yml URL triage: 428→388 enabled (40 user-approved disables/updates including 7 acquisitions, 1 defunct, 30 manual-review auto-disables, 2 user-flagged drops). Triage script + apply-fixes script + report. Commits e721305, 631cd87, aff12fc.
+  - **Step 1** — `lib/firecrawl.mjs` SDK wrapper: scrape/scrapeJson with cost tracking, --max-credits cap, AC-11a fallback queue wiring, retry+backoff. **8/8 unit tests pass.** Live test: 167 markdown chars, 1 credit. Commit 8f25673.
+  - **Step 2** — `lib/ats-clients.mjs` 8-provider library: GH/Ashby/Lever (duplicated per D-3) + new Workday CXS, SmartRecruiters, Personio (XML), Recruitee, Workable. **9/9 integration tests pass. Workday CXS pagination CONFIRMED** (40 jobs across 2 pages). Commit 68335e5.
+  - **Step 3** — 5 sibling adapters per D-15: workday-cxs, smartrecruiters, personio, recruitee, workable in repo-root `scripts/ats-adapters/`. Plus run-all.mjs orchestrator + README documenting JazzHR exclusion (AC-9). QI-1 RESOLVED. Commit 8ac3283.
+  - **Step 4** — `firecrawl-discover.mjs` Layer 1: scrape with formats:[html,links], detect 8-provider markers, drill 1-2 levels deep on /careers /jobs links, RI-4 ambiguity resolution with Levenshtein company-name agreement, 60-day TTL. **11/11 tests pass.** Live: Cloudflare drill→greenhouse/cloudflare. Commit df51a68.
+  - **Step 5** — sample-50 smoke validation: 37/50 (74%) coverage = +2.85x Phase 2.7 baseline (was 13/50 = 26%). 161 Firecrawl credits spent (0.16% of 101k budget). Restored live state cleanly. Cached-discovery adapter pattern emerged → extended ATS adapters from 5 to 8 (D-19); +225 jobs from cache-only adapters. Commit 5b5fcf9.
+  - **Jasper safeEncode fix** — addressed P-4 URL double-encoding (commit 8c4a443).
+- [x] **3 bugs surfaced during Step 5 inspection** — documented in `.claude/memory/pitfalls.md` for Codex to fix in next session:
+  - **P-4 — URL double-encoding** (FIXED commit 8c4a443).
+  - **P-5 — resolveAmbiguous candidate dedup** — would auto-resolve 4 of 6 ambiguous cases (Cadence / F5 / Monolithic Power / Tokyo Electron) lifting AC-2 from 74% to 82%.
+  - **P-6 — Greenhouse `embed` synthetic slug** — Vectra AI / Zipline incorrectly resolved to slug "embed" (the JS library URL); fix via regex update.
 - [x] **Phase 2.8 implementation plan v2 — Codex review integrated** (2026-04-29, `feat/phase-2.8-firecrawl`): D-18 documents integration. All 5 ⚠ Issues ACCEPTED (path/cwd mismatch, inconsistent cwd, full-scan dry-run support, Layer 3 fallback contract, source-precedence stale wording); 1 of 2 ❓ Questions ACCEPTED (HEAD+GET fallback); 1 DEFERRED (cp+overwrite kept); 2 💭 Optional ACCEPTED (RI-4 ambiguity rewrite, Workday CXS pagination test). Implementation plan v2 changes: §0 precedence rewritten with verification report as priority 1; new §0a command-cwd convention; Step 0 HEAD+GET fallback; Step 1/4/6/7 Layer 3 fallback queue wiring; Step 2 Workday pagination test; Step 8 new `scripts/full-scan-orchestrator.mjs` replaces plain npm chain (supports `--dry-run`/`--list` + post-run Layer 3 fan-out); AC-11 split into AC-11a (wired) + AC-11b (used); RI-4 ambiguous slug resolution rewritten with company-name agreement gate; QI-1 RESOLVED (sibling adapters at repo-root `scripts/ats-adapters/`). Decisions addendum Q-FC-1 baseline marked HISTORICAL/SUPERSEDED.
 - [x] **Phase 2.8 implementation plan v1 written** (2026-04-29, commit 7d67b2b): `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` — 12 sections covering pre-flight checks, branch+commit strategy, 12 ordered steps (URL triage → lib/firecrawl → lib/ats-clients → 5 sibling adapters → firecrawl-discover → smoke validation → firecrawl-extract → enrich-jobs Firecrawl-first refactor → wire full-scan → dashboard rate-cap manual gate → sample-50 verification → AC audit → Phase 2.6 readiness signal), per-step verification gates + rollback procedures, RI-1..RI-8 implementation risks, QI-1..QI-5 deferred decisions, reviewer checklist for optional Codex re-review.
 - [x] **Phase 2.8 design v2 — Codex review integrated** (2026-04-29, `feat/multi-agent-collab`):
@@ -82,9 +94,14 @@
   - Codex onboarding deferred — user triggers `--join codex` from a Codex session
 
 ## In Progress / Up Next
-- [ ] **USER GATE — Phase 2.8 implementation execution authorization.** Per user direction: notify before Step 0 with high-level overview; await signal.
-- [ ] **Execute Phase 2.8 implementation plan v2** Steps 0 → 12 per `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` (12 atomic steps, ~5h focused work, manual gates at Steps 0/5/9/10).
-- [ ] **Phase 2.6 clean rescan** (executable after Phase 2.8 implementation lands).
+- [ ] **CODEX (active handoff):** Fix P-5 + P-6 bugs in `career-ops/firecrawl-discover.mjs` resolveAmbiguous (dedup candidates) + `career-ops/lib/ats-detect.mjs` PROVIDER_PATTERNS.greenhouse (extract from `?for=` query param OR exclude `embed` synthetic slugs). Re-run sample-50 smoke; expected ≥41/50 (82%), clears AC-2.
+- [ ] **CODEX:** Step 6 — `firecrawl-extract.mjs` Layer 2 for the 20 no-ats-found companies (~100 credits estimated).
+- [ ] **CODEX:** Step 7 — `enrich-jobs.mjs` pure Firecrawl-first refactor per Q-FC-4.
+- [ ] **CODEX:** Step 8 — `scripts/full-scan-orchestrator.mjs` + npm wiring per design v2 §6.8.
+- [ ] **USER GATE:** Step 9 — Firecrawl dashboard rate-cap verification.
+- [ ] **CODEX:** Step 10 — full-pipeline sample-50 verification.
+- [ ] **CODEX:** Step 11 — acceptance audit (11 ACs from design v2 §7).
+- [ ] **CODEX:** Step 12 — tag scan-v2-prerescan; Phase 2.6 readiness signal.
 
 ## Blockers
 None
@@ -93,4 +110,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-**Phase 2.7** complete (commits a13b9a5 → 9ff216a, 18/18 ACs pass; merged to main via 39bac3d). **Phase 2.8 design v2** + **implementation plan v2** Codex-reviewed + integrated. D-17 records design v1→v2 integration; D-18 records implementation v1→v2 integration. Latest changes: §0 precedence (verification=priority 1); §0a cwd convention; Step 0 HEAD+GET fallback; Step 1/4/6/7 fallback-queue wiring; Step 8 new `full-scan-orchestrator.mjs`; AC-11a/AC-11b split; QI-1 RESOLVED. Branch `feat/phase-2.8-firecrawl` (off main) ready for Step 0 execution. **Next:** USER GATE — user notification + signal expected before Step 0 execution per explicit user direction. After signal: 12-step atomic execution per implementation plan, with manual gates at Steps 0 (URL triage review), 5 (smoke result review), 9 (Firecrawl dashboard rate-cap), 10 (full sample-50 review).
+**Steps 0-5 of Phase 2.8 implementation EXECUTED on `feat/phase-2.8-firecrawl`.** Latest commit: `8c4a443` (Jasper safeEncode fix). Sample-50 smoke run yielded 37/50 (74%) coverage and surfaced 3 bugs (P-4 fixed; P-5+P-6 documented for Codex). **Codex is now picking up at the post-Step-5 inspection point.** Specific Codex tasks: (1) fix P-5 candidate dedup in `firecrawl-discover.mjs resolveAmbiguous`; (2) fix P-6 Greenhouse "embed" synthetic slug in `lib/ats-detect.mjs PROVIDER_PATTERNS.greenhouse` regex; (3) re-run sample-50 smoke to confirm ≥41/50 (82%) AC-2; (4) Steps 6-12 per implementation plan v2. Working tree clean; live state restored cleanly post-smoke (git diff portals.yml/pipeline.md/scan-history.tsv: empty). 161 Firecrawl credits used; 100,839 remaining. **Decisions D-19 records the cached-discovery adapter pattern emerged in Step 5; pitfalls P-4/P-5/P-6 document the bugs.** All framework artifacts updated for Codex pickup.

@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-29T19:30:00-04:00
+last-updated: 2026-04-30T00:00:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -10,10 +10,11 @@ skip-if: "status != active or last-updated <= your watermark"
 # Claude — Live State
 
 <!-- section:current-state:start -->
-**Branch:** `feat/phase-2.8-firecrawl` (branched from main after `feat/multi-agent-collab` merged via 39bac3d)
-**Active task:** Phase 2.8 implementation plan now at v2 — Codex review of v1 (handoff `20260429-183239-0925`) integrated. All 5 ⚠ Issues + 1 of 2 ❓ Questions ACCEPTED + 1 ❓ DEFERRED + 2 💭 Optional ACCEPTED. D-18 records the integration. Q-FC-1 baseline section in addendum marked HISTORICAL/SUPERSEDED. Implementation plan §0 precedence rewritten (verification = priority 1); §0a command-cwd convention added; Step 0 HEAD+GET fallback; Step 1/4/6/7 fallback queue wiring; Step 2 Workday pagination test; Step 8 full-scan-orchestrator.mjs replaces plain npm chain; AC-11 split into AC-11a/AC-11b; RI-4 ambiguous slug resolution rewritten; QI-1 RESOLVED (root-level adapters).
-**Pause point:** Pre-flight checks for Phase 2.8 implementation execution. About to commit v2 integration; then waiting on user signal to begin Step 0 execution per user direction "notify me before actual implementation".
-**Blockers:** None.
+**Branch:** `feat/phase-2.8-firecrawl` (branched from main after `feat/multi-agent-collab` merged via 39bac3d).
+**Active task:** Phase 2.8 implementation Steps 0-5 complete + Jasper safeEncode fix. **Handing off to Codex** at the end of Step 5 inspection per user direction. Sample-50 smoke run achieved 37/50 (74%) coverage — narrowly under AC-2 ≥75% target but +2.85x baseline; bug fixes in Step 5 inspection identified to clear AC-2 cleanly.
+**Pause point:** Step 5 manual gate review concluded with three bug findings ready for Codex to fix in Step 6. Live state restored cleanly (git diff portals.yml/pipeline.md/scan-history.tsv: empty). Working tree clean.
+**Blockers:** None for Codex. Three bugs documented in pitfalls.md for fix.
+**Last commit on branch:** `8c4a443` (Jasper safeEncode fix).
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
@@ -30,21 +31,35 @@ skip-if: "status != active or last-updated <= your watermark"
 11. ~~Branch `feat/phase-2.8-firecrawl` from main~~ — DONE 2026-04-29.
 12. ~~Hand off implementation plan to Codex for review~~ — DONE 2026-04-29 (handoff `20260429-183239-0925`, commit 47dcd10).
 13. ~~Codex review integration → implementation plan v2~~ — DONE 2026-04-29 this session, about to commit. D-18 records the integration; addendum Q-FC-1 marked HISTORICAL.
-14. **Next step (USER GATE):** Step 0 execution (portals.yml URL triage). User explicitly asked to be notified before actual implementation begins, with a high-level overview cue. Awaiting user signal.
-10. **Phase 2.6 (still deferred):** clean rescan once Phase 2.8 implementation lands. Per design plan v2 §6 Step 12.
-11. **Phase 3:** open xlsx, S-tier review, /career-ops pipeline LLM eval, reports + tracker.
+14. ~~Step 0 — portals.yml URL triage~~ — DONE 2026-04-29 (commits e721305, 631cd87, aff12fc). 428→388 enabled. 42 disable/update edits applied per user-approved batches.
+15. ~~Step 1 — lib/firecrawl.mjs SDK wrapper + tests~~ — DONE (commit 8f25673). 8/8 tests pass; live test on example.com confirmed cost log + AC-11a fallback queue wiring.
+16. ~~Step 2 — lib/ats-clients.mjs 8-provider library~~ — DONE (commit 68335e5). 9/9 integration tests pass. **Workday CXS pagination CONFIRMED** (40 jobs across 2 pages).
+17. ~~Step 3 — 5 sibling adapters (workday-cxs/smartrecruiters/personio/recruitee/workable)~~ — DONE (commit 8ac3283). QI-1 RESOLVED at repo-root scripts/ats-adapters/. JazzHR explicit out-of-scope per AC-9.
+18. ~~Step 4 — firecrawl-discover.mjs Layer 1~~ — DONE (commit df51a68). 11/11 tests pass; Cloudflare drill→Greenhouse confirmed; --max-credits cap respected with fallback queue.
+19. ~~Step 5 — sample-50 smoke validation~~ — DONE (commit 5b5fcf9). 37/50 (74%) coverage = +2.85x baseline. Cached-discovery adapter pattern emerged (greenhouse-cached/ashby-cached/lever-cached) extending orchestrator from 5 to 8 adapters. 161 Firecrawl credits spent.
+20. ~~Jasper safeEncode bug fix~~ — DONE (commit 8c4a443). idempotent encoding.
+21. **NEXT (Codex):** Step 5 inspection surfaced 3 bugs. Fix them BEFORE Step 6:
+    a. Candidate dedup in resolveAmbiguous (4 of 6 "ambiguous" cases are actually 1 unique tenant repeated 2-420×; recovers Cadence/F5/Monolithic Power/Tokyo Electron → 41/50 = 82%, clears AC-2)
+    b. Greenhouse "embed" synthetic slug filter (slug "embed" comes from boards.greenhouse.io/embed JS library URL, never a company; affects Vectra AI, Zipline)
+    c. After fixes, re-run sample-50 smoke to confirm ≥75%
+22. **Step 6 — firecrawl-extract.mjs Layer 2** — handles 20 no-ats-found companies via JSON-mode extraction (5cr/page). Estimated 100 credits.
+23. **Step 7 — enrich-jobs.mjs Firecrawl-first refactor** — Q-FC-4 pure Firecrawl-first.
+24. **Step 8 — full-scan-orchestrator.mjs + npm wiring** — design v2 §6.8 + AC-11 fallback fan-out.
+25. **Step 9 — dashboard rate-cap manual gate (USER)** — verify Firecrawl plan caps before high-concurrency runs.
+26. **Step 10 — sample-50 verification (USER)** — full pipeline including enrich.
+27. **Step 11 — acceptance audit** — all 11 ACs from design v2 §7.
+28. **Step 12 — tag scan-v2-prerescan** — Phase 2.6 readiness.
+29. **Phase 2.6 / Phase 3** still deferred.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
-- **Q:** Phase 2.8 next step — write the implementation plan directly, or hand off to Codex for design review of `2026-04-29-firecrawl-pivot-design.md` first? User's call.
-- **Q:** Where do the 5 new ATS adapters live? Options: `scripts/ats-adapters/{workday,smartrecruiters,personio,recruitee,workable}.mjs` (sibling to scan.mjs, per D-3); or fold into a single `ats-extra-scrape.mjs`. Recommend per-ATS files for clarity. Decide in implementation plan.
-- **Q:** Does any of the 428 enabled companies use **Eightfold / Avature / SuccessFactors / Taleo / Oracle Cloud HCM**? Hostname grep didn't find any in current `careers_url` values, but post-Layer-1-discovery may surface some. Defer until verification.
-- **Q:** Phase 2.6 clean rescan timing — execute right after Phase 2.8 lands, or merge to main first? Default: merge first (clean baseline split between architecture + data).
-- **Q:** Should the next session merge `feat/multi-agent-collab` to `main` before Phase 2.8 implementation, or after? Trade-off: merging first means Phase 2.8 gets its own branch (cleaner history); merging after means Phase 2.7 + 2.8 land together (less branch churn). Default: merge first.
-- **Q:** Sample-script bug fix still needed: `scripts/sample-portals-50.py` was deleted (yaml.dump lost comment groups). For future sample runs, use `ruamel.yaml` or string-based preservation. Not blocking; only matters if Step 8.5 is repeated under different scope.
-- **Q:** Root `CLAUDE.md` `@import` shim — confirmed working this session (system prompt shows both `AI_AGENTS.md` and `.claude/CLAUDE.md` content). Open Q closed.
+- **Q (for Codex):** Should bugs #1+#2 (candidate dedup + embed-slug filter) be fixed in `career-ops/firecrawl-discover.mjs` (resolveAmbiguous) and `career-ops/lib/ats-detect.mjs` (PROVIDER_PATTERNS)? Recommended yes — see pitfalls.md P-4/P-5/P-6.
+- **Q (for Codex):** After bug fixes, re-run sample-50 smoke before Step 6, or fold into Step 10's full-pipeline sample run? Recommend re-run before Step 6 for cheap AC-2 confirmation (~50-100 credits).
+- **Q (for Codex):** Step 6 firecrawl-extract.mjs — JSON-mode 5cr/page on 20 no-ats-found companies (~100 credits). Acceptable cost; proceed without further user gate? User pre-authorized "step by step" execution with manual gates only at the explicit gates (Step 5 done, next gate is Step 9 dashboard rate-cap).
+- **Q (deferred):** Eightfold / Avature / SuccessFactors / Taleo / Oracle Cloud HCM — none in portals.yml direct URLs; may surface post-Layer-1-discovery. Defer to Step 6 + 10 inspection.
+- **Q (deferred):** Phase 2.6 clean rescan timing — after Phase 2.8 implementation lands.
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-04-29T19:30:00-04:00
+Last read INDEX at: 2026-04-30T00:00:00-04:00
 <!-- section:read-watermark:end -->

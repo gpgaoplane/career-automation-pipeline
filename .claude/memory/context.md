@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: claude
-last-updated: 2026-04-28T22:05:11-04:00
+last-updated: 2026-04-30T00:00:00-04:00
 read-if: "you need durable project truths as understood by Claude"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -12,6 +12,36 @@ skip-if: "status != active or last-updated <= your watermark"
 Append new invariants and project truths below, each with a dated ISO-8601 header.
 
 <!-- section:entries:start -->
+
+## 2026-04-30T00:00:00-04:00 — Phase 2.8 architecture facts (post-Step 5)
+
+Durable invariants surfaced during Phase 2.8 implementation Steps 0-5:
+
+- **`data/ats-discovery-cache.json` has TWO schemas in active use:**
+  1. **Legacy (custom-scraper.mjs writes):** `{ats: "workday"|..., tenant, instance, site, discovered: "YYYY-MM-DD"}`. The legacy `site` field sometimes contains a locale string (e.g., `"en-US"`) instead of the actual Workday site path — this is a known custom-scraper.mjs bug that surfaces 404s on the Workday CXS endpoint.
+  2. **New (firecrawl-discover.mjs writes):** `{ats: "workday-cxs"|..., host, site, discovered_at: "<ISO>"}`. The new schema also includes `candidates: [...]` for ambiguous results.
+
+  Both schemas are READ by `scripts/ats-adapters/_lib.mjs iterTargets()`. Backward-compat is permanent — DO NOT remove legacy reading code.
+
+- **Provider name aliases:** legacy `ats: "workday"` is treated as equivalent to new `ats: "workday-cxs"` in cache reading. The provider key in `PROVIDER_PATTERNS` and lib/ats-clients.mjs is canonically `workday-cxs`.
+
+- **The 8-provider direct-API tier is canonical:** Greenhouse, Ashby, Lever (in scan.mjs vendored upstream); Workday CXS, SmartRecruiters, Personio, Recruitee, Workable (in lib/ats-clients.mjs + sibling adapters per D-15 and D-19). JazzHR explicitly out-of-scope per AC-9.
+
+- **Cached-discovery vs portals.yml-direct adapters split:**
+  - The 5 D-15 adapters (workday-cxs, smartrecruiters, personio, recruitee, workable) handle BOTH portals.yml direct-ATS entries AND cache discoveries.
+  - The 3 cached-discovery adapters (greenhouse-cached, ashby-cached, lever-cached, per D-19) handle CACHE-ONLY because scan.mjs (vendored upstream) already handles portals.yml direct-ATS entries for those 3 providers.
+  - This asymmetry is documented in `scripts/ats-adapters/README.md`.
+
+- **`safeEncode()` helper in `lib/ats-clients.mjs`:** all slug arguments to fetch functions go through `safeEncode()` (not raw `encodeURIComponent`). Idempotent — handles both raw (`"Jasper AI"`) and already-encoded (`"Jasper%20AI"`) inputs without producing double-encoded results. Required because Layer 1 firecrawl-discover.mjs captures slugs from URL form (already encoded).
+
+- **Sample-50 baseline (Phase 2.7 → 2.8 progression):**
+  - Phase 2.7: 13/50 = 26% coverage
+  - Phase 2.8 Step 5 (post Layer 0 + Layer 1, no Layer 2): 37/50 = 74% (+2.85x)
+  - Expected after P-5/P-6 bug fixes: 41/50 = 82%
+  - Expected after Step 6 Layer 2 firecrawl-extract: 45-48/50 = 90-96%
+- **Phase 2.8 Firecrawl credit budget:** 101k credits available; first sample-50 smoke run consumed 161 credits (~0.16% of budget). Full Phase 2.6 clean rescan estimated ~1,000-2,150 credits (per design v2 §5.2).
+
+<!-- BEGIN earlier (pre-Phase-2.8) entries -->
 
 ## 2026-04-28 — ATS URL distribution in portals.yml (post-audit)
 

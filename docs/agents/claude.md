@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-29T19:30:00-04:00
+last-updated: 2026-04-30T00:00:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -564,6 +564,117 @@ Missing / intentionally skipped:
 - `.codex/memory/*` — Codex's memory; not modified.
 - No new handoff to Codex — re-review optional; user gate is for execution authorization, not another review round.
 
+## 2026-04-30 — Phase 2.8 implementation Steps 0-5 EXECUTED + Jasper fix + handoff to Codex
+
+**Goal:** Execute Phase 2.8 implementation per plan v2 (steps 0-5), surface findings at Step 5 manual gate, hand off to Codex for Step 6 onward per user direction.
+
+**Approach (atomic per-step commits):**
+
+1. **Step 0 — portals.yml URL triage** (commits `e721305`, `631cd87`, `aff12fc`):
+   - `scripts/portals-url-triage.py` HEAD+GET fallback over 428 enabled URLs; classified into 4 buckets (direct-ATS=24, branded=304, dead=68, wrong-company-suspect=32).
+   - User-approved batch decisions via `scripts/portals-triage-proposed-fixes.md`: 6 URL updates (Advantest, NXP, Thought Machine, Xiaomi, PT DCI, HF) — user kept some current URLs and overrode my Advantest URL with a different working one; user also dropped Xiaomi + PT DCI as unreachable. 7 acquisitions disabled (Adept, Lepton, Tessian, Tecton, Exscientia, Neon, OctoAI). 1 defunct (Tome). 30 manual-review auto-disabled.
+   - `scripts/portals-apply-triage-fixes.py` applied 42 edits to portals.yml. Result: 388 enabled / 60 disabled (all with notes).
+   - Re-triage confirmed bucket counts: direct-ATS=25, branded-page-OK=304, dead=35, wrong-company-suspect=24. Commit aff12fc.
+
+2. **Step 1 — `lib/firecrawl.mjs` SDK wrapper + cost tracking + tests** (commit `8f25673`):
+   - `scrape(url, opts)` (markdown 1cr) and `scrapeJson(url, schema, prompt, opts)` (JSON 5cr per Q1+Q4).
+   - **NO `extract()` wrapper** (AC-5 grep audit passes).
+   - JOB_LISTING_SCHEMA_V1 exported, MAX_CREDITS_DEFAULT=3000.
+   - Retry policy: 3× on 5xx with backoff 1s/2s/4s; fail-fast on 4xx.
+   - Layer 3 fallback wiring: hard-stop conditions append to `data/firecrawl-fallback-queue.tsv` (AC-11a structural guard).
+   - API key resolver: env var first; `.firecrawl-key` fallback supports both raw `fc-...` AND dotenv `FIRECRAWL_API_KEY=fc-...` formats.
+   - 8/8 unit tests pass (cost tracking, --max-credits cap, 5xx retry, 4xx fail-fast, actions param, schema validation).
+   - Live test: `https://example.com` → 167 markdown chars, 1 credit, cost log row appended.
+
+3. **Step 2 — `lib/ats-clients.mjs` 8-provider library** (commit `68335e5`):
+   - Exports: fetchGreenhouse / fetchAshby / fetchLever (duplicated from scan.mjs per D-3 — NOT extracted), fetchWorkdayCxs, fetchSmartrecruiters, fetchPersonio (XML parsing without xml2js dep), fetchRecruitee, fetchWorkable. Plus PROVIDERS dispatch map.
+   - All return normalized `{provider, slug?, host?, jobs: [{title, location, url, department, raw}]}`.
+   - 9/9 integration tests pass against representative real URLs (live HTTP, 0 Firecrawl credits).
+   - **Workday CXS pagination CONFIRMED** (Codex O2 verification gate): FIS host returned 40 jobs across 2 pages (limit:20 + offset:20), unique externalPath dedup verified.
+
+4. **Step 3 — 5 sibling adapters + run-all orchestrator** (commit `8ac3283`):
+   - QI-1 RESOLVED: `scripts/ats-adapters/{workday-cxs,smartrecruiters,personio,recruitee,workable}.mjs` at repo-root (preserves D-3).
+   - Shared `_lib.mjs` with PROVIDER_PATTERNS, detectProvider, iterTargets, buildTitleFilter, appendPipelineRow, appendHistoryRow, runAdapter generic.
+   - `run-all.mjs` sequential orchestrator (per design v2 §5.4 sequential-default-until-rate-cap-verified).
+   - `README.md` documents JazzHR explicit out-of-scope (AC-9), provider matrix, extension pattern.
+   - Repo-root `package.json` added with js-yaml dependency (career-ops/node_modules not visible to ESM resolution from repo-root scripts).
+   - Entry-point check fixed for Windows paths (use pathToFileURL not naive string concat).
+
+5. **Step 4 — `firecrawl-discover.mjs` Layer 1 + `lib/ats-detect.mjs`** (commit `df51a68`):
+   - Extracted PROVIDER_PATTERNS + detectProvider to `career-ops/lib/ats-detect.mjs` as single source of truth (used by both firecrawl-discover and scripts/ats-adapters/_lib.mjs).
+   - `detectAllInText` finds ALL ATS markers in HTML/markdown body in document order.
+   - Workday regex skips optional locale prefix (en-US, fr-FR, etc.).
+   - Drilling: pickDrillLinks selects same-domain inner links matching /careers /jobs /opportunities /hiring/. Up to 2 levels deep, 3 candidates per level.
+   - resolveAmbiguous with Levenshtein ≤2 company-name agreement (RI-4 per Codex O1).
+   - 60-day TTL with isCacheEntryFresh check; --force flag.
+   - --max-credits + fallback queue wiring on cap exhaustion.
+   - 11/11 tests pass; live Cloudflare test: drilled depth 0 → /careers/jobs/ → discovered greenhouse/cloudflare.
+   - `scripts/ats-adapters/_lib.mjs` updated with backward-compat for legacy custom-scraper.mjs cache schema (tenant+instance separate; ats:"workday" alias). Stale `site:"en-US"` (legacy bug) entries skipped with re-discover hint warning.
+
+6. **Step 5 — sample-50 smoke validation** (commit `5b5fcf9`):
+   - `scripts/sample-portals-50-v2.py` using ruamel.yaml (preserves YAML comment groups, fixing Phase 2.7 commit eacb2c3 bug).
+   - cp+overwrite-and-restore pattern (NOT mv-swap, per advisor's Phase 2.7 §11A guidance).
+   - **Sample run results:** 37/50 unique companies in pipeline = 74% coverage (vs Phase 2.7 baseline 13/50 = 26%) = +2.85x improvement. 248 jobs in Excel. 161 Firecrawl credits spent (0.16% of 101k budget).
+   - **D-19 emerged** during smoke: scan.mjs only reads portals.yml; my 5 D-15 adapters only handled the 5 NEW providers. The 20 newly-discovered Greenhouse+Ashby+Lever slugs from Layer 1 had no consumer. Added 3 cached-discovery adapter scripts (greenhouse-cached.mjs / ashby-cached.mjs / lever-cached.mjs) using new `runAdapterCacheOnly()` helper. Extended run-all.mjs ADAPTERS array from 5 to 8. Added 225 jobs from cached-discovery adapters.
+   - Live state restored cleanly via cp+overwrite (git diff portals.yml/pipeline.md/scan-history.tsv: empty).
+
+7. **Jasper safeEncode fix** (commit `8c4a443`): P-4 — slug `Jasper%20AI` (URL-encoded in Layer 1 capture) was being re-encoded by `encodeURIComponent` to `Jasper%2520AI` → 404. Fix: idempotent `safeEncode()` helper in lib/ats-clients.mjs that decodes-then-encodes. Applied to all 5 fetcher functions.
+
+**Step 5 inspection findings — 3 bugs surfaced:**
+
+- **P-4 — URL double-encoding** (FIXED, commit 8c4a443).
+- **P-5 — resolveAmbiguous candidate dedup needed**: 4 of 6 "ambiguous" cases in smoke (Cadence/F5/Monolithic Power/Tokyo Electron) are actually 1 unique tenant repeated 2-420×. After dedup → discovered. Recovers 4 companies; AC-2 lifts from 74% → 82%. Documented for Codex.
+- **P-6 — Greenhouse "embed" synthetic slug**: Vectra AI/Zipline matched to slug `embed` from `boards.greenhouse.io/embed/job_board.js?for=<real-slug>` URL. Fix: regex update OR exclude synthetic slug names. Documented for Codex.
+
+**Files touched (8 commits this session):**
+
+- New (career-ops/): `lib/firecrawl.mjs`, `lib/ats-clients.mjs`, `lib/ats-detect.mjs`, `firecrawl-discover.mjs`, `test-firecrawl-wrapper.mjs`, `test-ats-clients.mjs`, `test-firecrawl-discover.mjs`.
+- New (scripts/): `portals-url-triage.py`, `portals-url-triage-report.tsv` (initial) + `-v2.tsv` (post-fixes), `portals-triage-proposed-fixes.md`, `portals-apply-triage-fixes.py`, `sample-portals-50-v2.py`, `ats-adapters/_lib.mjs`, `ats-adapters/{workday-cxs,smartrecruiters,personio,recruitee,workable,greenhouse-cached,ashby-cached,lever-cached,run-all}.mjs`, `ats-adapters/README.md`.
+- New (root): `package.json` (workspace for repo-root scripts).
+- Modified: `career-ops/portals.yml` (42 disable/update edits), `career-ops/.gitignore` (firecrawl runtime artifacts), `.gitignore` (root node_modules + sample-50.yml).
+- Untouched: `career-ops/scan.mjs` (D-3 invariant — git log empty since 2026-04-29).
+
+**Watch out (for Codex pickup):**
+
+- **P-5 fix is 1-line dedup but architecturally important.** Without it, Layer 1 reports false ambiguity for any company whose careers page links the same Workday tenant from multiple footer/header positions. Place the dedup BEFORE Levenshtein scoring in `resolveAmbiguous()` in `career-ops/firecrawl-discover.mjs`. Use `(provider, slug, host, site)` as identity tuple.
+- **P-6 fix in PROVIDER_PATTERNS.greenhouse** — recommend updating regex to handle the `embed/job_board?for=<slug>` URL pattern. Pattern suggestion: `/boards\.greenhouse\.io\/(?:embed\/job_board\?for=)?([^/?#"'\s&]+)/i`. Verify with regression test in `test-firecrawl-discover.mjs`.
+- **After P-5+P-6 fixes, re-run sample-50 smoke** before proceeding to Step 6. Estimated 50-100 credits.
+- **Step 6 firecrawl-extract.mjs** uses JSON-mode (5 credits/page) on 20 no-ats-found companies. Expected ~100 credits. Should clear AC-2 by another 5-10 percentage points.
+- **Cache schema legacy compat is permanent** per `.claude/memory/context.md` 2026-04-30 entry. Codex must NOT remove the legacy reading path in scripts/ats-adapters/_lib.mjs iterTargets.
+- **Stale Workday cache entries with `site:"en-US"`** (custom-scraper.mjs's old bug) are skipped with re-discover warning at adapter time. Codex can run `node firecrawl-discover.mjs --force --company "SiFive"` etc to fix specific entries.
+- **Sample-50 list is reproducible via seed=42** — same 50 companies every run.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `career-ops/portals.yml` ........ 42 edits via portals-apply-triage-fixes.py (commit aff12fc)
+- `career-ops/lib/firecrawl.mjs` ........ NEW — SDK wrapper (8f25673)
+- `career-ops/lib/ats-clients.mjs` ........ NEW — 8-provider direct-API library (68335e5) + safeEncode fix (8c4a443)
+- `career-ops/lib/ats-detect.mjs` ........ NEW — single source of truth for URL detection (df51a68)
+- `career-ops/firecrawl-discover.mjs` ........ NEW — Layer 1 ATS discovery (df51a68)
+- `career-ops/test-firecrawl-wrapper.mjs` / `test-ats-clients.mjs` / `test-firecrawl-discover.mjs` ........ NEW tests (28 total tests passing across 3 files)
+- `career-ops/.gitignore` ........ added firecrawl runtime artifacts
+- `scripts/portals-url-triage.py` + `portals-apply-triage-fixes.py` + `portals-triage-proposed-fixes.md` + reports ........ NEW (Step 0)
+- `scripts/sample-portals-50-v2.py` ........ NEW with ruamel.yaml comment preservation
+- `scripts/ats-adapters/{workday-cxs,smartrecruiters,personio,recruitee,workable,greenhouse-cached,ashby-cached,lever-cached,run-all,_lib}.mjs` + README.md ........ NEW — 8 sibling adapters + orchestrator
+- `package.json` (root) ........ NEW — workspace for repo-root scripts (js-yaml dep)
+- `.gitignore` (root) ........ added node_modules + sample-50.yml
+- `.claude/memory/state.md` ........ refreshed for Codex pickup
+- `.claude/memory/decisions.md` ........ D-19 added (cached-discovery adapter pattern)
+- `.claude/memory/pitfalls.md` ........ P-4/P-5/P-6 added
+- `.claude/memory/context.md` ........ 2026-04-30 durable invariants (cache schema dual format, safeEncode pattern, sample-50 progression)
+- `docs/STATUS.md` ........ Phase 2.8 implementation Steps 0-5 done block + revised Up Next + handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt
+
+Missing / intentionally skipped:
+- `career-ops/scan.mjs` ........ D-3 invariant (vendored upstream, untouched)
+- `career-ops/firecrawl-extract.mjs` ........ Step 6 (Codex)
+- `career-ops/enrich-jobs.mjs` ........ Step 7 refactor (Codex)
+- `scripts/full-scan-orchestrator.mjs` ........ Step 8 (Codex)
+- `data/firecrawl-cost.tsv`, `data/firecrawl-fallback-queue.tsv`, `data/ats-discovery-cache.json` ........ gitignored runtime artifacts; preserved on disk for Codex to inspect
+- `.collab/INDEX.md` ........ being registered in this handoff turn
+- `output/jobs-2026-04-30.xlsx` ........ gitignored; left on disk from Step 5 smoke for inspection
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -667,6 +778,30 @@ Phase 2.8 implementation plan ready for review at docs/plans/2026-04-29-firecraw
 
 ### Files touched
 docs/plans/2026-04-29-firecrawl-pivot-implementation.md docs/plans/2026-04-29-firecrawl-pivot-design.md docs/plans/2026-04-29-firecrawl-pivot-decisions.md docs/design/2026-04-29-firecrawl-ats-verification.md .claude/memory/decisions.md
+
+### What needs validation
+(fill in during handoff; default: diff the commits listed above)
+
+### Open questions
+(none stated)
+<!-- collab:handoff:end -->
+
+<!-- collab:handoff:start id=20260429-232409-dfdd -->
+## Handoff → codex
+
+- **handoff-id:** `20260429-232409-dfdd`
+- **parent-id:** `none`
+- **from:** claude
+- **to:** codex
+- **branch:** feat/phase-2.8-firecrawl
+- **at:** 2026-04-29T23:24:09-04:00
+- **status:** open
+
+### What I did
+Phase 2.8 implementation Steps 0-5 EXECUTED on feat/phase-2.8-firecrawl + Jasper safeEncode bug fix. Sample-50 smoke achieved 37/50 (74%) coverage = +2.85x baseline. 161 Firecrawl credits used (0.16% of 101k). Working tree clean, live state restored. Latest commit: 8c4a443. PICK UP at Step 5 inspection: 3 bugs surfaced. P-4 URL double-encoding FIXED (8c4a443). P-5 candidate dedup needed in firecrawl-discover.mjs resolveAmbiguous (recovers 4 of 6 ambiguous = Cadence/F5/Monolithic/Tokyo Electron → 41/50=82% AC-2). P-6 Greenhouse 'embed' synthetic slug filter in lib/ats-detect.mjs PROVIDER_PATTERNS.greenhouse (recovers Vectra AI/Zipline). After fixes re-run sample-50 smoke (~50-100 credits). Then Steps 6 (firecrawl-extract Layer 2 ~100cr), 7 (enrich-jobs Firecrawl-first refactor), 8 (full-scan-orchestrator.mjs + npm wiring), 9 USER GATE (Firecrawl dashboard rate-cap), 10 sample-50 verification, 11 acceptance audit, 12 tag scan-v2-prerescan. State + decisions (D-19) + pitfalls (P-4/P-5/P-6) + context (cache schema dual format) all updated. Cwd convention per impl plan §0a: career-ops/ unless ../scripts/ prefix. D-3 invariant: scan.mjs untouched (verify with git log).
+
+### Files touched
+career-ops/lib/firecrawl.mjs career-ops/lib/ats-clients.mjs career-ops/lib/ats-detect.mjs career-ops/firecrawl-discover.mjs scripts/ats-adapters/_lib.mjs docs/plans/2026-04-29-firecrawl-pivot-implementation.md .claude/memory/state.md .claude/memory/decisions.md .claude/memory/pitfalls.md .claude/memory/context.md docs/STATUS.md
 
 ### What needs validation
 (fill in during handoff; default: diff the commits listed above)
