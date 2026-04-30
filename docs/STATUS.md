@@ -1,7 +1,7 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-30
-**Current Phase:** **Phase 2.8 IMPLEMENTATION COMPLETE** on `feat/phase-2.8-firecrawl` (Steps 0-12 with 2 USER-GATED manual steps remaining). 9/12 ACs PASS programmatically; 3 pending Step 9 (dashboard caps) + Step 10 (full sample run). Tag `scan-v2-prerescan` placed. AC-2 cleared at 78% (39/50) post P-5/P-6 fixes. Latest commit `28f72bb`.
+**Current Phase:** Phase 2.8 IMPLEMENTATION CODE-COMPLETE on `feat/phase-2.8-firecrawl` (Steps 0-12). **Inspection of Step 5 surfaced 3 new issues being handed to Codex for diagnosis/fixes:** P-7 (iterTargets cache pollution — inflated 39/50→78% reading; true is 30/50=60% pre-Layer-2), P-8 (Layer 1 misses Ashby on JS-embed pages — Ramp 119 jobs + Supabase 46 jobs verified via curl), P-9 (Layer 2 should detect ATS in extracted URLs + feedback to cache). Tag `scan-v2-prerescan` placed. **Handing off to Codex.**
 
 ## Done
 - [x] **Phase 2.8 implementation Steps 0-5 EXECUTED** (2026-04-29 → 2026-04-30, `feat/phase-2.8-firecrawl`, commits e721305 → 8c4a443):
@@ -94,14 +94,14 @@
   - Codex onboarding deferred — user triggers `--join codex` from a Codex session
 
 ## In Progress / Up Next
-- [ ] **CODEX (active handoff):** Fix P-5 + P-6 bugs in `career-ops/firecrawl-discover.mjs` resolveAmbiguous (dedup candidates) + `career-ops/lib/ats-detect.mjs` PROVIDER_PATTERNS.greenhouse (extract from `?for=` query param OR exclude `embed` synthetic slugs). Re-run sample-50 smoke; expected ≥41/50 (82%), clears AC-2.
-- [ ] **CODEX:** Step 6 — `firecrawl-extract.mjs` Layer 2 for the 20 no-ats-found companies (~100 credits estimated).
-- [ ] **CODEX:** Step 7 — `enrich-jobs.mjs` pure Firecrawl-first refactor per Q-FC-4.
-- [ ] **CODEX:** Step 8 — `scripts/full-scan-orchestrator.mjs` + npm wiring per design v2 §6.8.
-- [ ] **USER GATE:** Step 9 — Firecrawl dashboard rate-cap verification.
-- [ ] **CODEX:** Step 10 — full-pipeline sample-50 verification.
-- [ ] **CODEX:** Step 11 — acceptance audit (11 ACs from design v2 §7).
-- [ ] **CODEX:** Step 12 — tag scan-v2-prerescan; Phase 2.6 readiness signal.
+- [ ] **CODEX (active handoff 2026-04-30):** diagnose + fix P-7/P-8/P-9 in priority order (see `.claude/memory/pitfalls.md`):
+  - P-7 cache pollution in iterTargets (5-line fix + test)
+  - P-8 Layer 1 misses Ashby on Ramp/Supabase (investigate JS-embed/regex; high impact)
+  - P-9 Layer 2 should detect ATS in extracted URLs + feedback to cache (architectural enhancement)
+- [ ] **CODEX:** after fixes, re-run sample-50 smoke to measure TRUE coverage (expected 45-50/50 = 90-100%)
+- [ ] **USER GATE:** Step 9 — Firecrawl dashboard rate-cap verification (template at `career-ops/data/firecrawl-plan-caps.tsv.template`)
+- [ ] **CODEX (after Step 9):** Step 10 — full-pipeline sample-50 verification (~1500 credits with enrich enabled)
+- [ ] **Phase 2.6 clean rescan** (after Phase 2.8 fully validated — full 388 enabled portals via `npm run full-scan`)
 
 ## Blockers
 None
@@ -110,4 +110,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-**Steps 0-5 of Phase 2.8 implementation EXECUTED on `feat/phase-2.8-firecrawl`.** Latest commit: `8c4a443` (Jasper safeEncode fix). Sample-50 smoke run yielded 37/50 (74%) coverage and surfaced 3 bugs (P-4 fixed; P-5+P-6 documented for Codex). **Codex is now picking up at the post-Step-5 inspection point.** Specific Codex tasks: (1) fix P-5 candidate dedup in `firecrawl-discover.mjs resolveAmbiguous`; (2) fix P-6 Greenhouse "embed" synthetic slug in `lib/ats-detect.mjs PROVIDER_PATTERNS.greenhouse` regex; (3) re-run sample-50 smoke to confirm ≥41/50 (82%) AC-2; (4) Steps 6-12 per implementation plan v2. Working tree clean; live state restored cleanly post-smoke (git diff portals.yml/pipeline.md/scan-history.tsv: empty). 161 Firecrawl credits used; 100,839 remaining. **Decisions D-19 records the cached-discovery adapter pattern emerged in Step 5; pitfalls P-4/P-5/P-6 document the bugs.** All framework artifacts updated for Codex pickup.
+**Phase 2.8 implementation Steps 0-12 EXECUTED + 5 bugs discovered/fixed/documented on `feat/phase-2.8-firecrawl`** (14 commits e721305..bc45b4e). Tag `scan-v2-prerescan`. Acceptance audit: 9 PASS / 3 manual-pending / 0 FAIL. **Three NEW bugs surfaced during post-Step-5 inspection requiring Codex investigation:** P-7 iterTargets cache pollution (inflated coverage measurement — true sample-50 is 30/50=60% pre-Layer-2, not 39/50=78% as initially measured); P-8 Layer 1 misses Ashby on Ramp + Supabase (verified via curl: Ramp=119 jobs, Supabase=46 jobs on `api.ashbyhq.com/posting-api/job-board/{ramp,supabase}`); P-9 Layer 2 should detect ATS in extracted job URLs and write back to discovery cache (self-correcting). All bugs documented in `.claude/memory/pitfalls.md` with specific fix recipes and regression tests. After Codex addresses P-7/P-8/P-9, expected coverage lifts to 45-50/50 (90-100%). USER GATES Step 9 + Step 10 still pending. ~290 Firecrawl credits used; 100,710 remaining.

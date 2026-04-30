@@ -2,7 +2,7 @@
 status: active
 type: pitfalls
 owner: claude
-last-updated: 2026-04-30T00:00:00-04:00
+last-updated: 2026-04-30T03:00:00-04:00
 read-if: "you are touching an area Claude has flagged before"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -107,5 +107,85 @@ Recommend Option 2 (correct extraction) over Option 1 (deny-list of synthetic na
 **Regression test:** Add unit test to `test-firecrawl-discover.mjs`: `detectAllInText('<script src="https://boards.greenhouse.io/embed/job_board.js?for=cloudflare">')` should return one match with `slug:"cloudflare"`, NOT `slug:"embed"`.
 
 **Affected companies in Phase 2.8 Step 5 smoke**: Vectra AI (2 candidates → both `embed`), Zipline (3 candidates → all `embed`). (2 of 6 ambiguous cases.) After fix + P-5 fix: AC-2 lands at 41/50 (82%), clearing the ≥75% target cleanly.
+
+## P-7 — iterTargets cache pollution: cached-discovery adapters process companies NOT in current portals.yml — 2026-04-30
+
+**Symptom:** During Phase 2.8 Step 5 sample-50 smoke run, the post-fix re-run reported "39 unique companies in pipeline" but only 30 of the 50 sampled companies had a routing path (3 direct-ATS + 27 discovered, 20 no-ats-found pre-Layer-2). The 39 number included leakage from cache entries for companies NOT in the sample-50 portals.yml (e.g., Notion AI, Sierra, Synthesia from earlier full-portals smoke runs whose entries persisted in `data/ats-discovery-cache.json`).
+
+**Root cause:** `iterTargets()` in `scripts/ats-adapters/_lib.mjs` walks the entire `data/ats-discovery-cache.json` and yields every entry whose `info.ats === providerName`, with NO filter against the current portals.yml's enabled list. The cache persists across runs; entries from past smoke-50/full-portals runs survive and get processed even when the current run uses a different (or sample-filtered) portals.yml.
+
+**Workaround / Fix:** In `iterTargets()`, before yielding cache entries, build a Set of enabled-company-names from the current portals.yml and skip cache entries not in that Set. Pseudo-fix:
+```javascript
+const enabledNames = new Set(
+  (portals?.tracked_companies || []).filter(e => e?.enabled).map(e => e.name)
+);
+for (const [companyName, info] of Object.entries(cache || {})) {
+  if (!enabledNames.has(companyName)) continue;  // ADD THIS
+  // ...rest of cache iteration unchanged
+}
+```
+
+**Regression test:** Add a unit test in `scripts/ats-adapters/test-iter-targets.mjs` (new file): given `portals = {tracked_companies: [{name:"A", enabled:true}]}` and `cache = {A: {ats:"ashby", slug:"a"}, B: {ats:"ashby", slug:"b"}}`, iterTargets should yield only the A entry — not B.
+
+**Affected component:** Coverage measurement in Step 5 was inflated. True sample-50 coverage at smoke time is 30/50 (60%) max pre-Layer-2, not 39/50 (78%). After Step 6 Layer 2 runs on the 20 no-ats-found, expected lift to 50/50 minus any companies with 0 jobs after title filter.
+
+## P-8 — Layer 1 misses Ashby on JS-embed pages (Ramp, Supabase confirmed) — 2026-04-30
+
+**Symptom:** Ramp (`https://ramp.com/careers`) and Supabase (`https://supabase.com/careers`) were both classified by Layer 1 firecrawl-discover.mjs as `status:"no-ats-found"` during Phase 2.8 Step 5 smoke. **But both companies actually have public Ashby boards:** `https://api.ashbyhq.com/posting-api/job-board/ramp` returns 119 jobs; `https://api.ashbyhq.com/posting-api/job-board/supabase` returns 46 jobs (verified 2026-04-30 via direct curl).
+
+**Root cause hypotheses (need investigation):**
+1. **JS-embed loaded after Firecrawl render**: Ramp/Supabase may inject the Ashby `<iframe>` or job list via JavaScript that runs after Firecrawl's default scrape settle time. The `formats:["html","links"]` capture may not include post-JS DOM content if the wait is too short.
+2. **Embed URL form regex miss**: Ashby has multiple embed patterns: `jobs.ashbyhq.com/{slug}`, `embed.ashbyhq.com/{slug}`, `assets.ashbyhq.com/...{slug}...`. Current `PROVIDER_PATTERNS.ashby` only catches `jobs.ashbyhq.com/{slug}`.
+3. **Drilling skipped relevant inner page**: pickDrillLinks heuristic favors `/careers /jobs /opportunities` paths but Ramp/Supabase may put the Ashby embed at `/about/careers` or similar that the regex missed.
+4. **Cloudflare-style anti-bot blocking part of the page**: the careers landing renders a marketing layout but the Ashby embed iframe is Cloudflare-blocked from Firecrawl's IP.
+
+**Workaround / Fix priorities:**
+- **Quick fix (high value):** when Layer 2 firecrawl-extract.mjs runs JSON-mode extraction and the returned `jobs[].url` contains an ATS hostname (per `detectAllInText`), it should write a discovery cache entry promoting the company from `no-ats-found` to `discovered:<ats>:<slug>`. Subsequent runs use the direct API. See P-9 below for the architectural enhancement.
+- **Investigate Ramp + Supabase specifically**: scrape with `actions:[{wait:5000ms},{scrape}]` and inspect the resulting HTML for `ashbyhq.com` references. Update PROVIDER_PATTERNS.ashby if a new embed URL form is found.
+- **Expand drilling** to try `/about/careers`, `/company/jobs`, `/team` variants in addition to current heuristic.
+
+**Regression test:** Add live integration test asserting Ramp + Supabase resolve to `ats:"ashby"` after Layer 1 runs. Currently they resolve to `no-ats-found`.
+
+**Impact:** at minimum Ramp + Supabase from sample-50 are recoverable; likely many of the other 18 no-ats-found companies (Adyen, Canva, MongoDB, IBM, Lenovo, etc.) have similar JS-embed patterns and are recoverable with the same fix. **Could lift coverage from current 30/50 (60%) toward 45-50/50 (90-100%).**
+
+## P-9 — Layer 2 should detect ATS in extracted job URLs and feedback to discovery cache — 2026-04-30
+
+**Symptom:** `firecrawl-extract.mjs` runs JSON-mode extraction on `no-ats-found` companies and writes the resulting jobs straight to pipeline.md — without checking whether the `jobs[].url` values reveal an ATS we already have a fast-path adapter for. So if Ramp's careers page (after JSON-mode extraction) returns 119 jobs each with `url: "https://jobs.ashbyhq.com/ramp/{job-id}"`, Layer 2 just appends those URLs and never tells the discovery cache that Ramp is actually an Ashby company.
+
+**Root cause:** Layer 2 was specced as "for genuinely custom systems" — implicitly assuming Layer 1's `no-ats-found` verdict was correct. With P-8 confirming Layer 1 has gaps, Layer 2 must do its own ATS check on extracted URLs.
+
+**Workaround / Fix:** In `career-ops/firecrawl-extract.mjs` `extractCompany()`, after the scrapeJson call returns `result.json.jobs`:
+```javascript
+import { detectAllInText } from "./lib/ats-detect.mjs";
+const cache = loadCache();
+const urlText = result.jobs.map(j => j.url).join("\n");
+const detected = detectAllInText(urlText);
+const dedupSet = new Set();
+const candidates = detected.filter(c => {
+  const key = `${c.provider}|${c.slug || ""}|${c.host || ""}|${c.site || ""}`;
+  if (dedupSet.has(key)) return false;
+  dedupSet.add(key);
+  return true;
+});
+if (candidates.length === 1) {
+  // Auto-promote no-ats-found → discovered for next-run direct-API speed
+  cache[companyName] = {
+    ats: candidates[0].provider,
+    slug: candidates[0].slug,
+    host: candidates[0].host,
+    site: candidates[0].site,
+    discovered_at: new Date().toISOString(),
+    source_url: companyUrl,
+    discovery_method: "layer-2-feedback",
+  };
+  saveCache(cache);
+}
+```
+
+**Architectural note:** This makes Layer 2 self-correcting — when Layer 1 missed an ATS, Layer 2's first JSON-mode call (5 credits) detects it and the next full-scan run uses the free direct-API path for that company. Net cost: 5 credits one-time per no-ats-found-but-actually-ATS company; saves ~5 credits/run thereafter.
+
+**Regression test:** Mock scrapeJson to return `{json:{jobs:[{title:"Eng",url:"https://jobs.ashbyhq.com/testco/abc"}]}}`. Call extractCompany("TestCo", "https://example.com"). Assert cache[TestCo] is now `{ats:"ashby", slug:"testco", discovery_method:"layer-2-feedback"}`.
+
+**Cross-reference:** P-8 (the upstream Layer 1 gap that motivates this Layer 2 enhancement). Together P-8 + P-9 form a defense-in-depth: ideally Layer 1 catches all ATSes; if it misses some, Layer 2 catches them on first encounter.
 
 <!-- section:entries:end -->

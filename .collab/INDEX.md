@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-29T23:24:10-04:00
+last-updated: 2026-04-30T10:44:00-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -52,4 +52,9 @@ skip-if: "never"
 | scripts/portals-apply-triage-fixes.py | script | claude | active | 2026-04-30T00:00:00-04:00 |
 | scripts/sample-portals-50-v2.py | script | claude | active | 2026-04-30T00:00:00-04:00 |
 | scripts/portals-triage-proposed-fixes.md | docs | claude | active | 2026-04-30T00:00:00-04:00 |
+| career-ops/firecrawl-extract.mjs | script | claude | active | 2026-04-30T03:00:00-04:00 |
+| career-ops/test-firecrawl-extract.mjs | test | claude | active | 2026-04-30T03:00:00-04:00 |
+| scripts/full-scan-orchestrator.mjs | script | claude | active | 2026-04-30T03:00:00-04:00 |
+| scripts/acceptance-audit-phase2.8.py | script | claude | active | 2026-04-30T03:00:00-04:00 |
+| career-ops/data/firecrawl-plan-caps.tsv.template | template | claude | active | 2026-04-30T03:00:00-04:00 |
 <!-- collab:index:end -->

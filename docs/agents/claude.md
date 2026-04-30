@@ -675,6 +675,69 @@ Missing / intentionally skipped:
 - `.collab/INDEX.md` ........ being registered in this handoff turn
 - `output/jobs-2026-04-30.xlsx` ........ gitignored; left on disk from Step 5 smoke for inspection
 
+## 2026-04-30 — Steps 6-12 EXECUTED + 3 new bugs from inspection (P-7/P-8/P-9)
+
+**Goal:** Continue Phase 2.8 execution (Steps 6-12) per user direction "skip handoff, proceed". Then fully inspect Step 5 results and prepare second handoff to Codex.
+
+**Approach:**
+
+1. P-5/P-6 fixes (commit `4371eee`): resolveAmbiguous candidate dedup + Greenhouse embed regex. Recovered 5 of 6 ambiguous companies.
+2. Sample-50 re-validation (commit `66ac892`): 39/50 (78%) measured. AC-2 reported as cleared.
+3. Step 6 — `firecrawl-extract.mjs` (commit `2e463b8`): JSON-mode Layer 2 extraction. Live Shopify test: 31 jobs in 1 call (5 credits). 3/3 tests pass. AC-5 grep clean.
+4. Step 7 — `enrich-jobs.mjs` Firecrawl-first refactor (commit `1520bd1`): fetchFirecrawlMarkdown primary; HTTP/Playwright outage-only fallback. 19/19 existing tests still pass.
+5. Step 8 — `full-scan-orchestrator.mjs` + npm wiring (commit `5294f7f`): orchestrator with --dry-run/--list + Layer 3 fallback fan-out. `npm run full-scan:list` outputs all 6 steps cleanly.
+6. Step 11 — `acceptance-audit-phase2.8.py` (commit `28f72bb`): 9 PASS / 3 manual-pending / 0 FAIL. Re-runnable.
+7. Step 12 — tag `scan-v2-prerescan` placed (commit `28f72bb`).
+8. Final state update (commit `bc45b4e`).
+
+9. **POST-IMPLEMENTATION INSPECTION** (this entry) — user requested fully inspecting results before second Codex handoff. Three new bugs surfaced:
+
+   - **P-7 — iterTargets cache pollution.** Re-classifying sample-50: 3 direct-ATS + 27 discovered + 20 no-ats-found = 50 ✓. Only 30 had a routing path at smoke time. The 39/50 (78%) reading was inflated by past-run cache entries leaking into pipeline (iterTargets has no filter against current portals.yml's enabled list). **TRUE coverage at smoke time was at most 30/50 = 60% pre-Layer-2.** The 78% AC-2 measurement needs re-doing.
+
+   - **P-8 — Layer 1 misses Ashby on JS-embed pages.** User flagged Ramp + Supabase as actually being on Ashby. Verified via curl: Ramp = 119 jobs, Supabase = 46 jobs on `api.ashbyhq.com/posting-api/job-board/{ramp,supabase}`. Layer 1 marked them no-ats-found. Likely cause: JS-embedded Ashby iframe loaded after Firecrawl's render OR an alternate URL form (`embed.ashbyhq.com`?) not in PROVIDER_PATTERNS.ashby.
+
+   - **P-9 — Layer 2 should detect ATS in extracted job URLs.** Currently firecrawl-extract.mjs writes JSON-mode results straight to pipeline.md without checking whether `jobs[].url` values reveal a known ATS. Self-correcting fix: detectAllInText on extracted URLs; if single ATS found, promote cache entry from no-ats-found → discovered. Defense-in-depth with P-8.
+
+**Files touched (this entire post-Step-5 block):**
+
+- New (career-ops/): `firecrawl-extract.mjs`, `test-firecrawl-extract.mjs`
+- Modified (career-ops/): `firecrawl-discover.mjs` (P-5), `lib/ats-detect.mjs` (P-6), `lib/ats-clients.mjs` (P-4 safeEncode), `enrich-jobs.mjs` (Firecrawl-first), `package.json` (npm scripts)
+- New (scripts/): `full-scan-orchestrator.mjs`, `acceptance-audit-phase2.8.py`
+- New (career-ops/data/): `firecrawl-plan-caps.tsv.template`
+- Updated framework: `.claude/memory/{state,pitfalls}.md`, `docs/STATUS.md`, `.collab/INDEX.md`
+
+**Watch out (for Codex pickup):**
+
+- **AC-2 reading is inflated by P-7.** Fix P-7 first, re-run sample-50, get true number.
+- **P-8 high impact** — Ramp/Supabase alone recoverable; likely lifts 10+ of the 20 no-ats-found if pattern is general.
+- **P-9 makes the system self-correcting** — even if Layer 1 stays imperfect, Layer 2 catches and remembers.
+- **All Phase 2.8 IMPLEMENTATION CODE is in place** — Codex's job is bug fixes + measurement, not greenfield building.
+- **`firecrawl-plan-caps.tsv` template** at `career-ops/data/firecrawl-plan-caps.tsv.template` — USER must fill from firecrawl.dev/dashboard for AC-10.
+- **Step 10 full sample-50 with enrich** is ~1500 credits — needs USER authorization before Codex runs.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `career-ops/firecrawl-extract.mjs` + `test-firecrawl-extract.mjs` ........ NEW (Step 6, 2e463b8)
+- `career-ops/firecrawl-discover.mjs` ........ P-5 dedup (4371eee)
+- `career-ops/lib/ats-detect.mjs` ........ P-6 embed regex (4371eee)
+- `career-ops/lib/ats-clients.mjs` ........ P-4 safeEncode (8c4a443)
+- `career-ops/enrich-jobs.mjs` ........ Firecrawl-first (1520bd1)
+- `career-ops/package.json` ........ orchestrator + npm scripts (5294f7f)
+- `scripts/full-scan-orchestrator.mjs` ........ NEW (Step 8, 5294f7f)
+- `scripts/acceptance-audit-phase2.8.py` ........ NEW (Step 11, 28f72bb)
+- `career-ops/data/firecrawl-plan-caps.tsv.template` ........ NEW user-action template
+- `.claude/memory/state.md` + `pitfalls.md` ........ P-7/P-8/P-9 added; state for second Codex handoff
+- `docs/STATUS.md` ........ updated handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt
+- Tag `scan-v2-prerescan` placed at commit 28f72bb
+
+Missing / intentionally skipped:
+- `career-ops/scan.mjs` ........ D-3 invariant preserved
+- `.codex/memory/*`, `docs/agents/codex.md` ........ Codex's own files
+- AC-3 + AC-10 + AC-11b ........ require Codex action + USER Step 9 + Step 10
+- True coverage measurement ........ awaits Codex P-7 fix + re-run
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -802,6 +865,30 @@ Phase 2.8 implementation Steps 0-5 EXECUTED on feat/phase-2.8-firecrawl + Jasper
 
 ### Files touched
 career-ops/lib/firecrawl.mjs career-ops/lib/ats-clients.mjs career-ops/lib/ats-detect.mjs career-ops/firecrawl-discover.mjs scripts/ats-adapters/_lib.mjs docs/plans/2026-04-29-firecrawl-pivot-implementation.md .claude/memory/state.md .claude/memory/decisions.md .claude/memory/pitfalls.md .claude/memory/context.md docs/STATUS.md
+
+### What needs validation
+(fill in during handoff; default: diff the commits listed above)
+
+### Open questions
+(none stated)
+<!-- collab:handoff:end -->
+
+<!-- collab:handoff:start id=20260430-104400-aa3d -->
+## Handoff → codex
+
+- **handoff-id:** `20260430-104400-aa3d`
+- **parent-id:** `none`
+- **from:** claude
+- **to:** codex
+- **branch:** feat/phase-2.8-firecrawl
+- **at:** 2026-04-30T10:44:00-04:00
+- **status:** open
+
+### What I did
+Phase 2.8 implementation Steps 0-12 ALL CODE-COMPLETE on feat/phase-2.8-firecrawl + scan-v2-prerescan tag. Acceptance audit: 9 PASS / 3 manual-pending / 0 FAIL. POST-INSPECTION SURFACED 3 NEW BUGS (full details + fix recipes in .claude/memory/pitfalls.md): P-7 iterTargets cache pollution (inflated 39/50=78% reading; TRUE coverage is 30/50=60% pre-Layer-2 because cached-discovery adapters walk entire data/ats-discovery-cache.json with no filter against current portals.yml's enabled list). P-8 Layer 1 misses Ashby on JS-embed pages — user-confirmed Ramp (119 jobs) + Supabase (46 jobs) on api.ashbyhq.com/posting-api/job-board/{ramp,supabase} but Layer 1 marked them no-ats-found. P-9 Layer 2 firecrawl-extract.mjs should detect ATS in extracted jobs[].url values and promote no-ats-found → discovered (self-correcting). PRIORITY ORDER: (a) fix P-7 iterTargets filter in scripts/ats-adapters/_lib.mjs (~5 lines + unit test); (b) diagnose P-8 — scrape Ramp+Supabase with actions:[{wait:5000ms}] and inspect for ashbyhq.com markers, possibly expand PROVIDER_PATTERNS.ashby for embed.ashbyhq.com / assets.ashbyhq.com; (c) implement P-9 in firecrawl-extract.mjs ~15 lines; (d) re-run sample-50 smoke for TRUE coverage measurement (~50-100 credits). USER GATES still pending: Step 9 firecrawl-plan-caps.tsv (template at career-ops/data/firecrawl-plan-caps.tsv.template) + Step 10 full sample-50 with enrich (~1500 credits). All Phase 2.8 implementation code is in place — Codex job is bug fixes + measurement, not greenfield. Branch tip bc45b4e + 1 more commit pending for this handoff. ~290 Firecrawl credits used; 100,710 remaining.
+
+### Files touched
+career-ops/firecrawl-discover.mjs career-ops/firecrawl-extract.mjs career-ops/lib/ats-detect.mjs career-ops/lib/ats-clients.mjs career-ops/enrich-jobs.mjs scripts/ats-adapters/_lib.mjs scripts/full-scan-orchestrator.mjs scripts/acceptance-audit-phase2.8.py .claude/memory/pitfalls.md .claude/memory/state.md docs/STATUS.md career-ops/data/firecrawl-plan-caps.tsv.template
 
 ### What needs validation
 (fill in during handoff; default: diff the commits listed above)

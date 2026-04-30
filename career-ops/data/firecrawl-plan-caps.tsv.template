@@ -1,0 +1,8 @@
+field	value	notes
+plan_name		(e.g. "Hobby" / "Standard" / "Growth" — see firecrawl.dev/dashboard)
+monthly_credits		(e.g. 100000 — your credit cap per month)
+credits_remaining		(check dashboard at observation time)
+rpm_limit		(requests per minute; from dashboard usage page)
+concurrent_limit		(max simultaneous requests; check Settings)
+observed_at		(ISO 8601 timestamp when you read these from dashboard)
+notes		(any Plan-specific quirks; e.g. JSON-mode counts as 5x?)
