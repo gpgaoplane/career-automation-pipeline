@@ -50,6 +50,23 @@ async function _post(url, body, opts = {}) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Idempotent URL-component encoding: handles both "Jasper AI" (raw) and
+// "Jasper%20AI" (already encoded). decodeURIComponent on a non-encoded
+// string is a no-op; on an already-encoded string, it normalizes back to
+// the raw form. Then encodeURIComponent re-encodes correctly.
+//
+// Fixes Phase 2.8 Step 5 Jasper bug: Layer 1 discovery captured slug as
+// already-URL-encoded ("Jasper%20AI"), then fetchAshby double-encoded to
+// "Jasper%2520AI" → 404. With safeEncode, both forms produce the same
+// correct result.
+function safeEncode(s) {
+  try {
+    return encodeURIComponent(decodeURIComponent(s));
+  } catch {
+    return encodeURIComponent(s);
+  }
+}
+
 // ────────────────────────────────────────────────────────────────────────
 // Greenhouse — public Job Board API (no auth)
 // Endpoint: GET https://boards-api.greenhouse.io/v1/boards/{slug}/jobs
@@ -57,7 +74,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // ────────────────────────────────────────────────────────────────────────
 
 export async function fetchGreenhouse(slug) {
-  const url = `https://boards-api.greenhouse.io/v1/boards/${encodeURIComponent(slug)}/jobs?content=true`;
+  const url = `https://boards-api.greenhouse.io/v1/boards/${safeEncode(slug)}/jobs?content=true`;
   const data = await _get(url);
   const jobs = (data.jobs || []).map((j) => ({
     title: j.title || "",
@@ -75,7 +92,7 @@ export async function fetchGreenhouse(slug) {
 // ────────────────────────────────────────────────────────────────────────
 
 export async function fetchAshby(slug) {
-  const url = `https://api.ashbyhq.com/posting-api/job-board/${encodeURIComponent(slug)}?includeCompensation=true`;
+  const url = `https://api.ashbyhq.com/posting-api/job-board/${safeEncode(slug)}?includeCompensation=true`;
   const data = await _get(url);
   const jobs = (data.jobs || []).map((j) => ({
     title: j.title || "",
@@ -93,7 +110,7 @@ export async function fetchAshby(slug) {
 // ────────────────────────────────────────────────────────────────────────
 
 export async function fetchLever(slug) {
-  const url = `https://api.lever.co/v0/postings/${encodeURIComponent(slug)}?mode=json`;
+  const url = `https://api.lever.co/v0/postings/${safeEncode(slug)}?mode=json`;
   const data = await _get(url);
   const jobs = (Array.isArray(data) ? data : []).map((j) => ({
     title: j.text || "",
@@ -166,7 +183,7 @@ export async function fetchSmartrecruiters(companyId, { maxJobs = 200 } = {}) {
   const jobs = [];
   while (jobs.length < maxJobs) {
     const url =
-      `https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(companyId)}/postings` +
+      `https://api.smartrecruiters.com/v1/companies/${safeEncode(companyId)}/postings` +
       `?limit=${limit}&offset=${offset}`;
     const data = await _get(url);
     const content = data.content || [];
@@ -258,13 +275,13 @@ export async function fetchRecruitee(baseUrl) {
 // ────────────────────────────────────────────────────────────────────────
 
 export async function fetchWorkable(slug) {
-  const primary = `https://apply.workable.com/api/v1/widget/accounts/${encodeURIComponent(slug)}`;
+  const primary = `https://apply.workable.com/api/v1/widget/accounts/${safeEncode(slug)}`;
   let data;
   try {
     data = await _get(primary);
   } catch (e) {
     // Try legacy fallback
-    const legacy = `https://www.workable.com/api/accounts/${encodeURIComponent(slug)}?details=true`;
+    const legacy = `https://www.workable.com/api/accounts/${safeEncode(slug)}?details=true`;
     data = await _get(legacy);
   }
   const jobs = (data.jobs || []).map((j) => ({
