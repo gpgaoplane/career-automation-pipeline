@@ -19,20 +19,9 @@ export const PIPELINE_MD = resolve(CAREER_OPS, "data", "pipeline.md");
 export const SCAN_HISTORY = resolve(CAREER_OPS, "data", "scan-history.tsv");
 export const ATS_DISCOVERY_CACHE = resolve(CAREER_OPS, "data", "ats-discovery-cache.json");
 
-// URL patterns for detecting which provider a portals.yml entry belongs to.
-// Same 8-provider matrix as design v2 §4.1.1.
-export const PROVIDER_PATTERNS = {
-  greenhouse: /(?:boards|job-boards|boards-api)\.greenhouse\.io\/([^/?#]+)/i,
-  ashby: /jobs\.ashbyhq\.com\/([^/?#]+)/i,
-  lever: /jobs\.lever\.co\/([^/?#]+)/i,
-  // Workday: match `{tenant}.wd{N}.myworkdayjobs.com/{site}` anywhere in URL.
-  // Captures: [1]=tenant, [2]=instance digits, [3]=site
-  "workday-cxs": /([\w-]+)\.wd(\d+)\.myworkdayjobs\.com\/([\w-]+)/i,
-  smartrecruiters: /(?:careers|jobs)\.smartrecruiters\.com\/([^/?#]+)/i,
-  personio: /([\w-]+)\.jobs\.personio\.(?:de|com)/i,
-  recruitee: /([\w-]+)\.recruitee\.com/i,
-  workable: /apply\.workable\.com\/([^/?#]+)/i,
-};
+// URL patterns + detector — single source of truth in career-ops/lib/ats-detect.mjs.
+import { PROVIDER_PATTERNS, detectProvider } from "../../career-ops/lib/ats-detect.mjs";
+export { PROVIDER_PATTERNS, detectProvider };
 
 export function loadPortals() {
   const text = readFileSync(PORTALS_YML, "utf-8");
@@ -77,32 +66,6 @@ export function buildTitleFilter(portals) {
   };
 }
 
-// Detect which provider an entry belongs to by URL pattern. Returns
-// {provider, slug} or null. The first matching provider in PROVIDER_PATTERNS
-// wins.
-export function detectProvider(url) {
-  if (!url) return null;
-  for (const [provider, pat] of Object.entries(PROVIDER_PATTERNS)) {
-    const m = url.match(pat);
-    if (m) {
-      if (provider === "workday-cxs") {
-        // Workday needs {host, site} from regex match groups
-        // m[1]=tenant, m[2]=instance digit, m[3]=site
-        const tenant = m[1];
-        const instance = m[2];
-        const site = m[3];
-        return {
-          provider,
-          host: `${tenant}.wd${instance}.myworkdayjobs.com`,
-          site,
-        };
-      }
-      return { provider, slug: m[1] };
-    }
-  }
-  return null;
-}
-
 // Iterator over portals.yml + cache entries that match a given provider.
 // Yields { companyName, fetchArgs } where fetchArgs is the kwarg shape for
 // the provider's fetcher in lib/ats-clients.mjs.
@@ -123,14 +86,34 @@ export function* iterTargets(portals, cache, providerName) {
     };
   }
 
-  // From discovery cache
+  // From discovery cache. Accept BOTH schemas:
+  //   v1 (legacy custom-scraper.mjs): {ats:"workday", tenant, instance, site, discovered:"YYYY-MM-DD"}
+  //   v2 (firecrawl-discover.mjs): {ats:"workday-cxs", host, site, discovered_at:"<ISO>"}
+  // Plus older "workday" → "workday-cxs" alias.
   for (const [companyName, info] of Object.entries(cache || {})) {
-    if (!info || info.ats !== providerName) continue;
+    if (!info) continue;
     if (info.status === "no-ats-found" || info.status === "ambiguous") continue;
+    // Provider name alias: legacy "workday" matches new "workday-cxs"
+    const cacheProvider = info.ats === "workday" ? "workday-cxs" : info.ats;
+    if (cacheProvider !== providerName) continue;
     if (providerName === "workday-cxs") {
+      // Resolve host from either v2 (info.host) or v1 (tenant+instance)
+      let host = info.host;
+      if (!host && info.tenant && info.instance) {
+        host = `${info.tenant}.${info.instance}.myworkdayjobs.com`;
+      }
+      if (!host) continue;
+      let site = info.site || "External";
+      // Skip stale legacy cache entries where custom-scraper put a locale
+      // (e.g., "en-US") in the site field. These return 404 against the CXS
+      // endpoint. Caller can re-discover via firecrawl-discover.mjs --force.
+      if (/^[a-z]{2}(-[A-Z]{2})?$/.test(site)) {
+        console.warn(`  [ats-adapter] ${companyName}: cache has locale-as-site "${site}" — skipping; re-run firecrawl-discover --force --company "${companyName}" to fix`);
+        continue;
+      }
       yield {
         companyName,
-        fetchArgs: { host: info.host, site: info.site || "External" },
+        fetchArgs: { host, site },
         source: "discovery-cache",
       };
     } else if (info.slug) {
