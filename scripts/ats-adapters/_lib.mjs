@@ -166,6 +166,56 @@ export function appendHistoryRow({ url, company, title, portal }) {
  * @param {boolean} [args.dryRun=false]
  * @returns {Promise<{provider, attempted, added, errors}>}
  */
+// Cache-only variant: only iterates discovery cache entries (skip portals.yml).
+// Used by Greenhouse/Ashby/Lever adapter scripts since scan.mjs already
+// handles those providers' portals.yml direct-ATS entries.
+export async function runAdapterCacheOnly({ providerName, fetcher, dryRun = false }) {
+  const portals = loadPortals();
+  const cache = loadDiscoveryCache();
+  const seen = loadSeenUrls();
+  const titleFilter = buildTitleFilter(portals);
+
+  // Filter to cache-only targets
+  const targets = [...iterTargets({}, cache, providerName)]; // empty portals → no portals.yml entries
+  console.error(`[${providerName}-cached] ${targets.length} cache target(s)`);
+
+  let added = 0;
+  const errors = [];
+  for (const target of targets) {
+    try {
+      const result = typeof target.fetchArgs === "object"
+        ? await fetcher(target.fetchArgs)
+        : await fetcher(target.fetchArgs);
+      const matched = result.jobs.filter((j) => titleFilter(j.title) && j.url);
+      let newCount = 0;
+      for (const job of matched) {
+        if (seen.has(job.url)) continue;
+        seen.add(job.url);
+        if (!dryRun) {
+          appendPipelineRow({ url: job.url, company: target.companyName, title: job.title });
+          appendHistoryRow({
+            url: job.url,
+            company: target.companyName,
+            title: job.title,
+            portal: providerName,
+          });
+        }
+        newCount++;
+      }
+      added += newCount;
+      console.error(
+        `  ${target.companyName} (cache): ${newCount}/${result.jobs.length} jobs ` +
+        `added (after title filter + dedup)`
+      );
+    } catch (e) {
+      errors.push({ company: target.companyName, error: e.message?.slice(0, 200) });
+      console.error(`  ${target.companyName} (cache): ERROR ${e.message?.slice(0, 100)}`);
+    }
+  }
+  console.error(`[${providerName}-cached] DONE — attempted=${targets.length}, added=${added}, errors=${errors.length}${dryRun ? " (DRY RUN)" : ""}`);
+  return { provider: `${providerName}-cached`, attempted: targets.length, added, errors };
+}
+
 export async function runAdapter({ providerName, fetcher, dryRun = false }) {
   const portals = loadPortals();
   const cache = loadDiscoveryCache();

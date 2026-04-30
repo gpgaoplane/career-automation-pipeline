@@ -11,13 +11,21 @@ import { run as runSmartrecruiters } from "./smartrecruiters.mjs";
 import { run as runPersonio } from "./personio.mjs";
 import { run as runRecruitee } from "./recruitee.mjs";
 import { run as runWorkable } from "./workable.mjs";
+import { run as runGreenhouseCached } from "./greenhouse-cached.mjs";
+import { run as runAshbyCached } from "./ashby-cached.mjs";
+import { run as runLeverCached } from "./lever-cached.mjs";
 
 const ADAPTERS = [
+  // 5 NEW providers per D-15: handle BOTH portals.yml direct-ATS + cache discoveries
   { name: "workday-cxs", run: runWorkday },
   { name: "smartrecruiters", run: runSmartrecruiters },
   { name: "personio", run: runPersonio },
   { name: "recruitee", run: runRecruitee },
   { name: "workable", run: runWorkable },
+  // 3 EXISTING providers (scan.mjs handles portals.yml; these handle cache discoveries only)
+  { name: "greenhouse-cached", run: runGreenhouseCached },
+  { name: "ashby-cached", run: runAshbyCached },
+  { name: "lever-cached", run: runLeverCached },
 ];
 
 async function main() {

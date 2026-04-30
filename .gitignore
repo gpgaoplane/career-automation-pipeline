@@ -28,3 +28,4 @@ Thumbs.db
 # Editor
 .vscode/settings.json
 .firecrawl-key
+scripts/sample-50.yml
