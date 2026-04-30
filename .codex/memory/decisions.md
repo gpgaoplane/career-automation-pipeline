@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: codex
-last-updated: 2026-04-29T17:26:59-04:00
+last-updated: 2026-04-29T18:37:38-04:00
 read-if: "you need Codex's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -41,4 +41,11 @@ Append new decisions below. Format:
 **Choice:** Appended inline §11 review comments to the main Firecrawl design plan.
 **Rationale:** The review found cross-artifact drift that would materially shape the implementation plan: missing sibling adapters, stale `/v1/extract` assumptions, outdated cost/TTL/risk wording, placeholder acceptance criteria, and inconsistent enrichment policy.
 **Tradeoffs:** Adds one more design-integration pass, but prevents the implementation plan from inheriting baseline-knowledge assumptions the verification report already disproved.
+
+## D-4 — Inline review for Firecrawl implementation plan — 2026-04-29T18:37:38-04:00
+**Context:** Claude handed off the Phase 2.8 implementation plan for Codex review after integrating the Firecrawl design review into v2.
+**Alternatives:** Return a short handoff; append substantive inline §12 review comments; approve as-is and let Step 0 execution discover issues.
+**Choice:** Appended inline §12 review comments to the implementation plan.
+**Rationale:** The plan is directionally sound, but path resolution, cwd conventions, dry-run verification, and Layer 3 fallback wiring could break execution or let acceptance checks pass without proving the intended behavior.
+**Tradeoffs:** Adds another revision before Step 0, but keeps the first implementation pass from starting with avoidable command/path and fallback ambiguity.
 <!-- section:entries:end -->

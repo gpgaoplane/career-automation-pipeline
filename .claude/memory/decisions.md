@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-29T18:00:00-04:00
+last-updated: 2026-04-29T19:30:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -528,5 +528,63 @@ The largest single finding: **Workday's public CXS endpoint** at `POST {tenant}.
 - Implementation plan can now be written from a clean v2 design plan + corrected addendum + amended D-14 + D-17 audit trail.
 - 11 ACs in §7 are now the verification gate set (was 6 placeholder).
 - File list for Phase 2.8 includes `lib/firecrawl.mjs`, `firecrawl-discover.mjs`, `firecrawl-extract.mjs`, refactored `enrich-jobs.mjs`, 5 sibling adapters in `scripts/ats-adapters/`, plus `lib/ats-clients.mjs`.
+
+## D-18 — Integrate Codex review of Phase 2.8 implementation plan — 2026-04-29T19:30:00-04:00
+
+**Context:** Codex reviewed Phase 2.8 implementation plan v1 (handoff `20260429-183239-0925`) and surfaced 5 ⚠ Issues + 2 ❓ Questions + 2 💭 Optional improvements in §12 of `docs/plans/2026-04-29-firecrawl-pivot-implementation.md`. User asked Claude to be analytical: verify each Codex point against primary sources (implementation plan + design v2 + verification doc + D-14/D-15/D-17), decide accept/modify/defer/reject per technical merit.
+
+**Alternatives:**
+- Reject Codex's findings (would be wrong; all verify against primary sources)
+- Accept all blindly without verification
+- **Verify each finding analytically, then accept/modify/defer/reject per technical merit**
+
+**Choice:** Third option. All 5 ⚠ Issues ACCEPTED. 1 of 2 ❓ Questions ACCEPTED (HEAD+GET fallback for Step 0); 1 of 2 DEFERRED (Step 5/10 cp+overwrite pattern kept — cwd ambiguity resolved by §0a convention). Both 💭 Optional improvements ACCEPTED. Implementation plan revised in-place to revision: v2; Codex's §12 review preserved as audit trail; Claude's reconciliation documented in §13 with disposition table.
+
+**Verifications + dispositions:**
+
+1. **⚠ Issue 1 — Adapter path/cwd mismatch.** Verified: npm script paths resolve relative to package.json's directory; `node scripts/...` from `career-ops/package.json` points at `career-ops/scripts/...` not repo root. **ACCEPT.** §6.3 marked QI-1 RESOLVED inline (root-level location). §6.8 npm scripts updated to `node ../scripts/ats-adapters/run-all.mjs`. §0a command-cwd convention added.
+
+2. **⚠ Issue 2 — Inconsistent cwd across steps.** Verified: `import('./lib/firecrawl.mjs')` only works from career-ops/; backup paths without prefix imply career-ops/; root-level scripts imply repo root. **ACCEPT.** §0a section added defining cwd per step type. Verification gates per step now explicitly state `(cwd = ...)` annotation.
+
+3. **⚠ Issue 3 — `full-scan --dry-run`/`--list` not actually supported.** Verified: `npm run X && npm run Y` cannot conditionally print; npm `--dry-run` is for install not run. **ACCEPT.** Replaced plain chain with new `scripts/full-scan-orchestrator.mjs` invoking 6 chain steps + supporting `--dry-run`/`--list` + post-run Layer 3 fallback fan-out. New npm scripts: `full-scan`, `full-scan:dry-run`, `full-scan:list`.
+
+4. **⚠ Issue 4 — Layer 3 fallback under-specified.** Verified: design v2 §4.1 says fallback triggers on Firecrawl 5xx / `--no-firecrawl` / cap exhaustion, but implementation v1 had only clean exit, no queue, no orchestrator-driven fan-out. AC-11 could pass with 0 invocations without proving wiring. **ACCEPT.** Concrete fallback contract:
+   - Step 1 wrapper appends rows to `data/firecrawl-fallback-queue.tsv` on hard-stop with `{company, url, layer, reason, timestamp}`.
+   - Step 4/6/7 (firecrawl-discover/extract/enrich) all append on their hard-stop conditions.
+   - `full-scan-orchestrator.mjs` reads queue post-chain and invokes `npm run custom-scrape -- --queue <path>` if non-empty (no-op if empty).
+   - AC-11 split into AC-11a (wired — verified by forced-failure subtest) + AC-11b (used — ≤5% on normal run; 0 invocations OK as long as wiring works).
+
+5. **⚠ Issue 5 — Source-of-truth precedence contradicts design v2 + addendum has stale Q-FC-1.** Verified: implementation v1 §0 had design v2 priority 1 / verification 2; design v2 §0 had verification overriding design baseline. Addendum lines 13-46 + 202-207 still asked "verify next session" for Q-FC-1 even though verification doc Q1 already verified it. **ACCEPT.** §0 rewritten so verification report is priority 1 (overrides everywhere conflicts remain), D-14..D-18 priority 2, design v2 priority 3 (governs only after the verification + D-N filter), addendum priority 4 with Q-FC-1 baseline marked HISTORICAL/SUPERSEDED. Decisions addendum Q-FC-1 section gets explicit `**SUPERSEDED 2026-04-29 by verification doc Q1+Q2**` marker.
+
+6. **❓ Q1 — Step 5/10 cp-overwrite vs project-root orchestrator.** **DEFER.** Phase 2.7 used cp+overwrite-and-restore from `career-ops/`; pattern works. Cwd ambiguity Codex was concerned about is resolved by §0a convention; explicit `career-ops/` cwd for Step 5/10 backup commands removes the path-restore risk. No orchestrator change needed for sample runs.
+
+7. **❓ Q2 — Step 0 HEAD with GET fallback for 405/403/timeouts.** **ACCEPT.** Many careers sites treat HEAD differently from GET; without GET fallback, the script would over-classify rows as `dead` and waste manual-gate review on false positives. §6.0 method updated to "HEAD-first, GET fallback on 405/403/timeout/no-Content-Length".
+
+8. **💭 O1 — RI-4 ambiguous slug resolution.** **ACCEPT.** Mitigation rewritten: log all candidates; auto-pick only on strong company-name agreement (Levenshtein ≤2 against company name); otherwise mark `{ats: null, status: "ambiguous", candidates: [...]}` for manual review.
+
+9. **💭 O2 — Workday CXS pagination test.** **ACCEPT.** §6.2 verification gate now includes explicit pagination test (`limit:20, offset:0` + `offset:20`, dedup by `externalPath`).
+
+**Rationale:**
+
+- All 5 ⚠ Issues verified against primary sources — Codex was right on each. No performative agreement; technical correctness drives integration.
+- The Layer 3 fallback wire-up (Issue 4) is the most architecturally significant fix: the new fallback queue + orchestrator-driven fan-out replaces "wrappers exit cleanly and we hope someone notices" with "wrappers append, orchestrator consumes, AC-11a verifies wiring works in forced-failure mode".
+- The §0 precedence rewrite (Issue 5) prevents future drift: implementation plan executors will read verification doc first, not design v2 baseline-knowledge sections that may still have staleness.
+- Q1 deferred because Phase 2.7 pattern (cp+overwrite-and-restore) is battle-tested; the cwd ambiguity is the actual problem and §0a convention solves it directly.
+- Codex re-review of v2 OPTIONAL — matches Phase 2.7 D-12 pattern + Phase 2.8 design v1→v2 D-17 pattern. Correctness pass, not architecture change.
+
+**Tradeoffs:**
+
+- New `scripts/full-scan-orchestrator.mjs` adds ~120 lines of code we didn't have before. Counter: it solves both the dry-run requirement (Issue 3) and the Layer 3 fan-out (Issue 4) in one place; complexity is justified.
+- Step 1, 4, 6, 7 verification gates are slightly heavier (forced-failure subtests added). Counter: AC-11 wiring needs to be verified, not assumed.
+- Implementation plan v2 grew (added §0a + §13 reconciliation table + per-step cwd annotations + fallback-queue spec). Wall-clock for execution unchanged — the architecture is the same; just specified more precisely.
+
+**Implementation impact:**
+
+- New file Step 8 introduces: `scripts/full-scan-orchestrator.mjs` (replaces plain npm chain).
+- New gitignored data file: `career-ops/data/firecrawl-fallback-queue.tsv`.
+- New verification subtests in Step 1, 4, 6, 7 (forced-failure path).
+- Step 2 verification adds Workday CXS pagination assertion.
+- Step 0 method adds GET fallback after HEAD.
+- §6.5 Step 5 sample-run command updated to use `../scripts/ats-adapters/run-all.mjs` per cwd convention.
 
 <!-- section:entries:end -->

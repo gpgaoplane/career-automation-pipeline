@@ -2,7 +2,7 @@
 status: active
 type: design-addendum
 owner: claude
-last-updated: 2026-04-29T18:00:00-04:00
+last-updated: 2026-04-29T19:30:00-04:00
 read-if: "you are about to write the Phase 2.8 implementation plan or execute it"
 ---
 
@@ -10,7 +10,13 @@ read-if: "you are about to write the Phase 2.8 implementation plan or execute it
 
 ## Q-FC-1: Firecrawl extract API — per-call schema vs uploaded schema
 
-**Answer (baseline knowledge, NEEDS VERIFICATION via Firecrawl docs in next session):** Firecrawl's `/v1/scrape` and `/v1/extract` endpoints accept a JSON Schema **per call** in the request body. There is no separate "upload + reference" model in their public API — schemas are inline. The shape is roughly:
+> **⚠ HISTORICAL — SUPERSEDED 2026-04-29 by `docs/design/2026-04-29-firecrawl-ats-verification.md` Q1+Q2 (verified against primary sources).**
+>
+> The verification doc confirmed: canonical request shape is `formats:["json"]` + `jsonOptions:{schema, prompt}` in `/v1/scrape` (NOT legacy `extract` / `extractorOptions` / `extractionSchema`). `/v1/extract` is on a separate token-based subscription pool and is NOT used by this project.
+>
+> The baseline-knowledge text below is preserved for audit trail only. Implementation MUST follow the verification doc, not this section.
+
+**Answer (HISTORICAL — superseded; preserved for audit only):** Firecrawl's `/v1/scrape` and `/v1/extract` endpoints accept a JSON Schema **per call** in the request body. There is no separate "upload + reference" model in their public API — schemas are inline. The shape is roughly:
 
 ```javascript
 fetch('https://api.firecrawl.dev/v1/scrape', {
@@ -43,7 +49,7 @@ fetch('https://api.firecrawl.dev/v1/scrape', {
 
 **Implication for our code:** define the JobListing schema as a JS constant in `lib/firecrawl.mjs`. Pass it on every `extract` call. Version the schema as `JOB_LISTING_SCHEMA_V1` so future schema changes can be tracked and the cache invalidated correctly.
 
-**Verification needed in next session:** confirm exact request shape at `https://docs.firecrawl.dev/features/extract` (or the v1 spec). The above is my best understanding from training-data exposure to Firecrawl through 2025; it may have evolved.
+**Verification needed in next session:** ~~confirm exact request shape at `https://docs.firecrawl.dev/features/extract` (or the v1 spec). The above is my best understanding from training-data exposure to Firecrawl through 2025; it may have evolved.~~ **DONE 2026-04-29 via `docs/design/2026-04-29-firecrawl-ats-verification.md` Q1+Q2 — see HISTORICAL marker above.**
 
 ---
 

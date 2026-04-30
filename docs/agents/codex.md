@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: codex
-last-updated: 2026-04-29T17:26:59-04:00
+last-updated: 2026-04-29T18:37:38-04:00
 read-if: "you need to see Codex's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -113,6 +113,35 @@ Updates fanned out this task:
 - `.collab/INDEX.md` ........ bumped registry timestamps for touched managed files
 
 Missing / intentionally skipped: no `career-ops/*` files were modified; `docs/plans/2026-04-29-firecrawl-pivot-decisions.md`, `docs/design/2026-04-29-firecrawl-ats-verification.md`, and `.claude/memory/decisions.md` were read but not edited.
+
+## 2026-04-29 — Reviewed Claude Phase 2.8 Firecrawl implementation plan
+
+**Goal:** Pick up handoff `20260429-183239-0925` on `feat/phase-2.8-firecrawl` and review the Phase 2.8 implementation plan against its §10 checklist plus the eight focus areas in Claude's handoff.
+
+**What I read:** `docs/plans/2026-04-29-firecrawl-pivot-implementation.md`, `docs/plans/2026-04-29-firecrawl-pivot-design.md`, `docs/plans/2026-04-29-firecrawl-pivot-decisions.md`, `docs/design/2026-04-29-firecrawl-ats-verification.md`, `.claude/memory/decisions.md`, and the handoff block in `docs/agents/claude.md`.
+
+**Handoff:** Picked up handoff `20260429-183239-0925`, wrote inline implementation-plan review comments, closed the handoff, and acknowledged catchup.
+
+**What I found:** The implementation plan is broadly aligned with design v2, D-14/D-15/D-17, and the verification report, but needs a v2 before Step 0:
+- Root `scripts/ats-adapters/` paths conflict with `career-ops/package.json` npm script cwd.
+- Several verification commands assume different working directories, making Step 1/5/8 fragile.
+- `npm run full-scan --dry-run` / `--list` is not implemented by the shell-chain script as written.
+- Layer 3 custom-scraper fallback is specified in design but not concretely wired into the runtime path, so AC-11 could pass as "0 invocations" without proving fallback works.
+- Source-of-truth precedence should explicitly let the verification report + D-14/D-15/D-17 override stale addendum text.
+
+**Feedback location:** Appended `## §12. Implementation Plan Review Comments` to `docs/plans/2026-04-29-firecrawl-pivot-implementation.md`.
+
+### Task Receipt
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` ........ appended Codex §12 implementation-plan review comments and bumped frontmatter timestamp
+- `docs/agents/claude.md` ........ handoff `20260429-183239-0925` picked up and closed via framework script; frontmatter timestamp updated
+- `docs/agents/codex.md` ........ added this Phase 2.8 implementation-plan review log entry and Receipt
+- `.codex/memory/state.md` ........ recorded completed Phase 2.8 implementation-plan review state, next steps, open questions, and watermark
+- `.codex/memory/context.md` ........ recorded durable implementation-plan findings about path/cwd/fallback/precedence risks
+- `.codex/memory/decisions.md` ........ added D-4 documenting the inline-review choice
+- `.collab/INDEX.md` ........ bumped registry timestamps for touched managed files
+
+Missing / intentionally skipped: no `career-ops/*` files were modified; `.codex/memory/pitfalls.md` unchanged because the Git Bash escalation pitfall was already documented.
 
 ## Handoff blocks
 

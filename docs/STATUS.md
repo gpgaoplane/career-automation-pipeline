@@ -1,10 +1,11 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-29
-**Current Phase:** Phase 2.8 — Firecrawl pivot DESIGN v2 (Codex-reviewed + integrated) + IMPLEMENTATION PLAN written. Ready to merge `feat/multi-agent-collab` to main, then execute implementation plan on a fresh branch. Phase 2.7 implementation remains complete (18/18 acceptance criteria pass).
+**Current Phase:** Phase 2.8 — Firecrawl pivot DESIGN v2 + IMPLEMENTATION PLAN v2 (Codex-reviewed + integrated) on `feat/phase-2.8-firecrawl` branch. Awaiting user signal to begin Step 0 execution. Phase 2.7 implementation remains complete (18/18 ACs).
 
 ## Done
-- [x] **Phase 2.8 implementation plan written** (2026-04-29, `feat/multi-agent-collab`): `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` — 12 sections covering pre-flight checks, branch+commit strategy, 12 ordered steps (URL triage → lib/firecrawl → lib/ats-clients → 5 sibling adapters → firecrawl-discover → smoke validation → firecrawl-extract → enrich-jobs Firecrawl-first refactor → wire full-scan → dashboard rate-cap manual gate → sample-50 verification → AC audit → Phase 2.6 readiness signal), per-step verification gates + rollback procedures, RI-1..RI-8 implementation risks, QI-1..QI-5 deferred decisions, reviewer checklist for optional Codex re-review.
+- [x] **Phase 2.8 implementation plan v2 — Codex review integrated** (2026-04-29, `feat/phase-2.8-firecrawl`): D-18 documents integration. All 5 ⚠ Issues ACCEPTED (path/cwd mismatch, inconsistent cwd, full-scan dry-run support, Layer 3 fallback contract, source-precedence stale wording); 1 of 2 ❓ Questions ACCEPTED (HEAD+GET fallback); 1 DEFERRED (cp+overwrite kept); 2 💭 Optional ACCEPTED (RI-4 ambiguity rewrite, Workday CXS pagination test). Implementation plan v2 changes: §0 precedence rewritten with verification report as priority 1; new §0a command-cwd convention; Step 0 HEAD+GET fallback; Step 1/4/6/7 Layer 3 fallback queue wiring; Step 2 Workday pagination test; Step 8 new `scripts/full-scan-orchestrator.mjs` replaces plain npm chain (supports `--dry-run`/`--list` + post-run Layer 3 fan-out); AC-11 split into AC-11a (wired) + AC-11b (used); RI-4 ambiguous slug resolution rewritten with company-name agreement gate; QI-1 RESOLVED (sibling adapters at repo-root `scripts/ats-adapters/`). Decisions addendum Q-FC-1 baseline marked HISTORICAL/SUPERSEDED.
+- [x] **Phase 2.8 implementation plan v1 written** (2026-04-29, commit 7d67b2b): `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` — 12 sections covering pre-flight checks, branch+commit strategy, 12 ordered steps (URL triage → lib/firecrawl → lib/ats-clients → 5 sibling adapters → firecrawl-discover → smoke validation → firecrawl-extract → enrich-jobs Firecrawl-first refactor → wire full-scan → dashboard rate-cap manual gate → sample-50 verification → AC audit → Phase 2.6 readiness signal), per-step verification gates + rollback procedures, RI-1..RI-8 implementation risks, QI-1..QI-5 deferred decisions, reviewer checklist for optional Codex re-review.
 - [x] **Phase 2.8 design v2 — Codex review integrated** (2026-04-29, `feat/multi-agent-collab`):
   - Codex reviewed Phase 2.8 design via handoff `20260429-164715-2bcf`; surfaced 5 ⚠ Issues + 3 ❓ Questions + 2 💭 Optional improvements in `docs/plans/2026-04-29-firecrawl-pivot-design.md` §11
   - Each Codex point verified against primary sources (verification doc + D-14/D-15) before integration; no performative agreement
@@ -81,10 +82,9 @@
   - Codex onboarding deferred — user triggers `--join codex` from a Codex session
 
 ## In Progress / Up Next
-- [ ] **Merge `feat/multi-agent-collab` to main** as one coherent unit (Phase 2.7 + 2.8 design v2 + 2.8 implementation plan). Then branch `feat/phase-2.8-firecrawl` from main for execution.
-- [ ] **Optional: Codex review of Phase 2.8 implementation plan** before execution (matches Phase 2.7 implementation-plan-review pattern via handoff 20260429-001531-cb9a)
-- [ ] **Execute Phase 2.8 implementation plan** Steps 0 → 12 per `docs/plans/2026-04-29-firecrawl-pivot-implementation.md`
-- [ ] **Phase 2.6 clean rescan** (executable after Phase 2.8 implementation lands)
+- [ ] **USER GATE — Phase 2.8 implementation execution authorization.** Per user direction: notify before Step 0 with high-level overview; await signal.
+- [ ] **Execute Phase 2.8 implementation plan v2** Steps 0 → 12 per `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` (12 atomic steps, ~5h focused work, manual gates at Steps 0/5/9/10).
+- [ ] **Phase 2.6 clean rescan** (executable after Phase 2.8 implementation lands).
 
 ## Blockers
 None
@@ -93,4 +93,4 @@ None
 `docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
 
 ## Handoff Note
-**Phase 2.7** complete (commits a13b9a5 → 9ff216a, 18/18 ACs pass). **Phase 2.8 design v2** Codex-reviewed + integrated (D-17 records integration; D-14 inline-corrected for firecrawl-enrich → firecrawl-extract naming typo + softened rate-cap claim; decisions addendum Q-FC-4 rewritten as pure Firecrawl-first). **Phase 2.8 implementation plan** written: `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` — 12 ordered steps with per-step verification gates + rollback, mapped to all 11 ACs, 8 implementation risks documented, 5 deferred decisions. **Next sequence (per user direction):** (1) merge `feat/multi-agent-collab` to main as coherent unit (Phase 2.7 + 2.8 design v2 + 2.8 implementation plan); (2) optional Codex review of implementation plan before execution; (3) branch `feat/phase-2.8-firecrawl` from main; (4) execute Steps 0 → 12; (5) Phase 2.6 clean rescan. All open Q-FC questions resolved; root CLAUDE.md `@import` shim confirmed working; smoke-test scripts deleted post-purpose (commit 626e1ce).
+**Phase 2.7** complete (commits a13b9a5 → 9ff216a, 18/18 ACs pass; merged to main via 39bac3d). **Phase 2.8 design v2** + **implementation plan v2** Codex-reviewed + integrated. D-17 records design v1→v2 integration; D-18 records implementation v1→v2 integration. Latest changes: §0 precedence (verification=priority 1); §0a cwd convention; Step 0 HEAD+GET fallback; Step 1/4/6/7 fallback-queue wiring; Step 8 new `full-scan-orchestrator.mjs`; AC-11a/AC-11b split; QI-1 RESOLVED. Branch `feat/phase-2.8-firecrawl` (off main) ready for Step 0 execution. **Next:** USER GATE — user notification + signal expected before Step 0 execution per explicit user direction. After signal: 12-step atomic execution per implementation plan, with manual gates at Steps 0 (URL triage review), 5 (smoke result review), 9 (Firecrawl dashboard rate-cap), 10 (full sample-50 review).

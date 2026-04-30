@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: codex
-last-updated: 2026-04-29T17:26:59-04:00
+last-updated: 2026-04-29T18:37:38-04:00
 read-if: "you need durable project truths as understood by Codex"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -36,4 +36,13 @@ Codex reviewed the Phase 2.8 Firecrawl design, decisions addendum, verification 
 - The verification report supports D-14/D-15: use `/v1/scrape` with `formats:["html","links"]` for discovery; use `formats:["json"]` + `jsonOptions` only when JSON mode is needed; avoid `/v1/extract` by default; JSON mode costs 5 credits/page; Workday CXS, SmartRecruiters, Personio, Recruitee, and Workable have no-auth paths worth direct adapters.
 - The main design plan still has stale pre-verification content: Layer 0 is `scan.mjs` only, five sibling adapters are missing, `/v1/extract` language remains, cost/TTL assumptions are outdated, and acceptance criteria are still placeholders.
 - Q-FC-4 needs one settled enrichment fetch policy before implementation: pure Firecrawl-first vs HTTP-first for static ATS JD pages with Firecrawl fallback.
+
+## 2026-04-29T18:37:38-04:00 — Firecrawl implementation plan review findings
+
+Codex reviewed the Phase 2.8 implementation plan against design v2, the decisions addendum, the verification report, and Claude D-14/D-15/D-17. Durable findings:
+
+- The plan is broadly aligned on architecture: no `/v1/extract` wrapper, 5 sibling adapters, pure Firecrawl-first enrichment, 11 AC mappings, JazzHR exclusion, and sequential defaults are present.
+- The plan needs path/cwd cleanup before execution: root-level `scripts/ats-adapters/` conflicts with `career-ops/package.json` script resolution, and Step 1/5/8 commands assume inconsistent working directories.
+- The plan should implement or remove `full-scan --dry-run` / `--list`, because a plain npm shell chain will not provide those modes by itself.
+- The Layer 3 `custom-scraper.mjs` fallback contract is under-specified: design says Firecrawl outage/credit-cap should fall through to Layer 3, but the implementation plan's runtime chain omits `custom-scrape`, so AC-11 can pass without testing real fallback wiring.
 <!-- section:entries:end -->

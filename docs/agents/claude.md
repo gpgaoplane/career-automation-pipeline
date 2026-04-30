@@ -2,7 +2,7 @@
 status: active
 type: work-log
 owner: claude
-last-updated: 2026-04-29T18:30:00-04:00
+last-updated: 2026-04-29T19:30:00-04:00
 read-if: "you need to see Claude's recent work and watch-outs"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -496,6 +496,74 @@ Missing / intentionally skipped:
 - `AI_AGENTS.md` Project Context Pipeline Architecture diagram — still holding until implementation actually lands.
 - `.claude/rules/architecture.md` Layer separation table — same.
 
+## 2026-04-29 — Phase 2.8 implementation plan v2 (Codex review integration)
+
+**Goal:** Take the baton on handoff `20260429-183239-0925` (Codex closed it after review). Reconcile Codex's §12 review of Phase 2.8 implementation plan analytically — verify each point against primary sources, decide accept/modify/defer/reject per technical merit, integrate fixes in-place to v2.
+
+**Approach:**
+
+1. Loaded `superpowers:receiving-code-review` skill before reading review.
+2. Ran framework catchup; handoff already closed by Codex.
+3. Read review artifacts: implementation plan §12 (Codex review), `.codex/memory/state.md` + `decisions.md` D-4 + `context.md` latest entry, `docs/agents/codex.md` latest entry.
+4. **Verified each Codex finding against primary sources:**
+   - All 5 ⚠ Issues confirmed real (npm cwd resolution; cwd inconsistency across steps; full-scan dry-run unsupported by plain chain; Layer 3 fallback under-specified; §0 precedence contradicting design v2 + addendum Q-FC-1 stale). ACCEPT all 5.
+   - Q1 (cp-overwrite vs project-root orchestrator): DEFER — cp+overwrite-and-restore from `career-ops/` is Phase 2.7 battle-tested pattern; cwd ambiguity resolved by §0a convention.
+   - Q2 (HEAD+GET fallback for triage): ACCEPT — cheap, reduces false `dead` classifications.
+   - O1 (RI-4 ambiguity rewrite): ACCEPT.
+   - O2 (Workday CXS pagination test): ACCEPT.
+
+5. **Integrated all 8 accepted points into implementation plan v2** (in-place revision with frontmatter `revision: v2`):
+   - §0 source-of-truth precedence rewritten: verification report = priority 1 (overrides everywhere); D-14..D-18 = priority 2; design v2 = priority 3 (governs only after verification + D-N filter); addendum = priority 4 with Q-FC-1 baseline marked HISTORICAL.
+   - §0a NEW: command working-directory convention — explicit cwd per step type; npm script paths resolve relative to package.json's directory; root scripts invoked via `../scripts/...` from career-ops/.
+   - §6.0 Step 0: HEAD-first with GET fallback for 405/403/timeout/no-Content-Length.
+   - §6.1 Step 1: lib/firecrawl.mjs writes to `data/firecrawl-fallback-queue.tsv` on hard-stop instead of just clean-exit; verification gate adds forced-failure subtest.
+   - §6.2 Step 2: Workday CXS pagination test added to verification gate.
+   - §6.3 Step 3: QI-1 RESOLVED inline (sibling adapters at repo-root `scripts/ats-adapters/`).
+   - §6.4 Step 4: firecrawl-discover.mjs appends to fallback queue on `--max-credits` exhaustion.
+   - §6.5 Step 5: chain command updated to `node ../scripts/ats-adapters/run-all.mjs` per cwd convention.
+   - §6.6 Step 6: firecrawl-extract.mjs fallback-queue wiring + forced-failure subtest in verification gate.
+   - §6.7 Step 7: enrich-jobs.mjs HTTP fallback specified as outage-only (NOT cost-routing); fallback queue write if HTTP also fails; forced-failure subtest in verification gate.
+   - §6.8 Step 8: NEW `scripts/full-scan-orchestrator.mjs` (~120 lines) replaces plain npm chain; supports `--dry-run`/`--list`; reads fallback queue post-chain and invokes `npm run custom-scrape -- --queue <path>` if non-empty.
+   - §7 AC-11 split into AC-11a (wiring verified by forced-failure subtest) + AC-11b (≤5% on normal run; 0 invocations OK as long as wiring confirmed).
+   - §8 RI-4: ambiguous slug resolution rewritten — log all candidates; auto-pick on Levenshtein ≤2 company-name agreement; otherwise mark `ambiguous` for manual review.
+   - §9 QI-1 RESOLVED.
+   - §13 NEW: Claude's reconciliation table — disposition for each Codex point.
+
+6. **Updated decisions addendum**: Q-FC-1 baseline section marked `**⚠ HISTORICAL — SUPERSEDED 2026-04-29 by verification doc Q1+Q2**` with explicit "verified next session" line struck through and replaced with done-marker. Preserves audit trail; prevents future implementation reads from following stale baseline knowledge.
+
+7. **Recorded D-18** in `.claude/memory/decisions.md` documenting full integration with disposition table. Pattern matches D-12 (Phase 2.7 design v1→v2) and D-17 (Phase 2.8 design v1→v2).
+
+8. **Updated state.md, STATUS.md, work log** (this entry).
+
+**Files touched:**
+
+- Modified: `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` (revision v1→v2; Codex's §12 preserved; new §0/§0a/§13 + per-step updates), `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` (Q-FC-1 HISTORICAL marker + frontmatter timestamp), `.claude/memory/decisions.md` (D-18 added + frontmatter timestamp), `.claude/memory/state.md` (current state, next steps, watermark), `docs/STATUS.md` (Phase 2.8 implementation plan v2 done block + revised Up Next + handoff note), this work log.
+- Untouched: all `career-ops/*` config and code; design plan v2 (no further changes); D-14..D-17 (this is a v1→v2 integration adding D-18, not amending earlier decisions).
+
+**Watch out:**
+
+- **AC-11 split is structural.** Future implementation must produce a forced-failure subtest in Step 1 (mock 5xx) that demonstrates the fallback-queue write path works. Without that subtest, AC-11a passes vacuously even if the wiring doesn't actually fire.
+- **`scripts/full-scan-orchestrator.mjs` is new code that must be written carefully.** It's the consumer of the fallback queue; if buggy, Layer 3 fan-out doesn't trigger and AC-11a regresses.
+- **Step 5 chain command updated** to use `../scripts/ats-adapters/...` because of QI-1 resolution. If anyone copies the v1 chain command verbatim, it breaks.
+- **Q-FC-1 historical marker is the FOURTH stale-content fix this session** (after §0 precedence, decisions doc Q-FC-4 rewrite, D-14 typo, design v2 §0). Pattern: when verification surfaces a correction, ALL artifacts referencing the pre-verification state need synchronized updates. For Phase 2.8 implementation execution, this discipline is now baseline.
+- **No new handoff written** — Codex re-review of v2 OPTIONAL (correctness pass; matches Phase 2.7 D-12 + Phase 2.8 design D-17 pattern).
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/plans/2026-04-29-firecrawl-pivot-implementation.md` ........ revision v1→v2 with §0 + §0a + §6.0/1/2/3/4/5/6/7/8 + §7 AC-11a/b + §8 RI-4 + §9 QI-1 + §13 reconciliation
+- `docs/plans/2026-04-29-firecrawl-pivot-decisions.md` ........ Q-FC-1 HISTORICAL/SUPERSEDED marker
+- `.claude/memory/decisions.md` ........ D-18 added documenting integration
+- `.claude/memory/state.md` ........ current state + next steps (USER GATE before Step 0 execution) + watermark
+- `docs/STATUS.md` ........ Phase 2.8 implementation plan v2 done block + revised Up Next + handoff note
+- `docs/agents/claude.md` ........ this entry + Receipt
+
+Missing / intentionally skipped:
+- `career-ops/*` — all config/code edits remain deferred to Phase 2.8 implementation execution.
+- `docs/agents/codex.md` — Codex's work log; not modified per cross-agent courtesy.
+- `.codex/memory/*` — Codex's memory; not modified.
+- No new handoff to Codex — re-review optional; user gate is for execution authorization, not another review round.
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -591,7 +659,8 @@ docs/plans/2026-04-29-firecrawl-pivot-design.md docs/plans/2026-04-29-firecrawl-
 - **to:** codex
 - **branch:** feat/phase-2.8-firecrawl
 - **at:** 2026-04-29T18:32:39-04:00
-- **status:** open
+- **status:** closed
+- **picked-up:** 2026-04-29T18:34:57-04:00 by codex
 
 ### What I did
 Phase 2.8 implementation plan ready for review at docs/plans/2026-04-29-firecrawl-pivot-implementation.md on feat/phase-2.8-firecrawl (branched from main; main has Phase 2.7 + 2.8 design v2 already merged via commit 39bac3d). Plan executes design plan v2 (commit 73f6b2a, your prior review integrated as v2). 12 sections covering 12 ordered steps with per-step verification gates, atomic commits, explicit rollback, manual gates at Steps 0/5/9/10. ~5h estimated wall-clock. PLEASE REVIEW against the §10 reviewer checklist. Particularly: (1) Step 0 portals.yml URL triage script bucket logic + manual-gate framing; (2) Step 1 lib/firecrawl.mjs SDK shape — verify NO /v1/extract or legacy schema keys exposed (AC-5); (3) Step 2 lib/ats-clients.mjs duplication-vs-extraction approach for Greenhouse/Ashby/Lever (D-3 invariant); (4) Step 3 5 sibling adapters spec — confirm scripts/ats-adapters/ location preserves D-3 (career-ops/ vendored upstream); (5) Step 7 enrich-jobs.mjs refactor preserves pure Firecrawl-first per Q-FC-4 (HTTP fallback must be outage-resilience only, NOT cost-routing); (6) §7 AC mapping covers all 11 design v2 ACs; (7) §8 implementation risks (RI-1..RI-8) sufficient; (8) §9 deferred decisions (QI-1..QI-5) recommendations sound. Surface issues inline as §12 Implementation Plan Review Comments OR via return handoff. After your review is integrated, claude proceeds to Step 0 execution. No career-ops/* config or code edits during review — read-only inspection.
