@@ -240,6 +240,32 @@ export function extractSignals(text) {
 
 // ── Fetchers ─────────────────────────────────────────────────────────
 
+// Phase 2.8 Step 7 — Firecrawl-first fetcher per Q-FC-4. Returns same
+// shape as fetchTier1/fetchTier2 for drop-in compatibility with the
+// existing extractSignals() pipeline.
+//
+// On Firecrawl outage / 5xx / 4xx / --max-credits exhaustion: returns
+// {ok: false, error}; caller falls through to Tier 1 HTTP. This is
+// outage-resilience ONLY, not cost-routing.
+async function fetchFirecrawlMarkdown(url, company) {
+  try {
+    const { scrape } = await import("./lib/firecrawl.mjs");
+    const result = await scrape(url, {
+      formats: ["markdown"],
+      onlyMainContent: true,
+      layer: "enrich",
+      company,
+    });
+    const text = result.markdown || "";
+    if (text.length < 200) {
+      return { ok: false, error: `firecrawl-short-response (${text.length} chars)`, status: 200 };
+    }
+    return { ok: true, text, status: 200, tier: "firecrawl" };
+  } catch (e) {
+    return { ok: false, error: `firecrawl-${e.name}: ${e.message?.slice(0, 80)}`, status: e.statusCode ?? null };
+  }
+}
+
 async function fetchTier1(url, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -334,7 +360,14 @@ async function enrichOne(job, flags, cache) {
     return { skipped: true };
   }
 
-  let result = await fetchTier1(url, DEFAULTS.fetchTimeoutMs);
+  // Phase 2.8 Step 7: pure Firecrawl-first per Q-FC-4 (D-14, D-17).
+  // Primary: Firecrawl /v1/scrape markdown (1 credit/page). Outage-only
+  // fallback (NOT cost-routing) goes to Tier 1 HTTP, then Tier 2 Playwright.
+  let result = await fetchFirecrawlMarkdown(url, company);
+  if (!result.ok) {
+    log(`[${company}] firecrawl-failed (${result.error}) → tier1-http fallback — ${url}`);
+    result = await fetchTier1(url, DEFAULTS.fetchTimeoutMs);
+  }
   if (!result.ok) {
     log(`[${company}] tier1-http failed (${result.error}) → tier2-playwright — ${url}`);
     result = await fetchTier2(url, DEFAULTS.fetchTimeoutMs);
