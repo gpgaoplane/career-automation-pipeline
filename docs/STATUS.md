@@ -1,7 +1,7 @@
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-30
-**Current Phase:** Phase 2.8 IMPLEMENTATION IN-PROGRESS on `feat/phase-2.8-firecrawl`. **Steps 0-5 complete + Jasper safeEncode fix.** Sample-50 smoke run achieved 37/50 (74%) coverage = +2.85x baseline, narrowly under AC-2 ≥75%; 3 bugs identified for Codex to fix in next session. **Handoff to Codex active** (handoff id 20260430-XXXXXX-XXXX); Claude is paused.
+**Current Phase:** **Phase 2.8 IMPLEMENTATION COMPLETE** on `feat/phase-2.8-firecrawl` (Steps 0-12 with 2 USER-GATED manual steps remaining). 9/12 ACs PASS programmatically; 3 pending Step 9 (dashboard caps) + Step 10 (full sample run). Tag `scan-v2-prerescan` placed. AC-2 cleared at 78% (39/50) post P-5/P-6 fixes. Latest commit `28f72bb`.
 
 ## Done
 - [x] **Phase 2.8 implementation Steps 0-5 EXECUTED** (2026-04-29 → 2026-04-30, `feat/phase-2.8-firecrawl`, commits e721305 → 8c4a443):

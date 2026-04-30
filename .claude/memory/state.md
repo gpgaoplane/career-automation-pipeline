@@ -11,10 +11,10 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/phase-2.8-firecrawl` (branched from main after `feat/multi-agent-collab` merged via 39bac3d).
-**Active task:** Phase 2.8 implementation Steps 0-5 complete + Jasper safeEncode fix. **Handing off to Codex** at the end of Step 5 inspection per user direction. Sample-50 smoke run achieved 37/50 (74%) coverage — narrowly under AC-2 ≥75% target but +2.85x baseline; bug fixes in Step 5 inspection identified to clear AC-2 cleanly.
-**Pause point:** Step 5 manual gate review concluded with three bug findings ready for Codex to fix in Step 6. Live state restored cleanly (git diff portals.yml/pipeline.md/scan-history.tsv: empty). Working tree clean.
-**Blockers:** None for Codex. Three bugs documented in pitfalls.md for fix.
-**Last commit on branch:** `8c4a443` (Jasper safeEncode fix).
+**Active task:** **Phase 2.8 implementation Steps 0-12 essentially COMPLETE.** All 11 ACs from design v2 §7 audited: 9 PASS / 3 manual-pending / 0 FAIL. Code/config implementation done; only user-gated manual steps remain.
+**Pause point:** Steps 9+10 (manual gates) remaining. Step 9 = USER must log into firecrawl.dev dashboard, document RPM/concurrency/monthly caps in `data/firecrawl-plan-caps.tsv` before any high-concurrency run. Step 10 = full-pipeline sample-50 verification including Firecrawl-first enrich (estimated ~1500 credits — user should authorize before run). Tag `scan-v2-prerescan` placed.
+**Blockers:** None — Phase 2.8 is feature-complete. Production execution awaits Step 9 user confirmation of caps + Step 10 full sample run authorization.
+**Last commit on branch:** `28f72bb` (Step 11 acceptance audit). Tag: `scan-v2-prerescan`.
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
@@ -38,17 +38,14 @@ skip-if: "status != active or last-updated <= your watermark"
 18. ~~Step 4 — firecrawl-discover.mjs Layer 1~~ — DONE (commit df51a68). 11/11 tests pass; Cloudflare drill→Greenhouse confirmed; --max-credits cap respected with fallback queue.
 19. ~~Step 5 — sample-50 smoke validation~~ — DONE (commit 5b5fcf9). 37/50 (74%) coverage = +2.85x baseline. Cached-discovery adapter pattern emerged (greenhouse-cached/ashby-cached/lever-cached) extending orchestrator from 5 to 8 adapters. 161 Firecrawl credits spent.
 20. ~~Jasper safeEncode bug fix~~ — DONE (commit 8c4a443). idempotent encoding.
-21. **NEXT (Codex):** Step 5 inspection surfaced 3 bugs. Fix them BEFORE Step 6:
-    a. Candidate dedup in resolveAmbiguous (4 of 6 "ambiguous" cases are actually 1 unique tenant repeated 2-420×; recovers Cadence/F5/Monolithic Power/Tokyo Electron → 41/50 = 82%, clears AC-2)
-    b. Greenhouse "embed" synthetic slug filter (slug "embed" comes from boards.greenhouse.io/embed JS library URL, never a company; affects Vectra AI, Zipline)
-    c. After fixes, re-run sample-50 smoke to confirm ≥75%
-22. **Step 6 — firecrawl-extract.mjs Layer 2** — handles 20 no-ats-found companies via JSON-mode extraction (5cr/page). Estimated 100 credits.
-23. **Step 7 — enrich-jobs.mjs Firecrawl-first refactor** — Q-FC-4 pure Firecrawl-first.
-24. **Step 8 — full-scan-orchestrator.mjs + npm wiring** — design v2 §6.8 + AC-11 fallback fan-out.
-25. **Step 9 — dashboard rate-cap manual gate (USER)** — verify Firecrawl plan caps before high-concurrency runs.
-26. **Step 10 — sample-50 verification (USER)** — full pipeline including enrich.
-27. **Step 11 — acceptance audit** — all 11 ACs from design v2 §7.
-28. **Step 12 — tag scan-v2-prerescan** — Phase 2.6 readiness.
+21. ~~P-5 + P-6 bug fixes~~ — DONE (commit 4371eee). resolveAmbiguous candidate dedup + Greenhouse embed-slug filter. Sample-50 re-run: 39/50 (78%) — AC-2 cleared (commit 66ac892).
+22. ~~Step 6 — firecrawl-extract.mjs Layer 2~~ — DONE (commit 2e463b8). Live test on Shopify: 31 jobs returned in 1 JSON-mode call (5 credits).
+23. ~~Step 7 — enrich-jobs.mjs Firecrawl-first refactor~~ — DONE (commit 1520bd1). fetchFirecrawlMarkdown primary; HTTP/Playwright outage-only fallback (NOT cost-routing). Tests 19/19 still pass.
+24. ~~Step 8 — full-scan-orchestrator.mjs + npm wiring~~ — DONE (commit 5294f7f). Orchestrator with --dry-run/--list + Layer 3 fallback fan-out. npm full-scan / full-scan:dry-run / full-scan:list scripts.
+25. ~~Step 11 — acceptance audit~~ — DONE (commit 28f72bb). 9 PASS / 3 manual-pending / 0 FAIL. Re-runnable.
+26. ~~Step 12 — tag scan-v2-prerescan~~ — DONE.
+27. **PENDING — Step 9 USER GATE** — log into firecrawl.dev dashboard; document RPM/concurrency/monthly caps in `career-ops/data/firecrawl-plan-caps.tsv`; AC-10 final pass.
+28. **PENDING — Step 10 USER AUTHORIZATION** — full-pipeline sample-50 verification with enrich enabled (~1500 Firecrawl credits estimated). Confirms AC-3 and AC-11b runtime.
 29. **Phase 2.6 / Phase 3** still deferred.
 <!-- section:next-steps:end -->
 
