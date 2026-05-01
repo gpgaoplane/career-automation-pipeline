@@ -67,5 +67,44 @@ Base salary: $200,000 - $250,000 USD plus equity. Remote US-based only.`;
   assertEq(s.location_match.includes('Fully remote US'), true, 'fully-remote-US flagged');
 }
 
+// Fixture 5: Firecrawl pay transparency shorthand + generic raw location
+{
+  const txt = `# Research Engineer
+
+San Francisco
+
+Apply
+
+## Equal Opportunity & Pay Transparency
+
+|     |     |
+| --- | --- |
+| **Pay Range** | $200-$325k base salary (good-faith estimate for San Francisco Bay Area) |`;
+  const s = extractSignals(txt);
+  console.log('Fixture 5: Firecrawl markdown pay range + raw location');
+  assertEq(s.location_match, [], 'no Will-fit location match');
+  assertEq(s.location_raw.includes('San Francisco'), true, 'raw location includes San Francisco');
+  assertEq(s.comp_low_thousands, 200, 'low=200 from $200-$325k');
+  assertEq(s.comp_high_thousands, 325, 'high=325 from $200-$325k');
+  assertEq(s.comp_currency, 'USD', 'currency inferred from San Francisco');
+}
+
+// Fixture 6: Ashby-style location heading
+{
+  const txt = `# Product Manager
+
+## Location
+
+United Kingdom, London
+
+## Employment Type
+
+Full time`;
+  const s = extractSignals(txt);
+  console.log('Fixture 6: Ashby location heading');
+  assertEq(s.location_match, [], 'no Will-fit location match');
+  assertEq(s.location_raw.includes('United Kingdom, London'), true, 'raw location includes UK/London');
+}
+
 console.log(`\n${passed} passed, ${failed} failed`);
 process.exit(failed === 0 ? 0 : 1);

@@ -32,6 +32,7 @@ import {
   MAX_CREDITS_DEFAULT,
   JOB_LISTING_SCHEMA_V1,
 } from "./lib/firecrawl.mjs";
+import { detectAllInText } from "./lib/ats-detect.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORTALS_YML = resolve(__dirname, "portals.yml");
@@ -57,6 +58,42 @@ function loadCache() {
   }
 }
 
+function saveCache(cache) {
+  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
+  writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), "utf-8");
+}
+
+function dedupAtsCandidates(candidates) {
+  const seen = new Set();
+  const out = [];
+  for (const c of candidates) {
+    const key = `${c.provider}|${c.slug || ""}|${c.host || ""}|${c.site || ""}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(c);
+  }
+  return out;
+}
+
+function promoteCacheFromExtractedJobUrls(cache, companyName, sourceUrl, jobs, now = new Date()) {
+  const urlText = (jobs || []).map((job) => job?.url || "").filter(Boolean).join("\n");
+  const candidates = dedupAtsCandidates(detectAllInText(urlText));
+  if (candidates.length !== 1) return null;
+
+  const candidate = candidates[0];
+  const entry = {
+    ats: candidate.provider,
+    discovered_at: now.toISOString(),
+    source_url: sourceUrl,
+    discovery_method: "layer-2-feedback",
+  };
+  if (candidate.slug) entry.slug = candidate.slug;
+  if (candidate.host) entry.host = candidate.host;
+  if (candidate.site) entry.site = candidate.site;
+  cache[companyName] = entry;
+  return entry;
+}
+
 function loadSeenUrls() {
   if (!existsSync(SCAN_HISTORY)) return new Set();
   const text = readFileSync(SCAN_HISTORY, "utf-8");
@@ -67,6 +104,28 @@ function loadSeenUrls() {
     if (url) set.add(url);
   }
   return set;
+}
+
+function collectExtractTargets(cache, portals, opts = {}) {
+  const { companyFilter = null, limit = Infinity } = opts;
+  const enabledNames = new Set(
+    (portals?.tracked_companies || [])
+      .filter((entry) => entry?.enabled)
+      .map((entry) => entry.name)
+  );
+
+  let targets = Object.entries(cache || {})
+    .filter(([name, info]) => (
+      enabledNames.has(name) &&
+      info?.status === "no-ats-found" &&
+      info?.source_url
+    ))
+    .map(([name, info]) => ({ name, url: info.source_url }));
+
+  if (companyFilter) {
+    targets = targets.filter((t) => t.name === companyFilter);
+  }
+  return targets.slice(0, limit);
 }
 
 function buildTitleFilter(portals) {
@@ -133,15 +192,8 @@ async function main() {
   const seen = loadSeenUrls();
   const titleFilter = buildTitleFilter(portals);
 
-  // Collect targets: cache entries with status:"no-ats-found"
-  let targets = Object.entries(cache)
-    .filter(([_, info]) => info?.status === "no-ats-found" && info?.source_url)
-    .map(([name, info]) => ({ name, url: info.source_url }));
-
-  if (companyFilter) {
-    targets = targets.filter((t) => t.name === companyFilter);
-  }
-  targets = targets.slice(0, limit);
+  // Collect current-run targets only; stale cache rows must not pollute sample runs.
+  const targets = collectExtractTargets(cache, portals, { companyFilter, limit });
 
   console.error(
     `[firecrawl-extract] ${targets.length} no-ats-found target(s) ` +
@@ -158,6 +210,14 @@ async function main() {
         errors.push({ company: target.name, error: r.error });
         console.error(`  ${target.name}: ERROR ${r.error?.slice(0, 80)}`);
         continue;
+      }
+      const promoted = promoteCacheFromExtractedJobUrls(cache, target.name, target.url, r.jobs);
+      if (promoted && !dryRun) {
+        saveCache(cache);
+        console.error(
+          `  ${target.name}: promoted cache via Layer 2 feedback → ` +
+          `${promoted.ats}/${promoted.slug || promoted.host}`
+        );
       }
       const matched = r.jobs.filter((j) => titleFilter(j.title) && j.url);
       let newCount = 0;
@@ -195,8 +255,8 @@ async function main() {
   process.exit(errors.length > 0 ? 1 : 0);
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((e) => { console.error(e); process.exit(2); });
 }
 
-export { extractCompany, EXTRACT_PROMPT };
+export { extractCompany, EXTRACT_PROMPT, promoteCacheFromExtractedJobUrls, collectExtractTargets };

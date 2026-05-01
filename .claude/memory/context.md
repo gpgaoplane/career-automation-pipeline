@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: claude
-last-updated: 2026-04-30T00:00:00-04:00
+last-updated: 2026-04-30T22:11:51-04:00
 read-if: "you need durable project truths as understood by Claude"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -12,6 +12,36 @@ skip-if: "status != active or last-updated <= your watermark"
 Append new invariants and project truths below, each with a dated ISO-8601 header.
 
 <!-- section:entries:start -->
+
+## 2026-04-30T22:11:51-04:00 — Phase 2.8 closure facts (post-Step 10, post-AC-2 redefinition)
+
+Durable invariants surfaced during the Phase 2.8 closure pass (P-7/P-8/P-9 fixes by Codex, Step 0 disabled-company re-audit, Step 9/10 full-pipeline run, AC-2 redefinition, AC-3 generic-vs-Will-fit clarification):
+
+- **Current roster baseline is 448 total / 397 enabled / 51 disabled** (post-Codex re-audit on 2026-04-30). Historical milestones to remember when reading older docs: Phase 2.7 cleanup landed at 428 / 20; Phase 2.8 Step 0 over-pruned to 388 / 60; the re-audit restored 9 false disables (Galileo AI, VAST Data, Grammarly, Thinking Machines Lab, OpenEvidence, Aurascape, Fathom, Skild AI, Qdrant) → 397 / 51 current. Source: `docs/audits/2026-04-30-step0-disabled-company-audit.md`. All 51 disabled rows carry explicit `note:`.
+
+- **AC-2 is now a source-accounting + miss-classification gate, NOT exported-company coverage.** The pre-Step-10 wording ">=75% of sampled companies produce title-filtered exported jobs" is **retired**. Replacement metric stack (in `docs/audits/2026-04-30-sample50-missed-company-classification.md`):
+  - **Source Resolution Rate** (report): companies with either exported jobs or a resolved direct/cache route. Step 10: 38/50 (76.0%).
+  - **Source Health Rate** (gate ≥90%): resolved sources that responded successfully during direct probe. Step 10: 37/38 (97.4%) — PASS.
+  - **Raw Job Availability Rate** (report): healthy sources that returned ≥1 raw job. Step 10: 36/37 (97.3%).
+  - **Relevant Job Yield Rate** (report-only): companies with ≥1 title-filtered exported job. Step 10: 28/50 (56.0%).
+  - **Miss Classification Rate** (gate ≥95%): no-yield companies assigned a concrete miss reason. Step 10: 22/22 (100.0%) — PASS.
+  - Miss reason buckets: `NO_RELEVANT_JOBS` (source works, no Will-relevant titles); `NO_OPEN_JOBS` (source works, zero raw jobs); `ROUTE_MISSING` (no direct/cache route discovered); `SOURCE_BROKEN` (route exists but failed during probe).
+
+- **AC-3 has TWO valid interpretations; the GENERIC one is the gate.** `enrich-jobs.mjs` now extracts BOTH `location_raw` (any location string Firecrawl markdown reveals) and `location_match` (Toronto/GTA/Ontario, Canada-only, fully-remote-US for scoring). AC-3 passes under generic `location_raw OR comp ≥ 40%` (Step 10: 126/178 = 70.8%). It does NOT pass under Will-fit `location_match OR comp` (Step 10: 26/178 = 14.6%). The narrow `location_match` is intentional for scoring, not for measuring extraction quality. Anyone re-running AC-3 must use the generic interpretation.
+
+- **Step 10 transactional pattern is the production blueprint for sample runs but NOT for full rescans.** Codex's Step 10 used cp+overwrite-and-restore to preserve `portals.yml` / `pipeline.md` / `scan-history.tsv` / `applications.md` / fallback queue / live workbook. For the upcoming **full 397-company rescan**, the pipeline writes are the live update — no transactional restore. That's by design.
+
+- **P-7/P-8/P-9 are FIXED in code on this branch (`feat/phase-2.8-firecrawl`):**
+  - **P-7** (cache pollution): `iterTargets` in `scripts/ats-adapters/_lib.mjs` now filters cache entries to currently-enabled portals; cache-only adapters also exclude direct-portal companies. `firecrawl-extract.mjs` target selection got the same treatment.
+  - **P-8** (Ashby JS-embed): `lib/ats-detect.mjs` Ashby pattern now covers `embed.ashbyhq.com` and the posting API URL form. `firecrawl-discover.mjs` now does direct Ashby slug probing on `no-ats-found` candidates with Firecrawl-failure fallback. Ramp (119 jobs) + Supabase (46 jobs) recovered.
+  - **P-9** (Layer 2 → cache feedback): `firecrawl-extract.mjs` promotes a single ATS detected in extracted `jobs[].url` values back into `data/ats-discovery-cache.json` with `discovery_method:"layer-2-feedback"`.
+
+- **TRUE Phase 2.8 sample-50 numbers (post all fixes), per Step 10 audit:**
+  - Companies with title-filtered exported jobs: **28/50** (was projected 45–48/50 pre-Step-10; that projection is RETIRED — see supersession on 2026-04-30T00:00 entry below).
+  - Source resolved (companies with a working route OR exported jobs): **38/50** (76.0%).
+  - The remaining 22 no-yield companies are not parser failures — they're 8 NO_RELEVANT_JOBS (hardware/clinical roles + filters), 1 NO_OPEN_JOBS (Coactive AI), 12 ROUTE_MISSING (Databricks, Together AI, Navan, Waymo, etc.), 1 SOURCE_BROKEN (Seagate Workday CXS HTTP 422).
+
+- **Seagate Technology is a permanent SOURCE_BROKEN warning, not a blocker.** Workday CXS endpoint returns HTTP 422 for `EXT`; direct Workday HTML returns a maintenance page on probe. Until either Seagate fixes their tenant or we discover an alternate site path, treat as a source-health warning in any rescan report.
 
 ## 2026-04-30T00:00:00-04:00 — Phase 2.8 architecture facts (post-Step 5)
 
@@ -34,12 +64,13 @@ Durable invariants surfaced during Phase 2.8 implementation Steps 0-5:
 
 - **`safeEncode()` helper in `lib/ats-clients.mjs`:** all slug arguments to fetch functions go through `safeEncode()` (not raw `encodeURIComponent`). Idempotent — handles both raw (`"Jasper AI"`) and already-encoded (`"Jasper%20AI"`) inputs without producing double-encoded results. Required because Layer 1 firecrawl-discover.mjs captures slugs from URL form (already encoded).
 
-- **Sample-50 baseline (Phase 2.7 → 2.8 progression):**
+- **Sample-50 baseline (Phase 2.7 → 2.8 progression) — projections superseded by Step 10 actuals (see 2026-04-30T22:11 entry above):**
   - Phase 2.7: 13/50 = 26% coverage
-  - Phase 2.8 Step 5 (post Layer 0 + Layer 1, no Layer 2): 37/50 = 74% (+2.85x)
-  - Expected after P-5/P-6 bug fixes: 41/50 = 82%
-  - Expected after Step 6 Layer 2 firecrawl-extract: 45-48/50 = 90-96%
-- **Phase 2.8 Firecrawl credit budget:** 101k credits available; first sample-50 smoke run consumed 161 credits (~0.16% of budget). Full Phase 2.6 clean rescan estimated ~1,000-2,150 credits (per design v2 §5.2).
+  - Phase 2.8 Step 5 (post Layer 0 + Layer 1, no Layer 2): 37/50 = 74% reported (later shown to be inflated by P-7 cache pollution; true Step-5 routing coverage was 30/50 = 60%)
+  - ~~Expected after P-5/P-6 bug fixes: 41/50 = 82%~~ — superseded; the metric being projected (exported-company coverage) was itself retired per AC-2 redefinition.
+  - ~~Expected after Step 6 Layer 2 firecrawl-extract: 45-48/50 = 90-96%~~ — superseded; same reason.
+  - **Step 10 ACTUAL** (post P-7/P-8/P-9 + AC-3 fix + AC-2 redefinition): exported coverage 28/50 = 56% (now report-only); source resolved 38/50 = 76% (the metric that matters); source health 97.4%.
+- **Phase 2.8 Firecrawl credit budget:** Step 5 smoke (Claude) consumed 161 credits; Step 10 sample-50 full pipeline (Codex) consumed 383 credits. Combined Phase 2.8 spend ~700 credits. Remaining: 100,401 credits (per Step 9 dashboard). Full 397-company clean rescan estimated ~3,000 credits worst-case (extrapolating 383 / 50 × 397).
 
 <!-- BEGIN earlier (pre-Phase-2.8) entries -->
 

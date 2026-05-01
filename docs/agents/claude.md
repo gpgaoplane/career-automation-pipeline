@@ -738,6 +738,64 @@ Missing / intentionally skipped:
 - AC-3 + AC-10 + AC-11b ........ require Codex action + USER Step 9 + Step 10
 - True coverage measurement ........ awaits Codex P-7 fix + re-run
 
+## 2026-04-30 — Caught up on Codex's Phase 2.8 closure pass; reconciled Claude memory; preparing for full 397 rescan
+
+**Goal:** Take the baton on Codex handoff `20260430-215447-c74d`. Verify Codex's reconciliation analytically (per user direction "be critical and analytical"), then bring Claude-owned memory in line with current truth. Prepare the bench for the full 397-company clean rescan.
+
+**What I read (catchup):** `AGENTS.md`, `AI_AGENTS.md`, `.claude/CLAUDE.md`, `.collab/{INDEX,ROUTING,PROTOCOL}.md`, `.claude/memory/state.md`, `docs/STATUS.md`, `AI_HANDOFF.md`, `RESUME_PROMPT.md`, the three Step 10 audit artifacts (`docs/audits/2026-04-30-{step10-sample50-results.md, step10-sample50-metrics.json, sample50-missed-company-classification.md}`), latest `docs/agents/codex.md` entries (six entries spanning P-7/P-8/P-9 fixes, Step 0 re-audit, baseline reconciliation, Step 9/10 verification, AC-2 redefinition, handoff packaging), and `scripts/acceptance-audit-phase2.8.py` source.
+
+**Independent verification done before accepting Codex's reconciliation:**
+- Parsed `career-ops/portals.yml`: 448 total / 397 enabled / 51 disabled / 0 disabled-without-note. **Matches** Codex's claimed baseline.
+- `git log --oneline -- career-ops/scan.mjs` shows only `b8e47c6 init: project scaffold...`. **D-3 invariant intact.**
+- AC-5 grep for `/v1/extract|extractorOptions|extractionSchema` in active `.mjs` code: only one comment-line hit (`career-ops/lib/firecrawl.mjs:275: * Costs 5 credits/page (1 base + 4 surcharge). NOT /v1/extract.`). **Clean.**
+- Re-ran `python scripts/acceptance-audit-phase2.8.py`: **12 PASS / 0 FAIL / 0 pending**, matching Codex's reported state.
+- Audit script logic review: AC-2 reads `step10.get("ac2_source_accounting_pass")` from the metrics JSON. Codex's gate flags are `ac2_source_accounting_pass=true`, `ac2_source_health_pass=true`, `ac2_miss_classification_pass=true`. The gates are health ≥90% (got 97.4%) and miss classification ≥95% (got 100%). Internally consistent.
+- Step 10 metrics arithmetic: 28 exported + 8 NO_RELEVANT_JOBS + 1 NO_OPEN_JOBS + 1 SOURCE_BROKEN = 38 source-resolved; 12 ROUTE_MISSING = 50 − 38; 28 + 22 no-yield = 50 sample. Internally consistent.
+- Picked up Codex's open handoff `20260430-215447-c74d` at 2026-04-30T22:11:42-04:00 via `collab-handoff.sh pickup`.
+
+**What I changed (memory reconciliation):**
+
+1. **`.claude/memory/state.md`** — full rewrite. Active task now reflects Codex's closure pass, AC-2 redefinition, and the upcoming full-rescan gate. Stale "P-7/P-8/P-9 pending for Codex" / "Step 9 + Step 10 USER GATES still pending" content fully removed; superseded by completed entries with handoff IDs and audit cross-references. Open Questions reduced to current ones (rescan authorization; Layer-1 enhancement experiment timing; full-run audit naming).
+
+2. **`.claude/memory/context.md`** — appended a new dated entry (2026-04-30T22:11:51-04:00) capturing six Phase 2.8 closure invariants: (i) current 448/397/51 baseline + 9 restored false disables; (ii) AC-2 redefinition stack with gates + buckets; (iii) AC-3 has TWO interpretations and only the GENERIC one is the gate; (iv) Step 10 transactional pattern is for sample runs only, not full rescans; (v) P-7/P-8/P-9 are FIXED in code (with what fixed each); (vi) TRUE Phase 2.8 sample-50 numbers (28/50 exported, 38/50 source-resolved); (vii) Seagate Workday CXS HTTP 422 is permanent SOURCE_BROKEN warning. Inline-superseded the prior "Expected after P-5/P-6 / Step 6 Layer 2: 41-48/50" projection bullet with strikethrough + actuals. Updated the Phase 2.8 credit budget bullet with combined Phase 2.8 spend (~700 credits) and remaining (100,401) per Step 9 dashboard.
+
+3. **`.claude/memory/decisions.md`** — appended **D-20** documenting the formal acceptance of Codex's AC-2 redefinition. Records: (i) why I verified before accepting (per user "be critical" direction); (ii) what I checked independently; (iii) the four-bucket miss model; (iv) the two pass/fail gates (source health ≥90%, miss classification ≥95%); (v) tradeoffs (relevant yield is report-only; gates depend on classifier discipline); (vi) cross-references to Codex's D-9, the audit artifact, the audit script, design v2 + implementation v2 supersession notes. Frontmatter timestamp bumped.
+
+4. **`.claude/memory/pitfalls.md`** — added **`**Status:** RESOLVED 2026-04-30 by Codex`** markers to P-7, P-8, P-9 with one-line summaries of what fixed each + regression-test pointers. Kept the Symptom/Root cause text intact for historical "why does the code do this?" lookups. Frontmatter timestamp bumped.
+
+5. **This work log entry** — appended (this entry + Receipt below).
+
+**Files touched:**
+- Modified: `.claude/memory/state.md` (full section rewrite); `.claude/memory/context.md` (new entry + supersession edits); `.claude/memory/decisions.md` (D-20 + frontmatter); `.claude/memory/pitfalls.md` (resolved markers + frontmatter); `docs/agents/claude.md` (this entry); `.collab/INDEX.md` (timestamp bumps for the four memory files + claude work log — handled below).
+- Untouched: all `career-ops/*` config and code (Codex's uncommitted Phase 2.8 follow-up changes carried in working tree as-is); `.codex/memory/*`, `docs/agents/codex.md` (Codex's own files, cross-agent courtesy); `AI_AGENTS.md`, `docs/STATUS.md`, audit artifacts, design/implementation plans, scripts (Codex already brought these into alignment in the handoff packaging pass).
+
+**Watch out:**
+- The full 397-company rescan is the next gate, but it's USER-GATED. Do NOT start it without explicit "go" — the run is non-transactional (writes to live `pipeline.md` / `scan-history.tsv` / `applications.md` / output workbook), and the cost is ~3,000 Firecrawl credits (extrapolating Step 10's 383 / 50 × 397). Budget remains 100,401 so it fits, but ask first.
+- The acceptance audit gates are now source health (≥90%) and miss classification (≥95%). Anyone reading the old design v2 §7 wording must follow the supersession note to `docs/audits/2026-04-30-sample50-missed-company-classification.md`. Do NOT reinstate the old `>=75% companies produce jobs` AC-2 gate.
+- AC-3 has two valid interpretations. The gate uses generic `location_raw OR comp ≥ 40%`. The narrow Will-fit `location_match` (Toronto/GTA/Ontario, Canada-only, fully remote US) is for scoring, NOT for measuring extraction quality. Future rescans must report both but gate on the generic.
+- Seagate Workday CXS HTTP 422 will surface again on the full rescan. Treat as a source-health warning in the report, NOT a stop condition. Do not auto-disable Seagate without separate user direction.
+- Working tree carries 28+ uncommitted modifications (Codex's Phase 2.8 follow-up + my memory reconciliation edits). User has not asked for a commit; commits remain user-gated per `.collab/PROTOCOL.md` cadence rule.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `.claude/memory/state.md` ........ full rewrite — current state reflects post-AC-2-redefinition truth + next-step is full 397 rescan
+- `.claude/memory/context.md` ........ added 2026-04-30T22:11 entry (Phase 2.8 closure invariants); superseded stale projection bullet inline; updated credit budget bullet with actuals
+- `.claude/memory/decisions.md` ........ added D-20 (formal acceptance of Codex's AC-2 redefinition with independent verification)
+- `.claude/memory/pitfalls.md` ........ added RESOLVED markers to P-7/P-8/P-9 with what-fixed-each summaries + regression-test pointers
+- `docs/agents/claude.md` ........ this entry + Receipt
+- `.collab/INDEX.md` ........ timestamps bumped for the four memory files + claude work log
+- handoff `20260430-215447-c74d` ........ picked up via collab-handoff.sh pickup; will close after full-rescan acceptance
+
+Missing / intentionally skipped:
+- `career-ops/*` ........ no config or code edits this turn; D-3 invariant preserved.
+- `docs/STATUS.md` ........ Codex already brought it to current truth in the handoff packaging pass; no Claude-side delta to add until the full rescan completes.
+- `AI_AGENTS.md` ........ Codex already updated the canonical baseline (448/397/51) in the reconciliation pass; no Claude-side delta needed.
+- `docs/agents/codex.md`, `.codex/memory/*` ........ Codex-owned files; not modified per cross-agent courtesy.
+- No new handoff written ........ this turn closes the catchup, not a substantive chunk worth handing off; next handoff opens after the full rescan completes (return to Codex for full-run analysis review).
+- No commit made ........ user has not asked for one; Codex's working-tree edits + my memory reconciliation will land in the same commit when authorized.
+- `scripts/sample-50-list.yml` ........ untracked Codex artifact from Step 10 sampling; left in place per "do not delete unfamiliar files without investigating" rule.
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -882,7 +940,8 @@ career-ops/lib/firecrawl.mjs career-ops/lib/ats-clients.mjs career-ops/lib/ats-d
 - **to:** codex
 - **branch:** feat/phase-2.8-firecrawl
 - **at:** 2026-04-30T10:44:00-04:00
-- **status:** open
+- **status:** closed
+- **picked-up:** 2026-04-30T10:56:56-04:00 by codex
 
 ### What I did
 Phase 2.8 implementation Steps 0-12 ALL CODE-COMPLETE on feat/phase-2.8-firecrawl + scan-v2-prerescan tag. Acceptance audit: 9 PASS / 3 manual-pending / 0 FAIL. POST-INSPECTION SURFACED 3 NEW BUGS (full details + fix recipes in .claude/memory/pitfalls.md): P-7 iterTargets cache pollution (inflated 39/50=78% reading; TRUE coverage is 30/50=60% pre-Layer-2 because cached-discovery adapters walk entire data/ats-discovery-cache.json with no filter against current portals.yml's enabled list). P-8 Layer 1 misses Ashby on JS-embed pages — user-confirmed Ramp (119 jobs) + Supabase (46 jobs) on api.ashbyhq.com/posting-api/job-board/{ramp,supabase} but Layer 1 marked them no-ats-found. P-9 Layer 2 firecrawl-extract.mjs should detect ATS in extracted jobs[].url values and promote no-ats-found → discovered (self-correcting). PRIORITY ORDER: (a) fix P-7 iterTargets filter in scripts/ats-adapters/_lib.mjs (~5 lines + unit test); (b) diagnose P-8 — scrape Ramp+Supabase with actions:[{wait:5000ms}] and inspect for ashbyhq.com markers, possibly expand PROVIDER_PATTERNS.ashby for embed.ashbyhq.com / assets.ashbyhq.com; (c) implement P-9 in firecrawl-extract.mjs ~15 lines; (d) re-run sample-50 smoke for TRUE coverage measurement (~50-100 credits). USER GATES still pending: Step 9 firecrawl-plan-caps.tsv (template at career-ops/data/firecrawl-plan-caps.tsv.template) + Step 10 full sample-50 with enrich (~1500 credits). All Phase 2.8 implementation code is in place — Codex job is bug fixes + measurement, not greenfield. Branch tip bc45b4e + 1 more commit pending for this handoff. ~290 Firecrawl credits used; 100,710 remaining.

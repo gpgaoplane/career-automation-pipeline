@@ -2,6 +2,17 @@
 """
 One-shot Step 1 audit cleanup for career-ops/portals.yml.
 
+HISTORICAL SCRIPT: this enforces the 2026-04-29 Phase 2.7 cleanup state
+of 448 total / 428 enabled / 20 disabled. The current live roster after
+the 2026-04-30 Step 0 disabled-company re-audit is 448 total / 397
+enabled / 51 disabled.
+
+Do not rerun this script for normal maintenance. It is retained only to
+reproduce the historical Phase 2.7 cleanup state. Use current
+career-ops/portals.yml plus
+docs/audits/2026-04-30-step0-disabled-company-audit.md as the source of
+truth.
+
 Per design plan §4.1-§4.4:
 - Re-enable 14 mis-drops (set enabled: true, no note).
 - Add `note:` to 18 already-disabled entries (16 dup + 2 universal exclusions).
@@ -11,10 +22,31 @@ Final state: 448 / 428 / 20 / 0 missing notes.
 
 Operates on raw lines (regex) so YAML comments are preserved.
 """
+import argparse
 import re
+import sys
 from pathlib import Path
 
 SRC = Path('career-ops/portals.yml')
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--allow-historical-phase27",
+    action="store_true",
+    help="Required guard: replay the superseded Phase 2.7 428/20 cleanup."
+)
+args = parser.parse_args()
+
+if not args.allow_historical_phase27:
+    print(
+        "Refusing to run: scripts/portals-audit-cleanup.py would replay the "
+        "superseded Phase 2.7 428-enabled roster. Current source of truth is "
+        "career-ops/portals.yml plus docs/audits/2026-04-30-step0-disabled-company-audit.md. "
+        "Pass --allow-historical-phase27 only if you intentionally need to reproduce "
+        "the old state.",
+        file=sys.stderr,
+    )
+    raise SystemExit(2)
 
 # Companies to re-enable: identified by (name, rank) tuple
 RE_ENABLE = {

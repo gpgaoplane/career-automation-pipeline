@@ -2,7 +2,7 @@
 status: active
 type: shared
 owner: shared
-last-updated: 2026-04-22T00:00:00-05:00
+last-updated: 2026-04-30T16:07:21-04:00
 read-if: "you are any AI agent starting work in this repo"
 skip-if: "never"
 related: []
@@ -106,7 +106,7 @@ When creating your log (`docs/agents/<self>.md`), start from `templates/work-log
 
 > User content — outside all framework markers. Preserved on every re-init and upgrade. This section is the canonical project summary every agent reads.
 
-**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **428 enabled companies** (448 total in `career-ops/portals.yml`, 20 disabled — every disabled row carries an explicit `note:` after the 2026-04-28 audit cleanup. See `docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md` and `.claude/memory/decisions.md` D-11 for the audit details).
+**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **397 currently enabled companies** (448 total in `career-ops/portals.yml`, 51 disabled after the 2026-04-30 Step 0 disabled-company re-audit). Historical roster milestones: Phase 2.7 cleanup produced 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily over-pruned to 388 enabled / 60 disabled; Codex restored 9 high-confidence false disables to reach the current 397 / 51 baseline. See `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 reconciliation.
 
 **User contact:** `inquiry@dalamula.ai`. Targets remote roles from Toronto (no US presence viable for in-office roles).
 
@@ -214,7 +214,7 @@ node merge-tracker.mjs             # merge batch tracker additions
 ```
 Excel (450 companies)
     ↓ filter
-career-ops/portals.yml (448 companies, 428 enabled)
+career-ops/portals.yml (448 companies, 397 enabled)
     ↓
 scan.mjs ──────────────── Greenhouse/Ashby/Lever direct ATS URLs (zero token cost)
 custom-scraper.mjs ─────── 3-tier ATS discovery + Playwright for branded pages
@@ -285,7 +285,7 @@ career-ops/data/applications.md          ← master tracker
 
 ### Companies Source
 
-`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. 428 enabled / 20 disabled in portals.yml (every disabled row carries an explicit `note:` per the 2026-04-28 audit cleanup). Disabled categories: 16 duplicate-suppression entries, 2 universal-exclusion HW supply chain (NVIDIA, Foxconn), 2 universal-exclusion defense drones / maritime (Skydio, Saronic). Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
+`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. Current `career-ops/portals.yml` live roster is 448 total / 397 enabled / 51 disabled after the 2026-04-30 Step 0 disabled-company re-audit. Historical Phase 2.7 cleanup was 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily reduced that to 388 enabled / 60 disabled before 9 false disables were restored. Disabled rows use explicit `note:` values; consult `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 cohort and `docs/design/companies-roster.md` for the generated live roster. Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
 
 Excel columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
 

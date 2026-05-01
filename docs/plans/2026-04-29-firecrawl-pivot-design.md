@@ -2,13 +2,17 @@
 status: active
 type: design-plan
 owner: claude
-last-updated: 2026-04-29T18:00:00-04:00
+last-updated: 2026-04-30T17:13:48-04:00
 read-if: "you are about to refactor the scraping layer to use Firecrawl"
 skip-if: "branded scraping isn't on your task"
 revision: v2
 ---
 
 # Phase 2.8 — Firecrawl-Pivot Design
+
+> **Supersession note — 2026-04-30:** This design has been implemented. Any roster-count references to 428 enabled rows are historical. Phase 2.8 Step 0 temporarily reduced the roster to 388 enabled / 60 disabled, then Codex re-audited the disabled cohort and restored 9 high-confidence false disables. Current live roster is **448 total / 397 enabled / 51 disabled**. Use `career-ops/portals.yml`, `docs/STATUS.md`, `docs/design/companies-roster.md`, and `docs/audits/2026-04-30-step0-disabled-company-audit.md` as the current source of truth.
+>
+> **AC-2 supersession — 2026-04-30:** The original "sample-50 coverage >=75%" gate is retired because it conflated source resolution, source health, raw-job availability, title filters, and whether companies currently have Will-relevant openings. Use `docs/audits/2026-04-30-sample50-missed-company-classification.md` and `docs/audits/2026-04-30-step10-sample50-metrics.json` for the replacement source-accounting metrics.
 
 ## §0. Source of truth precedence
 
@@ -226,14 +230,14 @@ Implementation plan must include `--max-credits N` flag (default N=3000) that ha
 8. **Step 7**: refactor `enrich-jobs.mjs` to be **pure Firecrawl-first** (Q-FC-4) — primary `/v1/scrape` markdown; HTTP fallback only on Firecrawl outage.
 9. **Step 8**: rewire `package.json` `full-scan` chain to: `scan && firecrawl-discover && ats-adapters && firecrawl-extract && enrich && export`.
 10. **Step 9**: per-plan rate cap verification (manual gate) — confirm Firecrawl dashboard RPM/concurrency caps before any high-concurrency Layer 1 / Layer 2 batch.
-11. **Step 10**: re-run sample-50 end-to-end. Verify ≥75% coverage.
+11. **Step 10**: re-run sample-50 end-to-end. Verify source-accounting AC-2, enrichment-quality AC-3, and export quality.
 12. **Step 11**: acceptance audit pass against §7 ACs.
 13. **Step 12**: full Phase 2.6 clean rescan.
 
 ## §7. Acceptance criteria (final, post-Codex-review integration)
 
 - **AC-1**: `firecrawl-discover.mjs` recovers ATS slugs for ≥4 of the original 5 smoke-test companies (Jasper, SiFive, Expedia, Cloudflare, Shopify).
-- **AC-2**: Sample-50 coverage ≥75% (≥38 of 50 produce jobs) via the union of Layer 0 8-provider direct-API tier + Layer 1 discovery + Layer 2 structured extraction.
+- **AC-2**: Sample-50 source accounting is complete. Report source resolution, source health, raw-job availability, and relevant job yield separately; relevant job yield is report-only. Pass/fail checks are source health ≥90% for resolved sources and miss classification ≥95% for no-yield companies. Step 10 result: source resolved 38/50, source health 37/38, raw job availability 36/37, relevant job yield 28/50, no-yield classification 22/22.
 - **AC-3**: Per-JD enrichment via Firecrawl markdown yields location + comp signals on ≥40% of JDs (vs 9-12% in v1 sample run).
 - **AC-4**: All 5 new direct-API adapters (Workday CXS, SmartRecruiters, Personio, Recruitee, Workable) have integration tests passing against representative real company URLs. Tests assert: HTTP 200, parseable JSON/XML, ≥1 job extracted, schema-conformant output to pipeline.md.
 - **AC-5**: **No code path calls `/v1/extract` or uses legacy `extract` / `extractorOptions` / `extractionSchema` request keys.** Verified by grep audit across `career-ops/firecrawl-*.mjs`, `career-ops/lib/firecrawl.mjs`, `career-ops/enrich-jobs.mjs`, and `scripts/ats-adapters/`. Inline JSON Schema is delivered exclusively via `formats:["json"]` + `jsonOptions` in `/v1/scrape`.

@@ -41,6 +41,7 @@ import {
   detectProvider,
   detectAllInText,
 } from "./lib/ats-detect.mjs";
+import { fetchAshby } from "./lib/ats-clients.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PORTALS_YML = resolve(__dirname, "portals.yml");
@@ -100,6 +101,63 @@ function levenshtein(a, b) {
 
 function normalizeForAgreement(s) {
   return s.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function ashbySlugCandidates(entry) {
+  const candidates = [];
+  const add = (value) => {
+    const slug = String(value || "")
+      .toLowerCase()
+      .replace(/\([^)]*\)/g, "")
+      .replace(/^.*:\s*/, "")
+      .replace(/\.com$/i, "")
+      .replace(/[^a-z0-9-]/g, "");
+    if (slug && !candidates.includes(slug)) candidates.push(slug);
+  };
+
+  try {
+    const host = new URL(entry.careers_url).hostname.replace(/^www\./, "");
+    const firstLabel = host.split(".")[0];
+    if (!/^(careers?|jobs?|apply|www)$/i.test(firstLabel)) add(firstLabel);
+  } catch {
+    // Ignore malformed URLs; company-name candidate still applies.
+  }
+  add(entry.name);
+  return candidates;
+}
+
+async function probeAshbyDirect(entry, fetcher = fetchAshby) {
+  for (const slug of ashbySlugCandidates(entry)) {
+    try {
+      const result = await fetcher(slug);
+      if (Array.isArray(result.jobs) && result.jobs.length > 0) {
+        return {
+          provider: "ashby",
+          slug,
+          matchedAt: Number.MAX_SAFE_INTEGER,
+          discovery_method: "ashby-direct-probe",
+          probe_jobs: result.jobs.length,
+        };
+      }
+    } catch {
+      // 404/non-Ashby boards are expected while probing.
+    }
+  }
+  return null;
+}
+
+function cacheAshbyProbe(cache, entry, probe, depth = 0) {
+  const cacheEntry = {
+    ats: "ashby",
+    slug: probe.slug,
+    discovered_at: new Date().toISOString(),
+    source_url: entry.careers_url,
+    depth,
+    discovery_method: probe.discovery_method,
+    probe_jobs: probe.probe_jobs,
+  };
+  cache[entry.name] = cacheEntry;
+  return cacheEntry;
 }
 
 // Dedup candidates by identity tuple (provider, slug, host, site). Same
@@ -220,6 +278,12 @@ async function discoverCompany(entry, cache, opts) {
   try {
     depth0Result = await tryDiscoverPage(careers_url, name);
   } catch (e) {
+    const ashbyProbe = await probeAshbyDirect(entry);
+    if (ashbyProbe) {
+      const cacheEntry = cacheAshbyProbe(cache, entry, ashbyProbe, 0);
+      return { name, action: "discovered", entry: cacheEntry };
+    }
+    if (e instanceof CreditCapExhaustedError) throw e;
     return { name, action: "fetch-failed", error: e.message?.slice(0, 200) };
   }
 
@@ -304,6 +368,12 @@ async function discoverCompany(entry, cache, opts) {
     return { name, action: "ambiguous", candidates: resolution.candidates.length };
   }
 
+  const ashbyProbe = await probeAshbyDirect(entry);
+  if (ashbyProbe) {
+    const cacheEntry = cacheAshbyProbe(cache, entry, ashbyProbe, pickedDepth);
+    return { name, action: "discovered", entry: cacheEntry };
+  }
+
   // No ATS markers found
   cache[name] = {
     ats: null,
@@ -382,9 +452,9 @@ async function main() {
 }
 
 import { pathToFileURL } from "node:url";
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
 // Re-exports for testing
-export { discoverCompany, resolveAmbiguous, levenshtein };
+export { discoverCompany, resolveAmbiguous, levenshtein, ashbySlugCandidates, probeAshbyDirect, cacheAshbyProbe };

@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Run all 18 acceptance criteria from design plan §12. Print PASS/FAIL summary."""
+"""
+Run all 18 acceptance criteria from Phase 2.7 design plan §12.
+
+HISTORICAL SCRIPT: this audit verifies the 2026-04-29 Phase 2.7
+428-enabled / 20-disabled baseline. The current live roster after the
+2026-04-30 Step 0 disabled-company re-audit is 448 total / 397 enabled /
+51 disabled. Use scripts/acceptance-audit-phase2.8.py for Phase 2.8 and
+docs/audits/2026-04-30-step0-disabled-company-audit.md for the Step 0
+roster reconciliation.
+"""
+import argparse
 import re
 import json
 import subprocess
@@ -9,6 +19,24 @@ import yaml
 
 ROOT = Path('.')
 results = []
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    "--allow-historical-phase27",
+    action="store_true",
+    help="Required guard: run the historical Phase 2.7 428/20 acceptance audit."
+)
+args = parser.parse_args()
+
+if not args.allow_historical_phase27:
+    print(
+        "Refusing to run: scripts/acceptance-audit.py is a historical Phase 2.7 "
+        "audit for the superseded 428-enabled roster. Current roster is 448 total / "
+        "397 enabled / 51 disabled. Pass --allow-historical-phase27 only if you "
+        "intentionally need to reproduce the old Phase 2.7 acceptance check.",
+        file=sys.stderr,
+    )
+    raise SystemExit(2)
 
 def check(num, desc, ok, detail=''):
     status = 'PASS' if ok else 'FAIL'

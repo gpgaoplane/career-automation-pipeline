@@ -15,7 +15,7 @@ export const PROVIDER_PATTERNS = {
   // - Embed library: boards.greenhouse.io/embed/job_board.js?for={slug} or boards.greenhouse.io/embed/job_board?for={slug}
   // Per pitfall P-6 (2026-04-30) — slug "embed" is the library path, not a company.
   greenhouse: /(?:boards|job-boards|boards-api)\.greenhouse\.io\/(?:embed\/job_board(?:\.js)?\?(?:[^&\s"']*&)*for=([^&\s"']+)|([^/?#"'\s]+))/i,
-  ashby: /jobs\.ashbyhq\.com\/([^/?#"'\s]+)/i,
+  ashby: /(?:jobs|embed)\.ashbyhq\.com\/([^/?#"'\s]+)|api\.ashbyhq\.com\/posting-api\/job-board\/([^/?#"'\s]+)/i,
   lever: /jobs\.lever\.co\/([^/?#"'\s]+)/i,
   // Workday: {tenant}.wd{N}.myworkdayjobs.com/[locale/]{site}
   // Captures: [1]=tenant, [2]=instance digits, [3]=site (skipping optional locale prefix like "en-US")
@@ -55,6 +55,9 @@ export function detectProvider(url) {
         if (slug === "embed") return null;
         return { provider, slug };
       }
+      if (provider === "ashby") {
+        return { provider, slug: m[1] || m[2] };
+      }
       return { provider, slug: m[1] };
     }
   }
@@ -86,6 +89,8 @@ export function detectAllInText(text) {
         const slug = m[1] || m[2];
         if (slug === "embed") continue; // P-6 filter
         entry.slug = slug;
+      } else if (provider === "ashby") {
+        entry.slug = m[1] || m[2];
       } else {
         entry.slug = m[1];
       }

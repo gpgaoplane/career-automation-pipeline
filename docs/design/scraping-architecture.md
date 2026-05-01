@@ -1,6 +1,21 @@
+---
+status: active
+type: design
+owner: shared
+last-updated: 2026-04-30T17:25:27-04:00
+read-if: "you are modifying scraper architecture or interpreting pre-Firecrawl scraper docs"
+skip-if: "status != active"
+related:
+  - docs/plans/2026-04-29-firecrawl-pivot-design.md
+  - docs/plans/2026-04-29-firecrawl-pivot-implementation.md
+  - docs/audits/2026-04-30-sample50-missed-company-classification.md
+---
+
 # Scraping Architecture — Design Decisions
 
 Last updated 2026-04-19. Reference before modifying any scraper or adding companies.
+
+> **Phase 2.8 supersession — 2026-04-30:** The lower sections of this file document the pre-Firecrawl `custom-scraper.mjs` architecture. Current scraper architecture is Phase 2.8 Firecrawl pivot: `scan.mjs` remains untouched for direct Greenhouse/Ashby/Lever URLs; Firecrawl discovers ATS routes; repo-root `scripts/ats-adapters/` consumes discovered/direct ATS sources; `firecrawl-extract.mjs` handles no-ATS branded pages; `enrich-jobs.mjs` is Firecrawl-first; `custom-scraper.mjs` is a Layer 3 fallback. Current acceptance gate AC-2 uses source-accounting metrics, not forced exported-job yield. See `docs/STATUS.md`, `docs/plans/2026-04-29-firecrawl-pivot-design.md`, and `docs/audits/2026-04-30-sample50-missed-company-classification.md`.
 
 ---
 
@@ -152,9 +167,9 @@ Some `careers_url` entries in portals.yml point to a company's **generic careers
 |------|-------|-----------|-------------|
 | `fetch` + `cheerio` | Fast | No | Static/SSR pages, any ATS with a clean API response |
 | **Playwright** (installed) | Medium | Yes | Workday, Rippling, custom React/Next.js career pages |
-| Firecrawl | Slow (SaaS) | Yes | Not used — unnecessary cost given Playwright is installed |
+| Firecrawl | SaaS, credit-metered | Yes | **Current Phase 2.8 primary layer** for ATS discovery, no-ATS extraction, and enrichment markdown; see supersession note above |
 
-**Decision:** custom-scraper.mjs uses fetch+cheerio as default, falls back to Playwright only when JS rendering is detected or when the site is on the known Playwright-required list (Workday, Rippling, iCIMS).
+**Historical decision:** before Phase 2.8, `custom-scraper.mjs` used fetch+cheerio as default and fell back to Playwright only when JS rendering was detected or when the site was on the known Playwright-required list. Current Phase 2.8 design keeps `custom-scraper.mjs` as Layer 3 fallback rather than the primary branded-page path.
 
 ---
 

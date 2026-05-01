@@ -2,6 +2,17 @@
 """
 portals-apply-triage-fixes.py — Apply Step 0 triage decisions to portals.yml.
 
+HISTORICAL SCRIPT: this encodes the 2026-04-29 Phase 2.8 Step 0
+manual-gate decisions that temporarily reduced the roster to 388 enabled /
+60 disabled. Codex re-audited that cohort on 2026-04-30 and restored 9
+high-confidence false disables, producing the current 397 enabled / 51
+disabled baseline.
+
+Do not rerun this script for normal maintenance. It is retained only to
+reproduce the historical Step 0 state. Use
+docs/audits/2026-04-30-step0-disabled-company-audit.md and current
+career-ops/portals.yml for the source of truth.
+
 Operates on TEXT level (not YAML parse) to preserve comments and YAML group
 headers (per Phase 2.7 sample-script comment-loss pitfall, commit eacb2c3).
 
@@ -12,7 +23,7 @@ For each EDIT entry, finds the `  - name: "<name>"` block and:
     (replaces existing note if present)
 
 Run from repo root:
-    python scripts/portals-apply-triage-fixes.py [--dry-run]
+    python scripts/portals-apply-triage-fixes.py --allow-historical-rerun [--dry-run]
 """
 
 import argparse
@@ -166,7 +177,23 @@ def find_and_modify(text, edit):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true", help="Preview changes without writing")
+    parser.add_argument(
+        "--allow-historical-rerun",
+        action="store_true",
+        help="Required guard: replays the superseded 2026-04-29 Step 0 triage state."
+    )
     args = parser.parse_args()
+
+    if not args.allow_historical_rerun:
+        print(
+            "Refusing to run: this historical Step 0 script would replay the superseded "
+            "388-enabled roster. Current source of truth is career-ops/portals.yml plus "
+            "docs/audits/2026-04-30-step0-disabled-company-audit.md. Pass "
+            "--allow-historical-rerun only if you intentionally need to reproduce the "
+            "old 2026-04-29 state.",
+            file=sys.stderr,
+        )
+        return 2
 
     text = PORTALS_YML.read_text(encoding="utf-8")
     original_text = text
@@ -211,7 +238,8 @@ def main():
         print(f"\nWrote: {PORTALS_YML}", file=sys.stderr)
     else:
         print("\nNo changes needed (file already in target state)", file=sys.stderr)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -144,61 +144,67 @@ function uniqueCaseInsensitiveMatches(text, list) {
 }
 
 function extractCompRange(text) {
-  // Look for an anchor phrase, then extract numeric range within ±300 chars
-  const anchorRe = /\b(compensation|salary range|base salary|total compensation|OTE|target compensation|salary band|pay range)\b/i;
-  const aMatch = anchorRe.exec(text);
-  if (!aMatch) return null;
-  const start = Math.max(0, aMatch.index - 50);
-  const end = Math.min(text.length, aMatch.index + 350);
-  const window = text.slice(start, end);
+  // Look for anchor phrases, then extract numeric ranges within ±300 chars.
+  // Some boards repeat anchors (e.g. "Equal Opportunity" before "Pay Range"),
+  // so scan every anchor window and return the first sensible money range.
+  const anchorRe = /\b(compensation|salary range|base salary|total compensation|OTE|target compensation|salary band|pay range|base pay)\b/ig;
+  const anchors = [...text.matchAll(anchorRe)];
+  if (anchors.length === 0) return null;
 
   // Range pattern: must be anchored by $ on first number OR K/k on at least
   // one number (so "3-5 years" doesn't false-positive as a comp range).
   // Scans all candidates in window; returns the first with sensible thousands.
   const rangeRe = /(?:\$\s?([\d,]+)\s?([Kk])?|([\d,]+)\s?([Kk]))\s*[-–—to]+\s*\$?\s?([\d,]+)\s?([Kk])?/g;
-  let rMatch;
-  let low = null, high = null;
-  while ((rMatch = rangeRe.exec(window)) !== null) {
-    const n1raw = rMatch[1] || rMatch[3];
-    const k1 = rMatch[2] || rMatch[4];
-    const n2raw = rMatch[5];
-    const k2 = rMatch[6];
-    if (!n1raw || !n2raw) continue;
-    let l = parseInt(n1raw.replace(/,/g, ''), 10);
-    let h = parseInt(n2raw.replace(/,/g, ''), 10);
-    if (isNaN(l) || isNaN(h)) continue;
-    if (k1) l = l * 1000;
-    if (k2) h = h * 1000;
-    // Heuristic: if both numbers are < 1000 AND no K marker, the regex caught
-    // a non-money range (e.g., "3-5 years"). Skip.
-    if (l < 1000 || h < 1000) continue;
-    if (l > 10_000_000 || h > 10_000_000) continue;
-    if (l > h) [l, h] = [h, l];
-    low = l; high = h;
-    break;
-  }
-  if (low === null) return null;
+  for (const aMatch of anchors) {
+    const start = Math.max(0, aMatch.index - 50);
+    const end = Math.min(text.length, aMatch.index + 350);
+    const window = text.slice(start, end);
 
-  // Currency detection — look in the same window
-  const cad = /\b(CAD|CA\$|C\$|Canadian dollar)\b/i.test(window);
-  const usd = /\b(USD|US\$|United States dollar)\b/i.test(window);
-  let currency;
-  if (cad && !usd) currency = 'CAD';
-  else if (usd && !cad) currency = 'USD';
-  else if (!cad && !usd) {
-    // Heuristic: presence of "Canada" / "Toronto" → CAD; else default unknown
-    if (/\b(canada|toronto|ontario)\b/i.test(text)) currency = 'CAD';
-    else if (/\b(united states|usa|us-based|new york|san francisco|remote us)\b/i.test(text)) currency = 'USD';
-    else currency = 'unknown';
-  } else {
-    currency = 'unknown';
-  }
+    let rMatch;
+    rangeRe.lastIndex = 0;
+    while ((rMatch = rangeRe.exec(window)) !== null) {
+      const n1raw = rMatch[1] || rMatch[3];
+      const k1 = rMatch[2] || rMatch[4];
+      const n2raw = rMatch[5];
+      const k2 = rMatch[6];
+      if (!n1raw || !n2raw) continue;
+      let low = parseInt(n1raw.replace(/,/g, ''), 10);
+      let high = parseInt(n2raw.replace(/,/g, ''), 10);
+      if (isNaN(low) || isNaN(high)) continue;
+      if (k1) low *= 1000;
+      if (k2) high *= 1000;
+      // Common pay-transparency shorthand: "$200-$325k".
+      if (!k1 && k2 && low < 1000) low *= 1000;
+      if (k1 && !k2 && high < 1000) high *= 1000;
+      // Heuristic: if both numbers are < 1000 AND no K marker, the regex caught
+      // a non-money range (e.g., "3-5 years"). Skip.
+      if (low < 1000 || high < 1000) continue;
+      if (low > 10_000_000 || high > 10_000_000) continue;
+      if (low > high) [low, high] = [high, low];
 
-  return {
-    low_thousands: Math.round(low / 1000),
-    high_thousands: Math.round(high / 1000),
-    currency,
-  };
+      // Currency detection — look in the same window
+      const cad = /\b(CAD|CA\$|C\$|Canadian dollar)\b/i.test(window);
+      const usd = /\b(USD|US\$|United States dollar)\b/i.test(window);
+      let currency;
+      if (cad && !usd) currency = 'CAD';
+      else if (usd && !cad) currency = 'USD';
+      else if (!cad && !usd) {
+        // Heuristic: presence of "Canada" / "Toronto" → CAD; else default unknown
+        if (/\b(canada|toronto|ontario)\b/i.test(text)) currency = 'CAD';
+        else if (/\b(united states|usa|us-based|new york|san francisco|remote us)\b/i.test(text)) currency = 'USD';
+        else currency = 'unknown';
+      } else {
+        currency = 'unknown';
+      }
+
+      return {
+        low_thousands: Math.round(low / 1000),
+        high_thousands: Math.round(high / 1000),
+        currency,
+      };
+    }
+  }
+  return null;
 }
 
 function extractDealBreaker(text) {
@@ -224,10 +230,70 @@ function extractLocationMatches(text) {
   return matches;
 }
 
+function cleanLocationCandidate(line) {
+  return line
+    .replace(/^#+\s*/, '')
+    .replace(/^\*\*|\*\*$/g, '')
+    .replace(/^[-*]\s*/, '')
+    .trim();
+}
+
+function isLikelyLocationCandidate(line) {
+  if (!line || line.length > 120) return false;
+  if (/^(apply|employment type|department|location type|job type|about|back to jobs)$/i.test(line)) return false;
+  if (/^(full time|part time|contract|internship|temporary)$/i.test(line)) return false;
+  return /\b(remote|hybrid|onsite|on-site|san francisco|new york|toronto|canada|united states|usa|uk|united kingdom|london|europe|poland|germany|india|singapore|australia|south korea|washington|boulder|chicago|seattle|california)\b/i.test(line);
+}
+
+function extractRawLocations(text) {
+  const rawLines = text.split(/\r?\n/);
+  const lines = rawLines.map(cleanLocationCandidate).filter(Boolean);
+  const matches = [];
+  const seen = new Set();
+  const add = (line) => {
+    const value = cleanLocationCandidate(line);
+    const key = value.toLowerCase();
+    if (isLikelyLocationCandidate(value) && !seen.has(key)) {
+      seen.add(key);
+      matches.push(value);
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    if (/^location$/i.test(lines[i])) {
+      for (let j = i + 1; j < Math.min(i + 4, lines.length); j++) {
+        if (/^(employment type|location type|department)$/i.test(lines[j])) break;
+        add(lines[j]);
+        if (matches.length && seen.has(lines[j].toLowerCase())) break;
+      }
+    }
+  }
+
+  // Greenhouse-style markdown often has: "# Title" then a plain location line.
+  for (let i = 0; i < Math.min(rawLines.length - 1, 24); i++) {
+    if (/^#\s+/.test(rawLines[i] || '')) {
+      for (let j = i + 1; j < Math.min(i + 5, rawLines.length); j++) {
+        const candidate = cleanLocationCandidate(rawLines[j] || '');
+        if (!candidate) continue;
+        add(candidate);
+        break;
+      }
+      break;
+    }
+  }
+
+  for (const line of lines) {
+    if (/^(remote|hybrid|onsite|on-site)\b/i.test(line)) add(line);
+  }
+
+  return matches.slice(0, 5);
+}
+
 export function extractSignals(text) {
   const comp = extractCompRange(text);
   return {
     location_match: extractLocationMatches(text),
+    location_raw: extractRawLocations(text),
     comp_low_thousands: comp ? comp.low_thousands : null,
     comp_high_thousands: comp ? comp.high_thousands : null,
     comp_currency: comp ? comp.currency : null,

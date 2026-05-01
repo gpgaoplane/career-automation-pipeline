@@ -7,7 +7,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { detectAllInText, detectProvider, PROVIDER_PATTERNS } from "./lib/ats-detect.mjs";
-import { resolveAmbiguous, levenshtein, discoverCompany } from "./firecrawl-discover.mjs";
+import {
+  resolveAmbiguous,
+  levenshtein,
+  discoverCompany,
+  ashbySlugCandidates,
+  probeAshbyDirect,
+  cacheAshbyProbe,
+} from "./firecrawl-discover.mjs";
 
 test("PROVIDER_PATTERNS map has 8 entries", () => {
   assert.equal(Object.keys(PROVIDER_PATTERNS).length, 8);
@@ -18,6 +25,8 @@ test("detectProvider — direct-ATS URLs each provider", () => {
     ["https://boards.greenhouse.io/cloudflare", "greenhouse", "cloudflare"],
     ["https://job-boards.greenhouse.io/heygen", "greenhouse", "heygen"],
     ["https://jobs.ashbyhq.com/Abridge", "ashby", "Abridge"],
+    ["https://embed.ashbyhq.com/ramp", "ashby", "ramp"],
+    ["https://api.ashbyhq.com/posting-api/job-board/supabase?includeCompensation=true", "ashby", "supabase"],
     ["https://jobs.lever.co/palantir", "lever", "palantir"],
     ["https://apply.workable.com/pony-dot-ai/", "workable", "pony-dot-ai"],
     ["https://acme.recruitee.com", "recruitee", "acme"],
@@ -30,6 +39,43 @@ test("detectProvider — direct-ATS URLs each provider", () => {
     assert.equal(r.provider, expectedProvider);
     if (r.slug !== undefined) assert.equal(r.slug, expectedSlug);
   }
+});
+
+test("ashbySlugCandidates — derives brand slugs from careers URL and company name", () => {
+  assert.deepEqual(
+    ashbySlugCandidates({ name: "Ramp", careers_url: "https://ramp.com/careers" }),
+    ["ramp"]
+  );
+  assert.deepEqual(
+    ashbySlugCandidates({ name: "Supabase", careers_url: "https://supabase.com/careers" }),
+    ["supabase"]
+  );
+});
+
+test("probeAshbyDirect — returns discovered candidate when public board exists", async () => {
+  const r = await probeAshbyDirect(
+    { name: "Ramp", careers_url: "https://ramp.com/careers" },
+    async (slug) => ({ provider: "ashby", slug, jobs: [{ title: "Engineer" }] })
+  );
+  assert.equal(r.provider, "ashby");
+  assert.equal(r.slug, "ramp");
+  assert.equal(r.discovery_method, "ashby-direct-probe");
+});
+
+test("cacheAshbyProbe — writes normalized direct-probe cache entry", () => {
+  const cache = {};
+  const entry = cacheAshbyProbe(
+    cache,
+    { name: "Supabase", careers_url: "https://supabase.com/careers" },
+    { slug: "supabase", discovery_method: "ashby-direct-probe", probe_jobs: 46 },
+    0
+  );
+
+  assert.equal(entry.ats, "ashby");
+  assert.equal(entry.slug, "supabase");
+  assert.equal(entry.source_url, "https://supabase.com/careers");
+  assert.equal(entry.probe_jobs, 46);
+  assert.equal(cache.Supabase, entry);
 });
 
 test("detectProvider — Workday returns {host, site}", () => {

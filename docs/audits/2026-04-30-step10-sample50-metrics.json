@@ -1,0 +1,58 @@
+{
+  "observed_at": "2026-04-30T16:52:37-04:00",
+  "sample_companies": 50,
+  "exported_companies": 28,
+  "title_filtered_company_coverage": 0.56,
+  "source_resolved_companies": 38,
+  "source_resolution_rate": 0.76,
+  "resolved_sources": 38,
+  "healthy_sources": 37,
+  "source_health_rate": 0.9736842105263158,
+  "raw_job_available_sources": 36,
+  "healthy_source_raw_job_availability_rate": 0.972972972972973,
+  "no_yield_companies": 22,
+  "classified_no_yield_companies": 22,
+  "miss_classification_rate": 1.0,
+  "miss_reason_counts": {
+    "NO_RELEVANT_JOBS": 8,
+    "NO_OPEN_JOBS": 1,
+    "ROUTE_MISSING": 12,
+    "SOURCE_BROKEN": 1
+  },
+  "pending_jobs": 178,
+  "bands": {
+    "S": 7,
+    "A": 58,
+    "B": 111,
+    "C": 2
+  },
+  "description_score_positive": 146,
+  "description_score_positive_rate": 0.8202247191011236,
+  "will_fit_location_hits": 3,
+  "will_fit_location_rate": 0.016853932584269662,
+  "raw_location_hits": 126,
+  "raw_location_rate": 0.7078651685393258,
+  "compensation_hits": 23,
+  "compensation_rate": 0.12921348314606743,
+  "raw_location_or_compensation_hits": 126,
+  "raw_location_or_compensation_rate": 0.7078651685393258,
+  "will_fit_location_or_compensation_hits": 26,
+  "will_fit_location_or_compensation_rate": 0.14606741573033707,
+  "firecrawl_cost_rows": 307,
+  "firecrawl_credits": 383,
+  "firecrawl_modes": {
+    "markdown": 288,
+    "json": 19
+  },
+  "new_fallback_queue_rows": 0,
+  "ac2_title_filtered_company_coverage_pass": false,
+  "ac2_source_accounting_pass": true,
+  "ac2_source_health_pass": true,
+  "ac2_miss_classification_pass": true,
+  "ac3_generic_location_or_compensation_pass": true,
+  "ac3_will_fit_location_or_compensation_pass": false,
+  "ac11b_fallback_usage_pass": true,
+  "adapter_warnings": [
+    "Seagate Technology Workday CXS returned HTTP 422 during ats-adapters."
+  ]
+}

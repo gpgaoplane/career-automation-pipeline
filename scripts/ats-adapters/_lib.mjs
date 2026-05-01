@@ -69,28 +69,36 @@ export function buildTitleFilter(portals) {
 // Iterator over portals.yml + cache entries that match a given provider.
 // Yields { companyName, fetchArgs } where fetchArgs is the kwarg shape for
 // the provider's fetcher in lib/ats-clients.mjs.
-export function* iterTargets(portals, cache, providerName) {
+export function* iterTargets(portals, cache, providerName, opts = {}) {
+  const { includePortals = true, includeCache = true } = opts;
   const tracked = portals?.tracked_companies || [];
+  const enabledNames = new Set(
+    tracked.filter((entry) => entry?.enabled).map((entry) => entry.name)
+  );
 
   // From portals.yml — direct-ATS URLs
-  for (const entry of tracked) {
-    if (!entry?.enabled || !entry?.careers_url) continue;
-    const det = detectProvider(entry.careers_url);
-    if (!det || det.provider !== providerName) continue;
-    yield {
-      companyName: entry.name,
-      fetchArgs: providerName === "workday-cxs"
-        ? { host: det.host, site: det.site }
-        : det.slug,
-      source: "portals.yml",
-    };
+  if (includePortals) {
+    for (const entry of tracked) {
+      if (!entry?.enabled || !entry?.careers_url) continue;
+      const det = detectProvider(entry.careers_url);
+      if (!det || det.provider !== providerName) continue;
+      yield {
+        companyName: entry.name,
+        fetchArgs: providerName === "workday-cxs"
+          ? { host: det.host, site: det.site }
+          : det.slug,
+        source: "portals.yml",
+      };
+    }
   }
 
   // From discovery cache. Accept BOTH schemas:
   //   v1 (legacy custom-scraper.mjs): {ats:"workday", tenant, instance, site, discovered:"YYYY-MM-DD"}
   //   v2 (firecrawl-discover.mjs): {ats:"workday-cxs", host, site, discovered_at:"<ISO>"}
   // Plus older "workday" → "workday-cxs" alias.
+  if (!includeCache) return;
   for (const [companyName, info] of Object.entries(cache || {})) {
+    if (enabledNames.size > 0 && !enabledNames.has(companyName)) continue;
     if (!info) continue;
     if (info.status === "no-ats-found" || info.status === "ambiguous") continue;
     // Provider name alias: legacy "workday" matches new "workday-cxs"
@@ -176,7 +184,7 @@ export async function runAdapterCacheOnly({ providerName, fetcher, dryRun = fals
   const titleFilter = buildTitleFilter(portals);
 
   // Filter to cache-only targets
-  const targets = [...iterTargets({}, cache, providerName)]; // empty portals → no portals.yml entries
+  const targets = [...iterTargets(portals, cache, providerName, { includePortals: false })];
   console.error(`[${providerName}-cached] ${targets.length} cache target(s)`);
 
   let added = 0;
@@ -266,4 +274,3 @@ export async function runAdapter({ providerName, fetcher, dryRun = false }) {
   );
   return { provider: providerName, attempted: targets.length, added, errors };
 }
-

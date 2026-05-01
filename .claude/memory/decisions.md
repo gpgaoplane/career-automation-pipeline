@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-30T00:00:00-04:00
+last-updated: 2026-04-30T22:11:51-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -617,5 +617,38 @@ The largest single finding: **Workday's public CXS endpoint** at `POST {tenant}.
 - `scripts/ats-adapters/run-all.mjs` ADAPTERS array now has 8 entries.
 
 **Cross-references:** Phase 2.8 Step 5 smoke results in `docs/STATUS.md` + `docs/agents/claude.md` work log. Commit `5b5fcf9`.
+
+## D-20 — Accept Codex's AC-2 redefinition: source-accounting + miss-classification, NOT exported-company coverage — 2026-04-30T22:11:51-04:00
+
+**Context:** Phase 2.8 design v2 §7 originally framed AC-2 as ">=75% of sampled companies produce title-filtered exported jobs." Codex's Step 10 transactional sample-50 run measured 28/50 = 56% under that wording, which would FAIL AC-2. Codex independently reasoned that the gate was conflating four distinct things — source reachability, source health, raw job availability, and Will-relevant title yield — and replaced AC-2 with a stack of source-accounting metrics + a no-yield miss-classification gate. The replacement was applied unilaterally by Codex (its D-9, recorded in `docs/audits/2026-04-30-sample50-missed-company-classification.md`, `scripts/acceptance-audit-phase2.8.py`, and supersession notes in design v2 + implementation v2).
+
+User direction at handoff pickup was explicit: "be critical and analytical of Codex's reconciliation" and "do not resurrect the old `>=75% companies produce jobs` AC-2 gate." This decision records Claude's independent verification that the redefinition is technically sound, then formally accepts it as Phase 2.8's gate model.
+
+**Alternatives:**
+- Reject Codex's redefinition; keep ">=75% exported coverage" → AC-2 would fail at 56% and block the full rescan.
+- Accept the redefinition but tighten gates (e.g., source health ≥95% instead of ≥90%; miss classification ≥99% instead of ≥95%).
+- Accept the redefinition as-written by Codex.
+- Accept the redefinition but additionally require "≥X% of `ROUTE_MISSING` companies have manual route research" before declaring full-rescan acceptance done.
+
+**Choice:** Accept the redefinition as Codex wrote it. Source Health Rate gate ≥90% and Miss Classification Rate gate ≥95% are the two pass/fail checks; Source Resolution, Raw Job Availability, and Relevant Job Yield are report-only.
+
+**Rationale:**
+- The original "≥75% exported coverage" gate was originally written by me when the only known dimension of failure was "the scraper can't find jobs." Step 10 surfaced that the dominant non-yield reasons are NOT scraper failures: 8/22 no-yield companies are `NO_RELEVANT_JOBS` (the scraper found jobs; Will's title filters legitimately exclude them, e.g., SiFive's hardware-engineering roster); 12/22 are `ROUTE_MISSING` (the scraper found NO route at all; scraper-side improvement work is bounded by Layer 1 enhancements not gated AC criteria). Forcing the original 75% gate would create perverse incentives — relax title filters or re-enable hardware-supply-chain companies just to make the metric pass.
+- Codex's source-health threshold (≥90%) and miss-classification threshold (≥95%) are not arbitrary — health failure means our scraper hit a working source and got an error from it (truly a parser bug), and classification failure means we have an unexplained no-yield company (a process gap). Those ARE the things the gate should be measuring.
+- Independent verification this turn: parsed `career-ops/portals.yml` (448 / 397 / 51 / 0 missing notes — matches), grepped for `/v1/extract` (only one comment-line hit "NOT /v1/extract" — AC-5 clean), confirmed `scan.mjs` has only its initial commit (D-3 invariant intact), re-ran `python scripts/acceptance-audit-phase2.8.py` (12 PASS / 0 FAIL / 0 pending). Step 10 metrics JSON is internally consistent: 28 exported + 8 NO_RELEVANT_JOBS + 1 NO_OPEN_JOBS + 1 SOURCE_BROKEN = 38 source-resolved; 12 ROUTE_MISSING = 50 − 38; 28 + 22 = 50 sample. The arithmetic checks out.
+- Codex's analytical framework cleanly separates scraper quality (source health) from market quality (relevant job yield). That separation is critical for the upcoming full 397 rescan: a company like KLA returning 40 hardware roles is a `NO_RELEVANT_JOBS` outcome, not a scraper failure to fix.
+
+**Tradeoffs:**
+- The redefinition makes "AC-2 passes" weaker than the original wording — a future scraper that hits 100% source health on 50/397 sources still passes Source Health (gate is rate, not absolute). Mitigation: Source Resolution Rate is reported (76.0% in Step 10), so anyone reading the audit can see the absolute coverage too. The gate is "are the failures explained?", not "is the scraper finding everything?".
+- Relevant Job Yield as report-only means low yield won't block the rescan even if it would meaningfully change Will's review burden. Counter: Will's review is per-job after the rescan, so the relevant question is "are there enough title-filtered S-tier + A-tier jobs to make the review worthwhile?" — a yield rate doesn't answer that; a band distribution does (S=7 / A=58 in Step 10 sample, extrapolating ~55 S + ~460 A on 397 companies).
+- The new gates depend on the analyst correctly classifying every no-yield company. If classification is sloppy, miss-classification rate stays at 100% but the buckets become meaningless. Process discipline required: each classification cites concrete evidence (Step 10's audit table does this — the "Evidence" column quotes specific Workday/Greenhouse/Ashby titles or cache states).
+
+**Implementation impact:**
+- `scripts/acceptance-audit-phase2.8.py` already wired to read source-accounting flags from `docs/audits/2026-04-30-step10-sample50-metrics.json`. No code change needed.
+- For the upcoming full 397-company rescan, the audit artifact (`docs/audits/<YYYY-MM-DD>-fullscan-classification.md` + matching metrics JSON) must use the same metric stack. Every no-yield company classified into one of the four buckets with concrete evidence.
+- Phase 2.8 design v2 + implementation v2 carry supersession notes pointing at the new model. Any future agent reading those plans should NOT re-implement the old 75% gate.
+- Claude memory now formally aligned (this decision + state.md + context.md). Future Claude sessions reading the in-repo memory will see source-accounting framing as canonical.
+
+**Cross-references:** Codex's `.codex/memory/decisions.md` D-9 (the original-author decision); `docs/audits/2026-04-30-sample50-missed-company-classification.md` (durable replacement audit); `scripts/acceptance-audit-phase2.8.py` lines 132-150 (encoded gate logic); `docs/STATUS.md` "Done" entry from 2026-04-30; `AI_HANDOFF.md` Step 10 Results section.
 
 <!-- section:entries:end -->

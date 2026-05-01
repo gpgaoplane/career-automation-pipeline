@@ -2,7 +2,7 @@
 status: active
 type: pitfalls
 owner: claude
-last-updated: 2026-04-30T03:00:00-04:00
+last-updated: 2026-04-30T22:11:51-04:00
 read-if: "you are touching an area Claude has flagged before"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -110,6 +110,8 @@ Recommend Option 2 (correct extraction) over Option 1 (deny-list of synthetic na
 
 ## P-7 — iterTargets cache pollution: cached-discovery adapters process companies NOT in current portals.yml — 2026-04-30
 
+**Status:** RESOLVED 2026-04-30 by Codex (handoff `20260430-104400-aa3d`). `iterTargets()` in `scripts/ats-adapters/_lib.mjs` now filters cache entries to currently-enabled portals; cache-only adapters additionally exclude direct-portal companies. `firecrawl-extract.mjs` target selection got the same treatment. Regression test added at `scripts/ats-adapters/test-iter-targets.mjs` (1/1 passing). Keep this entry as historical context for future "why is iterTargets filtered?" questions.
+
 **Symptom:** During Phase 2.8 Step 5 sample-50 smoke run, the post-fix re-run reported "39 unique companies in pipeline" but only 30 of the 50 sampled companies had a routing path (3 direct-ATS + 27 discovered, 20 no-ats-found pre-Layer-2). The 39 number included leakage from cache entries for companies NOT in the sample-50 portals.yml (e.g., Notion AI, Sierra, Synthesia from earlier full-portals smoke runs whose entries persisted in `data/ats-discovery-cache.json`).
 
 **Root cause:** `iterTargets()` in `scripts/ats-adapters/_lib.mjs` walks the entire `data/ats-discovery-cache.json` and yields every entry whose `info.ats === providerName`, with NO filter against the current portals.yml's enabled list. The cache persists across runs; entries from past smoke-50/full-portals runs survive and get processed even when the current run uses a different (or sample-filtered) portals.yml.
@@ -131,6 +133,8 @@ for (const [companyName, info] of Object.entries(cache || {})) {
 
 ## P-8 — Layer 1 misses Ashby on JS-embed pages (Ramp, Supabase confirmed) — 2026-04-30
 
+**Status:** RESOLVED 2026-04-30 by Codex (handoff `20260430-104400-aa3d`). `lib/ats-detect.mjs` Ashby pattern expanded to cover `embed.ashbyhq.com` and the `api.ashbyhq.com/posting-api/job-board/{slug}` posting-API URL form. `firecrawl-discover.mjs` now does direct Ashby slug probing on `no-ats-found` candidates (using the company's lowercased one-word name) with Firecrawl-failure fallback. Live verification: Ramp → `ashby/ramp` 119 jobs, Supabase → `ashby/supabase` 46 jobs. Regression coverage added in `test-firecrawl-discover.mjs`. The hypothesized "JS-embed loaded after Firecrawl render" was the actual root cause for the two probed companies; the embed regex expansion alone was insufficient because the embed isn't always present in DOM. Keep this entry for "why are we direct-probing Ashby slugs?" context.
+
 **Symptom:** Ramp (`https://ramp.com/careers`) and Supabase (`https://supabase.com/careers`) were both classified by Layer 1 firecrawl-discover.mjs as `status:"no-ats-found"` during Phase 2.8 Step 5 smoke. **But both companies actually have public Ashby boards:** `https://api.ashbyhq.com/posting-api/job-board/ramp` returns 119 jobs; `https://api.ashbyhq.com/posting-api/job-board/supabase` returns 46 jobs (verified 2026-04-30 via direct curl).
 
 **Root cause hypotheses (need investigation):**
@@ -149,6 +153,8 @@ for (const [companyName, info] of Object.entries(cache || {})) {
 **Impact:** at minimum Ramp + Supabase from sample-50 are recoverable; likely many of the other 18 no-ats-found companies (Adyen, Canva, MongoDB, IBM, Lenovo, etc.) have similar JS-embed patterns and are recoverable with the same fix. **Could lift coverage from current 30/50 (60%) toward 45-50/50 (90-100%).**
 
 ## P-9 — Layer 2 should detect ATS in extracted job URLs and feedback to discovery cache — 2026-04-30
+
+**Status:** RESOLVED 2026-04-30 by Codex (handoff `20260430-104400-aa3d`). `firecrawl-extract.mjs` now promotes a single ATS detected in extracted `jobs[].url` values back into `data/ats-discovery-cache.json` with `discovery_method:"layer-2-feedback"`. Companies with multiple distinct ATSes detected stay `no-ats-found` (avoid bad guesses). Regression coverage added in `test-firecrawl-extract.mjs` (5/5 passing). Keep this entry for "why does Layer 2 write to the discovery cache?" context.
 
 **Symptom:** `firecrawl-extract.mjs` runs JSON-mode extraction on `no-ats-found` companies and writes the resulting jobs straight to pipeline.md — without checking whether the `jobs[].url` values reveal an ATS we already have a fast-path adapter for. So if Ramp's careers page (after JSON-mode extraction) returns 119 jobs each with `url: "https://jobs.ashbyhq.com/ramp/{job-id}"`, Layer 2 just appends those URLs and never tells the discovery cache that Ramp is actually an Ashby company.
 
