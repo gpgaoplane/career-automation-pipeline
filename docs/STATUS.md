@@ -13,6 +13,15 @@ skip-if: "status != active"
 **Current Phase:** **Phase 2.8 CLOSED** on `feat/phase-2.8-firecrawl` at commit `75ec403`, tag `phase-2.8-complete`. Current roster baseline is **448 total / 393 enabled / 55 disabled / 0 missing notes**. Full 393-company clean rescan executed 2026-05-01T03:36:40Z onward; 3,552 Firecrawl credits consumed (within 5,000 cap; budget remaining 96,849); output workbook `career-ops/output/jobs-2026-05-01.xlsx` ready for Will's manual review (613 jobs across 154 companies; S=37 / A=370 / B=195 / C=11). Acceptance audit on full-run metrics: **12 PASS / 0 FAIL / 0 pending**. Source resolved 385/393 (98.0%); source health 385/385 (100%); miss class 213/213 (100%); AC-3 generic loc OR comp 664/956 (69.5%); AC-11b fallback 33/956 (3.5%). Tag `scan-v2-prerescan` preserves the pre-rescan baseline; tag `phase-2.8-complete` is the canonical closure checkpoint.
 
 ## Done
+- [x] **Phase 2.8 CLOSURE EXECUTED** (2026-05-01, `feat/phase-2.8-firecrawl`, commits `fe4663c` → `0db39ae` → `75ec403` → `fa7de8c`, tag `phase-2.8-complete`):
+  - **Full 393-company clean rescan** ran 2026-05-01T03:36:40Z onward; 3,552 Firecrawl credits consumed (within 5,000 cap; budget remaining 96,849); output workbook `career-ops/output/jobs-2026-05-01.xlsx` (613 jobs across 154 companies; S=37 / A=370 / B=195 / C=11). 12/12 acceptance criteria pass on full-run metrics.
+  - **Scoring policy v2 shipped** in `career-ops/export-jobs.mjs`: S threshold 12→18, AE-only drop with lenient AE-multi keep, intern drop, deal-breaker drop (no longer penalize), Senior/Principal -2→-5. Sales/BD comment group removed from `portals.yml` positives (forward-looking). One-time `pipeline.md` AE-only strip removed 715 rows.
+  - **Option A signal-extraction fixes shipped** in `career-ops/enrich-jobs.mjs`: decimal-K comp parser fix (Will's finding — 11 jobs corrected, ~20-pt swing each), expanded anchor list (annual salary / the salary / etc.), strong-pattern fallback ($X,XXX-$X,XXX without anchor), single-value comp extraction, hybrid_non_toronto dealbreaker (with cloud/mesh/fabric tech-context exclusion), proximity-based Toronto check (±200 chars), generic X+ YoE pattern. New `scripts/reextract-signals.mjs` post-processor; gained 626 dealbreaker / 31 comp / 16 yoe signals; corrected 10 comp values. Zero Firecrawl credits.
+  - **4 SOURCE_BROKEN companies disabled** per Will's directive: Palo Alto Networks, Grammarly, SiFive, EvenUp. Roster baseline 397/51 → 393/55. Per-company rationale durable in `docs/audits/2026-05-01-source-broken-disables.md`.
+  - **Full-run audit tooling built** (Option B): `scripts/full-run-audit.mjs` (~430 lines) re-probes routes via direct adapters, classifies into NO_RELEVANT_JOBS / NO_OPEN_JOBS / ROUTE_MISSING / SOURCE_BROKEN, writes metrics JSON + classification MD matching sample-50 schema. `--metrics <path>` flag added to `scripts/acceptance-audit-phase2.8.py`. 48/48 unit tests pass.
+  - **Frontmatter compliance pass**: 4 INDEX-registered .md files (STATUS.md, scripts/ats-adapters/README.md, scripts/portals-triage-proposed-fixes.md) gained YAML frontmatter so the framework can index efficiently without reading full content. AI_HANDOFF.md and RESUME_PROMPT.md overwritten with closure-state pickup. `.gitignore` captures `scripts/sample-50-list.yml`. `docs/design/scraping-architecture.md` carries Phase 2.8 closure note. `docs/design/companies-roster.md` regenerated for 393/55. `AI_AGENTS.md` roster + audit-tooling commands updated.
+  - **D-21 records the closure decisions** with full empirical evidence + implementation impact + tradeoffs.
+  - **Final acceptance audit** (full-run metrics): source resolved 385/393 (98.0%); source health 385/385 (100%); miss class 213/213 (100%); AC-3 generic loc OR comp 664/956 (69.5%); AC-11b fallback 33/956 (3.5%); 12 PASS / 0 FAIL.
 - [x] **Phase 2.8 implementation Steps 0-5 EXECUTED** (2026-04-29 → 2026-04-30, `feat/phase-2.8-firecrawl`, commits e721305 → 8c4a443):
   - **Step 0** — portals.yml URL triage: 428→388 enabled (40 user-approved disables/updates including 7 acquisitions, 1 defunct, 30 manual-review auto-disables, 2 user-flagged drops). Triage script + apply-fixes script + report. Commits e721305, 631cd87, aff12fc.
   - **Step 1** — `lib/firecrawl.mjs` SDK wrapper: scrape/scrapeJson with cost tracking, --max-credits cap, AC-11a fallback queue wiring, retry+backoff. **8/8 unit tests pass.** Live test: 167 markdown chars, 1 credit. Commit 8f25673.
@@ -129,15 +138,20 @@ skip-if: "status != active"
   - Codex onboarding deferred — user triggers `--join codex` from a Codex session
 
 ## In Progress / Up Next
-- [ ] **NEXT:** run the Phase 2.6 clean rescan on all 397 enabled portals with source-accounting metrics, preserving route/status classification for no-yield companies.
-- [ ] **AFTER FULL RESCAN:** prioritize `ROUTE_MISSING` backlog by company fit instead of treating every route miss as a blocker.
-- [ ] **OPTIONAL CLEANUP:** consider disabling or marking low-fit hardware/clinical rows surfaced in the sample classification, but do not mix that with source-health metrics.
+- [ ] **HUMAN-SIDE NEXT:** Will manually reviews `career-ops/output/jobs-2026-05-01.xlsx`; marks `Push Decision` column with P1 / P2 / P3 / SKIP / (blank); optional `Will Notes` for free-form rationale. Hand back when ready.
+- [ ] **PIPELINE NEXT (post manual review):** generate per-row TSVs in `career-ops/batch/tracker-additions/` from marked Excel, run `node merge-tracker.mjs` from `career-ops/`, optionally run per-job evaluator on P1 batch.
+- [ ] **PHASE 3 candidate menu** (Will picks; no work scheduled):
+  - **Candidate A — LLM evaluation pipeline integration** (per old roadmap)
+  - **Candidate B — Calibration round** (after Will's first manual review feedback)
+  - **Candidate C — Delta detection** (deferred from pre-rescan review)
+  - **Candidate D — SOURCE_BROKEN cache refresh** (re-discover any of the 4 disabled companies if reconsidered)
+  - **Candidate E — NO_RELEVANT_JOBS roster cleanup** (39 hardware/clinical companies — KLA, Marvell, Cadence, NXP, Intel, etc.)
 
 ## Blockers
-None for proceeding to the full 397-company rescan under the replacement source-accounting AC-2. Known warning: Seagate Technology is currently `SOURCE_BROKEN`, not an unclassified parser failure.
+**None.** Phase 2.8 is closed and durable. All gates pass. Working tree clean (only `.claude/settings.local.json` untracked, intentionally excluded). Manual review is human-side, not pipeline-side.
 
 ## Active Plan
-`docs/design/pipeline-flow.md` (section 7 build status) + `docs/design/scraping-architecture.md`
+**Phase 2.8 plans frozen as historical:** `docs/plans/2026-04-29-firecrawl-pivot-design.md` + `-implementation.md`. **Current architecture:** `docs/design/scraping-architecture.md` (carries Phase 2.8 closure note). **Next-phase plan:** none — awaits Will's selection from the candidate menu above.
 
 ## Handoff Note
-**Phase 2.8 implementation Steps 0-12 EXECUTED + Codex follow-up passes complete through Step 10.** Tag `scan-v2-prerescan`. Current acceptance audit after AC-2 replacement: **12 PASS / 0 FAIL / 0 pending**. AC-2 now measures source accounting and miss explainability, not forced title-filtered job yield. Relevant job yield remains report-only at 28/50 (56.0%). Full 397-company rescan is the next gate.
+**Phase 2.8 CLOSED at commit `75ec403`, tag `phase-2.8-complete`, follow-on wrap-up at `fa7de8c`.** Full 393-company rescan executed; scoring policy v2 + Option A signal fixes + 4 SOURCE_BROKEN disables shipped; 12/12 acceptance criteria pass; output Excel ready for manual review. Tag `scan-v2-prerescan` preserves the pre-rescan baseline. Next agent picking up: read `AI_HANDOFF.md` (current closure-state handoff) → `.claude/memory/state.md` → this file. **Operational item deferred:** `docs/agents/claude.md` log rotation (1027 lines past 300 threshold) — safe to run `./scripts/collab-rotate-log.sh claude` at next session start before substantive work.

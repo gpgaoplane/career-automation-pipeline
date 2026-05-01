@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-30T23:08:53-04:00
+last-updated: 2026-05-01T12:30:50-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -72,4 +72,8 @@ skip-if: "never"
 | scripts/portals-audit-cleanup.py | script | claude | active | 2026-04-30T16:07:21-04:00 |
 | scripts/full-run-audit.mjs | script | claude | active | 2026-04-30T23:08:52-04:00 |
 | scripts/test-full-run-audit.mjs | test | claude | active | 2026-04-30T23:08:53-04:00 |
+| scripts/reextract-signals.mjs | script | claude | active | 2026-05-01T12:30:49-04:00 |
+| docs/audits/2026-05-01-source-broken-disables.md | audit | claude | active | 2026-05-01T20:00:00-04:00 |
+| docs/audits/2026-05-01-fullrun-classification.md | audit | claude | active | 2026-05-01T15:47:53.695Z |
+| docs/audits/2026-05-01-fullrun-metrics.json | audit-data | claude | active | 2026-05-01T12:30:50-04:00 |
 <!-- collab:index:end -->
