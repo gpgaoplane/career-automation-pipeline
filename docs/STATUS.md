@@ -9,8 +9,8 @@ skip-if: "status != active"
 
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
-**Last Updated:** 2026-04-30
-**Current Phase:** Phase 2.8 SAMPLE-50 ACCEPTANCE GREEN on `feat/phase-2.8-firecrawl`. Current roster baseline is **448 total / 397 enabled / 51 disabled**. Step 9 dashboard caps documented from user input. Step 10 full sample-50 run completed and exported `career-ops/output/jobs-sample50-step10-2026-04-30.xlsx`: **28/50 companies with title-filtered exported jobs, 178 jobs total, S=7/A=58/B=111/C=2**. AC-2 has been replaced by source-accounting metrics: source resolved 38/50 (76.0%), source health 37/38 (97.4%), raw job availability 36/37 (97.3%), no-yield companies classified 22/22 (100.0%), and relevant job yield report-only at 28/50 (56.0%). AC-3 passes under generic `location_raw` or compensation extraction (126/178 = 70.8%). Tag `scan-v2-prerescan` remains the pre-rescan marker.
+**Last Updated:** 2026-05-01
+**Current Phase:** **Phase 2.8 CLOSED** on `feat/phase-2.8-firecrawl` at commit `75ec403`, tag `phase-2.8-complete`. Current roster baseline is **448 total / 393 enabled / 55 disabled / 0 missing notes**. Full 393-company clean rescan executed 2026-05-01T03:36:40Z onward; 3,552 Firecrawl credits consumed (within 5,000 cap; budget remaining 96,849); output workbook `career-ops/output/jobs-2026-05-01.xlsx` ready for Will's manual review (613 jobs across 154 companies; S=37 / A=370 / B=195 / C=11). Acceptance audit on full-run metrics: **12 PASS / 0 FAIL / 0 pending**. Source resolved 385/393 (98.0%); source health 385/385 (100%); miss class 213/213 (100%); AC-3 generic loc OR comp 664/956 (69.5%); AC-11b fallback 33/956 (3.5%). Tag `scan-v2-prerescan` preserves the pre-rescan baseline; tag `phase-2.8-complete` is the canonical closure checkpoint.
 
 ## Done
 - [x] **Phase 2.8 implementation Steps 0-5 EXECUTED** (2026-04-29 → 2026-04-30, `feat/phase-2.8-firecrawl`, commits e721305 → 8c4a443):

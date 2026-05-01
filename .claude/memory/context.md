@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: claude
-last-updated: 2026-04-30T22:11:51-04:00
+last-updated: 2026-05-01T20:30:00-04:00
 read-if: "you need durable project truths as understood by Claude"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -12,6 +12,26 @@ skip-if: "status != active or last-updated <= your watermark"
 Append new invariants and project truths below, each with a dated ISO-8601 header.
 
 <!-- section:entries:start -->
+
+## 2026-05-01T20:30:00-04:00 — Phase 2.8 fully closed (post-rescan + scoring v2 + Option A)
+
+Durable invariants from the 2026-05-01 closure cycle. Supplements (does not supersede) the 2026-04-30 closure-facts entry below — that entry captured sample-50 truths; this entry captures full-run truths and the iterations on top.
+
+- **Roster baseline now 448 total / 393 enabled / 55 disabled / 0 missing notes.** 4 SOURCE_BROKEN companies disabled on 2026-05-01: Palo Alto Networks, Grammarly, SiFive, EvenUp. Per-company rationale durable in `docs/audits/2026-05-01-source-broken-disables.md`. All disable rows carry explicit `note:` values.
+
+- **Scoring policy v2 is the canonical scoring law** (per D-21). S threshold ≥18 (was ≥12); AE-only roles dropped at output time with lenient AE-multi-track keep; intern jobs dropped (defensive); deal-breaker jobs dropped (no longer penalized -5); Senior/Principal title-strength penalty -2 → -5 (Junior/Jr/Associate stay at -2). Sales/Business Development positive title-filter group removed from `portals.yml` so future scans never ingest AE-only jobs.
+
+- **Option A signal-extraction fixes are canonical** in `enrich-jobs.mjs` (per D-21). Decimal-K comp parses correctly via `[\d,]+(?:\.\d+)?` + parseFloat (was the bug Will spotted). Anchor list expanded to catch "annual salary" / "the salary" / "estimated annual salary" / "salary band" / "pay band" / "salary for this". Strong-pattern fallback handles `$X,XXX-$X,XXX` and `$XXK-$XXK` without anchor. Single-value comp extracts within anchor window. Hybrid-non-Toronto deal-breaker active with cloud/mesh/fabric tech-context exclusion. Toronto bypass uses ±200 char proximity. YoE 6+ matches generic `\d+\+` patterns 6 through 99.
+
+- **`scripts/reextract-signals.mjs` is the standard tool when signal-extraction logic changes.** Reads cached `content_text`, re-runs `extractSignals`, writes back updated `extracted_signals`. Zero Firecrawl credits. Use whenever the regex/heuristic logic in `enrich-jobs.mjs` changes — avoids needlessly re-fetching JDs.
+
+- **`scripts/full-run-audit.mjs` is the standard tool for post-rescan acceptance.** Re-probes has-route-but-no-exports companies via direct adapters (~60s, free), classifies into 4 buckets, writes metrics JSON + classification MD matching sample-50 schema. Pair with `python scripts/acceptance-audit-phase2.8.py --metrics <path>` for gate verification.
+
+- **Final Phase 2.8 Excel state:** `output/jobs-2026-05-01.xlsx` — 613 jobs / 154 companies / S=37 across 17 companies. OpenAI concentration 41% in S-tier (was 60% pre-fixes). Manageable manual-review surface.
+
+- **Phase 2.8 acceptance audit gates passed at 75ec403:** source resolved 385/393 (98.0%); source health 385/385 (100%); miss class 213/213 (100%); AC-3 generic loc OR comp 664/956 (69.5%); AC-11b fallback 33/956 (3.5%); 12 PASS / 0 FAIL.
+
+- **Excel manual-review marking convention** (advised to Will 2026-05-01): single `Push Decision` column with values `P1` / `P2` / `P3` / `SKIP` / blank. Optional `Will Notes` column. Maps to `applications.md` canonical statuses via `merge-tracker.mjs`: P1/P2/P3 → `Evaluated`, SKIP → `SKIP` or `Discarded`.
 
 ## 2026-04-30T22:11:51-04:00 — Phase 2.8 closure facts (post-Step 10, post-AC-2 redefinition)
 
