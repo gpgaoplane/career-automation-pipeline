@@ -8,8 +8,10 @@ Step 10 sample run results).
 
 Run from repo root:
     python scripts/acceptance-audit-phase2.8.py
+    python scripts/acceptance-audit-phase2.8.py --metrics docs/audits/2026-05-15-fullrun-metrics.json
 """
 
+import argparse
 import json
 import re
 import subprocess
@@ -19,7 +21,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CAREER_OPS = REPO_ROOT / "career-ops"
 DATA_DIR = CAREER_OPS / "data"
-STEP10_METRICS = REPO_ROOT / "docs" / "audits" / "2026-04-30-step10-sample50-metrics.json"
+DEFAULT_METRICS = REPO_ROOT / "docs" / "audits" / "2026-04-30-step10-sample50-metrics.json"
 
 AC_RESULTS = []
 
@@ -113,10 +115,27 @@ def check_orchestrator_present():
 
 
 def main():
-    print(f"\n=== Phase 2.8 Acceptance Audit ===\n")
+    parser = argparse.ArgumentParser(description="Phase 2.8 Acceptance Audit")
+    parser.add_argument(
+        "--metrics",
+        default=str(DEFAULT_METRICS),
+        help=(
+            "Path to metrics JSON (default: sample-50). For full-run audits, "
+            "point at the JSON produced by scripts/full-run-audit.mjs."
+        ),
+    )
+    args = parser.parse_args()
+    metrics_path = Path(args.metrics)
+    if not metrics_path.is_absolute():
+        metrics_path = REPO_ROOT / metrics_path
+
+    label = metrics_path.stem
+    print(f"\n=== Phase 2.8 Acceptance Audit ({label}) ===\n")
     step10 = None
-    if STEP10_METRICS.exists():
-        step10 = json.loads(STEP10_METRICS.read_text(encoding="utf-8"))
+    if metrics_path.exists():
+        step10 = json.loads(metrics_path.read_text(encoding="utf-8"))
+    else:
+        print(f"  WARN: metrics file not found at {metrics_path}")
 
     # AC-1: firecrawl-discover.mjs recovers ATS slugs (programmatically check via cache)
     cache_path = DATA_DIR / "ats-discovery-cache.json"

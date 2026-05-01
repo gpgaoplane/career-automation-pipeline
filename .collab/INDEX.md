@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-04-30T22:17:17-04:00
+last-updated: 2026-04-30T23:08:53-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -70,4 +70,6 @@ skip-if: "never"
 | scripts/generate-companies-roster.py | script | claude | active | 2026-04-30T16:07:21-04:00 |
 | scripts/acceptance-audit.py | script | claude | active | 2026-04-30T16:07:21-04:00 |
 | scripts/portals-audit-cleanup.py | script | claude | active | 2026-04-30T16:07:21-04:00 |
+| scripts/full-run-audit.mjs | script | claude | active | 2026-04-30T23:08:52-04:00 |
+| scripts/test-full-run-audit.mjs | test | claude | active | 2026-04-30T23:08:53-04:00 |
 <!-- collab:index:end -->
