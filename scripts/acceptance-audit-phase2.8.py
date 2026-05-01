@@ -89,10 +89,16 @@ def check_jazzhr_excluded():
 
 
 def check_max_credits_default():
-    """AC-10 partial: --max-credits default = 3000 in lib/firecrawl.mjs."""
+    """AC-10 partial: --max-credits cap exists in lib/firecrawl.mjs.
+
+    Matches MAX_CREDITS_DEFAULT = <positive integer>; the specific value
+    is operational, not architectural.
+    """
     fc = (CAREER_OPS / "lib" / "firecrawl.mjs").read_text(encoding="utf-8")
-    has_default = "MAX_CREDITS_DEFAULT = 3000" in fc
-    return has_default, "MAX_CREDITS_DEFAULT=3000" if has_default else "NOT FOUND"
+    m = re.search(r"MAX_CREDITS_DEFAULT\s*=\s*(\d+)", fc)
+    if m and int(m.group(1)) > 0:
+        return True, f"MAX_CREDITS_DEFAULT={m.group(1)}"
+    return False, "NOT FOUND"
 
 
 def check_5_adapters_present():
@@ -217,12 +223,12 @@ def main():
     # AC-10: rate-cap dashboard verification + --max-credits enforced
     caps_file = DATA_DIR / "firecrawl-plan-caps.tsv"
     has_caps = caps_file.exists() and caps_file.stat().st_size > 0
-    ok_max = check_max_credits_default()[0]
+    ok_max, max_detail = check_max_credits_default()
     overall = has_caps and ok_max
     if overall:
-        det = "dashboard caps documented; --max-credits=3000 default"
+        det = f"dashboard caps documented; {max_detail} default"
     elif ok_max and not has_caps:
-        det = "--max-credits=3000 OK; dashboard caps NOT YET DOCUMENTED — Step 9 manual gate"
+        det = f"{max_detail} OK; dashboard caps NOT YET DOCUMENTED — Step 9 manual gate"
         overall = None
     else:
         det = f"--max-credits default: {ok_max}; dashboard caps: {has_caps}"

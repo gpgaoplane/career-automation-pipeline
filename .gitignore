@@ -29,3 +29,4 @@ Thumbs.db
 .vscode/settings.json
 .firecrawl-key
 scripts/sample-50.yml
+scripts/sample-50-list.yml

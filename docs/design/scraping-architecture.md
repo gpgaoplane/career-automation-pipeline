@@ -2,7 +2,7 @@
 status: active
 type: design
 owner: shared
-last-updated: 2026-04-30T17:25:27-04:00
+last-updated: 2026-05-01T20:00:00-04:00
 read-if: "you are modifying scraper architecture or interpreting pre-Firecrawl scraper docs"
 skip-if: "status != active"
 related:
@@ -16,6 +16,8 @@ related:
 Last updated 2026-04-19. Reference before modifying any scraper or adding companies.
 
 > **Phase 2.8 supersession — 2026-04-30:** The lower sections of this file document the pre-Firecrawl `custom-scraper.mjs` architecture. Current scraper architecture is Phase 2.8 Firecrawl pivot: `scan.mjs` remains untouched for direct Greenhouse/Ashby/Lever URLs; Firecrawl discovers ATS routes; repo-root `scripts/ats-adapters/` consumes discovered/direct ATS sources; `firecrawl-extract.mjs` handles no-ATS branded pages; `enrich-jobs.mjs` is Firecrawl-first; `custom-scraper.mjs` is a Layer 3 fallback. Current acceptance gate AC-2 uses source-accounting metrics, not forced exported-job yield. See `docs/STATUS.md`, `docs/plans/2026-04-29-firecrawl-pivot-design.md`, and `docs/audits/2026-04-30-sample50-missed-company-classification.md`.
+>
+> **Phase 2.8 closure — 2026-05-01:** Phase 2.8 architecture is now executed end-to-end on the full 393-enabled-company roster. Full clean rescan ran 2026-05-01T03:36:40Z onward; 3,552 Firecrawl credits consumed; 12/12 acceptance criteria pass on the full-run audit (see `docs/audits/2026-05-01-fullrun-classification.md` and `2026-05-01-fullrun-metrics.json`). The architecture documented in the supersession note above is the current production pipeline and is no longer under development. Future scraper-architecture changes should be made under a new phase. Roster reduced 397→393 by user-directed disable of 4 SOURCE_BROKEN companies (see `docs/audits/2026-05-01-source-broken-disables.md`). New post-rescan tooling: `scripts/full-run-audit.mjs` (re-probes routes, computes metrics, classifies no-yield) and `scripts/reextract-signals.mjs` (re-runs `extractSignals` on cached JD text without Firecrawl re-fetches).
 
 ---
 

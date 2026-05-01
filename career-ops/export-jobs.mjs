@@ -155,8 +155,9 @@ function computeTitleScore(job, trackMap, companyMap) {
 
   const titleLower = job.title.toLowerCase();
   let titleStrength = 0;
-  if (/\b(senior|sr\.?|principal)\b/i.test(titleLower)) titleStrength = -2;
-  else if (/\b(junior|jr\.?|associate|intern)\b/i.test(titleLower)) titleStrength = -2;
+  if (/\b(senior|sr\.?|principal)\b/i.test(titleLower)) titleStrength = -5;
+  else if (/\b(junior|jr\.?|associate)\b/i.test(titleLower)) titleStrength = -2;
+  // Note: intern/internship jobs are dropped entirely at output time, not penalized here.
 
   if (tracks.length === 0) {
     return { tracks: ['?'], score: rankTier + categoryBonus + titleStrength,
@@ -204,13 +205,13 @@ function computeDescScore(signals) {
   if (signals.yoe_signal === '3-5') { score += 1; parts.push('+1 yoe35'); }
   else if (signals.yoe_signal === '6+') { score -= 1; parts.push('-1 yoe6+'); }
   else if (signals.yoe_signal === '0-2') { score -= 1; parts.push('-1 yoe02'); }
-  // Deal-breaker
-  if (signals.deal_breaker_signal) { score -= 5; parts.push(`-5 db:${signals.deal_breaker_signal}`); }
+  // Note: deal-breaker jobs are dropped entirely at output time (see main());
+  // no score penalty here.
   return { score, breakdown: parts.join(' ') || '0' };
 }
 
 function computeBand(preScore) {
-  if (preScore >= 12) return 'S';
+  if (preScore >= 18) return 'S';
   if (preScore >= 8) return 'A';
   if (preScore >= 4) return 'B';
   return 'C';
@@ -254,14 +255,28 @@ async function main() {
     } catch {}
   }
 
-  // Score every job
-  const jobsScored = jobs.map(job => {
-    const titleResult = computeTitleScore(job, trackMap, companyMap);
+  // Score every job. flatMap because some jobs are dropped entirely:
+  //   • intern/internship titles (Will targets mid-level only per D-7).
+  //   • jobs with deal_breaker_signal (PhD required, no sponsorship for
+  //     remote, in-office 5 days non-Toronto). User opted to drop these
+  //     rather than penalize, so the slot doesn't waste manual-review attention.
+  let droppedIntern = 0;
+  let droppedDealBreaker = 0;
+  const jobsScored = jobs.flatMap(job => {
+    if (/\b(intern|internship)\b/i.test(job.title)) {
+      droppedIntern++;
+      return [];
+    }
     const signals = cache[job.url]?.extracted_signals;
+    if (signals?.deal_breaker_signal) {
+      droppedDealBreaker++;
+      return [];
+    }
+    const titleResult = computeTitleScore(job, trackMap, companyMap);
     const descResult = computeDescScore(signals);
     const preScore = titleResult.score + descResult.score;
     const band = computeBand(preScore);
-    return {
+    return [{
       ...job,
       match_track: titleResult.tracks.join(', '),
       title_score: titleResult.score,
@@ -269,8 +284,11 @@ async function main() {
       pre_score: preScore,
       priority_band: band,
       score_notes: `${titleResult.breakdown} | ${descResult.breakdown}`,
-    };
+    }];
   });
+  if (droppedIntern > 0 || droppedDealBreaker > 0) {
+    console.log(`Dropped at output: ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker`);
+  }
 
   // Sort: pre_score desc, rank asc, company asc, title asc
   jobsScored.sort((a, b) => {

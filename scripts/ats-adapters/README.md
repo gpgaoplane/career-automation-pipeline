@@ -1,3 +1,12 @@
+---
+status: active
+type: docs
+owner: claude
+last-updated: 2026-05-01T20:00:00-04:00
+read-if: "you are adding/modifying an ATS sibling adapter or need the JazzHR-out-of-scope rationale"
+skip-if: "status != active"
+---
+
 # scripts/ats-adapters/
 
 Phase 2.8 Step 3 — sibling adapters to `career-ops/scan.mjs` for the 5 ATS

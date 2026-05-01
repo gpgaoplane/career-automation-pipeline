@@ -796,6 +796,76 @@ Missing / intentionally skipped:
 - No commit made ........ user has not asked for one; Codex's working-tree edits + my memory reconciliation will land in the same commit when authorized.
 - `scripts/sample-50-list.yml` ........ untracked Codex artifact from Step 10 sampling; left in place per "do not delete unfamiliar files without investigating" rule.
 
+## 2026-05-01 — Phase 2.8 closure: full rescan + scoring policy v2 + Option A fixes + checkpoint
+
+**Goal:** Execute full 393-enabled-company rescan, iterate scoring/filter policy with Will's review feedback, fix the signal-extraction bugs Will spotted, and land a clean Phase 2.8 closure checkpoint.
+
+**Span:** 2026-05-01 single session. Three commits: `fe4663c` (catchup), `0db39ae` (audit tooling, Option B), and the about-to-be-created closure commit (rescan output + scoring v2 + Option A signal fixes + 4 SOURCE_BROKEN disables + frontmatter compliance + .gitignore + scraping-architecture closure note).
+
+**What landed:**
+
+- **Full 393-company rescan executed.** Snapshot baselines (rescan-start `2026-05-01T03:36:40Z`, queue=6, cost.tsv=988); reset `pipeline.md` + `scan-history.tsv` to header-only; bumped `MAX_CREDITS_DEFAULT` 3000→5000; ran `npm run full-scan` from `career-ops/`. Wall-clock ~3.5 hours. 3,552 Firecrawl credits consumed (within 5,000 cap; budget remaining 96,849). Two intermediate steps had non-zero exits (ats-adapters per-company 4xx errors, firecrawl-extract scrape timeouts) but the orchestrator continued by design and enrich + export + Layer 3 fallback all ran clean.
+- **Full-run audit tooling built and exercised.** `scripts/full-run-audit.mjs` (~430 lines) re-probes has-route-but-no-exports companies via direct adapters, classifies into 4 buckets, writes metrics JSON + classification MD matching sample-50 schema. `--metrics` flag added to `scripts/acceptance-audit-phase2.8.py`. Mid-run found and fixed a real classifier bug: `probe_attempted: false` (e.g., 244 generic Layer-3 entries) was being mis-classified as SOURCE_BROKEN, dropping source-health from 99% to 60.5%. Fix added a `probe_attempted` flag distinguishing "no probe path available" from "probe failed." 48/48 unit tests pass.
+- **4 SOURCE_BROKEN companies disabled** per Will's directive: Palo Alto Networks (Workday CXS 404), Grammarly (Greenhouse 404), SiFive (Workday CXS 404 + HW exclusion), EvenUp (Ashby 404). Roster baseline 397/51 → 393/55. Documented in `docs/audits/2026-05-01-source-broken-disables.md` for durable reference.
+- **Scoring policy v2 shipped** in `career-ops/export-jobs.mjs`: S threshold 12→18, AE-only drop with lenient AE-multi keep, intern drop, deal-breaker drop (no longer penalize), Senior/Principal -2→-5. Sales/Business Development positive title-filter group removed from `career-ops/portals.yml` (forward-looking). One-time `pipeline.md` AE-only strip removed 715 rows; 2 AE-multi rows kept under lenient rule.
+- **Option A signal-extraction fixes shipped** in `career-ops/enrich-jobs.mjs`: decimal-K pattern (Will's finding — 11 jobs corrected, ~20 score-points each), expanded anchor list, strong-pattern fallback (no anchor required for $X,XXX-$X,XXX or $XXK-$XXK), single-value comp extraction, hybrid_non_toronto dealbreaker (with cloud/mesh/fabric tech-context exclusion), proximity-based Toronto check, generic X+ YoE pattern. New `scripts/reextract-signals.mjs` post-processor re-runs `extractSignals` on cached `content_text` without Firecrawl re-fetches; ran with `--apply` and gained 626 dealbreaker / 31 comp / 16 yoe signals; corrected 10 comp values.
+- **Final Excel state:** `career-ops/output/jobs-2026-05-01.xlsx` — 613 jobs across 154 companies; bands S=37 / A=370 / B=195 / C=11. S-tier OpenAI concentration dropped from 60% to 41%; 17 distinct companies in S-tier with reasonable diversity (Sierra, Together AI, Cresta, Airbnb, plus 12 single-S companies).
+- **Acceptance audit (full-run metrics):** 12 PASS / 0 FAIL. Source resolved 385/393 (98.0%), health 385/385 (100%), miss class 213/213 (100%), AC-3 generic 664/956 (69.5%), AC-11b 33/956 (3.5%). All gates clear.
+- **Wrap-up housekeeping:** frontmatter added to 4 INDEX-registered .md files (`docs/STATUS.md`, `scripts/ats-adapters/README.md`, `scripts/portals-triage-proposed-fixes.md`, RESUME_PROMPT.md to be overwritten); `scripts/sample-50-list.yml` added to `.gitignore`; `docs/design/scraping-architecture.md` carries Phase 2.8 closure note; `AI_AGENTS.md` roster baseline updated to 393/55 with new audit-tooling commands; `docs/design/companies-roster.md` regenerated.
+
+**What was deferred this session (operational, non-blocking):**
+
+- Log rotation for `docs/agents/claude.md` (957 lines, past 300 threshold). Quota was close to limit; rotating without confidence the script runs clean on Windows is the wrong risk to take pre-commit. Safe to run `./scripts/collab-rotate-log.sh claude` at the start of next session before any substantive edit.
+- Full STATUS.md narrative update (frontmatter added; substantive content update beyond closure already covered by `state.md`'s closure narrative).
+- Full work-log Receipt fan-out detail beyond this entry.
+
+**Watch out:**
+
+- **Hybrid dealbreaker has ~2% false-positive rate** on tech-context "hybrid cloud / hybrid model" phrasings. Conservative cloud/mesh/fabric exclusion reduces but doesn't eliminate. If Will surfaces a notable false-positive during manual review, the fix is per-company `portals.yml` re-enable with explicit note.
+- **AE-multi-track jobs lose their AE tag entirely after the portals.yml prune.** They get scored on their non-AE track only — no penalty AND no multi-track bonus from AE side. Documented in D-21.
+- **The 39 NO_RELEVANT_JOBS companies are mostly hardware/clinical** (KLA, Marvell, Cadence, NXP, Intel, Tokyo Electron, etc.). They score healthy + raw-jobs-found + zero-title-match — working as intended given Will's filters. If Will wants to tighten further, a separate disable round is the cleanest path.
+- **The 8 ROUTE_MISSING companies** are LMArena, Aleph Alpha, Primer, Veritone, MindsDB, Galileo AI, Genmo (rank ≥296 — not top targets) plus one more. Defer Layer 1 enhancement experiments unless Will requests.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `career-ops/data/pipeline.md` ........ rescan output + AE-only strip (715 rows removed; 956 → 613 after dealbreaker filter)
+- `career-ops/data/scan-history.tsv` ........ rescan dedup ledger (1671 rows)
+- `career-ops/data/job-descriptions-cache.json` ........ enrichment grew 178 → 1502; re-extract added 626 dealbreaker / 31 comp / 16 yoe; corrected 10 comp values (gitignored — not staged)
+- `career-ops/data/firecrawl-cost.tsv` ........ +2776 rows during run (gitignored — not staged)
+- `career-ops/data/firecrawl-fallback-queue.tsv` ........ +33 rows during run (gitignored — not staged)
+- `career-ops/output/jobs-2026-05-01.xlsx` ........ 613 jobs, S=37/A=370/B=195/C=11 (gitignored — not staged)
+- `career-ops/lib/firecrawl.mjs` ........ MAX_CREDITS_DEFAULT 3000→5000
+- `career-ops/portals.yml` ........ Sales/BD group removed from positives; 4 SOURCE_BROKEN companies disabled with explicit notes
+- `career-ops/enrich-jobs.mjs` ........ Option A signal-extraction fixes (7 fixes including Will's decimal-K finding)
+- `career-ops/export-jobs.mjs` ........ scoring policy v2 (S=18 / drop AE-only / drop intern / drop dealbreaker / Senior-Principal -5; flatMap pattern for filter)
+- `scripts/full-run-audit.mjs` ........ probe_attempted bug fix (mid-session)
+- `scripts/test-full-run-audit.mjs` ........ +4 new tests for probe_attempted distinction (44 → 48 tests)
+- `scripts/acceptance-audit-phase2.8.py` ........ AC-10 regex check + `--metrics <path>` flag
+- `scripts/reextract-signals.mjs` ........ NEW one-shot post-processor
+- `docs/audits/2026-05-01-fullrun-metrics.json` ........ NEW (post-Option-A version; full-run gates pass)
+- `docs/audits/2026-05-01-fullrun-classification.md` ........ NEW (per-company classification with re-probe evidence)
+- `docs/audits/2026-05-01-source-broken-disables.md` ........ NEW (companion audit for the 4 disables)
+- `docs/design/companies-roster.md` ........ regenerated for 393/55
+- `docs/design/scraping-architecture.md` ........ added Phase 2.8 closure note
+- `docs/STATUS.md` ........ added frontmatter
+- `scripts/ats-adapters/README.md` ........ added frontmatter
+- `scripts/portals-triage-proposed-fixes.md` ........ added frontmatter (status: archived)
+- `AI_AGENTS.md` ........ roster baseline 397/51 → 393/55; new audit-tooling commands
+- `.gitignore` ........ added `scripts/sample-50-list.yml`
+- `.claude/memory/state.md` ........ Phase 2.8 closure narrative + cleared open-questions + Phase 3 candidate menu
+- `.claude/memory/decisions.md` ........ D-21 (scoring policy v2 + Option A fixes)
+- `.collab/INDEX.md` ........ register new files + bump touched-file timestamps
+
+Missing / intentionally skipped:
+- `.claude/memory/context.md` ........ closure facts captured in state.md; no new durable invariants beyond what D-21 records
+- `.claude/memory/pitfalls.md` ........ no new pitfalls (every spotted bug was fixed in-session, not a recurring gotcha)
+- `docs/STATUS.md` body update ........ frontmatter added; substantive narrative already in state.md
+- `AI_HANDOFF.md` / `RESUME_PROMPT.md` ........ Codex's existing versions remain functionally accurate as next-session pickup; can be refreshed next session if needed
+- log rotation ........ deferred per quota; safe to run at next-session start
+- `.codex/memory/*`, `docs/agents/codex.md` ........ Codex-owned; not modified (cross-agent courtesy)
+- No new handoff written ........ this is a checkpoint, not a hand-off; manual review of the Excel is the human-side next step
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,

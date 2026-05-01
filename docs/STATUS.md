@@ -1,3 +1,12 @@
+---
+status: active
+type: status
+owner: shared
+last-updated: 2026-05-01T20:00:00-04:00
+read-if: "you need the current project phase, recent done items, blockers, or handoff note"
+skip-if: "status != active"
+---
+
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
 **Last Updated:** 2026-04-30

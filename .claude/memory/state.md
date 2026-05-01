@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-04-30T22:11:51-04:00
+last-updated: 2026-05-01T20:00:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -11,46 +11,47 @@ skip-if: "status != active or last-updated <= your watermark"
 
 <!-- section:current-state:start -->
 **Branch:** `feat/phase-2.8-firecrawl` (branched from main after `feat/multi-agent-collab` merged via 39bac3d).
-**Active task:** Phase 2.8 sample-50 acceptance is GREEN. Acceptance audit reports **12 PASS / 0 FAIL / 0 pending**. Codex completed P-7/P-8/P-9 fixes, the Step 0 disabled-company re-audit (restoring 9 false disables), Step 9 dashboard caps documentation, the Step 10 transactional sample-50 full-pipeline run, the AC-3 `location_raw` interpretation, and an AC-2 redefinition (now source-accounting + miss-classification, not exported-company coverage). Claude-owned memory has been reconciled to match. **Next gate: full 397-company clean rescan under source-accounting metrics** (user-gated; not yet started).
-**Pause point:** Catchup + memory reconciliation complete. User asked three pre-rescan questions; Claude answered with code-level review (Q1 — Codex diffs all sound), delta-detection grep (Q2 — NO automatic between-runs delta exists; gap to surface before rescan if it matters), and orchestrator chain review (Q3 — yes, full enrich + export is in the chain; final Excel is band-colored, scored, sorted). Quota hit 100% after answering. Working tree still carries Codex's uncommitted edits + Claude's memory reconciliation. **Three open decisions for the user before rescan starts:** (1) accept the no-delta-detection gap or build delta-detection first; (2) for full-rescan acceptance, generate a full-run metrics JSON or update the audit script (script currently reads `docs/audits/2026-04-30-step10-sample50-metrics.json`); (3) commit cadence (commit catchup work now vs single commit at end). Awaiting user direction on those + final rescan authorization.
-**Blockers:** None for the rescan itself. Known warning to surface in the full-run report: Seagate Technology Workday CXS endpoint returned HTTP 422 during Step 10 (classified `SOURCE_BROKEN`, not a stop condition).
-**Last commit on branch:** `db8804f` (Codex's "phase 2.8 second handoff to codex" — note the message is misnamed; it actually documented P-7/P-8/P-9 ahead of Codex's pickup). Tag `scan-v2-prerescan` still marks the pre-rescan baseline.
+**Active task:** **PHASE 2.8 CLOSED** at the 2026-05-01 checkpoint. Full 393-enabled-company clean rescan executed; 12/12 acceptance criteria pass on full-run metrics; output Excel `career-ops/output/jobs-2026-05-01.xlsx` ready for manual review (613 jobs across 154 companies; S=37 / A=370 / B=195 / C=11). Roster baseline now **448 total / 393 enabled / 55 disabled / 0 missing notes** after 2026-05-01 SOURCE_BROKEN disable round (Palo Alto Networks, Grammarly, SiFive, EvenUp). All Option A signal-extraction fixes shipped (decimal-K comp, hybrid-non-Toronto dealbreaker, single-value comp, expanded anchor list, strong-pattern fallback, generic X+ YoE, proximity-based Toronto check). Scoring policy v2 shipped (S threshold 18, AE-only drop, intern drop, dealbreaker drop, Senior/Principal -5).
+**Pause point:** **Phase 2.8 closure checkpoint — committed and tagged.** Full rescan, audit, scoring policy v2 (S=18 / drop AE / drop intern / drop dealbreaker / Senior-Principal -5), Option A signal-extraction bug fixes (decimal-K, hybrid-non-Toronto, expanded anchor list, single-value comp, strong-pattern fallback, generic X+ YoE, proximity-based Toronto check), 4 SOURCE_BROKEN disables, frontmatter compliance pass on 4 INDEX-registered .md files, log rotation, and `.gitignore` cleanup all landed. Manual review of the Excel is the human-side next step.
+**Blockers:** None for pipeline engineering. Known follow-up items deferred (none blocking): SOURCE_BROKEN cache refresh if any of the 4 disabled companies are reconsidered; calibration tuning after manual-review feedback; delta-detection feature build; hardware/clinical NO_RELEVANT_JOBS roster cleanup pass.
+**Last commit on branch:** commit 3 (closure) — see `git log --oneline` for SHA. Tag `phase-2.8-complete` marks this checkpoint. Tag `scan-v2-prerescan` still marks the pre-rescan baseline at the earlier `28f72bb`. Tag `phase-2.8-complete` is the canonical checkout point for "closure-ready Phase 2.8".
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
-1. ~~Phase 2.8 implementation Steps 0-12~~ — DONE (commits e721305 → bc45b4e). All 12 steps code-complete.
-2. ~~P-7 cache pollution fix~~ — DONE by Codex (handoff `20260430-104400-aa3d` → return `20260430-112119-cee0`).
-3. ~~P-8 Ashby JS-embed detection fix~~ — DONE by Codex; Ramp/Supabase recovered (119 + 46 jobs via direct Ashby probing + Firecrawl-failure fallback).
-4. ~~P-9 Layer 2 ATS feedback into discovery cache~~ — DONE by Codex.
-5. ~~Step 0 disabled-company re-audit~~ — DONE by Codex 2026-04-30. Restored 9 high-confidence false disables; new baseline 448 / 397 / 51 (was 448 / 388 / 60). Source: `docs/audits/2026-04-30-step0-disabled-company-audit.md`.
-6. ~~Roster baseline reconciliation across shared docs~~ — DONE by Codex (handoff `20260430-161303-809e`). `AI_AGENTS.md`, `docs/design/companies-roster.md`, and historical scripts updated/guarded.
-7. ~~Step 9 Firecrawl dashboard caps~~ — DONE 2026-04-30. User supplied: plan `free`, monthly_credits `0`, credits_remaining `100401`, scrape RPM `10/min`, crawl RPM `1/min`, concurrent `2`. Persisted at gitignored `career-ops/data/firecrawl-plan-caps.tsv`.
-8. ~~Step 10 transactional sample-50 full-pipeline run with enrich~~ — DONE by Codex 2026-04-30. 50 enabled (seed=42); 28/50 companies with title-filtered exported jobs; 178 jobs total; bands S=7/A=58/B=111/C=2; 383 Firecrawl credits. Workbook preserved at `career-ops/output/jobs-sample50-step10-2026-04-30.xlsx`. Live state restored cleanly.
-9. ~~AC-3 ambiguity fix~~ — DONE by Codex. Added generic `location_raw` extraction + broadened comp parsing in `enrich-jobs.mjs`. Generic `location_raw` OR comp = 126/178 (70.8%). Will-fit `location_match` OR comp = 26/178 (14.6%) — kept narrow on purpose; the AC interpretation that passes is the generic one.
-10. ~~AC-2 redefinition (D-20 below)~~ — DONE by Codex 2026-04-30. Replaced ">=75% companies produce jobs" gate with source-accounting + miss-classification metrics. Source resolved 38/50 (76.0%); source health 37/38 (97.4%); raw job availability 36/37 (97.3%); miss classification 22/22 (100.0%); relevant job yield report-only 28/50 (56.0%). Source: `docs/audits/2026-04-30-sample50-missed-company-classification.md`.
-11. ~~Handoff packaging~~ — DONE by Codex (handoff `20260430-215447-c74d`, picked up by Claude 2026-04-30T22:11:42-04:00). `AI_HANDOFF.md` + `RESUME_PROMPT.md` rewritten as fresh-pickup artifacts; `docs/design/scraping-architecture.md` carries Phase 2.8 supersession note.
-12. ~~Claude memory reconciliation~~ — IN PROGRESS this session. state.md / context.md / decisions.md / pitfalls.md aligned with current truth (this turn). Work log entry to follow.
+**Phase 2.8 is CLOSED.** All major Phase 2.8 items completed:
+1. ~~Implementation Steps 0-12~~ — DONE (commits e721305 → bc45b4e).
+2. ~~P-7/P-8/P-9 bug fixes~~ — DONE by Codex 2026-04-30.
+3. ~~Step 0 disabled-company re-audit~~ — DONE by Codex 2026-04-30 (397/51 baseline).
+4. ~~Step 9 Firecrawl dashboard caps documented~~ — DONE 2026-04-30.
+5. ~~Step 10 sample-50 full-pipeline run~~ — DONE by Codex 2026-04-30.
+6. ~~AC-3 generic `location_raw` interpretation~~ — DONE by Codex 2026-04-30.
+7. ~~AC-2 redefinition (source-accounting)~~ — DONE by Codex 2026-04-30 (D-9 codex / D-20 claude).
+8. ~~Claude memory reconciliation~~ — DONE 2026-04-30.
+9. ~~Full-run audit tooling (Option B)~~ — DONE 2026-05-01 (commit `0db39ae`).
+10. ~~Full 393-enabled-company clean rescan~~ — DONE 2026-05-01 (3,552 Firecrawl credits; 12/12 ACs pass).
+11. ~~Scoring policy v2 (S=18 / drop AE / drop intern / drop dealbreaker / Senior-Principal -5)~~ — DONE 2026-05-01.
+12. ~~Option A signal-extraction bug fixes~~ (decimal-K, hybrid-non-Toronto, single-value comp, expanded anchors, strong-pattern fallback, generic X+ YoE, proximity-based Toronto check) — DONE 2026-05-01 (D-21).
+13. ~~SOURCE_BROKEN disable round~~ — DONE 2026-05-01 (PAN, Grammarly, SiFive, EvenUp → 393/55 baseline).
+14. ~~Frontmatter compliance pass + log rotation + .gitignore cleanup~~ — DONE 2026-05-01.
 
-13. **NEXT — full 397-company clean rescan** (user-gated):
-    - Tooling: `npm run full-scan` from `career-ops/` (orchestrator at `scripts/full-scan-orchestrator.mjs`).
-    - Cost estimate: based on Step 10 sample-50 burn of 383 credits, full 397 ≈ ~3,000 credits in worst case. Within `--max-credits=3000` default but worth raising the cap explicitly if the run hits it. Plan budget: 100,401 credits remaining, comfortable headroom.
-    - Concurrency: respect dashboard cap (2 concurrent / 10 RPM scrape). Orchestrator already runs sequentially.
-    - Acceptance: re-run `python scripts/acceptance-audit-phase2.8.py` after the rescan; produce a full-run analogue of `docs/audits/2026-04-30-sample50-missed-company-classification.md` covering ALL 397 enabled companies; classify every no-yield company into NO_RELEVANT_JOBS / NO_OPEN_JOBS / ROUTE_MISSING / SOURCE_BROKEN.
-    - Do **not** restore the old `>=75% companies produce jobs` AC-2 gate. Title-filtered yield is reported, not gated.
-    - Seagate Workday CXS warning: surface in the report; do not abort.
-14. **AFTER FULL RESCAN:** prioritize `ROUTE_MISSING` backlog by company fit (rank tier + category alignment), not by treating every miss as a parser bug. Strong-fit `ROUTE_MISSING` examples from sample: Databricks (high-fit, no route).
-15. **OPTIONAL CLEANUP:** consider a low-fit policy pass on hardware/clinical companies surfaced as `NO_RELEVANT_JOBS` (KLA, Marvell, Texas Instruments, Lightmatter, Delfina Care). Keep separate from source-health metrics.
-16. **DEFERRED:** Phase 3 (LLM-driven evaluation pipeline integration). No action this session.
+**Manual review of `career-ops/output/jobs-2026-05-01.xlsx` is the next human task.** Pipeline engineering pauses here until either Will surfaces calibration feedback from review OR explicitly chooses the next phase from the menu below.
+
+**Phase 3 / next-phase candidates** (no work scheduled — for Will's choice when ready):
+- **Candidate A — LLM evaluation pipeline integration:** wire S/A-tier candidates through the per-job LLM evaluator, generate `reports/{###}-{slug}-{date}.md` files, populate `applications.md` via `merge-tracker.mjs`. Aligns with the original roadmap.
+- **Candidate B — Calibration round:** after Will's first manual-review pass, his thumbs-up/down feedback informs threshold + weight tuning. Higher-fidelity than guessing in advance.
+- **Candidate C — Delta detection:** build the "what disappeared since last run" mechanism deferred from Q2 of the pre-rescan review.
+- **Candidate D — SOURCE_BROKEN cache refresh:** re-discover any of the 4 disabled-but-real-fit companies if Will reconsiders. Cheap.
+- **Candidate E — NO_RELEVANT_JOBS roster cleanup:** disable the 39 hardware/clinical companies returning healthy-but-Will-irrelevant jobs (KLA, Marvell, Cadence, NXP, Intel, Tokyo Electron, etc.). Tightens forward scrapes.
+- **Operational item — work-log rotation** if `docs/agents/claude.md` grows again past threshold. Hygienic, not blocking.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
-- **Q (for user — pre-rescan):** Three open items surfaced by the Q1/Q2/Q3 review (see this session's work-log entry for full text):
-  1. **Delta-detection gap.** No mechanism exists for marking jobs that disappeared between runs. `scan-history.tsv` is dedup-only; `pipeline.md` rows persist; `check-liveness.mjs` is per-URL not between-run. Build delta-detection before the rescan (estimated 100–200 lines + tests) OR accept the gap and rely on manual URL re-checks.
-  2. **Full-run audit metrics.** `scripts/acceptance-audit-phase2.8.py` reads sample-50 metrics JSON. For the full rescan to have an automated acceptance pass, we need either a full-run metrics generator script (writes `docs/audits/<YYYY-MM-DD>-fullscan-metrics.json` with the same schema) OR a script update to compute metrics on-the-fly from pipeline.md + ats-discovery-cache.json + the export workbook.
-  3. **Commit cadence.** Working tree has 28+ uncommitted modified files (Codex's Phase 2.8 closure + Claude's memory reconciliation). Two clean options: commit catchup now → run rescan → commit rescan output as separate atomic units (cleaner history); OR single commit at end (faster, less granular).
-- **Q (for user):** Authorize the full 397-company rescan after the three above are resolved? Cost estimate ~3,000 Firecrawl credits worst-case; budget remains 100,401. Sequential per dashboard caps. Live data files (pipeline.md, scan-history.tsv, applications.md, fallback queue, output workbook) will be written in-place — Step 10's transactional cp+overwrite-and-restore was for the sample-50 only, since the full rescan IS the live update.
-- **Q (deferred):** Once `ROUTE_MISSING` companies are prioritized post-rescan, do we want a Layer 1 "actions:[{wait:8000ms}]" experiment on the top-fit unrouted companies (Databricks first), or accept that they remain `ROUTE_MISSING` until a future Layer 1 enhancement pass?
-- **Q (deferred):** Phase 2.6 was originally framed as the clean rescan itself. With the full rescan now imminent, the "Phase 2.6" label can be retired (it'll be folded into the post-rescan analysis pass).
+**Phase 2.8 closure: all open questions from the closure cycle are resolved.** Pre-rescan questions (delta-detection / full-run audit metrics / commit cadence) all answered (deferred / Option B built / 3 separate commits). Rescan + scoring + signal fixes all shipped. SOURCE_BROKEN follow-ups handled by user-directed disable. No outstanding pre-merge questions for Phase 2.8.
+
+**Open questions for the next phase** (depend on Will's choice from the candidates list):
+- **Phase 3 selection:** which candidate from {LLM-eval integration / calibration / delta-detection / cache refresh / NO_RELEVANT_JOBS cleanup} does Will want first? Decide after manual review of the Excel.
+- **Calibration trigger:** should Will surface his thumbs-up/down feedback inline in the Excel (e.g., a `Manual Decision` column) or in a separate scratch doc? Determines what hooks the calibration phase needs.
+- **Log rotation deferred:** `docs/agents/claude.md` is past the 300-line threshold. Was deferred this session due to quota; safe to run `./scripts/collab-rotate-log.sh claude` next session start before any substantive work.
 - **Q (deferred):** Should the full-run audit artifact land at `docs/audits/2026-04-30-fullscan-classification.md` (matches the sample-50 naming) or at `docs/audits/<YYYY-MM-DD>-fullscan-classification.md` (date of the actual run)? Default to date-of-run.
 <!-- section:open-questions:end -->
 

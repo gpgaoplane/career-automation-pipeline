@@ -2,7 +2,7 @@
 status: active
 type: shared
 owner: shared
-last-updated: 2026-04-30T16:07:21-04:00
+last-updated: 2026-05-01T20:00:00-04:00
 read-if: "you are any AI agent starting work in this repo"
 skip-if: "never"
 related: []
@@ -106,7 +106,7 @@ When creating your log (`docs/agents/<self>.md`), start from `templates/work-log
 
 > User content — outside all framework markers. Preserved on every re-init and upgrade. This section is the canonical project summary every agent reads.
 
-**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **397 currently enabled companies** (448 total in `career-ops/portals.yml`, 51 disabled after the 2026-04-30 Step 0 disabled-company re-audit). Historical roster milestones: Phase 2.7 cleanup produced 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily over-pruned to 388 enabled / 60 disabled; Codex restored 9 high-confidence false disables to reach the current 397 / 51 baseline. See `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 reconciliation.
+**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **393 currently enabled companies** (448 total in `career-ops/portals.yml`, 55 disabled after the 2026-05-01 user-directed SOURCE_BROKEN disable round). Historical roster milestones: Phase 2.7 cleanup produced 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily over-pruned to 388 enabled / 60 disabled; Codex restored 9 high-confidence false disables on 2026-04-30 to reach 397 / 51; Phase 2.8 closure on 2026-05-01 disabled 4 SOURCE_BROKEN companies (Palo Alto Networks, Grammarly, SiFive, EvenUp) per Will to land at the current 393 / 55 baseline. See `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 reconciliation and `docs/audits/2026-05-01-source-broken-disables.md` for the SOURCE_BROKEN round.
 
 **User contact:** `inquiry@dalamula.ai`. Targets remote roles from Toronto (no US presence viable for in-office roles).
 
@@ -199,8 +199,10 @@ node custom-scraper.mjs --dry-run
 # Export
 node export-jobs.mjs               # produces output/jobs-YYYY-MM-DD.xlsx
 
-# Full pipeline (scan -> scrape -> export)
+# Full pipeline (scan -> discover -> adapters -> extract -> enrich -> export)
 npm run full-scan
+npm run full-scan:dry-run          # print plan; do not execute
+npm run full-scan:list             # alias for dry-run
 
 # Pipeline maintenance
 node verify-pipeline.mjs           # health check
@@ -209,12 +211,29 @@ node dedup-tracker.mjs             # remove duplicates
 node merge-tracker.mjs             # merge batch tracker additions
 ```
 
+### Phase 2.8 audit + post-run tooling (run from repo root)
+
+```bash
+# Acceptance audit (12 ACs from design plan v2 §7)
+python scripts/acceptance-audit-phase2.8.py                                        # default: sample-50 metrics
+python scripts/acceptance-audit-phase2.8.py --metrics docs/audits/<DATE>-fullrun-metrics.json   # full-run metrics
+
+# Full-run audit + classification (re-probes routes; ~60s; zero Firecrawl credits)
+node scripts/full-run-audit.mjs --since <ISO> --queue-baseline <N> --label fullrun-<DATE>
+node scripts/full-run-audit.mjs --skip-reprobe                                     # faster; assumes NO_OPEN_JOBS for unprobed
+node scripts/test-full-run-audit.mjs                                               # 48 unit tests
+
+# Re-extract signals from cached JD text (zero Firecrawl, after enrich-jobs.mjs logic changes)
+node scripts/reextract-signals.mjs                                                 # dry-run summary
+node scripts/reextract-signals.mjs --apply                                         # write updated cache
+```
+
 ### Pipeline Architecture
 
 ```
 Excel (450 companies)
     ↓ filter
-career-ops/portals.yml (448 companies, 397 enabled)
+career-ops/portals.yml (448 companies, 393 enabled)
     ↓
 scan.mjs ──────────────── Greenhouse/Ashby/Lever direct ATS URLs (zero token cost)
 custom-scraper.mjs ─────── 3-tier ATS discovery + Playwright for branded pages
@@ -285,7 +304,7 @@ career-ops/data/applications.md          ← master tracker
 
 ### Companies Source
 
-`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. Current `career-ops/portals.yml` live roster is 448 total / 397 enabled / 51 disabled after the 2026-04-30 Step 0 disabled-company re-audit. Historical Phase 2.7 cleanup was 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily reduced that to 388 enabled / 60 disabled before 9 false disables were restored. Disabled rows use explicit `note:` values; consult `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 cohort and `docs/design/companies-roster.md` for the generated live roster. Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics.
+`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. Current `career-ops/portals.yml` live roster is **448 total / 393 enabled / 55 disabled** after the 2026-05-01 SOURCE_BROKEN disable round. Historical Phase 2.7 cleanup was 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily reduced that to 388 enabled / 60 disabled before 9 false disables were restored on 2026-04-30 (→ 397/51); 2026-05-01 closure round disabled Palo Alto Networks, Grammarly, SiFive, EvenUp (→ 393/55). Disabled rows use explicit `note:` values; consult `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 cohort, `docs/audits/2026-05-01-source-broken-disables.md` for the closure cohort, and `docs/design/companies-roster.md` for the generated live roster. Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics. Sales/Business Development positive title-filter group also removed 2026-05-01 to drop AE-only roles per Will's scope refinement (multi-track AE+AI-ENG roles still pass via their other matches).
 
 Excel columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
 

@@ -103,9 +103,21 @@ const REGEXES = {
   canadaOnly: /\b(canada-only|must be located in canada|canadian residents only)\b/i,
   fullyRemoteUS: /\b(100% remote|fully remote)\b[\s\S]{0,100}\b(us-based|north america|united states)\b/i,
   yoe35: /\b(3|4|5|3-5|3 to 5|four|five) ?years?\b[\s\S]{0,30}\b(experience|exp)\b/i,
-  yoe6plus: /\b(6\+|7\+|8\+|10\+) ?years?\b/i,
+  // Generic X+ years pattern. Any 6+ to 99+ counts as senior. Was previously
+  // /\b(6\+|7\+|8\+|10\+) ?years?\b/ which missed 9+, 11+, 12+, 15+, etc.
+  yoe6plus: /\b(?:[6-9]|\d{2,})\+\s?years?\b/i,
   yoe02: /\b(0-2|1-2|less than 2|0 to 2) ?years?\b/i,
+  // Onsite-5-days dealbreaker. Proximity-based Toronto check applied in
+  // extractDealBreaker (not the global text test that used to exist).
   dealBreakerOnsite: /\bin-office (5|five) days?\b/i,
+  // Hybrid dealbreaker (added 2026-05-01). Matches "hybrid" not followed by
+  // unambiguous technical-term suffixes (cloud / mesh / fabric — networking
+  // and architecture jargon, not work-mode). The Toronto/non-Toronto
+  // proximity check runs in extractDealBreaker. Will's rule:
+  // US/non-Toronto-Canada/non-Toronto-anywhere hybrid = SKIP.
+  // Note: "hybrid model" is intentionally NOT excluded here — it's frequently
+  // used to mean work-mode ("Work style: Hybrid model with 2 days per week").
+  dealBreakerHybrid: /\bhybrid\b(?!\s+(?:cloud|mesh|fabric))/i,
   dealBreakerPhd: /\bphd required\b/i,
   dealBreakerSponsor: /\bsponsorship not available for remote\b/i,
 };
@@ -143,74 +155,149 @@ function uniqueCaseInsensitiveMatches(text, list) {
   return [...seen];
 }
 
-function extractCompRange(text) {
-  // Look for anchor phrases, then extract numeric ranges within ±300 chars.
-  // Some boards repeat anchors (e.g. "Equal Opportunity" before "Pay Range"),
-  // so scan every anchor window and return the first sensible money range.
-  const anchorRe = /\b(compensation|salary range|base salary|total compensation|OTE|target compensation|salary band|pay range|base pay)\b/ig;
-  const anchors = [...text.matchAll(anchorRe)];
-  if (anchors.length === 0) return null;
+// Detects the currency for a comp window. Falls back to whole-text region
+// hints when the window itself doesn't say USD/CAD literally.
+function detectCurrency(window, fullText) {
+  const cad = /\b(CAD|CA\$|C\$|Canadian dollar)\b/i.test(window);
+  const usd = /\b(USD|US\$|United States dollar)\b/i.test(window);
+  if (cad && !usd) return 'CAD';
+  if (usd && !cad) return 'USD';
+  if (!cad && !usd) {
+    if (/\b(canada|toronto|ontario)\b/i.test(fullText)) return 'CAD';
+    if (/\b(united states|usa|us-based|new york|san francisco|remote us)\b/i.test(fullText)) return 'USD';
+    return 'unknown';
+  }
+  return 'unknown';
+}
 
-  // Range pattern: must be anchored by $ on first number OR K/k on at least
-  // one number (so "3-5 years" doesn't false-positive as a comp range).
-  // Scans all candidates in window; returns the first with sensible thousands.
-  const rangeRe = /(?:\$\s?([\d,]+)\s?([Kk])?|([\d,]+)\s?([Kk]))\s*[-–—to]+\s*\$?\s?([\d,]+)\s?([Kk])?/g;
+function extractCompRange(text) {
+  // Anchor phrases that introduce comp text. Expanded 2026-05-01 to catch
+  // "annual salary"/"the salary"/"estimated annual salary"/"pay band" forms
+  // (Bug 1a — Arize, Block, etc. were missed under the older list).
+  const anchorRe = /\b(compensation|salary range|base salary|total compensation|OTE|target compensation|salary band|pay band|pay range|base pay|annual salary|the salary|estimated annual salary|salary for this)\b/ig;
+  const anchors = [...text.matchAll(anchorRe)];
+
+  // Range pattern: requires $ on first number OR K/k marker on a number
+  // (so "3-5 years" doesn't false-positive). [\d,]+ extended with optional
+  // (?:\.\d+)? so decimal-K formats like $207.2K parse correctly
+  // (Bug 1d — affected 11 cached JDs each by ~20 score points).
+  const rangeRe = /(?:\$\s?([\d,]+(?:\.\d+)?)\s?([Kk])?|([\d,]+(?:\.\d+)?)\s?([Kk]))\s*[-–—to]+\s*\$?\s?([\d,]+(?:\.\d+)?)\s?([Kk])?/g;
+
+  // Strong-pattern detection — when no anchor matches, a $X,XXX-$X,XXX or
+  // $XXk-$XXk pattern is sufficiently specific to be comp on its own.
+  // Catches Lever standalone footers ($190,000 - $290,000 a year) etc.
+  // (Bug 1b — Shield AI 4x, others.)
+  const strongRangeRe = /\$\s?(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\s*[-–—]\s*\$?\s?(\d{1,3}(?:,\d{3})+(?:\.\d+)?)\b/g;
+  const strongKRangeRe = /\$\s?(\d{2,3}(?:\.\d+)?)\s?[Kk]\s*[-–—]\s*\$?\s?(\d{2,3}(?:\.\d+)?)\s?[Kk]\b/g;
+
+  // Single-value pattern (no range). "Compensation: $240K • OTE..." etc.
+  // Only used inside an anchor window. Yields {low=high=value}.
+  // (Bug 1c — Harvey 2x, LangChain, OpenAI single-value comp roles.)
+  const singleValRe = /\$\s?([\d,]+(?:\.\d+)?)\s?([Kk])\b/g;
+
+  function processRangeMatch(m, window) {
+    const n1raw = m[1] || m[3];
+    const k1 = m[2] || m[4];
+    const n2raw = m[5];
+    const k2 = m[6];
+    if (!n1raw || !n2raw) return null;
+    let low = parseFloat(n1raw.replace(/,/g, ''));
+    let high = parseFloat(n2raw.replace(/,/g, ''));
+    if (isNaN(low) || isNaN(high)) return null;
+    if (k1) low *= 1000;
+    if (k2) high *= 1000;
+    // Pay-transparency shorthand: "$200-$325k" → low gets implicit K.
+    if (!k1 && k2 && low < 1000) low *= 1000;
+    if (k1 && !k2 && high < 1000) high *= 1000;
+    // Skip non-money ranges ("3-5 years") — both <1000 and no K marker.
+    if (low < 1000 || high < 1000) return null;
+    if (low > 10_000_000 || high > 10_000_000) return null;
+    if (low > high) [low, high] = [high, low];
+    return {
+      low_thousands: Math.round(low / 1000),
+      high_thousands: Math.round(high / 1000),
+      currency: detectCurrency(window, text),
+    };
+  }
+
+  // Strategy 1: anchor-window scan with range pattern (preferred).
   for (const aMatch of anchors) {
     const start = Math.max(0, aMatch.index - 50);
     const end = Math.min(text.length, aMatch.index + 350);
     const window = text.slice(start, end);
-
-    let rMatch;
+    let m;
     rangeRe.lastIndex = 0;
-    while ((rMatch = rangeRe.exec(window)) !== null) {
-      const n1raw = rMatch[1] || rMatch[3];
-      const k1 = rMatch[2] || rMatch[4];
-      const n2raw = rMatch[5];
-      const k2 = rMatch[6];
-      if (!n1raw || !n2raw) continue;
-      let low = parseInt(n1raw.replace(/,/g, ''), 10);
-      let high = parseInt(n2raw.replace(/,/g, ''), 10);
-      if (isNaN(low) || isNaN(high)) continue;
-      if (k1) low *= 1000;
-      if (k2) high *= 1000;
-      // Common pay-transparency shorthand: "$200-$325k".
-      if (!k1 && k2 && low < 1000) low *= 1000;
-      if (k1 && !k2 && high < 1000) high *= 1000;
-      // Heuristic: if both numbers are < 1000 AND no K marker, the regex caught
-      // a non-money range (e.g., "3-5 years"). Skip.
-      if (low < 1000 || high < 1000) continue;
-      if (low > 10_000_000 || high > 10_000_000) continue;
-      if (low > high) [low, high] = [high, low];
-
-      // Currency detection — look in the same window
-      const cad = /\b(CAD|CA\$|C\$|Canadian dollar)\b/i.test(window);
-      const usd = /\b(USD|US\$|United States dollar)\b/i.test(window);
-      let currency;
-      if (cad && !usd) currency = 'CAD';
-      else if (usd && !cad) currency = 'USD';
-      else if (!cad && !usd) {
-        // Heuristic: presence of "Canada" / "Toronto" → CAD; else default unknown
-        if (/\b(canada|toronto|ontario)\b/i.test(text)) currency = 'CAD';
-        else if (/\b(united states|usa|us-based|new york|san francisco|remote us)\b/i.test(text)) currency = 'USD';
-        else currency = 'unknown';
-      } else {
-        currency = 'unknown';
-      }
-
-      return {
-        low_thousands: Math.round(low / 1000),
-        high_thousands: Math.round(high / 1000),
-        currency,
-      };
+    while ((m = rangeRe.exec(window)) !== null) {
+      const result = processRangeMatch(m, window);
+      if (result) return result;
     }
   }
+
+  // Strategy 2: strong-pattern fallback (no anchor required).
+  for (const re of [strongRangeRe, strongKRangeRe]) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const start = Math.max(0, m.index - 100);
+      const end = Math.min(text.length, m.index + 200);
+      const window = text.slice(start, end);
+      // Re-run rangeRe on the local window so the same processing applies.
+      rangeRe.lastIndex = 0;
+      let inner;
+      while ((inner = rangeRe.exec(window)) !== null) {
+        const result = processRangeMatch(inner, window);
+        if (result) return result;
+      }
+    }
+  }
+
+  // Strategy 3: single-value within anchor window (last resort).
+  for (const aMatch of anchors) {
+    const start = Math.max(0, aMatch.index - 30);
+    const end = Math.min(text.length, aMatch.index + 250);
+    const window = text.slice(start, end);
+    let m;
+    singleValRe.lastIndex = 0;
+    while ((m = singleValRe.exec(window)) !== null) {
+      let val = parseFloat(m[1].replace(/,/g, ''));
+      if (m[2]) val *= 1000;
+      if (val < 1000 || val > 10_000_000) continue;
+      const v = Math.round(val / 1000);
+      return { low_thousands: v, high_thousands: v, currency: detectCurrency(window, text) };
+    }
+  }
+
   return null;
+}
+
+// Proximity-based Toronto check (within ±200 chars of the matched signal)
+// instead of a global text test. Was previously bypassed whenever Toronto
+// appeared anywhere in the JD — including JDs that listed Toronto as one
+// of multiple office locations but the ROLE was not Toronto-based.
+function nearToronto(text, matchIndex) {
+  const start = Math.max(0, matchIndex - 200);
+  const end = Math.min(text.length, matchIndex + 200);
+  return /\btoronto\b/i.test(text.slice(start, end));
 }
 
 function extractDealBreaker(text) {
   if (REGEXES.dealBreakerPhd.test(text)) return 'phd_required';
   if (REGEXES.dealBreakerSponsor.test(text)) return 'no_sponsorship_remote';
-  if (REGEXES.dealBreakerOnsite.test(text) && !/\btoronto\b/i.test(text)) return 'onsite_5_days_non_toronto';
+
+  // Onsite-5-days outside Toronto.
+  const onsiteMatch = REGEXES.dealBreakerOnsite.exec(text);
+  if (onsiteMatch && !nearToronto(text, onsiteMatch.index)) {
+    return 'onsite_5_days_non_toronto';
+  }
+
+  // Hybrid outside Toronto. Will's universal rule: US/non-Toronto-Canada/
+  // any-region hybrid = SKIP (he is in Toronto and only Toronto hybrid is
+  // acceptable). Added 2026-05-01.
+  const hybridMatch = REGEXES.dealBreakerHybrid.exec(text);
+  if (hybridMatch && !nearToronto(text, hybridMatch.index)) {
+    return 'hybrid_non_toronto';
+  }
+
   return null;
 }
 

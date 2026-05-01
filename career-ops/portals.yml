@@ -49,16 +49,6 @@ title_filter:
     - "Deployment Engineer"
     - "AI Architect"
     - "Enterprise Architect"
-    # ── Sales / Business Development ─────────────────────────────────────────
-    - "Account Executive"
-    - "Enterprise Account Executive"
-    - "Strategic Account Executive"
-    - "Sales Engineer"
-    - "AI Sales"
-    - "Business Development"
-    - "Enterprise Sales"
-    - "Technical Sales"
-    - "Partner Sales"
     # ── Product Management ───────────────────────────────────────────────────
     - "AI Product Manager"
     - "Product Manager"
@@ -385,7 +375,8 @@ tracked_companies:
     rank: 277
     category: "AI Chips / Compute"
     careers_url: "https://www.sifive.com/careers"
-    enabled: true
+    enabled: false
+    note: "disabled 2026-05-01: SOURCE_BROKEN (Workday CXS 404) + AI chips/hardware scope mismatch (matches universal HW exclusion)"
 
 
   # ── AI Chips / Inference ──────────────────────────────────────
@@ -1043,7 +1034,8 @@ tracked_companies:
     rank: 326
     category: "AI Legal Tech"
     careers_url: "https://www.evenuplaw.com/careers/"
-    enabled: true
+    enabled: false
+    note: "disabled 2026-05-01: SOURCE_BROKEN (Ashby 404 — cache-stale slug) + user-directed scope drop with SOURCE_BROKEN cohort"
 
 
   # ── AI Local / Community ──────────────────────────────────────
@@ -1167,8 +1159,8 @@ tracked_companies:
     rank: 221
     category: "AI SaaS"
     careers_url: "https://www.grammarly.com/careers"
-    enabled: true
-    note: "restored 2026-04-30: active Grammarly/Superhuman jobs exist; Step 0 disable was false positive"
+    enabled: false
+    note: "disabled 2026-05-01: SOURCE_BROKEN (Greenhouse 404 — cache-stale slug) + AI writing/SaaS scope mismatch (Will targets AI engineering / agentic / production AI). Supersedes 2026-04-30 restoration which confirmed active Grammarly/Superhuman jobs exist but the user has now ruled the scope out."
 
   - name: "Harvey"
     rank: 230
@@ -1772,7 +1764,8 @@ tracked_companies:
     rank: 48
     category: "Cybersecurity"
     careers_url: "https://jobs.paloaltonetworks.com/"
-    enabled: true
+    enabled: false
+    note: "disabled 2026-05-01: SOURCE_BROKEN (Workday CXS 404 — cache-stale en-US site path) + user-directed scope drop with SOURCE_BROKEN cohort"
 
   - name: "CrowdStrike"
     rank: 60

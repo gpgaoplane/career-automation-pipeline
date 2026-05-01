@@ -65,6 +65,26 @@ const noRelevantJobs = classifyCompany({
 assert("route + healthy + raw>0 + no exports → NO_RELEVANT_JOBS", noRelevantJobs.miss_reason === "NO_RELEVANT_JOBS");
 assert("NO_RELEVANT_JOBS → has raw jobs", noRelevantJobs.has_raw_jobs === true);
 
+// Probe-not-attempted (e.g., ats:"generic" Layer 3 entry, no direct API)
+const noProbe = classifyCompany({
+  hasExports: false,
+  hasRoute: true,
+  probeResult: { probe_attempted: false, healthy: null, raw_jobs: null, error: "no-probe-available" },
+});
+assert("route + probe_attempted:false → NO_OPEN_JOBS (conservative)", noProbe.miss_reason === "NO_OPEN_JOBS");
+assert("probe-not-attempted → resolved + assumed healthy", noProbe.source_resolved === true && noProbe.source_healthy === true);
+assert("probe-not-attempted → has_raw_jobs:false", noProbe.has_raw_jobs === false);
+
+// Backward-compat: legacy probeResult without probe_attempted flag still
+// classifies as SOURCE_BROKEN when healthy:false (matches the test
+// fixtures used before the probe_attempted distinction landed).
+const legacyBroken = classifyCompany({
+  hasExports: false,
+  hasRoute: true,
+  probeResult: { healthy: false, raw_jobs: 0, error: "HTTP 500" },
+});
+assert("legacy probeResult (no probe_attempted) + healthy:false → SOURCE_BROKEN", legacyBroken.miss_reason === "SOURCE_BROKEN");
+
 // ── hasRoute ─────────────────────────────────────────────────────────
 
 console.log("\nhasRoute:");

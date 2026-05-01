@@ -1,4 +1,13 @@
-# Phase 2.8 Step 0 — Proposed Fixes for portals.yml
+---
+status: archived
+type: docs
+owner: claude
+last-updated: 2026-05-01T20:00:00-04:00
+read-if: "you need the historical Phase 2.8 Step 0 triage rationale; otherwise skip"
+skip-if: "status == archived (default)"
+---
+
+# Phase 2.8 Step 0 — Proposed Fixes for portals.yml (HISTORICAL)
 
 **Generated:** 2026-04-29 from `scripts/portals-url-triage-report.tsv`
 **Total problem rows:** 100 (68 dead + 32 wrong-company-suspect)

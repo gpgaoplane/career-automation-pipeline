@@ -194,19 +194,29 @@ async function buildProbe(cacheEntry, fetchers) {
 
 async function reprobeCompany(cacheEntry, fetchers, throttleMs) {
   const probe = await buildProbe(cacheEntry, fetchers);
-  if (!probe) return { healthy: false, raw_jobs: 0, error: "no-probe-available" };
+  if (!probe) {
+    // No direct-API probe path for this provider (e.g., ats:"generic"
+    // written by Layer 3 custom-scraper, or unsupported provider).
+    // Distinguishes "probe-not-attempted" from "probe-attempted-and-failed".
+    return { probe_attempted: false, healthy: null, raw_jobs: null, error: "no-probe-available" };
+  }
   try {
     const result = await probe();
     if (throttleMs > 0) await new Promise((r) => setTimeout(r, throttleMs));
     const rawJobs = Array.isArray(result?.jobs) ? result.jobs.length : 0;
-    return { healthy: true, raw_jobs: rawJobs, error: null };
+    return { probe_attempted: true, healthy: true, raw_jobs: rawJobs, error: null };
   } catch (e) {
     if (throttleMs > 0) await new Promise((r) => setTimeout(r, throttleMs));
-    return { healthy: false, raw_jobs: 0, error: String(e.message || e).slice(0, 200) };
+    return { probe_attempted: true, healthy: false, raw_jobs: 0, error: String(e.message || e).slice(0, 200) };
   }
 }
 
 // Pure classifier — easy to unit test
+//
+// Probe-not-attempted (no direct-API path; e.g., ats:"generic" from Layer
+// 3 custom-scraper) is treated as NO_OPEN_JOBS — the conservative
+// assumption matching --skip-reprobe mode. SOURCE_BROKEN is reserved for
+// probes that actually ran and failed.
 export function classifyCompany({ hasExports, hasRoute, probeResult }) {
   if (hasExports) {
     return { miss_reason: null, source_resolved: true, source_healthy: true, has_raw_jobs: true };
@@ -214,14 +224,22 @@ export function classifyCompany({ hasExports, hasRoute, probeResult }) {
   if (!hasRoute) {
     return { miss_reason: "ROUTE_MISSING", source_resolved: false, source_healthy: false, has_raw_jobs: false };
   }
-  // has route but no exports — probe result determines bucket
-  if (!probeResult || !probeResult.healthy) {
+  // Probe attempted and failed → genuine source breakage. The
+  // `probe_attempted !== false` form lets legacy callers (and the unit
+  // tests) omit the flag and still get SOURCE_BROKEN behavior when
+  // healthy:false; only an *explicit* probe_attempted:false signal
+  // diverts to the conservative NO_OPEN_JOBS bucket.
+  if (probeResult && probeResult.healthy === false && probeResult.probe_attempted !== false) {
     return { miss_reason: "SOURCE_BROKEN", source_resolved: true, source_healthy: false, has_raw_jobs: false };
   }
-  if (probeResult.raw_jobs === 0) {
-    return { miss_reason: "NO_OPEN_JOBS", source_resolved: true, source_healthy: true, has_raw_jobs: false };
+  // Probe attempted and healthy with raw jobs > 0 → title filter excluded everything
+  if (probeResult && probeResult.healthy === true && probeResult.raw_jobs > 0) {
+    return { miss_reason: "NO_RELEVANT_JOBS", source_resolved: true, source_healthy: true, has_raw_jobs: true };
   }
-  return { miss_reason: "NO_RELEVANT_JOBS", source_resolved: true, source_healthy: true, has_raw_jobs: true };
+  // Probe attempted and healthy with 0 raw jobs → source has nothing open
+  // OR probe not attempted (generic Layer 3 / unsupported provider) →
+  // conservatively classified as NO_OPEN_JOBS.
+  return { miss_reason: "NO_OPEN_JOBS", source_resolved: true, source_healthy: true, has_raw_jobs: false };
 }
 
 // ── AC-3 signal computation ──────────────────────────────────────────

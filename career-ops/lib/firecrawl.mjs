@@ -31,7 +31,7 @@ const COST_LOG = resolve(DATA_DIR, "firecrawl-cost.tsv");
 const FALLBACK_QUEUE = resolve(DATA_DIR, "firecrawl-fallback-queue.tsv");
 const KEY_FILE = resolve(REPO_ROOT, ".firecrawl-key");
 
-export const MAX_CREDITS_DEFAULT = 3000;
+export const MAX_CREDITS_DEFAULT = 5000;
 
 // JSON Schema for Layer 2 structured listing extraction. Reserved name
 // JOB_LISTING_SCHEMA_V1 — version-bumped on schema changes so cache invalidation

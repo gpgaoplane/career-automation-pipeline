@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-04-30T22:11:51-04:00
+last-updated: 2026-05-01T20:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -650,5 +650,45 @@ User direction at handoff pickup was explicit: "be critical and analytical of Co
 - Claude memory now formally aligned (this decision + state.md + context.md). Future Claude sessions reading the in-repo memory will see source-accounting framing as canonical.
 
 **Cross-references:** Codex's `.codex/memory/decisions.md` D-9 (the original-author decision); `docs/audits/2026-04-30-sample50-missed-company-classification.md` (durable replacement audit); `scripts/acceptance-audit-phase2.8.py` lines 132-150 (encoded gate logic); `docs/STATUS.md` "Done" entry from 2026-04-30; `AI_HANDOFF.md` Step 10 Results section.
+
+## D-21 — Phase 2.8 closure: scoring policy v2 + Option A signal-extraction fixes — 2026-05-01T20:00:00-04:00
+
+**Context:** Will manually reviewed the Excel after the full 393-enabled-company rescan and surfaced multiple specific concerns: (1) S-tier was too lenient at threshold ≥12 with 433 jobs concentrated 60% in OpenAI; (2) AE/Sales jobs still flowing through the pipeline despite no fit signal; (3) intern roles slipping through despite mid-level pivot; (4) deal-breaker jobs being penalized but not dropped, wasting review attention; (5) Senior/Principal slip-throughs only penalized -2 (insufficient given mid-level pivot in D-7); (6) US hybrid jobs not flagged as deal-breakers despite Will's "not 100% remote → SKIP" rule for US; (7) decimal-K compensation format ($207.2K) being mis-parsed as $2K, swinging scores by ~20 points per affected job.
+
+**Choice:** Ship two coordinated changes — a scoring/filter policy update (v2) AND a signal-extraction bug-fix bundle (Option A) — in one closure commit.
+
+**Scoring/filter policy v2** (in `career-ops/export-jobs.mjs` + `career-ops/portals.yml`):
+- **S threshold raised 12 → 18.** Manual-review surface drops from 433 → 90 → 37 (after combined filters). Trade: stricter S-tier reduces concentration; some borderline-S move to A.
+- **AE-only jobs dropped at output, AE-multi-track lenient kept.** Sales/Business Development comment-group removed from `portals.yml` positives (forward-looking — future scans don't ingest AE-only jobs). One-time pipeline.md strip removes 715 AE-only rows from the current export. Two AE-multi rows preserved without score deduction (they re-derive to their non-AE track).
+- **Intern jobs dropped at output.** `if /\b(intern|internship)\b/i.test(title)` filter in main loop. Empirically 0 jobs in current pipeline (title_filter excludes at scrape time); defensive guard.
+- **Deal-breaker jobs dropped at output (no longer penalized).** Removed `score -= 5` line from `computeDescScore`; added filter on `signals?.deal_breaker_signal` in main loop. User explicitly preferred drop over penalty so dealbreaker-flagged jobs don't waste manual-review attention.
+- **Senior/Principal penalty -2 → -5.** Reflects D-7 mid-level pivot more aggressively. Junior/Jr/Associate stay at -2.
+
+**Option A signal-extraction fixes** (in `career-ops/enrich-jobs.mjs`; verified empirically against current 1502-entry JD cache):
+- **Bug 1d (decimal-K) — Will's finding:** Regex `[\d,]+` was changed to `[\d,]+(?:\.\d+)?` and parseInt → parseFloat. Affects 11 cached JDs (Harvey, Ramp, Writer 3x, OpenAI 4x, etc.) that were mis-extracted as $2-$5K (they should have been $146-$280K). 20-point score swing per affected job.
+- **Bug 1a (anchor list expansion):** Added `annual salary | the salary | estimated annual salary | salary band | pay band | salary for this`. Catches phrasings like Arize's "the estimated annual salary for this role is between..." that the older anchor list missed.
+- **Bug 1b (strong-pattern fallback):** When no anchor matches, scan whole text for `$NNN,NNN-$NNN,NNN` or `$NNK-$NNK` patterns. Catches Lever standalone footers (Shield AI 4x, etc.) where comp text appears at end of JD with no preamble.
+- **Bug 1c (single-value comp):** When range scan fails, look for a single `$NNN[Kk]` value within anchor window. Use as both low and high. Catches Harvey x2, LangChain, OpenAI single-value comp roles.
+- **Bug 2 (hybrid_non_toronto dealbreaker):** New `dealBreakerHybrid: /\bhybrid\b(?!\s+(?:cloud|mesh|fabric))/i` regex with proximity-based Toronto check (±200 chars). Conservative tech-context exclusion (cloud/mesh/fabric) avoids false-positives like Pure Storage's "hybrid cloud environments." Empirically 626 new dealbreaker hits → 343 jobs dropped from current Excel after re-extract.
+- **Issue 3 (Toronto bypass refinement):** Both onsite-5-days AND hybrid checks now use a `nearToronto(text, matchIndex)` proximity helper instead of a global text test. JDs that mention Toronto as one of multiple offices but the role is elsewhere no longer get a free pass.
+- **Issue 6 (YoE generic X+):** `yoe6plus` pattern broadened from `\b(6\+|7\+|8\+|10\+) ?years?\b` to `\b(?:[6-9]|\d{2,})\+\s?years?\b` (matches 6+ through 99+).
+
+**Implementation mechanics:** Re-extract pass via new `scripts/reextract-signals.mjs` runs the updated `extractSignals` over each cached `content_text` and writes back `extracted_signals` — zero Firecrawl credits, ~30 seconds. No JD re-fetch needed. Re-export with the updated `export-jobs.mjs` regenerates the workbook from the corrected cache.
+
+**Rationale:**
+- All changes are pure post-processing on already-cached text; no Firecrawl spend.
+- All changes are localized to two files (`enrich-jobs.mjs` for signal extraction, `export-jobs.mjs` for scoring/filter policy) plus the one-time `portals.yml` AE prune and `pipeline.md` AE strip.
+- 26/26 existing enrich-signals tests still pass. 48/48 full-run-audit tests still pass.
+- Empirical impact verified before commit: Excel went 1496 → 956 → 613 jobs across the staged filter rounds; S-tier went 433 → 90 → 37; OpenAI concentration dropped 60% → 41% (15/37); 17 distinct companies now in S-tier (was 21 then). Net manual-review surface is materially better.
+- All 12 acceptance criteria pass on the post-fix metrics: source resolved 385/393 (98.0%), source health 385/385 (100%), miss class 213/213 (100%), AC-3 generic 664/956 (69.5%), AC-11b 33/956 (3.5%).
+
+**Tradeoffs:**
+- **AE-multi count is 2.** Lenient design preserved them, but they're also tagged with their non-AE track only after the portals.yml prune (since AE keywords are no longer in trackMap). User accepted: no AE penalty AND no AE bonus on mixed-track jobs.
+- **Hybrid dealbreaker has ~2% false-positive rate.** Pure Storage and similar enterprise software roles that legitimately discuss "hybrid cloud" or "hybrid model" as technical concepts may get flagged. Conservative tech-context exclusion (cloud/mesh/fabric) reduces but doesn't eliminate this. Will can manually re-enable specific companies in `portals.yml` if a notable false positive surfaces during review.
+- **Toronto proximity check is text-positional, not semantic.** A JD that genuinely says "the role is hybrid in NYC but our team has offices in NYC, Toronto, SF" — Toronto appears within 200 chars of the hybrid mention → false negative (job not flagged as dealbreaker). Possible to refine later; not blocking.
+- **S threshold = 18 may shift after manual review.** If Will finds 37 too few or A-tier too crowded, re-export with a different threshold is a 30-second iteration with zero Firecrawl cost.
+- **Decimal-K fix only catches `[\d,]+(?:\.\d+)?` patterns, not exotic forms like `$1.5M` or commas-with-decimal.** Real-world coverage of decimal-K in cached data is 11 jobs; this fix catches all 11. Future enhancement could add million-dollar formats.
+
+**Cross-references:** `career-ops/enrich-jobs.mjs` (REGEXES + extractCompRange + extractDealBreaker + nearToronto helper), `career-ops/export-jobs.mjs` (computeBand + computeTitleScore + main filter loop), `career-ops/portals.yml` (Sales/BD group removed lines 52-61, 4 SOURCE_BROKEN companies disabled), `scripts/reextract-signals.mjs` (one-time post-processor), `docs/audits/2026-05-01-source-broken-disables.md` (companion audit), `docs/audits/2026-05-01-fullrun-classification.md` + `2026-05-01-fullrun-metrics.json` (post-fix audit artifacts).
 
 <!-- section:entries:end -->
