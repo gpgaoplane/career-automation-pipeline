@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-05-02T20:31:23-04:00
+last-updated: 2026-05-02T20:56:20-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---

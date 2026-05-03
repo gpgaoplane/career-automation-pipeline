@@ -866,6 +866,42 @@ Missing / intentionally skipped:
 - `.codex/memory/*`, `docs/agents/codex.md` ........ Codex-owned; not modified (cross-agent courtesy)
 - No new handoff written ........ this is a checkpoint, not a hand-off; manual review of the Excel is the human-side next step
 
+## 2026-05-02 — Filter pipeline reference doc + handoff to Codex
+
+**Goal:** Will observed during manual review of `career-ops/output/jobs-2026-05-01.xlsx` that specific job postings he expected to see were missing. He asked for a thorough explanation of the current filter pipeline (research-only, no modifications) so he can identify which layer dropped each missing job. After the doc lands, hand off to Codex.
+
+**What I read (Phase 1 exploration via 3 parallel Explore agents):** every filter layer in the codebase — `career-ops/portals.yml` `title_filter`, `career-ops/scan.mjs:125-135` `buildTitleFilter`, `scripts/ats-adapters/_lib.mjs:57-103` `iterTargets`+`buildTitleFilter`, `career-ops/firecrawl-discover.mjs:264-385` `discoverCompany`, `career-ops/firecrawl-extract.mjs:109-176` `collectExtractTargets`+main, `career-ops/enrich-jobs.mjs:100-302,519-554` REGEXES+extractDealBreaker+fetchers, `career-ops/export-jobs.mjs:120-218,265-288` scoring+output drops, `scripts/full-scan-orchestrator.mjs:28-141` chain order+fallback, `lib/firecrawl.mjs:140-230` retry+fallback queue.
+
+**What I changed:**
+- New file: `docs/design/filter-pipeline-reference.md` (~1040 lines, 9 sections). Verbatim title_filter inventory (60 positives + 89 negatives), match semantics with worked examples, all 5 cache schema variants, complete scoring formulas (computeTitleScore + computeDescScore + computeBand), all 4 dealbreaker regexes with check order + nearToronto proximity logic, 7-step diagnostic recipe for tracing any specific missing job through the pipeline, and explicit out-of-scope list.
+- Registered in `.collab/INDEX.md` via `collab-register.sh`.
+- Committed as `ff8303d` (`docs: add filter pipeline reference for missing-job diagnostic`).
+
+**What I did NOT change** (per Will's scope direction "explanation only, no modifications"):
+- No edits to `portals.yml`, `enrich-jobs.mjs`, `export-jobs.mjs`, scripts/*, or any production code/config.
+- No filter relaxations applied.
+- No re-extract, no re-export.
+- Phase 2.8 closure state at tag `phase-2.8-complete` is preserved exactly.
+
+**Watch out (for Codex pickup):**
+- **The doc is research-only.** Will explicitly said NOT to propose changes, NOT to plan modifications. He'll later share specific missing-job examples; the handoff describes what to do then (apply Section 7 recipe; append per-job traces as Section 8).
+- **Filter substring fragility is real.** Section 4 documents how `negative: "Senior"` drops "Seniority: Senior" and "Senior-level Engineer", how `negative: "London"` drops `"Software Engineer (London/NYC/Remote-US)"`, how `negative: "PhD"` drops `"Applied AI Engineer (PhD or 5+ years)"`. These are observed behaviors — the doc explicitly does NOT propose to change them. Do not unilaterally tighten or loosen filters.
+- **Codex memory is 2 days behind.** `.codex/memory/{state,context,decisions,pitfalls}.md` last edited 2026-04-30; the 2026-05-01 closure (4 commits) and the 2026-05-02 filter-doc commit are not yet reflected. Codex should sync its own memory on pickup using the closure docs (`AI_HANDOFF.md`, `state.md`, `STATUS.md`, `D-21`, `2026-05-01-source-broken-disables.md`) plus this work-log entry and the new filter-pipeline-reference.
+- **Log rotation still deferred.** `docs/agents/claude.md` is now 1117+ lines (well past 300 threshold). Framework rotation script ran on 2026-05-01 and chose not to archive (its 8-entry minimum heuristic returned 0). Safe to leave as informational advisory; if Codex wants to force rotation, manual archive is the path.
+
+### Task Receipt
+
+Updates fanned out this task:
+- `docs/design/filter-pipeline-reference.md` ........ NEW — comprehensive 9-section reference covering filter layers, match semantics, cache schemas, scoring/dealbreaker formulas, and per-job diagnostic recipe
+- `.collab/INDEX.md` ........ registered the new doc (auto-managed timestamp bump)
+- `docs/agents/claude.md` ........ this entry + Receipt + handoff block
+
+Missing / intentionally skipped:
+- `.claude/memory/{state,context,decisions,pitfalls}.md` ........ no new durable invariants from this turn (the doc captures everything; D-21 already records the scoring policy + Option A fixes; no new architectural decision was made)
+- `docs/STATUS.md` ........ Phase 2.8 closure narrative is current; this doc is a research deliverable, not a phase-status change
+- `AI_HANDOFF.md` / `RESUME_PROMPT.md` ........ remain accurate for Phase 2.8 closure pickup; the Codex handoff via `collab-handoff.sh` is the right channel for this specific cross-agent transfer
+- No re-extract / re-export / portals.yml or production-code edits ........ explicitly out of scope per Will's direction
+
 ## Handoff blocks
 
 When you finish a substantive chunk of work and want another agent to take over,
@@ -1018,6 +1054,58 @@ Phase 2.8 implementation Steps 0-12 ALL CODE-COMPLETE on feat/phase-2.8-firecraw
 
 ### Files touched
 career-ops/firecrawl-discover.mjs career-ops/firecrawl-extract.mjs career-ops/lib/ats-detect.mjs career-ops/lib/ats-clients.mjs career-ops/enrich-jobs.mjs scripts/ats-adapters/_lib.mjs scripts/full-scan-orchestrator.mjs scripts/acceptance-audit-phase2.8.py .claude/memory/pitfalls.md .claude/memory/state.md docs/STATUS.md career-ops/data/firecrawl-plan-caps.tsv.template
+
+### What needs validation
+(fill in during handoff; default: diff the commits listed above)
+
+### Open questions
+(none stated)
+<!-- collab:handoff:end -->
+
+<!-- collab:handoff:start id=20260502-205619-f5ed -->
+## Handoff → codex
+
+- **handoff-id:** `20260502-205619-f5ed`
+- **parent-id:** `none`
+- **from:** claude
+- **to:** codex
+- **branch:** feat/phase-2.8-firecrawl
+- **at:** 2026-05-02T20:56:19-04:00
+- **status:** open
+
+### What I did
+Phase 2.8 closure stable + new filter pipeline reference doc landed. Will is in manual review of jobs-2026-05-01.xlsx and observed missing job postings. Handing off to Codex to handle the next stages.
+
+CURRENT STATE
+- Branch feat/phase-2.8-firecrawl, tag phase-2.8-complete at commit 75ec403.
+- Recent commits this arc: fa7de8c, 59b841f, ff8303d (most recent — filter pipeline reference doc).
+- Roster baseline: 448 total / 393 enabled / 55 disabled / 0 missing notes.
+- Acceptance audit gates: 12 PASS / 0 FAIL / 0 pending against docs/audits/2026-05-01-fullrun-metrics.json.
+- Output Excel for Will's manual review: career-ops/output/jobs-2026-05-01.xlsx (613 jobs, S=37/A=370/B=195/C=11).
+- Working tree clean (only .claude/settings.local.json untracked, intentionally excluded).
+
+NEW THIS SESSION (commit ff8303d)
+- docs/design/filter-pipeline-reference.md — comprehensive 9-section research-only reference doc covering every filter layer, match semantics, cache schema variants, scoring/dealbreaker formulas, and a 7-step per-job diagnostic recipe. Will requested this so he can trace specific missing jobs through the pipeline himself, OR have an agent do it on his behalf when he provides examples.
+
+WHAT TO DO ON PICKUP
+1. Sync your own memory. .codex/memory/* was last edited 2026-04-30; the 2026-05-01 closure round (4 commits) and the 2026-05-02 filter doc are not reflected. Read AI_HANDOFF.md, .claude/memory/state.md, .claude/memory/decisions.md (D-21), docs/STATUS.md, docs/audits/2026-05-01-source-broken-disables.md, docs/audits/2026-05-01-fullrun-classification.md, latest docs/agents/claude.md entry, AND the new docs/design/filter-pipeline-reference.md to get current.
+2. Wait for Will's specific missing-job examples (URLs or titles). When provided, apply the Section 7 diagnostic recipe to each one and append the per-job traces as Section 8 — Worked Examples in a follow-up commit to docs/design/filter-pipeline-reference.md.
+3. Do NOT proceed to filter modifications, relaxation recommendations, or re-extract/re-export unless Will explicitly authorizes. Scope is strictly research/diagnostic at this point.
+
+PHASE 3 CANDIDATE MENU (no work scheduled — Will picks)
+A. LLM evaluation pipeline integration (per old roadmap)
+B. Calibration round (after Will's manual review feedback)
+C. Delta detection (deferred from pre-rescan review)
+D. SOURCE_BROKEN cache refresh for any of the 4 disabled-but-real-fit companies (PAN, Grammarly, SiFive, EvenUp)
+E. NO_RELEVANT_JOBS roster cleanup (39 hardware/clinical companies)
+
+WATCH OUTS
+- The new filter pipeline reference doc explicitly does NOT propose changes — it explains current architecture only. Don't unilaterally relax filters even if patterns look over-aggressive.
+- docs/agents/claude.md is at 1117+ lines (past 300 threshold). Framework rotation script returned 0-archivable; safe to leave as informational advisory unless you want to manually archive older entries.
+- Phase 2.8 closure state is preserved at tag phase-2.8-complete. If anything in this handoff or the closure docs doesn't hold up empirically, push back and reconcile before acting.
+
+### Files touched
+docs/design/filter-pipeline-reference.md docs/agents/claude.md .collab/INDEX.md
 
 ### What needs validation
 (fill in during handoff; default: diff the commits listed above)
