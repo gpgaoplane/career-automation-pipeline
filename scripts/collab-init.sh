@@ -1,0 +1,1103 @@
+#!/usr/bin/env bash
+# collab-init.sh — bootstrap the multi-agent-collab structure in the current repo.
+# Modes: fresh (no .collab/), re-init (.collab/ exists, version matches),
+#        upgrade (.collab/ exists, version older), legacy-merge (some files exist w/o markers).
+set -euo pipefail
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+SKILL_ROOT="$(cd "$HERE/.." && pwd)"
+TEMPLATES="$SKILL_ROOT/templates"
+
+source "$HERE/lib/frontmatter.sh"
+source "$HERE/lib/index.sh"
+source "$HERE/lib/merge.sh"
+source "$HERE/lib/sha.sh"
+source "$HERE/lib/semver.sh"
+source "$HERE/lib/migrations.sh"
+
+DRY_RUN=0
+FORCE=0
+FORCE_DIRTY=0
+NO_BACKUP=0
+DIFF_MODE=0
+PRUNE_BACKUPS=0
+PRUNE_KEEP=""
+RESTORE_ID=""
+TARGET_AGENTS=()
+ADD_AGENT=""
+JOIN_AGENT=""
+INSTALL_HOOKS=0
+ACK_UPGRADE=0
+RESOLVED_AGENTS=()
+
+usage() {
+  cat <<'EOF'
+Usage: collab-init.sh [options]
+  --agent <name>       Bootstrap only the named agent (repeatable)
+  --add-agent <name>   Add a new agent; requires descriptor to already exist
+  --join <name>        Add an agent by name. Three-tier lookup:
+                         1. existing user descriptor at .collab/agents.d/<name>.yml
+                         2. shipped descriptor in templates/agents.d/<name>.yml
+                         3. generic template (auto-renders defaults)
+  --dry-run            Print actions without writing
+  --force              Overwrite non-marker content (destructive)
+  --install-hooks      Install collab pre-commit hook at .git/hooks/pre-commit
+  --ack-upgrade        Archive .collab/UPGRADE_NOTES.md (run after reading post-upgrade ritual)
+  --force-dirty        Skip the upgrade cleanliness check (dirty working tree allowed)
+  --no-backup          Skip the auto-backup that runs before upgrade migrations
+  --restore <id>       Restore framework-managed files from a backup directory
+                       (use 'latest' for the most recent backup; or pass a
+                       specific timestamp like 0.3.0-to-0.4.0-20260426150405)
+  --diff               In upgrade mode: apply migrations, print per-file diffs,
+                       then restore from backup. Repo state is unchanged after.
+  --prune-backups      Delete old .collab/backup/<timestamp>/ directories,
+                       keeping only the most recent N (--keep N, default 5).
+  --keep <N>           Used with --prune-backups: how many backups to retain.
+  -h, --help           Show this help
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --agent) TARGET_AGENTS+=("$2"); shift 2 ;;
+    --add-agent) ADD_AGENT="$2"; shift 2 ;;
+    --join) JOIN_AGENT="$2"; shift 2 ;;
+    --dry-run) DRY_RUN=1; shift ;;
+    --force) FORCE=1; shift ;;
+    --install-hooks) INSTALL_HOOKS=1; shift ;;
+    --ack-upgrade) ACK_UPGRADE=1; shift ;;
+    --force-dirty) FORCE_DIRTY=1; shift ;;
+    --no-backup) NO_BACKUP=1; shift ;;
+    --restore) RESTORE_ID="$2"; shift 2 ;;
+    --diff) DIFF_MODE=1; shift ;;
+    --prune-backups) PRUNE_BACKUPS=1; shift ;;
+    --keep) PRUNE_KEEP="$2"; shift 2 ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "Unknown arg: $1" >&2; usage; exit 1 ;;
+  esac
+done
+
+say() {
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "[dry-run] $*"
+  else
+    echo "$*"
+  fi
+}
+
+# Detect the calling agent via env-var probe. Returns name on stdout; empty if
+# nothing matches. Probe order is fixed (claude, codex, gemini) — first hit wins.
+# Env-var detection is best-effort across CLI versions; fallback is --agent or
+# $COLLAB_AGENT, both checked by resolve_calling_agents() before this function.
+detect_calling_agent() {
+  if [[ -n "${CLAUDECODE:-}" || -n "${CLAUDE_CODE_SSE_PORT:-}" || -n "${CLAUDE_CODE_OAUTH_TOKEN:-}" ]]; then
+    echo "claude"
+    return 0
+  fi
+  if [[ -n "${CODEX_HOME:-}" || -n "${CODEX_CLI:-}" ]]; then
+    echo "codex"
+    return 0
+  fi
+  if [[ -n "${GEMINI_CLI:-}" || -n "${GEMINI_API_KEY:-}" || -n "${GOOGLE_AI_API_KEY:-}" ]]; then
+    echo "gemini"
+    return 0
+  fi
+  return 0
+}
+
+# Resolve which agents to bootstrap on `init` (fresh mode). Precedence:
+#   1. --agent <name> flag (one or more)
+#   2. $COLLAB_AGENT env var
+#   3. detect_calling_agent env probe
+#   4. hard-fail with guidance
+# Re-init / upgrade modes skip resolution and iterate existing descriptors.
+resolve_calling_agents() {
+  if [[ ${#TARGET_AGENTS[@]} -gt 0 ]]; then
+    RESOLVED_AGENTS=("${TARGET_AGENTS[@]}")
+    return 0
+  fi
+  if [[ -n "${COLLAB_AGENT:-}" ]]; then
+    RESOLVED_AGENTS=("$COLLAB_AGENT")
+    return 0
+  fi
+  # v0.4.1 ladder tier 3: per-repo persistent default. Read from config.yml
+  # default_agent key. Zero false positives — explicit user opt-in.
+  if [[ -f .collab/config.yml ]]; then
+    local cfg_default
+    cfg_default=$(awk -F': *' '/^default_agent:/ { print $2; exit }' .collab/config.yml | tr -d '"' | tr -d "'" | xargs 2>/dev/null || true)
+    if [[ -n "$cfg_default" ]]; then
+      RESOLVED_AGENTS=("$cfg_default")
+      return 0
+    fi
+  fi
+  local detected
+  detected=$(detect_calling_agent)
+  if [[ -n "$detected" ]]; then
+    RESOLVED_AGENTS=("$detected")
+    return 0
+  fi
+  cat >&2 <<'EOF'
+collab-init: cannot detect calling agent on fresh install.
+
+Re-run with one of:
+  bash scripts/collab-init.sh --agent claude        # or codex / gemini / <name>
+  COLLAB_AGENT=claude bash scripts/collab-init.sh
+
+For a persistent setting (per-repo, doesn't need re-export each shell):
+  After init, add to .collab/config.yml:
+    default_agent: claude
+  Detection ladder: --agent > $COLLAB_AGENT > config.yml default_agent >
+  env probe > hard-fail.
+
+Detection probed (none set): CLAUDECODE, CLAUDE_CODE_SSE_PORT,
+  CLAUDE_CODE_OAUTH_TOKEN, CODEX_HOME, CODEX_CLI, GEMINI_CLI,
+  GEMINI_API_KEY, GOOGLE_AI_API_KEY.
+
+Note: only CLAUDECODE is a strong active-session signal. The Codex and
+Gemini probes are best-effort (they can match config/auth env vars set
+globally without an active session). Prefer --agent or default_agent
+for non-Claude installs.
+
+Add agents later with:
+  bash scripts/collab-init.sh --join <name>
+EOF
+  exit 1
+}
+
+copy_file() {
+  local src="$1"
+  local dest="$2"
+  if [[ $DRY_RUN -eq 1 ]]; then
+    say "copy $src -> $dest"
+    return 0
+  fi
+  if [[ -f "$dest" && $FORCE -eq 0 ]]; then
+    say "skip (exists): $dest"
+    return 0
+  fi
+  mkdir -p "$(dirname "$dest")"
+  cp "$src" "$dest"
+}
+
+# substitute_tokens <src> <dest> <var=value> [...]
+substitute_tokens() {
+  local src="$1"; shift
+  local dest="$1"; shift
+  if [[ $DRY_RUN -eq 1 ]]; then
+    say "render $src -> $dest"
+    return 0
+  fi
+  if [[ -f "$dest" && $FORCE -eq 0 ]]; then
+    say "skip (exists): $dest"
+    return 0
+  fi
+  mkdir -p "$(dirname "$dest")"
+  local content
+  content=$(cat "$src")
+  for pair in "$@"; do
+    local key="${pair%%=*}"
+    local val="${pair#*=}"
+    content="${content//\{\{$key\}\}/$val}"
+  done
+  printf '%s' "$content" > "$dest"
+}
+
+# parse_descriptor <yml-file> — emits shell assignments for name/display/adapter/memory/log.
+parse_descriptor() {
+  local f="$1"
+  awk '
+    /^name:/        { sub(/^name:[ \t]*/, ""); print "DESC_NAME="$0 }
+    /^display:/     { sub(/^display:[ \t]*/, ""); print "DESC_DISPLAY="$0 }
+    /^adapter_path:/{ sub(/^adapter_path:[ \t]*/, ""); print "DESC_ADAPTER="$0 }
+    /^memory_dir:/  { sub(/^memory_dir:[ \t]*/, ""); print "DESC_MEMORY="$0 }
+    /^log_path:/    { sub(/^log_path:[ \t]*/, ""); print "DESC_LOG="$0 }
+  ' "$f"
+}
+
+# Render <!-- collab:current-adapters --> from the live descriptor set so the
+# "Current Adapters" table in AI_AGENTS.md always reflects the agents that are
+# actually installed in this repo. Called after any change to .collab/agents.d/.
+render_adapters_table() {
+  local target="${1:-AI_AGENTS.md}"
+  [[ -f "$target" ]] || return 0
+  if ! merge_has_section "$target" "current-adapters"; then
+    return 0
+  fi
+
+  local body
+  body=$'\n<!-- WARNING: framework-managed; edit OUTSIDE this block, not inside -->\n## Current Adapters\n\n| Agent | Config file | Memory dir | Work log |\n|-------|-------------|------------|----------|'
+
+  for yml in .collab/agents.d/*.yml; do
+    [[ -f "$yml" ]] || continue
+    [[ "$(basename "$yml")" == _* ]] && continue
+    local DESC_NAME="" DESC_DISPLAY="" DESC_ADAPTER="" DESC_MEMORY="" DESC_LOG=""
+    eval "$(parse_descriptor "$yml")"
+    local adapter_display
+    if [[ "$DESC_ADAPTER" == */* ]]; then
+      adapter_display="\`$DESC_ADAPTER\`"
+    else
+      adapter_display="\`$DESC_ADAPTER\` (root)"
+    fi
+    body+=$'\n'"| $DESC_DISPLAY | $adapter_display | \`$DESC_MEMORY/\` | \`$DESC_LOG\` |"
+  done
+
+  if [[ $DRY_RUN -eq 0 ]]; then
+    # Tolerate doubled-marker warnings from G7 so init continues on corrupted files.
+    merge_replace_section "$target" "current-adapters" "$body" || true
+  fi
+}
+
+bootstrap_agent() {
+  local descriptor="$1"
+  eval "$(parse_descriptor "$descriptor")"
+
+  say "Bootstrapping agent: $DESC_DISPLAY"
+
+  local now
+  now=$(bash "$HERE/collab-now.sh")
+
+  substitute_tokens "$TEMPLATES/adapter/ADAPTER.md" "$DESC_ADAPTER" \
+    "AGENT_NAME=$DESC_NAME" "AGENT_DISPLAY=$DESC_DISPLAY" \
+    "MEMORY_DIR=$DESC_MEMORY" "WORK_LOG_PATH=$DESC_LOG"
+
+  for f in state.md context.md decisions.md pitfalls.md; do
+    substitute_tokens "$TEMPLATES/memory/$f" "$DESC_MEMORY/$f" \
+      "AGENT_NAME=$DESC_NAME" "AGENT_DISPLAY=$DESC_DISPLAY"
+  done
+
+  substitute_tokens "$TEMPLATES/work-log-seed.md" "$DESC_LOG" \
+    "AGENT_NAME=$DESC_NAME" "AGENT_DISPLAY=$DESC_DISPLAY" \
+    "ONBOARD_DATE=${now%T*}" "ADAPTER_PATH=$DESC_ADAPTER"
+
+  # Register all generated files in INDEX if INDEX exists (it does after setup).
+  if [[ -f ".collab/INDEX.md" && $DRY_RUN -eq 0 ]]; then
+    bash "$HERE/collab-register.sh" "$DESC_ADAPTER" || true
+    bash "$HERE/collab-register.sh" "$DESC_LOG" || true
+    for f in state.md context.md decisions.md pitfalls.md; do
+      bash "$HERE/collab-register.sh" "$DESC_MEMORY/$f" || true
+    done
+  fi
+}
+
+inject_agents_md_section() {
+  local target="AGENTS.md"
+  local template="$TEMPLATES/AGENTS.md"
+
+  if [[ $DRY_RUN -eq 1 ]]; then
+    if [[ -f "$target" ]]; then
+      say "would refresh/append managed section in AGENTS.md"
+    else
+      say "would create AGENTS.md from template"
+    fi
+    return 0
+  fi
+
+  if [[ ! -f "$target" ]]; then
+    cp "$template" "$target"
+    return 0
+  fi
+
+  # If the legacy single-section file pre-dates a section that's now in the
+  # template, append the missing section. For sections present in both, refresh.
+  local sections
+  sections=$(grep -oE '<!-- collab:[a-z-]+:start -->' "$template" | sed -E 's/<!-- collab:([a-z-]+):start -->/\1/' | sort -u)
+
+  for section in $sections; do
+    local new_content
+    new_content=$(awk -v start="<!-- collab:${section}:start -->" -v end="<!-- collab:${section}:end -->" '
+      $0 == start { in_sec = 1; next }
+      $0 == end { in_sec = 0; next }
+      in_sec { print }
+    ' "$template")
+    if merge_has_section "$target" "$section"; then
+      # Tolerate doubled-marker warnings from G7; the warning is on stderr so
+      # the user still sees corruption while the upgrade continues.
+      merge_replace_section "$target" "$section" "$new_content" || true
+    elif grep -q "<!-- collab:${section}:start -->" "$target" || \
+         grep -q "<!-- collab:${section}:end -->" "$target"; then
+      # G9: orphan marker present (start without end, or vice versa). Don't
+      # append a fresh block — that would create doubled markers. Leave the
+      # file untouched and surface a warning so the user can fix manually.
+      echo "inject: WARNING $target: orphan marker for section '$section'; skipping append (fix the file or restore a clean version)" >&2
+    else
+      # Append the section verbatim from template (start marker + body + end marker).
+      {
+        echo
+        echo "<!-- collab:${section}:start -->"
+        printf '%s\n' "$new_content"
+        echo "<!-- collab:${section}:end -->"
+      } >> "$target"
+    fi
+  done
+}
+
+install_pre_commit_hook() {
+  local src="$SKILL_ROOT/scripts/hooks/pre-commit.template"
+  local lib="$SKILL_ROOT/scripts/lib/receipt.sh"
+  local dest=".git/hooks/pre-commit"
+
+  if [[ ! -d .git/hooks ]]; then
+    say "install-hooks: no .git/hooks dir (is this a git repo?)" >&2
+    return 0
+  fi
+
+  if [[ $DRY_RUN -eq 1 ]]; then
+    say "would install $src -> $dest (with $lib inlined)"
+    return 0
+  fi
+
+  if [[ ! -f "$src" ]] || [[ ! -f "$lib" ]]; then
+    say "install-hooks: missing template or lib (src=$src lib=$lib)" >&2
+    return 1
+  fi
+
+  # Preserve existing hook if the installed one is not already ours.
+  # Detection uses the `# collab:managed-hook` sentinel — substring matches on
+  # script paths are unreliable (can collide with user scripts that mention
+  # collab-verify-receipt for any reason).
+  if [[ -f "$dest" ]] && ! grep -q "^# collab:managed-hook" "$dest"; then
+    mv "$dest" ".git/hooks/pre-commit.local"
+    say "preserved existing pre-commit as .git/hooks/pre-commit.local"
+  fi
+
+  # Render: substitute the `# {{INLINE_RECEIPT_LIB}}` placeholder line with the
+  # body of scripts/lib/receipt.sh (shebang stripped). The placeholder MUST sit
+  # AFTER the `# collab:managed-hook` sentinel so the sentinel stays on line 2
+  # and re-install detection at the top of this function still works.
+  awk -v lib="$lib" '
+    /^# \{\{INLINE_RECEIPT_LIB\}\}$/ {
+      while ((getline line < lib) > 0) {
+        if (line ~ /^#!/) continue   # skip shebang
+        print line
+      }
+      close(lib)
+      next
+    }
+    { print }
+  ' "$src" > "$dest"
+  chmod +x "$dest"
+
+  # If a .local exists, append a single delegation block so it still runs.
+  # The block is marked with `# collab:delegation` so test suites can count
+  # occurrences (exactly one expected after any number of re-runs).
+  if [[ -f .git/hooks/pre-commit.local ]]; then
+    cat >> "$dest" <<'EOF'
+
+# collab:delegation — invoke user's pre-existing hook, if any.
+if [[ -x .git/hooks/pre-commit.local ]]; then
+  .git/hooks/pre-commit.local "$@" || exit $?
+fi
+EOF
+  fi
+  say "installed collab pre-commit hook at $dest"
+}
+
+# M3: backup + restore.
+# `do_backup <from> <to>` snapshots framework-managed files into a timestamped
+# directory under .collab/backup/. Run automatically before upgrade migrations
+# unless --no-backup. `do_restore <id>` reverses, where id is "latest" or an
+# exact backup directory name.
+
+# Files that count as "framework-managed" for backup purposes. Walks INDEX.md
+# (authoritative for managed files) plus a few well-known paths that might
+# lack frontmatter (AGENTS.md) or might not yet be in INDEX during early
+# upgrade phases.
+collect_backup_paths() {
+  local paths=()
+  if [[ -f .collab/INDEX.md ]]; then
+    while IFS= read -r p; do
+      [[ -z "$p" ]] && continue
+      [[ -f "$p" ]] || continue
+      paths+=("$p")
+    done < <(awk -F'|' '
+      /^\| [^-]/ && !/^\| path/ {
+        # Trim leading "| " and the path column.
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", $2)
+        if ($2 != "path" && $2 != "") print $2
+      }
+    ' .collab/INDEX.md)
+  fi
+  # Always include these even if not in INDEX.
+  for f in AGENTS.md AI_AGENTS.md .collab/VERSION .collab/config.yml; do
+    [[ -f "$f" ]] && paths+=("$f")
+  done
+  # De-dupe.
+  printf '%s\n' "${paths[@]}" | awk '!seen[$0]++'
+}
+
+do_backup() {
+  local from="$1"
+  local to="$2"
+  local stamp
+  stamp=$(date +%Y%m%d%H%M%S)
+  local backup_dir=".collab/backup/${from}-to-${to}-${stamp}"
+
+  if [[ $DRY_RUN -eq 1 ]]; then
+    say "would create backup at $backup_dir"
+    return 0
+  fi
+
+  mkdir -p "$backup_dir"
+  local count=0
+  while IFS= read -r path; do
+    [[ -z "$path" ]] && continue
+    local target="$backup_dir/$path"
+    mkdir -p "$(dirname "$target")"
+    cp "$path" "$target"
+    count=$((count + 1))
+  done < <(collect_backup_paths)
+
+  cat > "$backup_dir/RESTORE.md" <<EOF
+# Backup — ${from} -> ${to} (${stamp})
+
+This directory was created by collab-init before applying migrations.
+It contains a verbatim snapshot of framework-managed files at the
+moment the upgrade started.
+
+To restore from this backup:
+
+    bash scripts/collab-init.sh --restore ${from}-to-${to}-${stamp}
+
+To restore the most recent backup:
+
+    bash scripts/collab-init.sh --restore latest
+
+To delete this backup:
+
+    rm -rf "$backup_dir"
+EOF
+
+  say "backup: snapshotted $count files to $backup_dir"
+}
+
+do_prune_backups() {
+  # Keep the most recent $keep backups, delete the rest.
+  local keep="${1:-5}"
+  local backup_root=".collab/backup"
+
+  if [[ ! -d "$backup_root" ]]; then
+    echo "prune-backups: no backup directory at $backup_root; nothing to prune."
+    return 0
+  fi
+
+  # Sort by mtime (most recent first), keep the first $keep, delete rest.
+  mapfile -t all_backups < <(ls -1t "$backup_root" 2>/dev/null)
+  local total=${#all_backups[@]}
+  if [[ $total -le $keep ]]; then
+    echo "prune-backups: $total backup(s); keep=$keep; nothing to prune."
+    return 0
+  fi
+
+  local removed=0
+  for ((i = keep; i < total; i++)); do
+    local victim="${all_backups[i]}"
+    if [[ $DRY_RUN -eq 1 ]]; then
+      echo "[dry-run] would remove $backup_root/$victim"
+    else
+      rm -rf "$backup_root/$victim"
+      removed=$((removed + 1))
+    fi
+  done
+  echo "prune-backups: kept $keep most recent; removed $removed older backup(s)."
+}
+
+do_restore() {
+  local id="$1"
+  local backup_root=".collab/backup"
+
+  if [[ ! -d "$backup_root" ]]; then
+    echo "restore: no backup directory at $backup_root" >&2
+    exit 1
+  fi
+
+  local target=""
+  if [[ "$id" == "latest" ]]; then
+    target=$(ls -1t "$backup_root" 2>/dev/null | head -1)
+    [[ -n "$target" ]] || { echo "restore: no backups found in $backup_root" >&2; exit 1; }
+    target="$backup_root/$target"
+  else
+    target="$backup_root/$id"
+    [[ -d "$target" ]] || { echo "restore: no such backup at $target" >&2; exit 1; }
+  fi
+
+  if [[ $DRY_RUN -eq 1 ]]; then
+    say "would restore from $target"
+    return 0
+  fi
+
+  # v0.4.2 (G4): prune migration-created files not present in the backup.
+  # Walk the live framework-managed file set (via collect_backup_paths,
+  # which reads INDEX.md + always-included paths). For any path in live
+  # but NOT in the backup, delete it before restoring. Without this, a
+  # migration that created new descriptors or sentinels would leak into
+  # the post-restore state.
+  local pruned=0
+  if [[ -f .collab/INDEX.md ]]; then
+    # Build a sorted list of paths present in the backup (relative to repo root).
+    local backup_set
+    backup_set=$(find "$target" -type f -print | while IFS= read -r f; do
+      local rel="${f#$target/}"
+      [[ "$rel" == "RESTORE.md" ]] && continue
+      printf '%s\n' "$rel"
+    done | sort -u)
+    while IFS= read -r live_path; do
+      [[ -z "$live_path" ]] && continue
+      # Never touch the backup directory itself or its contents.
+      case "$live_path" in
+        .collab/backup/*|.collab/backup) continue ;;
+      esac
+      # Only files (rm -f handles symlinks by unlinking, not following).
+      [[ -f "$live_path" ]] || [[ -L "$live_path" ]] || continue
+      if ! printf '%s\n' "$backup_set" | grep -qxF "$live_path"; then
+        rm -f "$live_path"
+        pruned=$((pruned + 1))
+      fi
+    done < <(collect_backup_paths)
+  fi
+
+  local count=0
+  # Walk the backup directory; for every file (other than RESTORE.md), copy it
+  # back to its original location (relative to the repo root).
+  while IFS= read -r -d '' src; do
+    local rel="${src#$target/}"
+    [[ "$rel" == "RESTORE.md" ]] && continue
+    mkdir -p "$(dirname "$rel")"
+    cp "$src" "$rel"
+    count=$((count + 1))
+  done < <(find "$target" -type f -print0)
+
+  if [[ $pruned -gt 0 ]]; then
+    echo "restore: pruned $pruned migration-created file(s); restored $count files from $target"
+  else
+    echo "restore: restored $count files from $target"
+  fi
+}
+
+# G5 (v0.4.2): archive a transient UPGRADE_NOTES.md to a richer-named file.
+# Schema: .collab/archive/UPGRADE_NOTES-<from>-to-<to>-<YYYYMMDDHHMMSS>.md
+# Used by both --ack-upgrade and the auto-archive-on-re-upgrade path so
+# their outputs are uniformly named. Atomic via mv; uniquifies with $$ if
+# two archivers race within the same second.
+# Args: <source-path> [from-version] [to-version]
+# Echoes the archive path on stdout (empty if source missing).
+archive_upgrade_notes() {
+  local source="${1:-.collab/UPGRADE_NOTES.md}"
+  local from="${2:-}"
+  local to="${3:-}"
+
+  [[ -f "$source" ]] || return 0
+
+  # Parse from/to from the file's "# Upgrade Notes — X.Y.Z → A.B.C" header
+  # if not provided by the caller.
+  if [[ -z "$from" || -z "$to" ]]; then
+    local header
+    header=$(grep -E '^# Upgrade Notes' "$source" 2>/dev/null | head -1 || true)
+    if [[ "$header" =~ ([0-9]+\.[0-9]+\.[0-9]+).*([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+      from="${from:-${BASH_REMATCH[1]}}"
+      to="${to:-${BASH_REMATCH[2]}}"
+    fi
+  fi
+  from="${from:-unknown}"
+  to="${to:-unknown}"
+
+  mkdir -p .collab/archive
+  local stamp
+  stamp=$(date -u +%Y%m%d%H%M%S)
+  local dest=".collab/archive/UPGRADE_NOTES-${from}-to-${to}-${stamp}.md"
+  if [[ -e "$dest" ]]; then
+    # Same-second collision (concurrent ack/upgrade). Disambiguate via PID.
+    dest="${dest%.md}-$$.md"
+  fi
+  mv "$source" "$dest"
+  bash "$HERE/collab-register.sh" "$dest" >/dev/null 2>&1 || true
+  echo "$dest"
+}
+
+# G8 (v0.4.2): migration sentinel helpers moved to scripts/lib/migrations.sh
+# in v0.4.3 (X1b) so collab-update.sh can source them without dragging in
+# init's top-level dispatch. Functions: ensure_migration_dir,
+# write_migration_sentinel, is_migration_applied, backfill_legacy_sentinels.
+
+install_config() {
+  local src="$TEMPLATES/config.yml"
+  local dest=".collab/config.yml"
+  [[ -f "$dest" ]] && return 0
+  if [[ $DRY_RUN -eq 0 ]]; then
+    cp "$src" "$dest"
+  fi
+  say "installed default config at $dest"
+}
+
+setup_shared() {
+  say "Setting up shared files"
+  copy_file "$TEMPLATES/collab/VERSION" ".collab/VERSION"
+  copy_file "$TEMPLATES/collab/ACTIVE.md" ".collab/ACTIVE.md"
+  copy_file "$TEMPLATES/collab/INDEX.md" ".collab/INDEX.md"
+  copy_file "$TEMPLATES/collab/ROUTING.md" ".collab/ROUTING.md"
+  copy_file "$TEMPLATES/collab/PROTOCOL.md" ".collab/PROTOCOL.md"
+  mkdir -p ".collab/agents.d" ".collab/archive"
+  # Per-agent descriptor seeding happens via join_agent() during dispatch — this
+  # keeps fresh `init` to a single calling agent instead of pre-seeding all
+  # shipped descriptors. Add others later with --join <name>.
+  copy_file "$TEMPLATES/AI_AGENTS.md" "AI_AGENTS.md"
+  inject_agents_md_section
+  install_config
+}
+
+join_agent() {
+  local name="$1"
+  local upper
+  upper=$(echo "$name" | tr '[:lower:]' '[:upper:]')
+  local display="$(echo "${name:0:1}" | tr '[:lower:]' '[:upper:]')${name:1}"
+
+  local shipped="$TEMPLATES/agents.d/${name}.yml"
+  local user=".collab/agents.d/${name}.yml"
+  local generic="$TEMPLATES/agents.d/_generic.yml"
+
+  if [[ -f "$user" ]]; then
+    say "join: using existing descriptor at $user"
+  elif [[ -f "$shipped" ]]; then
+    say "join: installing shipped descriptor for $name"
+    if [[ $DRY_RUN -eq 0 ]]; then
+      mkdir -p ".collab/agents.d"
+      cp "$shipped" "$user"
+    fi
+  else
+    say "join: rendering generic descriptor for unknown agent $name"
+    if [[ ! -f "$generic" ]]; then
+      echo "join: generic template missing at $generic" >&2
+      return 1
+    fi
+    if [[ $DRY_RUN -eq 0 ]]; then
+      mkdir -p ".collab/agents.d"
+      local content
+      content=$(cat "$generic")
+      content="${content//\{\{AGENT_NAME\}\}/$name}"
+      content="${content//\{\{AGENT_DISPLAY\}\}/$display}"
+      content="${content//\{\{AGENT_UPPER\}\}/$upper}"
+      printf '%s\n' "$content" > "$user"
+    fi
+  fi
+
+  bootstrap_agent "$user"
+}
+
+validate_descriptor_exists() {
+  local name="$1"
+  local path=".collab/agents.d/${name}.yml"
+  if [[ ! -f "$path" ]]; then
+    cat >&2 <<EOF
+collab-init: descriptor for agent "$name" not found at $path
+
+To add a new agent, first create the descriptor:
+  cp templates/agents.d/claude.yml .collab/agents.d/$name.yml
+  # then edit to set name/display/adapter_path/memory_dir/log_path
+
+Then re-run:
+  ./scripts/collab-init.sh --add-agent $name
+EOF
+    return 1
+  fi
+}
+
+# --- Main dispatch ---
+
+detect_mode() {
+  if [[ ! -f ".collab/VERSION" ]]; then
+    echo "fresh"
+    return
+  fi
+  local installed
+  installed="$(cat .collab/VERSION)"
+  # v0.4.2: validate VERSION format. Garbage content can cause silent
+  # under-migration via lexicographic compare. Hard-fail with guidance.
+  # NOTE: --restore / --prune-backups / --ack-upgrade short-circuit before
+  # detect_mode runs, so a corrupted VERSION still allows recovery via
+  # `--restore latest` without lockout.
+  if [[ ! "$installed" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "init: .collab/VERSION contains invalid version: '$installed'" >&2
+    echo "Expected semver X.Y.Z. Either restore from a backup with --restore latest," >&2
+    echo "or fix .collab/VERSION manually." >&2
+    exit 1
+  fi
+  local shipped="$(cat "$TEMPLATES/collab/VERSION")"
+  if [[ "$installed" == "$shipped" ]]; then
+    echo "re-init"
+  else
+    echo "upgrade"
+  fi
+}
+
+re_init_shared() {
+  say "Re-initializing shared files (idempotent, markers-only)"
+  # Re-emit files that don't exist. For files that do, use merge to refresh
+  # marker sections only.
+  [[ -f .collab/VERSION ]] || copy_file "$TEMPLATES/collab/VERSION" ".collab/VERSION"
+  [[ -f .collab/ACTIVE.md ]] || copy_file "$TEMPLATES/collab/ACTIVE.md" ".collab/ACTIVE.md"
+  [[ -f .collab/INDEX.md ]] || copy_file "$TEMPLATES/collab/INDEX.md" ".collab/INDEX.md"
+  [[ -f .collab/ROUTING.md ]] || copy_file "$TEMPLATES/collab/ROUTING.md" ".collab/ROUTING.md"
+  [[ -f .collab/PROTOCOL.md ]] || copy_file "$TEMPLATES/collab/PROTOCOL.md" ".collab/PROTOCOL.md"
+
+  # For AI_AGENTS.md, refresh managed sections only.
+  if [[ -f AI_AGENTS.md ]]; then
+    refresh_managed_sections "AI_AGENTS.md" "$TEMPLATES/AI_AGENTS.md"
+  else
+    copy_file "$TEMPLATES/AI_AGENTS.md" "AI_AGENTS.md"
+  fi
+
+  # AGENTS.md — always ensure managed section present/current.
+  inject_agents_md_section
+
+  # Descriptors are NOT auto-seeded on re-init. The calling-agent-only invariant
+  # established at fresh install is preserved; users add agents via --join.
+  mkdir -p .collab/agents.d .collab/archive
+
+  install_config
+}
+
+# refresh_managed_sections <target> <template>
+# For every <!-- collab:NAME:start/end --> section in target, replace content
+# with the content from template's same-named section.
+refresh_managed_sections() {
+  local target="$1"
+  local template="$2"
+
+  # Extract section names from template.
+  local sections
+  sections=$(grep -oE '<!-- collab:[a-z-]+:start -->' "$template" | sed -E 's/<!-- collab:([a-z-]+):start -->/\1/' | sort -u)
+
+  for section in $sections; do
+    if merge_has_section "$target" "$section" && merge_has_section "$template" "$section"; then
+      # Extract template content between markers (exclusive).
+      local new_content
+      new_content=$(awk -v start="<!-- collab:${section}:start -->" -v end="<!-- collab:${section}:end -->" '
+        $0 == start { in_sec = 1; next }
+        $0 == end { in_sec = 0; next }
+        in_sec { print }
+      ' "$template")
+      if [[ $DRY_RUN -eq 1 ]]; then
+        say "would refresh section $section in $target"
+      else
+        # Tolerate doubled-marker warnings from G7 so refresh continues on corrupted files.
+        merge_replace_section "$target" "$section" "$new_content" || true
+      fi
+    fi
+  done
+}
+
+# --restore: copy files from a backup directory back to live locations and exit.
+if [[ -n "$RESTORE_ID" ]]; then
+  do_restore "$RESTORE_ID"
+  exit 0
+fi
+
+# --prune-backups: delete old backup directories beyond --keep N (default 5).
+if [[ $PRUNE_BACKUPS -eq 1 ]]; then
+  keep="${PRUNE_KEEP:-}"
+  if [[ -z "$keep" && -f .collab/config.yml ]]; then
+    keep=$(awk -F': *' '/^keep_recent_backups:/ { print $2; exit }' .collab/config.yml | xargs 2>/dev/null || true)
+  fi
+  keep="${keep:-5}"
+  do_prune_backups "$keep"
+  exit 0
+fi
+
+# --ack-upgrade: archive the transient UPGRADE_NOTES.md and exit. Idempotent —
+# if the file is already absent or already archived, this is a no-op.
+# Also auto-prunes old backups (beyond keep_recent_backups, default 5) so
+# .collab/backup/ stays self-cleaning. Override the keep count in config.yml.
+if [[ $ACK_UPGRADE -eq 1 ]]; then
+  if [[ -f .collab/UPGRADE_NOTES.md ]]; then
+    archived=$(archive_upgrade_notes .collab/UPGRADE_NOTES.md)
+    if [[ -n "$archived" ]]; then
+      echo "ack-upgrade: archived UPGRADE_NOTES.md to $archived."
+    else
+      echo "ack-upgrade: archive produced no path (mv failed?); inspect .collab/ manually." >&2
+    fi
+  else
+    echo "ack-upgrade: no UPGRADE_NOTES.md present; nothing to do."
+  fi
+
+  # Auto-prune backups: keeps .collab/backup/ from accumulating indefinitely.
+  if [[ -d .collab/backup ]]; then
+    keep=""
+    if [[ -f .collab/config.yml ]]; then
+      keep=$(awk -F': *' '/^keep_recent_backups:/ { print $2; exit }' .collab/config.yml | xargs 2>/dev/null || true)
+    fi
+    keep="${keep:-5}"
+    do_prune_backups "$keep"
+  fi
+  exit 0
+fi
+
+MODE=$(detect_mode)
+say "Mode: $MODE"
+
+# Validate flag combinations. --join / --add-agent require an existing install;
+# --agent acts as the calling-agent override on fresh installs.
+if [[ "$MODE" == "fresh" ]]; then
+  if [[ -n "$JOIN_AGENT" ]]; then
+    echo "collab-init: --join is not valid on a fresh install. Use --agent <name> to set the calling agent." >&2
+    exit 1
+  fi
+  if [[ -n "$ADD_AGENT" ]]; then
+    echo "collab-init: --add-agent is not valid on a fresh install. Use --agent <name> to set the calling agent." >&2
+    exit 1
+  fi
+fi
+
+case "$MODE" in
+  fresh)
+    resolve_calling_agents   # populates RESOLVED_AGENTS or hard-fails
+    setup_shared
+    for name in "${RESOLVED_AGENTS[@]}"; do
+      join_agent "$name"
+    done
+    ;;
+  re-init)
+    re_init_shared
+    if [[ -z "$JOIN_AGENT" && -z "$ADD_AGENT" ]]; then
+      if [[ ${#TARGET_AGENTS[@]} -eq 0 ]]; then
+        for yml in ".collab/agents.d/"*.yml; do
+          [[ -f "$yml" ]] || continue
+          [[ "$(basename "$yml")" == _* ]] && continue
+          bootstrap_agent "$yml"
+        done
+      else
+        for name in "${TARGET_AGENTS[@]}"; do
+          bootstrap_agent ".collab/agents.d/${name}.yml"
+        done
+      fi
+    fi
+    ;;
+  upgrade)
+    # M2: cleanliness check. Refuse to upgrade with tracked changes in the
+    # working tree — migration output mixed with in-flight work is hard to
+    # disentangle. Untracked files are fine. Override with --force-dirty.
+    if [[ $DRY_RUN -eq 0 && $FORCE_DIRTY -eq 0 ]]; then
+      if command -v git >/dev/null 2>&1 && [[ -d .git ]]; then
+        # `--porcelain` includes both staged and unstaged tracked changes;
+        # untracked files appear with `??` and we strip those out.
+        dirty=$(git status --porcelain 2>/dev/null | grep -vE '^\?\? ' || true)
+        if [[ -n "$dirty" ]]; then
+          cat >&2 <<EOF
+collab-init: working tree has tracked changes — refusing to upgrade.
+
+Migration output would mix with your in-flight work and become hard to
+disentangle. Either:
+
+  1. Commit or stash your changes first, then re-run.
+  2. Pass --force-dirty to override (you'll have to untangle the diff yourself).
+
+Files with tracked changes:
+$dirty
+EOF
+          exit 1
+        fi
+      fi
+    fi
+
+    installed=$(cat .collab/VERSION)
+    shipped=$(cat "$TEMPLATES/collab/VERSION")
+    say "Upgrading from $installed to $shipped"
+
+    # M3: auto-backup before any migration runs. Disable with --no-backup.
+    # --diff forces a backup ON regardless of --no-backup, since it's the
+    # mechanism we use to compute and revert diffs.
+    if [[ ($NO_BACKUP -eq 0 || $DIFF_MODE -eq 1) && $DRY_RUN -eq 0 ]]; then
+      do_backup "$installed" "$shipped"
+      diff_backup_dir=$(ls -1dt .collab/backup/${installed}-to-${shipped}-* 2>/dev/null | head -1)
+    fi
+
+    # Capture migration output for UPGRADE_NOTES.md while still streaming to
+    # stdout. The notes file becomes a transient artifact the next agent reads
+    # to learn what changed.
+    upgrade_log=""
+    if [[ $DRY_RUN -eq 0 ]]; then
+      upgrade_log=$(mktemp)
+    fi
+
+    # G8: back-fill sentinels for legacy migrations that were already applied
+    # before v0.4.2 introduced the sentinel system. Without this, the runner
+    # below would try to re-run them on the first v0.4.2 upgrade.
+    backfill_legacy_sentinels "$installed"
+
+    # Chain migrations by walking shipped migration scripts. Filename order
+    # works because versions are zero-padded semver-like (0.1.0, 0.2.0, 0.3.0).
+    # G8: each migration's sentinel is checked before run and written after.
+    from_version="$installed"
+    for script in "$HERE/migrations/"*-to-*.sh; do
+      [[ -f "$script" ]] || continue
+      base=$(basename "$script" .sh)            # e.g. 0.1.0-to-0.2.0
+      src="${base%-to-*}"                       # 0.1.0
+      dst="${base##*-to-}"                      # 0.2.0
+      # Run only forward-chain migrations starting at our current from_version
+      # and not exceeding shipped.
+      if [[ "$src" == "$from_version" && ! "$dst" > "$shipped" ]]; then
+        if is_migration_applied "$src" "$dst" "$script"; then
+          say "migration: $src → $dst already applied (sentinel present); skipping"
+          from_version="$dst"
+          continue
+        fi
+        say "Running migration: $(basename "$script")"
+        if [[ $DRY_RUN -eq 1 ]]; then
+          :
+        elif [[ -n "$upgrade_log" ]]; then
+          bash "$script" 2>&1 | tee -a "$upgrade_log"
+          # Note: tee in a pipeline obscures the migration's exit code; bash's
+          # `set -o pipefail` ensures any non-zero in the chain propagates.
+          write_migration_sentinel "$src" "$dst" "$script"
+        else
+          bash "$script"
+          write_migration_sentinel "$src" "$dst" "$script"
+        fi
+        from_version="$dst"
+      fi
+    done
+    if [[ "$from_version" != "$shipped" ]]; then
+      say "warning: no migration path from $installed to $shipped; applying re-init only"
+    fi
+
+    re_init_shared
+    [[ $DRY_RUN -eq 1 ]] || echo "$shipped" > .collab/VERSION
+
+    # Write UPGRADE_NOTES.md so the first agent to enter the next session sees
+    # what changed. Marked status: transient — agents read it, run the
+    # post-upgrade ritual (re-read AI_AGENTS.md), then ack via --ack-upgrade.
+    if [[ $DRY_RUN -eq 0 && -n "$upgrade_log" && -s "$upgrade_log" ]]; then
+      # G5: if a prior transient UPGRADE_NOTES exists (the previous upgrade
+      # wasn't acked), archive it FIRST so this write doesn't silently clobber
+      # it. Honor only files that still carry status: transient — anything
+      # else (e.g. a hand-written note) is left alone.
+      if [[ -f .collab/UPGRADE_NOTES.md ]] && grep -q '^status: transient' .collab/UPGRADE_NOTES.md 2>/dev/null; then
+        prior_archived=$(archive_upgrade_notes .collab/UPGRADE_NOTES.md)
+        if [[ -n "$prior_archived" ]]; then
+          echo "upgrade: prior UPGRADE_NOTES.md was unacked; archived to $prior_archived" >&2
+        fi
+      fi
+      now=$(bash "$HERE/collab-now.sh")
+      {
+        printf -- '---\n'
+        printf 'status: transient\n'
+        printf 'type: upgrade-notes\n'
+        printf 'owner: shared\n'
+        printf 'last-updated: %s\n' "$now"
+        printf 'read-if: "you are starting a session and have not yet acked this upgrade"\n'
+        printf 'skip-if: "you already ran collab-init --ack-upgrade after reading this"\n'
+        printf -- '---\n\n'
+        printf '# Upgrade Notes — %s → %s\n\n' "$installed" "$shipped"
+        printf 'Run on %s.\n\n' "$now"
+        printf '## What changed\n\n'
+        # Strip ANSI escapes if any leaked in; preserve summary lines verbatim.
+        cat "$upgrade_log"
+        printf '\n## Post-upgrade ritual\n\n'
+        printf 'Before your next substantive write:\n\n'
+        printf '1. Re-read `AI_AGENTS.md` `behavioral-rules` (rules may have changed).\n'
+        printf '2. Skim the `>>> Upgrade summary:` blocks above for breaking changes.\n'
+        printf '3. Read `CHANGELOG.md` if a summary references it.\n'
+        printf '4. Once done, ack: `bash scripts/collab-init.sh --ack-upgrade`\n'
+        printf '   (this archives this file so other agents do not re-process it).\n'
+      } > .collab/UPGRADE_NOTES.md
+      rm -f "$upgrade_log"
+      bash "$HERE/collab-register.sh" .collab/UPGRADE_NOTES.md >/dev/null 2>&1 || true
+      say "wrote .collab/UPGRADE_NOTES.md (run --ack-upgrade after reading)"
+    fi
+    if [[ -z "$JOIN_AGENT" && -z "$ADD_AGENT" ]]; then
+      if [[ ${#TARGET_AGENTS[@]} -eq 0 ]]; then
+        for yml in ".collab/agents.d/"*.yml; do
+          [[ -f "$yml" ]] || continue
+          [[ "$(basename "$yml")" == _* ]] && continue
+          bootstrap_agent "$yml"
+        done
+      else
+        for name in "${TARGET_AGENTS[@]}"; do
+          bootstrap_agent ".collab/agents.d/${name}.yml"
+        done
+      fi
+    fi
+
+    # M4: --diff mode. Print per-file diffs from backup vs current live state,
+    # then restore from backup so the repo ends up unchanged.
+    if [[ $DIFF_MODE -eq 1 && -n "${diff_backup_dir:-}" ]]; then
+      echo
+      echo "=== Migration diff ($installed -> $shipped) ==="
+      echo "(would-be changes; the repo will be restored to its pre-upgrade state below)"
+      echo
+      changed=0
+      # Disable pipefail/errexit inside the diff loops — diff exits non-zero
+      # whenever files differ (which is what we WANT to surface), and we don't
+      # want that propagating through pipes or terminating the script.
+      set +e
+      while IFS= read -r -d '' src; do
+        rel="${src#$diff_backup_dir/}"
+        [[ "$rel" == "RESTORE.md" ]] && continue
+        if [[ -f "$rel" ]]; then
+          diff -q "$src" "$rel" >/dev/null 2>&1
+          if [[ $? -ne 0 ]]; then
+            echo "--- $rel (before / v$installed)"
+            echo "+++ $rel (after / v$shipped)"
+            diff -u "$src" "$rel" | tail -n +3
+            echo
+            changed=$((changed + 1))
+          fi
+        else
+          echo "DELETED: $rel"
+          changed=$((changed + 1))
+        fi
+      done < <(find "$diff_backup_dir" -type f -print0)
+
+      # Files that exist in live but not in the backup = newly added by migration.
+      while IFS= read -r -d '' new_file; do
+        rel="${new_file#./}"
+        case "$rel" in
+          .collab/backup/*) continue ;;
+          .collab/archive/*) continue ;;
+          .git/*) continue ;;
+          scripts/*) continue ;;
+          templates/*) continue ;;
+        esac
+        if [[ -f "$rel" && ! -f "$diff_backup_dir/$rel" ]]; then
+          echo "NEW: $rel"
+          changed=$((changed + 1))
+        fi
+      done < <(find . -type f -print0 2>/dev/null)
+
+      set -e   # restore strict mode after the diff loops
+      if [[ $changed -eq 0 ]]; then
+        echo "(no file-level changes)"
+      fi
+      echo
+      echo "=== End diff. Restoring repo from backup. ==="
+
+      # Restore from this specific backup, then prune it (it served its purpose).
+      do_restore "${diff_backup_dir##*/}"
+      rm -rf "$diff_backup_dir"
+      # Also remove UPGRADE_NOTES.md that was created by this dry-run upgrade.
+      rm -f .collab/UPGRADE_NOTES.md
+      exit 0
+    fi
+    ;;
+esac
+
+# --join / --add-agent for re-init / upgrade modes.
+if [[ -n "$JOIN_AGENT" ]]; then
+  join_agent "$JOIN_AGENT"
+fi
+if [[ -n "$ADD_AGENT" ]]; then
+  validate_descriptor_exists "$ADD_AGENT"
+  bootstrap_agent ".collab/agents.d/${ADD_AGENT}.yml"
+fi
+
+if [[ $DRY_RUN -eq 0 ]]; then
+  # AGENTS.md has no YAML frontmatter (standard format), so collab-register will soft-fail; that's OK.
+  for f in AI_AGENTS.md AGENTS.md .collab/ACTIVE.md .collab/INDEX.md .collab/ROUTING.md .collab/PROTOCOL.md; do
+    [[ -f "$f" ]] && bash "$HERE/collab-register.sh" "$f" 2>/dev/null || true
+  done
+  render_adapters_table "AI_AGENTS.md"
+fi
+
+if [[ $INSTALL_HOOKS -eq 1 ]]; then
+  install_pre_commit_hook
+fi
+
+say "Done. Repo at collab version $(cat .collab/VERSION 2>/dev/null || echo '?')."

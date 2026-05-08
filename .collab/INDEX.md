@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-05-02T20:56:20-04:00
+last-updated: 2026-05-07T12:00:00-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -14,29 +14,30 @@ skip-if: "never"
 |------|------|-------|--------|--------------|
 | .claude/CLAUDE.md | adapter | claude | active | 2026-04-22T00:00:00-05:00 |
 | docs/agents/claude.md | work-log | claude | active | 2026-04-30T00:00:00-04:00 |
-| docs/STATUS.md | status | shared | active | 2026-04-30T17:13:48-04:00 |
+| docs/STATUS.md | status | shared | active | 2026-05-05T11:39:22-04:00 |
 | .claude/memory/state.md | state | claude | active | 2026-04-30T22:11:51-04:00 |
 | .claude/memory/context.md | context | claude | active | 2026-04-30T22:11:51-04:00 |
 | .claude/memory/decisions.md | decisions | claude | active | 2026-04-30T22:11:51-04:00 |
 | .claude/memory/pitfalls.md | pitfalls | claude | active | 2026-04-30T22:11:51-04:00 |
-| AI_AGENTS.md | shared | shared | active | 2026-04-30T16:07:21-04:00 |
-| AI_HANDOFF.md | handoff | codex | active | 2026-04-30T17:25:27-04:00 |
-| RESUME_PROMPT.md | handoff | codex | active | 2026-04-30T17:25:27-04:00 |
+| AI_AGENTS.md | shared | shared | active | 2026-05-01T20:00:00-04:00 |
+| AI_HANDOFF.md | handoff | codex | active | 2026-05-05T11:39:22-04:00 |
+| RESUME_PROMPT.md | handoff | codex | active | 2026-05-05T11:39:22-04:00 |
 | .collab/ACTIVE.md | active-board | shared | active | 2026-04-22T00:00:00-05:00 |
-| .collab/INDEX.md | index | shared | active | 2026-04-30T17:25:27-04:00 |
+| .collab/INDEX.md | index | shared | active | 2026-05-04T22:21:04-04:00 |
 | .collab/ROUTING.md | routing | shared | active | 2026-04-22T00:00:00-05:00 |
-| .collab/PROTOCOL.md | protocol | shared | active | 2026-04-22T00:00:00-05:00 |
+| .collab/PROTOCOL.md | protocol | shared | active | 2026-05-05T10:55:00-04:00 |
+| .collab/.migrations/README.md | framework-state | shared | managed | 2026-05-05T10:55:00-04:00 |
 | .claude/archive/project-memory-pre-collab-2026-04-28.md | archive | claude | archived | 2026-04-28T19:00:04-04:00 |
 | .codex/CODEX.md | adapter | codex | active | 2026-04-22T00:00:00-05:00 |
-| docs/agents/codex.md | work-log | codex | active | 2026-04-30T16:07:21-04:00 |
-| .codex/memory/state.md | state | codex | active | 2026-04-30T17:25:27-04:00 |
-| .codex/memory/context.md | context | codex | active | 2026-04-30T17:25:27-04:00 |
-| .codex/memory/decisions.md | decisions | codex | active | 2026-04-30T17:13:48-04:00 |
-| .codex/memory/pitfalls.md | pitfalls | codex | active | 2026-04-30T17:13:48-04:00 |
+| docs/agents/codex.md | work-log | codex | active | 2026-05-05T11:39:22-04:00 |
+| .codex/memory/state.md | state | codex | active | 2026-05-05T11:39:22-04:00 |
+| .codex/memory/context.md | context | codex | active | 2026-05-05T11:39:22-04:00 |
+| .codex/memory/decisions.md | decisions | codex | active | 2026-05-05T11:39:22-04:00 |
+| .codex/memory/pitfalls.md | pitfalls | codex | active | 2026-05-05T11:39:22-04:00 |
 | docs/plans/2026-04-28-portals-cleanup-and-prescoring-design.md | design-plan | claude | active | 2026-04-28T23:00:00-04:00 |
 | docs/plans/2026-04-28-portals-cleanup-and-prescoring-implementation.md | implementation-plan | claude | active | 2026-04-29T00:26:05-04:00 |
-| career-ops/enrich-jobs.mjs | script | claude | active | 2026-04-30T16:52:37-04:00 |
-| career-ops/test-enrich-signals.mjs | test | claude | active | 2026-04-30T16:52:37-04:00 |
+| career-ops/enrich-jobs.mjs | script | claude | active | 2026-05-04T00:33:19-04:00 |
+| career-ops/test-enrich-signals.mjs | test | claude | active | 2026-05-04T00:33:19-04:00 |
 | docs/design/companies-roster.md | design-artifact | claude | active | 2026-04-30T16:07:21-04:00 |
 | docs/design/scraping-architecture.md | design | shared | active | 2026-04-30T17:25:27-04:00 |
 | docs/plans/2026-04-29-firecrawl-pivot-design.md | design-plan | claude | active | 2026-04-30T17:13:48-04:00 |
@@ -77,4 +78,79 @@ skip-if: "never"
 | docs/audits/2026-05-01-fullrun-classification.md | audit | claude | active | 2026-05-01T15:47:53.695Z |
 | docs/audits/2026-05-01-fullrun-metrics.json | audit-data | claude | active | 2026-05-01T12:30:50-04:00 |
 | docs/design/filter-pipeline-reference.md | design | shared | active | 2026-05-02T12:00:00-04:00 |
+| docs/audits/2026-05-03-fullrun-missing-jobs-diagnostic.md | audit | codex | active | 2026-05-03T00:15:38-04:00 |
+| scripts/fullrun-calibration-workbook.mjs | script | codex | active | 2026-05-03T16:10:08-04:00 |
+| scripts/test-fullrun-calibration-workbook.mjs | test | codex | active | 2026-05-03T16:10:08-04:00 |
+| docs/audits/2026-05-03-fullrun-calibration-summary.json | audit-data | codex | active | 2026-05-03T16:10:08-04:00 |
+| docs/plans/2026-05-03-production-filter-refinement-design.md | design-plan | codex | active | 2026-05-03T20:52:29-04:00 |
+| docs/plans/2026-05-03-production-filter-refinement-implementation.md | implementation-plan | codex | active | 2026-05-03T20:57:38-04:00 |
+| scripts/lib/jd-sections.mjs | script | codex | active | 2026-05-03T21:18:27-04:00 |
+| scripts/test-jd-sections.mjs | test | codex | active | 2026-05-03T21:18:27-04:00 |
+| scripts/lib/job-fit-rules.mjs | script | codex | active | 2026-05-04T22:21:04-04:00 |
+| scripts/test-job-fit-rules.mjs | test | codex | active | 2026-05-04T18:11:58-04:00 |
+| scripts/production-filter-refinement-audit.mjs | script | codex | active | 2026-05-04T22:21:04-04:00 |
+| scripts/test-production-filter-refinement-audit.mjs | test | codex | active | 2026-05-04T22:21:04-04:00 |
+| docs/audits/2026-05-03-production-filter-refinement-summary.json | audit-data | codex | active | 2026-05-04T00:33:19-04:00 |
+| docs/audits/2026-05-04-production-filter-refinement-v2-summary.json | audit-data | codex | active | 2026-05-04T16:48:00-04:00 |
+| docs/audits/2026-05-04-production-filter-refinement-v3-summary.json | audit-data | codex | active | 2026-05-04T17:28:08-04:00 |
+| docs/audits/2026-05-04-production-filter-refinement-v4-summary.json | audit-data | codex | active | 2026-05-04T18:11:58-04:00 |
+| docs/audits/2026-05-04-production-filter-refinement-v5-summary.json | audit-data | codex | active | 2026-05-04T22:21:04-04:00 |
+| scripts/shadow-version-diff.mjs | script | codex | active | 2026-05-05T10:40:40-04:00 |
+| scripts/test-shadow-version-diff.mjs | test | codex | active | 2026-05-05T10:40:40-04:00 |
+| docs/audits/2026-05-05-shadow-version-diff-summary.json | audit-data | codex | active | 2026-05-05T10:40:40-04:00 |
+| docs/audits/2026-05-05-v5-reviewer-agent-findings.md | audit | reviewer-agent | active | 2026-05-05T16:30:00-04:00 |
+| docs/audits/2026-05-05-production-filter-refinement-v6-summary.json | audit-data | claude | active | 2026-05-05T17:00:00-04:00 |
+| docs/audits/2026-05-05-shadow-v5-v6-diff-summary.json | audit-data | claude | active | 2026-05-05T17:00:00-04:00 |
+| docs/audits/2026-05-05-v6-implementation-summary.md | audit | claude | active | 2026-05-05T17:00:00-04:00 |
+| scripts/v5-v6-diff.mjs | script | claude | active | 2026-05-05T17:00:00-04:00 |
+| scripts/test-v5-v6-diff.mjs | test | claude | active | 2026-05-05T17:00:00-04:00 |
+| docs/plans/2026-05-05-v7-consolidated-plan.md | implementation-plan | claude | active | 2026-05-05T19:00:00-04:00 |
+| docs/audits/2026-05-05-v7-plan-review.md | audit | reviewer-agent | active | 2026-05-05T18:38:35-04:00 |
+| docs/audits/2026-05-05-v7-plan-v2-verification.md | audit | reviewer-agent | active | 2026-05-05T19:30:00-04:00 |
+| docs/audits/2026-05-05-round3-comparison-findings.md | audit | reviewer-agent | active | 2026-05-05T22:00:00-04:00 |
+| docs/audits/2026-05-05-production-filter-refinement-v7-summary.json | audit-data | claude | active | 2026-05-05T22:30:00-04:00 |
+| docs/audits/2026-05-05-shadow-v6-v7-diff-summary.json | audit-data | claude | active | 2026-05-05T22:30:00-04:00 |
+| docs/audits/2026-05-05-v7-implementation-summary.md | audit | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-fixtures/v7-realdata-fixtures.jsonl | test-fixtures | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-fixtures/sample-v7-fixtures.mjs | helper-script | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-realdata-fixtures.mjs | test | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-properties.mjs | test | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-cohort-shape.mjs | test | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/v6-v7-diff.mjs | script | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/test-v6-v7-diff.mjs | test | claude | active | 2026-05-05T22:30:00-04:00 |
+| scripts/collab-init.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/collab-update.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/collab-check.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/collab-rotate-log.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/collab-handoff.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/collab-catchup.sh | framework-script | shared | active | 2026-05-05T10:55:00-04:00 |
+| scripts/ats-adapters/direct-core-v1.mjs | script | codex | active | 2026-05-03T21:18:27-04:00 |
+| scripts/gated-full-scan-v1.mjs | script | codex | active | 2026-05-03T21:18:27-04:00 |
+| GEMINI.md | adapter | gemini | active | 2026-04-22T00:00:00-05:00 |
+| docs/agents/gemini.md | work-log | gemini | active | 2026-04-22T00:00:00-05:00 |
+| .gemini/memory/state.md | state | gemini | active | 2026-04-22T00:00:00-05:00 |
+| .gemini/memory/context.md | context | gemini | active | 2026-04-22T00:00:00-05:00 |
+| .gemini/memory/decisions.md | decisions | gemini | active | 2026-04-22T00:00:00-05:00 |
+| .gemini/memory/pitfalls.md | pitfalls | gemini | active | 2026-04-22T00:00:00-05:00 |
+| .collab/archive/agents/claude-20260505.md | work-log | claude | archived | 2026-05-05T12:12:05-04:00 |
+| .collab/archive/agents/codex-20260505.md | work-log | codex | archived | 2026-05-05T12:12:07-04:00 |
+| docs/plans/2026-05-05-v7-consolidated-plan.md | implementation-plan | claude | active | 2026-05-05T17:30:00-04:00 |
+| docs/plans/2026-05-06-v8-consolidated-plan.md | implementation-plan | claude | active | 2026-05-06T10:00:00-04:00 |
+| docs/audits/2026-05-06-production-filter-refinement-v8-summary.json | audit-summary | claude | active | 2026-05-06T18:00:00-04:00 |
+| docs/audits/2026-05-06-shadow-v7-v8-diff-summary.json | audit-summary | claude | active | 2026-05-06T18:00:00-04:00 |
+| docs/audits/2026-05-06-v8-implementation-summary.md | audit | claude | active | 2026-05-06T18:00:00-04:00 |
+| docs/audits/2026-05-06-v8-source-hygiene-audit.md | audit | claude | active | 2026-05-06T18:00:00-04:00 |
+| scripts/v7-v8-diff.mjs | script | claude | active | 2026-05-06T18:00:00-04:00 |
+| scripts/test-v7-v8-diff.mjs | test | claude | active | 2026-05-06T18:00:00-04:00 |
+| docs/audits/2026-05-06-production-filter-refinement-v9-summary.json | audit-summary | claude | active | 2026-05-06T20:00:00-04:00 |
+| docs/audits/2026-05-06-shadow-v8-v9-diff-summary.json | audit-summary | claude | active | 2026-05-06T20:00:00-04:00 |
+| docs/audits/2026-05-06-v9-implementation-summary.md | audit | claude | active | 2026-05-06T20:00:00-04:00 |
+| scripts/v8-v9-diff.mjs | script | claude | active | 2026-05-06T20:00:00-04:00 |
+| scripts/test-v8-v9-diff.mjs | test | claude | active | 2026-05-06T20:00:00-04:00 |
+| docs/audits/2026-05-06-round6-verification-findings.md | audit | shared | active | 2026-05-06T23:55:00-04:00 |
+| docs/audits/2026-05-07-production-filter-refinement-v10-summary.json | audit-summary | claude | active | 2026-05-07T12:00:00-04:00 |
+| docs/audits/2026-05-07-shadow-v9-v10-diff-summary.json | audit-summary | claude | active | 2026-05-07T12:00:00-04:00 |
+| docs/audits/2026-05-07-v10-implementation-summary.md | audit | claude | active | 2026-05-07T12:00:00-04:00 |
+| scripts/v9-v10-diff.mjs | script | claude | active | 2026-05-07T12:00:00-04:00 |
+| scripts/test-v9-v10-diff.mjs | test | claude | active | 2026-05-07T12:00:00-04:00 |
 <!-- collab:index:end -->

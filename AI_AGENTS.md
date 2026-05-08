@@ -18,7 +18,7 @@ related: []
 <!-- WARNING: framework-managed; edit OUTSIDE this block, not inside -->
 ## What This Project Is
 
-See **Project Context** section at the end of this file for the full project summary, knowledge bank, pipeline architecture, scoring calibration, and deal-breakers. Project content lives outside framework-managed markers so re-init does not overwrite it.
+{{PROJECT_SUMMARY}}
 <!-- collab:project-summary:end -->
 
 ---
@@ -32,6 +32,7 @@ See **Project Context** section at the end of this file for the full project sum
 |-------|-------------|------------|----------|
 | Claude | `.claude/CLAUDE.md` | `.claude/memory/` | `docs/agents/claude.md` |
 | Codex | `.codex/CODEX.md` | `.codex/memory/` | `docs/agents/codex.md` |
+| Gemini | `GEMINI.md` (root) | `.gemini/memory/` | `docs/agents/gemini.md` |
 <!-- collab:current-adapters:end -->
 
 ---

@@ -1,79 +1,120 @@
 ---
 status: active
 type: handoff
-owner: claude
-last-updated: 2026-05-01T20:30:00-04:00
-read-if: "you are an AI agent picking up this project after Phase 2.8 closure"
+owner: codex
+last-updated: 2026-05-05T11:39:22-04:00
+read-if: "you are Claude or another AI agent resuming this project"
 skip-if: "status != active"
 related:
   - AI_HANDOFF.md
-  - .claude/memory/state.md
   - docs/STATUS.md
+  - docs/agents/codex.md
+  - .codex/memory/state.md
 ---
 
-# Resume Prompt — Phase 2.8 Closed; Manual Review In Progress
+# Resume Prompt — Shadow Filter Calibration Handoff
 
-You are an AI agent (Claude Code or Codex) in `D:/Projects/career ops` on
-branch `feat/phase-2.8-firecrawl`. Phase 2.8 is closed at commit
-`75ec403`, tag `phase-2.8-complete`.
+You are Claude Code taking over in `D:/Projects/career ops` on branch `feat/phase-2.8-firecrawl`.
 
-You are already onboarded in the multi-agent-collab framework. Do not run
-`--join` or `--init`.
+Phase 2.8 is closed, but the active project is now **shadow-mode production filter calibration** for Will's 2026-05-01 full-run job pipeline. Do not treat the old Phase 2.8 manual-review prompt as current.
 
-## First actions (in order)
+## First Actions
 
-1. Read `AGENTS.md`, `AI_AGENTS.md`, `.claude/CLAUDE.md` (Claude only) or
-   `.codex/CODEX.md` (Codex only), `.collab/INDEX.md`, `.collab/ROUTING.md`,
-   `.collab/PROTOCOL.md`.
-2. Read your own memory: `.claude/memory/state.md` (Claude) or
-   `.codex/memory/state.md` (Codex).
-3. Read `AI_HANDOFF.md` — current closure-state handoff with full Phase 3
-   candidate menu.
-4. Read `docs/STATUS.md`.
-5. Optional but recommended: `docs/audits/2026-05-01-fullrun-classification.md`,
-   `docs/audits/2026-05-01-fullrun-metrics.json`,
-   `docs/audits/2026-05-01-source-broken-disables.md`,
-   latest entry in `docs/agents/claude.md`.
-6. Run `git status --short` and `git log --oneline -5`.
-7. Run `python scripts/acceptance-audit-phase2.8.py --metrics docs/audits/2026-05-01-fullrun-metrics.json` to verify gates still green.
+1. Read `AGENTS.md`, `AI_AGENTS.md`, `.collab/INDEX.md`, `.collab/ROUTING.md`, `.collab/PROTOCOL.md`, and `.claude/CLAUDE.md`.
+2. Read this file and `AI_HANDOFF.md`.
+3. Read `docs/STATUS.md`.
+4. Read Codex's current memory and log:
+   - `.codex/memory/state.md`
+   - `.codex/memory/context.md`
+   - `.codex/memory/decisions.md`
+   - latest entries in `docs/agents/codex.md`
+5. Run `git status --short` and do not revert unrelated dirty work.
+6. Verify the latest artifacts exist:
+   - `career-ops/output/production-filter-refinement-review-2026-05-01-v5.xlsx`
+   - `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`
+   - `docs/audits/2026-05-04-production-filter-refinement-v5-summary.json`
+   - `docs/audits/2026-05-05-shadow-version-diff-summary.json`
 
-## Current truth (as of 2026-05-01)
+## Current Truth
 
-- Roster: 448 total / 393 enabled / 55 disabled / 0 missing notes.
-- Phase 2.8 closure: 12/12 acceptance criteria pass on full-run metrics.
-- Output: `career-ops/output/jobs-2026-05-01.xlsx` (613 jobs, S=37 / A=370 / B=195 / C=11).
-- Manual review in progress on Will's side. Do NOT modify the Excel
-  unless Will hands it back marked.
+- Baseline workbook: `career-ops/output/jobs-2026-05-01.xlsx`
+- Baseline SHA: `7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e`
+- Baseline must remain unchanged.
+- Production exporter/config/default scan/caches/tracker/live scraping remain unchanged.
+- Latest shadow workbook: `career-ops/output/production-filter-refinement-review-2026-05-01-v5.xlsx`
+- Latest diff workbook: `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`
+- Multi-agent-collab framework is now `0.4.3`; read `.collab/UPGRADE_NOTES.md` before substantive writes.
+- Local collab helper scripts/templates are present under `scripts/` and `templates/`, but Codex saw Git Bash Win32 error 5 in this sandbox, so Claude should verify Bash execution before relying on helper scripts.
 
-## What to do next depends on Will's signal
+## Current V5 Metrics
 
-- **If Will hands back the marked Excel** with a `Push Decision` column
-  (P1/P2/P3/SKIP): generate per-row TSVs in
-  `career-ops/batch/tracker-additions/`, run `node merge-tracker.mjs`
-  from `career-ops/`. Optionally run the per-job evaluator on P1 batch.
-- **If Will picks a Phase 3 candidate** (A: LLM evaluation pipeline; B:
-  calibration; C: delta detection; D: SOURCE_BROKEN cache refresh; E:
-  NO_RELEVANT_JOBS roster cleanup): start with `writing-plans` skill or
-  `brainstorming` skill before substantive code changes.
-- **If Will reports a bug or anomaly from review:** treat as systematic
-  debugging; reproduce, root-cause, fix, test, commit.
+- 956 pipeline rows
+- 613 baseline Excel rows
+- 514 shadow hard drops
+- 236 visible shadow hard drops
+- 108 sales hard drops
+- 1 compensation hard drop
+- 148 YoE hard drops
+- 361 location hard drops
+- 206 Source Repair Review rows
+- 4 review-only validation findings
+- 0 blocking validation findings
 
-## Hygiene check at session start
+## Version Diff Metrics
 
-- `docs/agents/claude.md` may need rotation. Run
-  `./scripts/collab-rotate-log.sh claude` if `bash ~/.claude/skills/multi-agent-collab/scripts/collab-check.sh` advises it.
-- Verify `git status --short` shows clean tree (only
-  `.claude/settings.local.json` should be untracked).
+- V3 -> V4:
+  - 356 materially changed rows
+  - 35 hard-drop additions
+  - 78 hard-drop removals
+  - 86 hard-drop reason changes
+  - 0 unmatched rows
+- V4 -> V5:
+  - 230 materially changed rows
+  - 0 hard-drop additions
+  - 29 hard-drop removals
+  - 192 row-level Source Repair movements
+  - 0 unmatched rows
 
-## User preferences (durable)
+## What Will Wants Solved
 
-- Will is critical-and-analytical; verify before acting on anything in
-  this handoff that doesn't hold up empirically.
-- Atomic commits, one logical change each. Commit only at clean task
-  boundaries with explicit user request.
-- Manual review of S-tier first (37 jobs is intentionally manageable),
-  then A-tier (370). Don't burn Will's time on B/C unless asked.
-- Excel marking convention: single `Push Decision` column with values
-  P1/P2/P3/SKIP/(blank). Optional `Will Notes` column for free-form
-  rationale. Map P1/P2/P3 → `Evaluated` status, SKIP → `SKIP` /
-  `Discarded` in `applications.md` via merge-tracker.
+Will wants the filter/rejection/scoring system to become robust before production wiring. The current problems are:
+
+- Relevant AI/program/solutions/deployment/engineering roles were missed or under-ranked.
+- U.S./non-Toronto hybrid/on-site roles should hard-drop unless genuine remote is available.
+- Sales roles should hard-drop, but non-sales roles with incidental sales collaboration wording should not.
+- Compensation hard drops must only happen from real salary/rate evidence.
+- YoE must use lower-bound range logic and hard-drop only when the minimum required years are over 5.
+- Broken/generic/closed/listing/blog/missing-cache sources should be source-repair items, not fit decisions.
+- Every V3/V4/V5 change should be inspectable row by row.
+
+## Recommended Next Move
+
+Start by reviewing `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`. It is the current source of truth for Will's latest request about exactly what changed and why.
+
+If Will asks for a reviewer agent, run an independent reviewer pass on V5 and/or the diff workbook. The reviewer should inspect the important sheets like Will would, compare evidence against decisions, and return discrepancies with whether the issue appears to be the reviewer or the workbook/rules.
+
+Do not proceed to production wiring until Will approves a specific rule group. If approval happens, draft a short production-wiring implementation plan first.
+
+## Commands To Re-Validate
+
+```powershell
+node scripts\test-shadow-version-diff.mjs
+node scripts\test-production-filter-refinement-audit.mjs
+node scripts\test-job-fit-rules.mjs
+node scripts\test-jd-sections.mjs
+node scripts\test-fullrun-calibration-workbook.mjs
+cd career-ops
+node test-enrich-signals.mjs
+cd ..
+git diff --check
+```
+
+Expected latest results:
+
+- shadow-version-diff: 15/15
+- production-filter-refinement-audit: 45/45
+- job-fit-rules: 52/52
+- jd-sections: 8/8
+- fullrun-calibration-workbook: 19/19
+- enrich-signals: 54/54
+- `git diff --check`: no whitespace errors, CRLF warnings only
