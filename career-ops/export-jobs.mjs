@@ -1,14 +1,24 @@
 #!/usr/bin/env node
-// export-jobs.mjs — converts pipeline + scan history to Excel with pre-scoring
+// export-jobs.mjs — converts pipeline + scan history to Excel with V10 filter rules
 // Reads: data/pipeline.md, data/scan-history.tsv, portals.yml,
 //        data/job-descriptions-cache.json (if present)
 // Writes: output/jobs-YYYY-MM-DD.xlsx
+//
+// V10 wire (2026-05-08): scoring is delegated to scripts/lib/job-fit-rules.mjs
+// (single source of truth). Source-hygiene gate, hard-drop routing, and
+// shadow_score/shadow_band semantics mirror the audit script at
+// scripts/production-filter-refinement-audit.mjs. See plan at
+// docs/plans/2026-05-08-v10-production-wiring.md.
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import yaml from 'js-yaml';
 import ExcelJS from 'exceljs';
+
+import { parseJdSections } from '../scripts/lib/jd-sections.mjs';
+import { scoreJob, formatScoreReasons } from '../scripts/lib/job-fit-rules.mjs';
+import { detectSourceHygiene } from '../scripts/production-filter-refinement-audit.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -34,43 +44,6 @@ function loadCompanyMap() {
   const map = new Map();
   for (const c of parsed.tracked_companies || []) {
     map.set(c.name, { rank: c.rank ?? Infinity, category: c.category ?? '' });
-  }
-  return map;
-}
-
-// Comment-group → track code lookup. Per design §6.2.
-const GROUP_TO_TRACK = {
-  'AI / ML Engineering': 'AI-ENG',
-  'Solutions / Technical Advisory': 'SA',
-  'Sales / Business Development': 'AE',
-  'Product Management': 'PM',
-  'Consulting / Advisory': 'CONSULT',
-  'Generative AI Engineering': 'GEN-AI',
-  'Creative': 'CREATIVE',
-  'Broad AI roles': 'AI-ENG',
-};
-
-function parseTrackMappingFromYaml(yamlPath) {
-  // Walk file as text (NOT via js-yaml — we need comment groups).
-  // /^\s*#\s*──\s*(.+?)\s*──/ detects a group header.
-  // Map keyword (case-insensitive) → track code via GROUP_TO_TRACK.
-  const text = fs.readFileSync(yamlPath, 'utf8');
-  const map = new Map();
-  let inPositive = false;
-  let currentTrack = null;
-  for (const line of text.split('\n')) {
-    if (/^\s*positive:\s*$/.test(line)) { inPositive = true; continue; }
-    if (/^\s*negative:\s*$/.test(line)) { inPositive = false; continue; }
-    if (!inPositive) continue;
-    const groupMatch = line.match(/^\s*#\s*──\s*(.+?)\s*──/);
-    if (groupMatch) {
-      currentTrack = GROUP_TO_TRACK[groupMatch[1].trim()] || null;
-      continue;
-    }
-    const itemMatch = line.match(/^\s*-\s*"([^"]+)"\s*$/);
-    if (itemMatch && currentTrack) {
-      map.set(itemMatch[1].toLowerCase(), currentTrack);
-    }
   }
   return map;
 }
@@ -115,108 +88,6 @@ function parseScanHistory(filePath) {
   return rows;
 }
 
-// ── Pre-scoring ──────────────────────────────────────────────────────
-
-const TRACK_WEIGHTS = { 'AI-ENG': 5, 'GEN-AI': 5, 'SA': 4, 'PM': 4, 'CONSULT': 3, 'CREATIVE': 3, 'AE': 3 };
-
-// Will-preferred categories. Per design §7.3 + QI-3 + Codex Q-3 review.
-// Includes Foundation Models, AI Sales / GTM AI, AI Data Labeling /
-// Programmatic. EXCLUDES "AI Chatbot / Consumer" (xAI/Grok is disabled;
-// consumer chatbots not Will's target track).
-const PREFERRED_CATEGORIES = new Set([
-  'AI Agents', 'AI 3D Generation', 'AI Video Generation', 'AI Video Understanding',
-  'AI Video / Avatar Generation', 'AI Video/Audio Editing',
-  'AI Coding Tools', 'AI Coding Assistant', 'AI Coding / Vibe-Coding', 'AI Coding CLI',
-  'AI Embeddings', 'AI Embeddings / Open-Source',
-  'AI Cloud Infrastructure',
-  'AI Healthcare', 'AI Financial Planning',
-  'Data Cloud / AI Features', 'Data Integration / AI Pipeline',
-  'AI Data Labeling', 'AI Data Labeling / Programmatic',
-  'AI Foundation Models', 'Foundation Models',
-  'AI Sales / GTM AI',
-]);
-
-function deriveMatchTrack(title, trackMap) {
-  const lower = title.toLowerCase();
-  const matched = new Set();
-  for (const [keyword, track] of trackMap) {
-    if (lower.includes(keyword)) matched.add(track);
-  }
-  return [...matched];
-}
-
-function computeTitleScore(job, trackMap, companyMap) {
-  const tracks = deriveMatchTrack(job.title, trackMap);
-  const meta = companyMap.get(job.company);
-  const rank = meta?.rank ?? 9999;
-  const category = meta?.category ?? '';
-  const rankTier = rank <= 50 ? 4 : rank <= 150 ? 3 : rank <= 300 ? 2 : 1;
-  const categoryBonus = PREFERRED_CATEGORIES.has(category) ? 2 : 0;
-
-  const titleLower = job.title.toLowerCase();
-  let titleStrength = 0;
-  if (/\b(senior|sr\.?|principal)\b/i.test(titleLower)) titleStrength = -5;
-  else if (/\b(junior|jr\.?|associate)\b/i.test(titleLower)) titleStrength = -2;
-  // Note: intern/internship jobs are dropped entirely at output time, not penalized here.
-
-  if (tracks.length === 0) {
-    return { tracks: ['?'], score: rankTier + categoryBonus + titleStrength,
-             breakdown: `track=? rank=${rankTier} ${categoryBonus ? '+2cat' : ''} ${titleStrength ? `${titleStrength}strength` : ''}` };
-  }
-
-  const trackWeight = Math.max(...tracks.map(t => TRACK_WEIGHTS[t] || 0));
-  const multiTrackBonus = tracks.length >= 2 ? 1 : 0;
-  const score = trackWeight + multiTrackBonus + rankTier + categoryBonus + titleStrength;
-  const parts = [
-    `track=${tracks.join('+')}(${trackWeight})`,
-    multiTrackBonus ? '+1multi' : '',
-    `rank=${rankTier}`,
-    categoryBonus ? '+2cat' : '',
-    titleStrength ? `${titleStrength}strength` : '',
-  ].filter(Boolean).join(' ');
-  return { tracks, score, breakdown: parts };
-}
-
-function computeDescScore(signals) {
-  if (!signals) return { score: 0, breakdown: 'no enrichment cache hit' };
-  let score = 0;
-  const parts = [];
-  // Toronto/GTA/Ontario / Hybrid Toronto / Canada-only — collapse to single +2
-  const torontoHit = (signals.location_match || []).some(l => /toronto|gta|ontario|canada-only/i.test(l));
-  if (torontoHit) { score += 2; parts.push('+2 Toronto/CA'); }
-  // Fully remote US: +4
-  if ((signals.location_match || []).some(l => /fully remote us/i.test(l))) {
-    score += 4; parts.push('+4 remote-US');
-  }
-  // Comp signal: ±1 per $10K vs floor (lower bound)
-  if (signals.comp_low_thousands && signals.comp_currency && signals.comp_currency !== 'unknown') {
-    const floor = signals.comp_currency === 'USD' ? 120 : 110;
-    const delta = Math.floor((signals.comp_low_thousands - floor) / 10);
-    score += delta;
-    parts.push(`${delta >= 0 ? '+' : ''}${delta} comp(${signals.comp_currency})`);
-  }
-  // Track keywords: +1 per unique, cap +3
-  const kwBonus = Math.min(3, (signals.track_keywords_matched || []).length);
-  if (kwBonus > 0) { score += kwBonus; parts.push(`+${kwBonus} kw`); }
-  // Tech stack: +1 per unique, cap +2
-  const techBonus = Math.min(2, (signals.tech_stack_matched || []).length);
-  if (techBonus > 0) { score += techBonus; parts.push(`+${techBonus} tech`); }
-  // YoE
-  if (signals.yoe_signal === '3-5') { score += 1; parts.push('+1 yoe35'); }
-  else if (signals.yoe_signal === '6+') { score -= 1; parts.push('-1 yoe6+'); }
-  else if (signals.yoe_signal === '0-2') { score -= 1; parts.push('-1 yoe02'); }
-  // Note: deal-breaker jobs are dropped entirely at output time (see main());
-  // no score penalty here.
-  return { score, breakdown: parts.join(' ') || '0' };
-}
-
-function computeBand(preScore) {
-  if (preScore >= 18) return 'S';
-  if (preScore >= 8) return 'A';
-  if (preScore >= 4) return 'B';
-  return 'C';
-}
-
 // ── Excel helpers ────────────────────────────────────────────────────
 
 function styleHeader(row) {
@@ -244,7 +115,6 @@ async function main() {
   const flags = parseFlags(process.argv);
 
   const companyMap = loadCompanyMap();
-  const trackMap = parseTrackMappingFromYaml(path.join(__dirname, 'portals.yml'));
   const jobs = parsePipelineMd(path.join(__dirname, 'data/pipeline.md'));
   const history = parseScanHistory(path.join(__dirname, 'data/scan-history.tsv'));
 
@@ -255,44 +125,103 @@ async function main() {
     } catch {}
   }
 
-  // Score every job. flatMap because some jobs are dropped entirely:
-  //   • intern/internship titles (Will targets mid-level only per D-7).
-  //   • jobs with deal_breaker_signal (PhD required, no sponsorship for
-  //     remote, in-office 5 days non-Toronto). User opted to drop these
-  //     rather than penalize, so the slot doesn't waste manual-review attention.
+  // Layered scoring loop (V10 wire). flatMap because rows drop entirely on:
+  //   • intern title (Will targets mid-level only per D-7)
+  //   • signals.deal_breaker_signal (PhD-required, no-sponsorship-remote,
+  //     onsite-5-days-non-Toronto, hybrid-non-Toronto). Conservative R2 path
+  //     keeps this layer alongside V10 — V10 likely re-catches location-shaped
+  //     cases via decideLocation, but PhD-required and no-sponsorship-remote
+  //     have no obvious V10 equivalent. Revisit after Will reviews regenerated
+  //     workbook.
+  //   • V10 hard-drop (territory/sales/yoe/comp/location)
+  //   • source-hygiene-invalid OR scoreJob source-repair-route annotation —
+  //     routed to Source Repair Review sheet rather than Pending Jobs
   let droppedIntern = 0;
   let droppedDealBreaker = 0;
+  const droppedHardByReason = {};   // reason → count (multi-reason rows count in each)
+  const droppedHardUrls = new Set();  // url-set for headline row count
+  const sourceRepairRows = [];
+
   const jobsScored = jobs.flatMap(job => {
     if (/\b(intern|internship)\b/i.test(job.title)) {
       droppedIntern++;
       return [];
     }
-    const signals = cache[job.url]?.extracted_signals;
-    if (signals?.deal_breaker_signal) {
+
+    const cacheEntry = cache[job.url] || {};
+    const rawSignals = cacheEntry.extracted_signals || {};
+    const contentText = cacheEntry.content_text || '';
+
+    if (rawSignals.deal_breaker_signal) {
       droppedDealBreaker++;
       return [];
     }
-    const titleResult = computeTitleScore(job, trackMap, companyMap);
-    const descResult = computeDescScore(signals);
-    const preScore = titleResult.score + descResult.score;
-    const band = computeBand(preScore);
+
+    const sourceHygiene = detectSourceHygiene({ job, cacheEntry, text: contentText });
+    const usableText = sourceHygiene.invalid ? '' : contentText;
+    const sections = usableText ? parseJdSections(usableText) : [];
+    const scoreSignals = sourceHygiene.invalid ? {} : rawSignals;
+    const companyMeta = companyMap.get(job.company) || { rank: 9999, category: '' };
+
+    const result = scoreJob({ job, companyMeta, signals: scoreSignals, textSections: sections });
+
+    // Hard-drop routing. Source-hygiene-invalid rows do NOT hard-drop —
+    // they route to source-repair (mirrors shadow audit line 348).
+    if (!sourceHygiene.invalid && result.hard_drop) {
+      const reasons = result.hard_drop_reason.split(';').map(s => s.trim()).filter(Boolean);
+      for (const r of reasons) droppedHardByReason[r] = (droppedHardByReason[r] || 0) + 1;
+      droppedHardUrls.add(job.url);
+      return [];
+    }
+
+    // Source-repair routing (mirrors shadow audit line 322).
+    const isSourceRepair = sourceHygiene.invalid
+      || result.annotations.includes('source_repair_or_cache_miss_review');
+    if (isSourceRepair) {
+      sourceRepairRows.push({
+        company: job.company,
+        title: job.title,
+        url: job.url,
+        cache_hit: cacheEntry?.extracted_signals ? 'yes' : 'no',
+        source_repair_reason: sourceHygiene.reason
+          || (result.annotations.includes('source_repair_or_cache_miss_review') ? 'cache_miss_or_insufficient_evidence' : ''),
+        source_repair_evidence: sourceHygiene.evidence || '',
+        primary_family: result.primary_family,
+        shadow_score: result.shadow_score,
+        shadow_band: result.shadow_band,
+        annotations: result.annotations.join('; '),
+        score_reasons: formatScoreReasons(result),
+      });
+      return [];
+    }
+
+    // Kept row — V10-native shape.
     return [{
       ...job,
-      match_track: titleResult.tracks.join(', '),
-      title_score: titleResult.score,
-      desc_score: descResult.score,
-      pre_score: preScore,
-      priority_band: band,
-      score_notes: `${titleResult.breakdown} | ${descResult.breakdown}`,
+      primary_family: result.primary_family,
+      families_str: (result.families || []).map(f => f.family || f).join(', ') || result.primary_family,
+      semantic_score: result.semantic.score,
+      score_parts: result.score_parts,
+      shadow_score: result.shadow_score,
+      shadow_band: result.shadow_band,
+      annotations_str: result.annotations.join('; '),
+      score_reasons: formatScoreReasons(result),
     }];
   });
-  if (droppedIntern > 0 || droppedDealBreaker > 0) {
-    console.log(`Dropped at output: ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker`);
-  }
 
-  // Sort: pre_score desc, rank asc, company asc, title asc
+  const totalReasonHits = Object.values(droppedHardByReason).reduce((a, b) => a + b, 0);
+  console.log(
+    `Dropped at output: ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker, ` +
+    `${droppedHardUrls.size} V10 hard-drops (${totalReasonHits} reason-hits)`
+  );
+  for (const [reason, count] of Object.entries(droppedHardByReason).sort((a, b) => b[1] - a[1])) {
+    console.log(`  ${reason}: ${count}`);
+  }
+  console.log(`Source repair review: ${sourceRepairRows.length} rows`);
+
+  // Sort: shadow_score desc, rank asc, company asc, title asc
   jobsScored.sort((a, b) => {
-    if (b.pre_score !== a.pre_score) return b.pre_score - a.pre_score;
+    if (b.shadow_score !== a.shadow_score) return b.shadow_score - a.shadow_score;
     const ra = companyMap.get(a.company)?.rank ?? Infinity;
     const rb = companyMap.get(b.company)?.rank ?? Infinity;
     if (ra !== rb) return ra - rb;
@@ -315,7 +244,7 @@ async function main() {
   wb.creator = 'career-ops';
   wb.created = new Date();
 
-  // Sheet 1: Pending Jobs
+  // Sheet 1: Pending Jobs (Option B — V10-native columns)
   const pendingSheet = wb.addWorksheet('Pending Jobs');
   pendingSheet.columns = [
     { header: 'Rank', key: 'rank', width: 8 },
@@ -323,16 +252,17 @@ async function main() {
     { header: 'Category', key: 'category', width: 25 },
     { header: 'Title', key: 'title', width: 50 },
     { header: 'URL', key: 'url', width: 60 },
-    { header: 'Match Track', key: 'match_track', width: 18 },
-    { header: 'Title Score', key: 'title_score', width: 11 },
-    { header: 'Desc Score', key: 'desc_score', width: 11 },
-    { header: 'Pre-Score', key: 'pre_score', width: 11 },
-    { header: 'Band', key: 'priority_band', width: 7 },
-    { header: 'Score Notes', key: 'score_notes', width: 40 },
+    { header: 'Primary Family', key: 'primary_family', width: 22 },
+    { header: 'Families', key: 'families_str', width: 22 },
+    { header: 'Semantic', key: 'semantic_score', width: 10 },
+    { header: 'Shadow Score', key: 'shadow_score', width: 13 },
+    { header: 'Shadow Band', key: 'shadow_band', width: 12 },
+    { header: 'Annotations', key: 'annotations_str', width: 35 },
+    { header: 'Score Reasons', key: 'score_reasons', width: 50 },
   ];
   styleHeader(pendingSheet.getRow(1));
   pendingSheet.views = [{ state: 'frozen', ySplit: 1 }];
-  pendingSheet.autoFilter = { from: 'A1', to: 'K1' };
+  pendingSheet.autoFilter = { from: 'A1', to: 'L1' };
 
   for (const job of filteredJobs) {
     const meta = companyMap.get(job.company);
@@ -342,40 +272,39 @@ async function main() {
       category: meta?.category ?? '',
       title: job.title,
       url: job.url,
-      match_track: job.match_track,
-      title_score: job.title_score,
-      desc_score: job.desc_score,
-      pre_score: job.pre_score,
-      priority_band: job.priority_band,
-      score_notes: job.score_notes,
+      primary_family: job.primary_family,
+      families_str: job.families_str,
+      semantic_score: job.semantic_score,
+      shadow_score: job.shadow_score,
+      shadow_band: job.shadow_band,
+      annotations_str: job.annotations_str,
+      score_reasons: job.score_reasons,
     });
   }
-  // Per-row band fill
   pendingSheet.eachRow({ includeEmpty: false }, (row, rowNum) => {
     if (rowNum === 1) return;
-    const band = row.getCell('priority_band').value;
+    const band = row.getCell('shadow_band').value;
     if (BAND_FILLS[band]) {
       row.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: BAND_FILLS[band] } };
     }
   });
   autoWidth(pendingSheet);
 
-  // Sheet 2: By Company (with pre_score aggregates)
+  // Sheet 2: By Company (with shadow_score aggregates)
   const byCompanySheet = wb.addWorksheet('By Company');
   byCompanySheet.columns = [
     { header: 'Rank', key: 'rank', width: 8 },
     { header: 'Company', key: 'company', width: 30 },
     { header: 'Category', key: 'category', width: 25 },
     { header: 'Pending Jobs', key: 'count', width: 14 },
-    { header: 'Pre-Score Max', key: 'pre_score_max', width: 14 },
-    { header: 'Pre-Score Avg', key: 'pre_score_avg', width: 14 },
+    { header: 'Shadow Score Max', key: 'shadow_score_max', width: 18 },
+    { header: 'Shadow Score Avg', key: 'shadow_score_avg', width: 18 },
     { header: 'S-Tier Count', key: 's_tier_count', width: 13 },
   ];
   styleHeader(byCompanySheet.getRow(1));
   byCompanySheet.views = [{ state: 'frozen', ySplit: 1 }];
   byCompanySheet.autoFilter = { from: 'A1', to: 'G1' };
 
-  // Aggregate per company across ALL scored jobs (not filtered by --top)
   const byCompany = new Map();
   for (const j of jobsScored) {
     if (!byCompany.has(j.company)) byCompany.set(j.company, []);
@@ -383,19 +312,19 @@ async function main() {
   }
   const byCompanyRows = [...byCompany.entries()]
     .map(([company, list]) => {
-      const scores = list.map(x => x.pre_score);
+      const scores = list.map(x => x.shadow_score);
       return {
         rank: companyMap.get(company)?.rank ?? Infinity,
         company,
         category: companyMap.get(company)?.category ?? '',
         count: list.length,
-        pre_score_max: Math.max(...scores),
-        pre_score_avg: Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10,
-        s_tier_count: list.filter(x => x.priority_band === 'S').length,
+        shadow_score_max: Math.max(...scores),
+        shadow_score_avg: Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10,
+        s_tier_count: list.filter(x => x.shadow_band === 'S').length,
       };
     })
     .sort((a, b) => {
-      if (b.pre_score_max !== a.pre_score_max) return b.pre_score_max - a.pre_score_max;
+      if (b.shadow_score_max !== a.shadow_score_max) return b.shadow_score_max - a.shadow_score_max;
       return a.rank - b.rank;
     });
 
@@ -405,8 +334,8 @@ async function main() {
       company: row.company,
       category: row.category,
       count: row.count,
-      pre_score_max: row.pre_score_max,
-      pre_score_avg: row.pre_score_avg,
+      shadow_score_max: row.shadow_score_max,
+      shadow_score_avg: row.shadow_score_avg,
       s_tier_count: row.s_tier_count,
     });
   }
@@ -429,14 +358,35 @@ async function main() {
   for (const row of history) historySheet.addRow(row);
   autoWidth(historySheet);
 
+  // Sheet 4: Source Repair Review (V10 wire — mirrors shadow workbook shape)
+  const sourceRepairSheet = wb.addWorksheet('Source Repair Review');
+  sourceRepairSheet.columns = [
+    { header: 'Company', key: 'company', width: 30 },
+    { header: 'Title', key: 'title', width: 50 },
+    { header: 'URL', key: 'url', width: 60 },
+    { header: 'Cache Hit', key: 'cache_hit', width: 10 },
+    { header: 'Source Repair Reason', key: 'source_repair_reason', width: 28 },
+    { header: 'Source Repair Evidence', key: 'source_repair_evidence', width: 40 },
+    { header: 'Primary Family', key: 'primary_family', width: 22 },
+    { header: 'Shadow Score', key: 'shadow_score', width: 13 },
+    { header: 'Shadow Band', key: 'shadow_band', width: 12 },
+    { header: 'Annotations', key: 'annotations', width: 35 },
+    { header: 'Score Reasons', key: 'score_reasons', width: 50 },
+  ];
+  styleHeader(sourceRepairSheet.getRow(1));
+  sourceRepairSheet.views = [{ state: 'frozen', ySplit: 1 }];
+  sourceRepairSheet.autoFilter = { from: 'A1', to: 'K1' };
+  for (const row of sourceRepairRows) sourceRepairSheet.addRow(row);
+  autoWidth(sourceRepairSheet);
+
   fs.mkdirSync(path.join(__dirname, 'output'), { recursive: true });
   const today = new Date().toISOString().slice(0, 10);
   const outPath = path.join(__dirname, `output/jobs-${today}.xlsx`);
   await wb.xlsx.writeFile(outPath);
 
   const bandCounts = { S: 0, A: 0, B: 0, C: 0 };
-  for (const j of jobsScored) bandCounts[j.priority_band]++;
-  console.log(`Exported ${filteredJobs.length}/${jobsScored.length} pending jobs (${cacheHits} cache hits, ${hitRate.toFixed(1)}%), ${byCompanyRows.length} companies, ${history.length} scan history rows`);
+  for (const j of jobsScored) bandCounts[j.shadow_band]++;
+  console.log(`Exported ${filteredJobs.length}/${jobsScored.length} pending jobs (${cacheHits} cache hits, ${hitRate.toFixed(1)}%), ${byCompanyRows.length} companies, ${history.length} scan history rows, ${sourceRepairRows.length} source-repair rows`);
   console.log(`Bands: S=${bandCounts.S} A=${bandCounts.A} B=${bandCounts.B} C=${bandCounts.C}`);
   console.log(`Output: ${outPath}`);
 }

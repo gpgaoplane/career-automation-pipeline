@@ -727,4 +727,32 @@ User direction at handoff pickup was explicit: "be critical and analytical of Co
 
 **Cross-references:** `scripts/lib/job-fit-rules.mjs` (single source of truth for V10 rules), `scripts/lib/jd-sections.mjs` (SECTION_ALIASES), `scripts/test-job-fit-rules.mjs` (1,418 assertions), `scripts/test-fixtures/v7-realdata-fixtures.jsonl` (66 rows), `scripts/production-filter-refinement-audit.mjs` (workbook generator), `scripts/v9-v10-diff.mjs` (latest version diff), `docs/plans/2026-05-05-v7-consolidated-plan.md` + `2026-05-06-v8-consolidated-plan.md` (latest plans), `docs/audits/2026-05-07-v10-implementation-summary.md` + `2026-05-07-round7-verification-findings.md` (V10 closure artifacts), `.claude/memory/pitfalls.md` P-10 (self-verification anti-pattern).
 
+## D-23 — V10 production wiring + plan-review-revise-agent-review cycle — 2026-05-08T12:00:00-04:00
+
+**Context:** V10 shadow rules at `scripts/lib/job-fit-rules.mjs` were approved by Will on 2026-05-07 after a 7-round verification arc (D-22). Production code was untouched. The next step was porting the rules into `career-ops/export-jobs.mjs` so the daily pipeline produces V10-quality output. State.md called this "checklist work, no plan needed." That was wrong: the wire introduces five new hard-drop axes (territory, sales, yoe, comp, location), changes the scoring scale (bands 4/8/18 → 14/24/34), and is the only commit in the entire arc that actually changes production behavior — therefore the loosest moment without rigor.
+
+**Choice:** Apply the same plan-review-revise pattern that worked for V7/V8, but with internal `reviewer` subagents instead of cross-agent Codex handoffs. Three review phases:
+1. Plan v1 → reviewer agent (read-only, full context) → REVISE_BEFORE_EXECUTION with 6 fixes + 7 open-question answers.
+2. Plan v2 (integrating fixes + Will's choices: conservative R2, Option B columns, second reviewer pass) → second reviewer agent → APPROVE_FOR_EXECUTION with 3 minor nits.
+3. Wire executed → post-wire reviewer agent → APPROVE_FOR_COMMIT_AND_TAG with one residual gap (10-row random sample not run due to read-only constraint). Gap closed by Claude running an extended `tmp-v10-smoke-verify.mjs`: 9/10 explicit genuine drops + 1 unverified-plausible. P-10 bar passed.
+
+**Architecture decisions locked:**
+- **Single source of truth preserved:** `career-ops/export-jobs.mjs` imports `scoreJob`, `parseJdSections`, `formatScoreReasons` from `../scripts/lib/...` and `detectSourceHygiene` from `../scripts/production-filter-refinement-audit.mjs` directly. No duplication. Future V11+ rule changes propagate automatically.
+- **Conservative R2 path:** `signals.deal_breaker_signal` early-drop layer kept alongside V10. Reasoning: deal_breaker catches PhD-required and no-sponsorship-remote which V10 has no obvious equivalent for. Tradeoff: 343 hybrid_non_toronto rows pre-drop overlap V10 territory/location, making per-axis comparison to shadow harder. Acceptable; revisit after Will reviews regenerated workbook.
+- **Option B V10-native columns:** Pending Jobs sheet replaced legacy `title_score`/`desc_score`/`pre_score` columns with V10-native `Primary Family` / `Families` / `Semantic` / `Shadow Score` / `Shadow Band` / `Annotations` / `Score Reasons`. Reviewer initially recommended Option A (legacy with null fills) for ergonomics; Will and Claude argued Option B is more honest because Will's most recent mental model is the V10 shadow workbook he approved 2026-05-07.
+- **Source Repair Review sheet (Sheet 4):** added per shadow-workbook precedent. 11 columns mirroring the audit script's `addSheet(wb, "Source Repair Review", ...)` shape. Catches missing_jd_cache (125), page_not_found_or_closed_cache (53), not_a_job_page (6), generic_careers_index (6), placeholder_or_invalid_url (1) = 191 rows.
+- **Branch and tag strategy:** wired on `feat/phase-2.8-firecrawl` (same branch as shadow arc); tag `production-v10` standalone (no `phase-2.9-complete` per Will).
+
+**Methodological lesson reinforcing P-10:**
+- Post-wire reviewer flagged residual P-10 risk because it couldn't run the 10-row random sample (read-only constraint). I (Claude) extended the smoke script and ran the sample myself before committing. **Skipping the sample at this stage would have been the exact P-10 anti-pattern** — reviewer gave structural verdict on the wire being sound, but P-10 requires empirical adversarial coverage of the newly-dropped cohort. Both checks are needed.
+- Two of three plan §4 spot-cases (GitLab Bangalore, OpenAI India) didn't exist in pipeline.md by the exact title named. The OpenAI India variant DOES exist as "AI Deployment Engineer, Startups - India Remote" (different title); was correctly dropped. **Lesson:** plan spot-cases should be verified against current pipeline.md before specifying — names rot.
+
+**Tradeoffs:**
+- 5 hard-drop axes added without per-axis A/B testing in production. Mitigation: V10 was extensively shadow-tested (1,418 assertions, 7 verification rounds, Will's manual review).
+- Conservative R2 means production drops MORE than shadow (784 effective drops vs 720 shadow). Net effect: smaller kept pool (172 vs ~213). Acceptable per Will's hybrid-non-Toronto policy; he can opt to tighten R2 after seeing the kept pool.
+- Mistral Morocco S-tier kept row is a known V10 inheritance, not a wire bug. Reviewer confirmed via `scoring-ledger.tsv:742`. Same class as Trimble PM. Deferred to V11 territory-gate refinement.
+- The `detectSourceHygiene` import path crosses `career-ops/` → `../scripts/`. Acceptable per D-22 single-source-of-truth, but couples production to an audit script. Long-term: lift `detectSourceHygiene` to `scripts/lib/source-hygiene.mjs`. Out of scope for this wire.
+
+**Cross-references:** `career-ops/export-jobs.mjs` (the wire), `docs/plans/2026-05-08-v10-production-wiring.md` (plan v2 with revision history), `docs/STATUS.md` (Done entry + handoff note), `.claude/memory/state.md` (live state), `docs/agents/claude.md` (Receipt). Tag `production-v10` on this commit.
+
 <!-- section:entries:end -->

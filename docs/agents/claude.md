@@ -456,3 +456,56 @@ docs/design/filter-pipeline-reference.md docs/agents/claude.md .collab/INDEX.md
 | Next agent action | Production wiring — port V10 rules from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs`, smoke test, tag `production-v10` |
 | Reversibility | Full — V10 rules in `scripts/lib/`; production code untouched until wiring commit; `git revert` rolls back wiring without affecting shadow infra |
 | Open questions | None for this checkpoint. Wiring branch strategy (same vs new) deferred to next session. |
+
+## 2026-05-08 — V10 production wiring shipped via plan-review-revise-agent-review cycle
+
+**Goal:** Port V10 filter rules from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs` so the daily pipeline produces V10-quality output. State.md called this "checklist work, no plan needed" — disagreed (5 new hard-drop axes + scoring scale change) and proposed Option B from a brainstorm: write a brief plan, internal `reviewer` subagent reviews, integrate, execute, post-wire reviewer pass. Will accepted Option B with tweak: use internal subagents instead of Codex.
+
+**Approach:**
+1. Wrote `docs/plans/2026-05-08-v10-production-wiring.md` v1 (~370 lines): goal, architecture, concrete wire steps, smoke-test protocol, rollback, 7 open questions, risk table. Imports plan: `scoreJob`+`formatScoreReasons` from `scripts/lib/job-fit-rules.mjs`, `parseJdSections` from `scripts/lib/jd-sections.mjs`, `detectSourceHygiene` from `scripts/production-filter-refinement-audit.mjs`. Single source of truth — no duplication.
+2. Dispatched first `reviewer` subagent — read-only audit of plan v1 + cross-check against `scoreJob` signature, `extractSignals` schema, shadow audit invocation pattern at `production-filter-refinement-audit.mjs:305-373`, cross-boundary import resolution. Verdict: REVISE_BEFORE_EXECUTION with 6 fixes (R1 source-hygiene gate, R2 deal_breaker preservation audit, R3 multi-reason double-count, R4 rollback HEAD~1→HEAD, R5 smoke-test arithmetic, families.join object-array bug) + 7 open-question recommendations (Q1=A initially, Q2=include source-repair, Q3=parse on the fly, Q5=cache-miss safe, Q6=row-Set+reason histogram, Q7=no production drift confirmed; schema audit Q4=fully compatible).
+3. Surfaced findings to Will. Will chose: conservative R2 path, second reviewer pass yes, asked my advice on Q1. I argued Option B (V10-native columns) over reviewer's Option A (legacy null fills) — Will's most recent mental anchor is the V10 shadow workbook he approved 2026-05-07; aligning daily output preserves continuity with that, not the legacy export-jobs columns. Will agreed: Option B.
+4. Wrote plan v2 incorporating all 6 fixes + 7 open-question decisions + Will's three answers. Dispatched second `reviewer` subagent — focused on v2 fix integration, Sub-step 1b new-logic audit, column-key consistency, legacy-helper deletion safety (cross-repo Grep confirmed no external consumers — `scripts/full-run-audit.mjs:249` and `scripts/fullrun-calibration-workbook.mjs:403` define their own copies, intentional audit-time mirrors), smoke-test arithmetic re-derivation. Verdict: APPROVE_FOR_EXECUTION with 3 minor nits — intern count off by order of magnitude (production regex word-boundary catches 0, not 12-15; "Internet Group" doesn't match), By Company header strings need rename too (not just keys), per-row companyMap.get pattern preservation should be explicit. Patched the three nits inline into plan v2.
+5. Executed Step 0 pre-flight: 8 test suites pass (test-job-fit-rules 155, test-jd-sections 12, test-realdata-fixtures 66, test-v9-v10-diff 11, test-properties 915, test-cohort-shape 13, test-shadow-version-diff 15, test-production-filter-refinement-audit 54). Baseline workbook SHA matches `7BFE4EC5...071E`.
+6. Executed Step 1 port: rewrote `career-ops/export-jobs.mjs` end-to-end (444 lines → 351 lines after legacy-helper deletion). Layered drop ordering: intern → deal_breaker → source-hygiene → V10 hard-drop → source-repair → kept emit. New imports work cross-boundary (`career-ops/export-jobs.mjs` → `../scripts/...`); ESM relative-path resolution uses `import.meta.url` regardless of `node` cwd.
+7. Executed Step 2 smoke (`node export-jobs.mjs` against cached 2026-05-01 pipeline): 956 rows in → 0 intern + 343 deal_breaker (all `hybrid_non_toronto`) + 250 V10 hard-drops + 191 source-repair + 172 kept = 956 ✓. Bands S=33/A=85/B=41/C=13. V10 reasons: territory 50, sales-title 4, sales-content 28, yoe 55, comp 1, onsite-non-toronto-no-remote 100, specific-non-toronto-location-no-remote 79. Spot-checks: Cohere FDE Infrastructure (5 variants kept, S/A bands), GitLab Engineering Manager AI Workflow Catalog kept (V10 V9-FP-closure case), OpenAI ChatGPT/Codex Deployment Engineer kept, OpenAI India variant correctly dropped.
+8. Dispatched third `reviewer` subagent (post-wire): diff audit + 3 V10 spot-cases + Mistral Morocco investigation. Verdict: APPROVE_FOR_COMMIT_AND_TAG with 3 flags — Mistral Morocco S-tier kept is V10-inherited (NOT wire-introduced; reviewer confirmed via `scoring-ledger.tsv:742`); 2 of 3 plan spot-cases were vacuous on this dataset (GitLab Bangalore + OpenAI India under exact named titles); 10-row random sample not run due to read-only constraint.
+9. Closed the residual P-10 gap myself. Extended `tmp-v10-smoke-verify.mjs` to compute `dropped = pipeline ∖ kept ∖ source-repair` (593 rows) and seed-random-sample 10 with cache content. Adjudicated: 9/10 explicit genuine drops (Snowflake hybrid, Decagon SF on-site, OpenAI SF FDE hybrid, OpenAI India Remote AI Deployment, Anthropic NY/DC hybrid, DevRev Austin on-site, Dataiku Dubai, Veeva Frankfurt, OpenAI Munich/Dublin hybrid) + 1 unverified-but-plausible (Pure Storage PM Pure1, empty signals, likely dropped on family/yoe). P-10 bar passed. Bonus: sample row #4 ("OpenAI AI Deployment Engineer Startups - India Remote") IS the OpenAI India variant the reviewer thought was vacuous; it exists under a slightly different title and correctly dropped via territory.
+10. Cleaned up: deleted `career-ops/tmp-v10-smoke-verify.mjs` per reviewer recommendation. Final baseline workbook SHA verify: still `7BFE4EC5...071E` ✓.
+11. Memory + handoff updates fanned out per .claude/CLAUDE.md wrap-up checklist.
+
+**Decisions:**
+- D-23 (decisions.md): V10 production wiring + plan-review-revise-agent-review cycle. Documents the methodology (3 reviewer agent passes), architecture (single source of truth via direct imports), conservative R2 rationale, Option B column choice, P-10 lesson reinforcement (post-wire reviewer's read-only constraint required Claude to run the 10-row sample directly — skipping would have been the exact P-10 anti-pattern), known V10 inheritance (Mistral Morocco), and tradeoffs.
+- Branch + tag: same branch `feat/phase-2.8-firecrawl`, tag `production-v10` standalone (no `phase-2.9-complete` per Will).
+
+**Updates:**
+- `career-ops/export-jobs.mjs` — full rewrite (351 lines). V10 wire, Option B columns, Source Repair sheet, conservative R2, legacy helpers deleted.
+- `docs/plans/2026-05-08-v10-production-wiring.md` — plan v2 with revision history (v1→v2→3 nit-patches).
+- `.claude/memory/state.md` — full rewrite. Active task = production wired; pause point = post-wire pre-merge; next steps = Will's manual review + Phase 3 selection; open questions reset.
+- `.claude/memory/decisions.md` — append D-23.
+- `docs/STATUS.md` — top entry for V10 production wiring DONE; handoff note rewritten.
+- `docs/agents/claude.md` — this Receipt.
+- `.collab/INDEX.md` — register the new plan + bump touched-file timestamps (will sync at commit time via collab-register if desired; framework script availability uncertain on Windows).
+
+**Verification:**
+- Pre-flight: 1,241 assertion test suite pass (post-wire-relevant subset of 1,418).
+- Smoke: 956 = 0 + 343 + 250 + 191 + 172 ✓; baseline workbook SHA preserved.
+- 3 reviewer agent passes (plan v1 + plan v2 + post-wire).
+- 10-row P-10 adversarial sample: 9/10 explicit genuine drops.
+- Spot-checks against V10 closure FP cases pass.
+- Cross-boundary imports verified.
+
+### Task Receipt
+
+| Field | Value |
+|---|---|
+| Task | V10 production wiring + plan-review-revise-agent-review cycle |
+| Outcome | DONE — wire commits with tag `production-v10`; daily pipeline now produces V10-quality output |
+| Commits | this commit (single — combines wire + plan + memory + STATUS updates per atomic-logical-change rule) |
+| Files touched | `career-ops/export-jobs.mjs` (rewrite) · `docs/plans/2026-05-08-v10-production-wiring.md` (new) · `.claude/memory/state.md` (rewrite) · `.claude/memory/decisions.md` (D-23 append) · `docs/STATUS.md` (Done + handoff) · `docs/agents/claude.md` (this entry) |
+| Tests | 1,241 assertions pass (relevant V10 subset of 1,418); 10-row P-10 adversarial sample 9/10 genuine; baseline SHA preserved |
+| Decisions | D-23 (V10 production wiring + plan-review-revise-agent-review cycle) |
+| Pitfalls | None new. P-10 reinforced — post-wire reviewer's read-only constraint required Claude to run the 10-row sample directly; skipping would have been the anti-pattern. |
+| Next agent action | Await Will's manual review of `career-ops/output/jobs-2026-05-08.xlsx`. Then merge `feat/phase-2.8-firecrawl` → `main`. Then Phase 3 candidate selection. |
+| Reversibility | Full — `git revert HEAD; git tag -d production-v10` restores pre-wire state. Shadow infra in `scripts/lib/` and V10 workbook untouched. |
+| Open questions | Phase 3 candidate selection (A-F). Whether to tighten conservative R2 path after Will's review. Whether to lift `tmp-v10-smoke-verify.mjs` pattern into permanent diagnostic tooling. |
