@@ -2,7 +2,7 @@
 status: active
 type: decisions
 owner: claude
-last-updated: 2026-05-01T20:00:00-04:00
+last-updated: 2026-05-07T00:00:00-04:00
 read-if: "you need Claude's major design decisions"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -690,5 +690,41 @@ User direction at handoff pickup was explicit: "be critical and analytical of Co
 - **Decimal-K fix only catches `[\d,]+(?:\.\d+)?` patterns, not exotic forms like `$1.5M` or commas-with-decimal.** Real-world coverage of decimal-K in cached data is 11 jobs; this fix catches all 11. Future enhancement could add million-dollar formats.
 
 **Cross-references:** `career-ops/enrich-jobs.mjs` (REGEXES + extractCompRange + extractDealBreaker + nearToronto helper), `career-ops/export-jobs.mjs` (computeBand + computeTitleScore + main filter loop), `career-ops/portals.yml` (Sales/BD group removed lines 52-61, 4 SOURCE_BROKEN companies disabled), `scripts/reextract-signals.mjs` (one-time post-processor), `docs/audits/2026-05-01-source-broken-disables.md` (companion audit), `docs/audits/2026-05-01-fullrun-classification.md` + `2026-05-01-fullrun-metrics.json` (post-fix audit artifacts).
+
+## D-22 — Shadow filter calibration V1→V10 + plan-review-revise-implement-verify cycle — 2026-05-07T00:00:00-04:00
+
+**Context:** After Phase 2.8 closure shipped scoring v2 + Option A signal fixes (D-21), Will surfaced from Excel review that the workbook still contained roles that should have been filtered: Pre-Sales/SA roles wrongly dropped (policy 2 violation), AE/AM roles slipping through, non-NA territory sales roles surviving despite Will's "Toronto-remote only" deal-breaker, level-classification gaps on Director-tier sales, CSM mis-flagged as sales-hard-drop. Direct production-code patches risked regression and gave no audit trail. Needed an iterative calibration process that could safely test rule changes against real cached JD data before touching production.
+
+**Choice:** Build a shadow filter pipeline (`scripts/lib/job-fit-rules.mjs` + `scripts/production-filter-refinement-audit.mjs`) that applies candidate filter rules to the existing 933-row pipeline output and produces a review workbook (`career-ops/output/production-filter-refinement-review-2026-05-01-vN.xlsx`) without modifying `career-ops/export-jobs.mjs`. Iterate through versioned rule sets V1→V10, gating each version bump with three layers: (1) plan review pre-implementation, (2) implementation agent self-checks, (3) independent verification round on the resulting workbook.
+
+**Cycle structure (per version bump):** plan written → reviewer agent finds bugs → plan revised (typically v2) → verifier agent confirms revisions → implementation agent executes → independent verification round samples the output cohorts → either ACCEPT or surface FPs that trigger next version. Caught real bugs at every iteration:
+- V7 plan v1: 3 BLOCKING bugs (Pre-Sales regex too narrow; gate referenced nonexistent SALES/AE_HYBRID families; token-list contradictions: Mexico in both NA and non-NA lists). Fixed in v2.
+- V8 plan v1: 3 BLOCKING (detector mechanics ambiguity; SECTION_ALIASES not extended for new gates; cohort-shape range too wide).
+- V8 implementation: Round 5 caught 3 territory FPs (Vercel Pricing PM, Vercel SE AI SDK, XBOW SE AI Systems). Fixed in V9-1 (NA_CITIES_RE expansion with bare-abbrev guards).
+- V9 implementation: Round 6 caught 2 territory FPs (GitLab Eng Mgr AI Workflow Catalog, ElevenLabs FDE). Fixed in V10-1 (symmetric guard for V9-2 implicit-anchor mechanism).
+- V10 implementation: Round 7 caught 0 FPs. Verdict V10_READY_FOR_PRODUCTION_WIRING.
+
+**Rules landed (in `scripts/lib/job-fit-rules.mjs`, V10):**
+- **Sales classification:** policy 2 loosened (Pre-Sales/SA/FDE survive); AE/AM/Director-sales/Sales-Lead strict-drop; CSM carve-out (Customer Success NOT sales-hard-dropped).
+- **Territory detection:** NA-rooted strict (US/Canada/North America tokens preserve role); multi-region default-permissive (any NA token wins ties); strict-NA gate (non-NA-only sales/SA territories drop). Symmetric body-tie guard added in V10 to prevent implicit-anchor false positives on multi-region postings.
+- **Level classification:** Senior/Principal/Lead/Staff/Director-IC/Junior/Jr/Associate/Intern excluded at scrape time per D-7 mid-level pivot.
+- **NA city detection (`NA_CITIES_RE`):** expanded with bare-abbrev guards (CA, NY, etc. only count when paired with city or "United States"/"USA" anchor); role-anchor markdown patterns added (V9).
+- **Source hygiene:** detector for listing-chrome leakage (W-4 audit found 184 such rows; deferred to optional V11).
+
+**Rationale:**
+- All shadow runs are zero-Firecrawl (read from cached `extracted_signals` + `content_text`).
+- Iteration cost is ~30 seconds per version bump; cohort-shape + property tests run in <2 min.
+- 1,418 test assertions vs starting ~152 — comprehensive regression net.
+- 66-row real-data fixture set with `revised_in` audit trails per V8/V9/V10 additions documents *why* each fixture was added (which FP it captures).
+- Plan-review-revise pattern caught 6 BLOCKING bugs across V7+V8 plans before code was written. Verification rounds caught 5 territory FPs across V8+V9 before they could ship to production.
+
+**Tradeoffs:**
+- **Heavy audit-trail volume:** 38 audit/plan markdown + JSON files in `docs/audits/` and `docs/plans/`. Justified for the rigor; not all phases need this much.
+- **Implementation agent self-verification anti-pattern surfaced twice** (Rounds 5+6 — agents sampled wrong population). Codified as P-10 pitfall + V10 brief encoded the lesson explicitly. Round 7 confirmed the lesson worked.
+- **V10 spec deviation:** "suppression-only" vs original "tie → NA promotion" design. Implementation agent's design call confirmed sound by Round 7. Discrepancy preserved in V10 implementation summary.
+- **Trimble PM source-hygiene gap deferred to V11:** half-day patch, non-blocking. Listing-chrome leakage doesn't affect daily decision quality.
+- **Manual review still required before production wiring:** no automated check substitutes for Will's eyeball on borderline cases.
+
+**Cross-references:** `scripts/lib/job-fit-rules.mjs` (single source of truth for V10 rules), `scripts/lib/jd-sections.mjs` (SECTION_ALIASES), `scripts/test-job-fit-rules.mjs` (1,418 assertions), `scripts/test-fixtures/v7-realdata-fixtures.jsonl` (66 rows), `scripts/production-filter-refinement-audit.mjs` (workbook generator), `scripts/v9-v10-diff.mjs` (latest version diff), `docs/plans/2026-05-05-v7-consolidated-plan.md` + `2026-05-06-v8-consolidated-plan.md` (latest plans), `docs/audits/2026-05-07-v10-implementation-summary.md` + `2026-05-07-round7-verification-findings.md` (V10 closure artifacts), `.claude/memory/pitfalls.md` P-10 (self-verification anti-pattern).
 
 <!-- section:entries:end -->

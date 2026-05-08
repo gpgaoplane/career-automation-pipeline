@@ -409,3 +409,50 @@ docs/design/filter-pipeline-reference.md docs/agents/claude.md .collab/INDEX.md
 ### Open questions
 (none stated)
 <!-- collab:handoff:end -->
+
+
+## 2026-05-07 — Shadow filter calibration arc CLOSED at V10 + 4-commit checkpoint
+
+**Goal:** Close the V1→V10 shadow filter calibration arc (started 2026-05-03 by Codex) and checkpoint the entire body of work to git before production wiring. Will manually reviewed V10 workbook and approved.
+
+**Approach:**
+1. Verified Round 7 verification confirmed V10_READY_FOR_PRODUCTION_WIRING (1,418 assertions pass, 2/2 V9 FPs closed, 0 new FPs introduced).
+2. Saved methodological pitfall P-10 ("Implementation agents self-verify on the wrong population") to `.claude/memory/pitfalls.md`. The lesson was caught in Rounds 5+6, encoded into V10 brief, and Round 7 confirmed it worked.
+3. Will reviewed V10 workbook on 2026-05-07 and approved.
+4. Sequenced 4 logical commits to checkpoint everything before production wiring:
+   - `d73638b` — framework upgrade to multi-agent-collab v0.4.3 + Gemini onboarding (75 files, +6471/-1188).
+   - `17251c8` — shadow filter calibration test infra + enrichment patches (37 files, +11015/-8). Includes `scripts/lib/job-fit-rules.mjs` (V10 single source of truth), `scripts/lib/jd-sections.mjs`, 1,418-assertion test suites, 66-row real-data fixtures with `revised_in` audit trails, V5-V6 through V9-V10 diff scripts, `scripts/gated-full-scan-v1.mjs`, `scripts/fullrun-calibration-workbook.mjs`, `scripts/ats-adapters/direct-core-v1.mjs`, plus `career-ops/enrich-jobs.mjs` compResult helper for hourly→annual normalization with confidence tagging.
+   - `7dd512e` — shadow filter calibration arc V1→V10 audit trail (38 files, +9412). All audit findings R3-R7, all per-version implementation summaries V6-V10, V7+V8 plan reviews + plan-v2 verifications, per-version diff summaries V5-V6 through V9-V10.
+   - This commit — memory + STATUS update for V10 closure.
+
+**Decisions:**
+- D-22 (decisions.md): Shadow filter calibration V1→V10 + plan-review-revise-implement-verify cycle. Documents the iterative methodology, the 6 BLOCKING bugs caught in plan reviews, the 5 FPs caught in verification rounds, and the final V10 rule set.
+- Commit cadence: 4 logical chunks rather than one mega-commit, per Will's option-1 selection. Framework upgrade isolated from shadow work; test infra separated from audit trail; memory update last to capture closure state with commit SHAs from earlier chunks.
+- Local-only files intentionally NOT committed: `.claude/settings.local.json` (Claude Code permissions cache), `docs/audits/*test*.json` (test-output regenerable artifacts), `career-ops/tmp-extract-territory.mjs` (temp file, cleanup-pending).
+
+**Updates:**
+- `.claude/memory/decisions.md` — append D-22 (shadow filter calibration arc).
+- `.claude/memory/state.md` — overwrite to reflect V10 closure + 4-commit checkpoint + production wiring as next step.
+- `.claude/memory/pitfalls.md` — append P-10 (already done in prior session).
+- `docs/STATUS.md` — top entry for V10 closure + Round 7 verdict + V9 + Round 5/6 retrospective entries; Handoff Note rewritten for production wiring as next agent action.
+- `docs/agents/claude.md` — this Receipt.
+
+**Verification:**
+- 4 commits land cleanly (verified `git log --oneline -5` post-commit-3 shows expected SHAs).
+- Working tree post-commit-4 contains only the 3 intentionally-uncommitted local files.
+- Branch `feat/phase-2.8-firecrawl` ready for production wiring (next session).
+
+### Task Receipt
+
+| Field | Value |
+|---|---|
+| Task | Shadow filter calibration arc V10 closure + 4-commit checkpoint |
+| Outcome | DONE — V10_READY_FOR_PRODUCTION_WIRING confirmed by Round 7; Will approved manual review; 4 logical commits checkpointed |
+| Commits | `d73638b` framework upgrade · `17251c8` test infra + enrichment · `7dd512e` audit trail · this commit memory + STATUS |
+| Files touched (this commit) | `.claude/memory/decisions.md` · `.claude/memory/state.md` · `docs/STATUS.md` · `docs/agents/claude.md` |
+| Tests | 1,418 assertions pass; baseline SHA preserved `7bfe4ec5...071e` |
+| Decisions | D-22 (shadow filter calibration V1→V10 + plan-review-revise-implement-verify cycle) |
+| Pitfalls | P-10 (implementation agents self-verify on wrong population) |
+| Next agent action | Production wiring — port V10 rules from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs`, smoke test, tag `production-v10` |
+| Reversibility | Full — V10 rules in `scripts/lib/`; production code untouched until wiring commit; `git revert` rolls back wiring without affecting shadow infra |
+| Open questions | None for this checkpoint. Wiring branch strategy (same vs new) deferred to next session. |

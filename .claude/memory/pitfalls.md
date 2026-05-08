@@ -2,7 +2,7 @@
 status: active
 type: pitfalls
 owner: claude
-last-updated: 2026-05-01T20:30:00-04:00
+last-updated: 2026-05-07T00:00:00-04:00
 read-if: "you are touching an area Claude has flagged before"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -193,5 +193,23 @@ if (candidates.length === 1) {
 **Regression test:** Mock scrapeJson to return `{json:{jobs:[{title:"Eng",url:"https://jobs.ashbyhq.com/testco/abc"}]}}`. Call extractCompany("TestCo", "https://example.com"). Assert cache[TestCo] is now `{ats:"ashby", slug:"testco", discovery_method:"layer-2-feedback"}`.
 
 **Cross-reference:** P-8 (the upstream Layer 1 gap that motivates this Layer 2 enhancement). Together P-8 + P-9 form a defense-in-depth: ideally Layer 1 catches all ATSes; if it misses some, Layer 2 catches them on first encounter.
+
+## P-10 — Implementation agents self-verify on the wrong population — 2026-05-07
+
+**Symptom:** An implementation agent claims "I sample-verified all N new drops are legitimate, no false positives." A subsequent independent verification round finds N false positives anyway. Both V8's implementation agent (Round 5 caught 3 FPs) and V9's implementation agent (Round 6 caught 2 FPs) made this exact mistake. V10's brief encoded the lesson explicitly and Round 7 caught only 1 source-hygiene noise case (no real FPs).
+
+**Root cause:** When validating a NEW gate that adds drops, agents instinctively sample the gate's *kept* cohort or sample *location-string* shapes asking "does this look non-NA?". Both populations are wrong:
+- Kept cohort cannot contain FPs of the new gate by definition (FPs are wrongly-dropped rows, not wrongly-kept rows).
+- Location-string shape sampling answers "is this string non-NA?" but the relevant question is "is this *role* NA-eligible?" Multi-region roles with any NA base ARE NA-eligible regardless of how many non-NA tokens appear.
+
+**Workaround:** When briefing an implementation agent that adds a new gate or detector, explicitly require:
+1. Sample the gate's NEW-DROP cohort (rows it added drops on, not preserved rows).
+2. For each, ask "is this role NA-eligible / Will-eligible?" — not "does the location string look like X?"
+3. Multi-region roles with ANY NA base must be assumed NA-eligible unless JD explicitly excludes NA candidates.
+4. Verification briefs (Rounds N+1) MUST sample the same cohort independently — never trust an implementation agent's self-verification of its own new drops.
+
+**Regression test:** No code-level regression test possible (this is a process-level pitfall). Mitigation is procedural: every territory/filter-gate brief from this point forward includes the boilerplate "Sample the affected population, ask the role-eligibility question, not the string-shape question" instruction. See V10 implementation brief and Round 7 verification brief for examples.
+
+**Cross-reference:** Round 5 findings (`docs/audits/2026-05-06-round5-verification-findings.md`) caught V8's FPs; Round 6 (`2026-05-06-round6-verification-findings.md`) caught V9's; Round 7 (`2026-05-07-round7-verification-findings.md`) was the first round where the pre-encoded lesson prevented new FPs.
 
 <!-- section:entries:end -->
