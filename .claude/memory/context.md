@@ -2,7 +2,7 @@
 status: active
 type: context
 owner: claude
-last-updated: 2026-05-01T20:30:00-04:00
+last-updated: 2026-05-08T00:00:00-04:00
 read-if: "you need durable project truths as understood by Claude"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -12,6 +12,32 @@ skip-if: "status != active or last-updated <= your watermark"
 Append new invariants and project truths below, each with a dated ISO-8601 header.
 
 <!-- section:entries:start -->
+
+## 2026-05-08T00:00:00-04:00 — Shadow filter calibration as the canonical methodology for filter rule changes
+
+Durable invariant from the V1→V10 shadow filter calibration arc (D-22). Whenever filter/scoring rules need substantive change, follow this pattern instead of patching `career-ops/export-jobs.mjs` directly:
+
+1. **Build rules in a separate lib** — `scripts/lib/job-fit-rules.mjs` is the canonical filter-rules module. Production code (`export-jobs.mjs`) imports/copies from it; the lib is the single source of truth. New gates, classifiers, and detectors land here first.
+
+2. **Generate versioned audit workbooks** — `scripts/production-filter-refinement-audit.mjs` reads the cached pipeline + the lib rules and writes `career-ops/output/production-filter-refinement-review-<baseline>-vN.xlsx` plus a JSON summary in `docs/audits/<date>-production-filter-refinement-vN-summary.json`. Zero Firecrawl spend (reads cached `extracted_signals` + `content_text`). ~30 seconds per version bump.
+
+3. **Plan-review-revise-implement-verify cycle** for each substantive version bump:
+   - Plan written → reviewer agent finds bugs → plan revised (typically v2) → verifier agent confirms revisions → implementation agent executes → independent verification round samples the *newly-dropped cohort* adversarially → either ACCEPT or surface FPs that trigger the next version.
+   - Cycle caught 6 BLOCKING bugs in V7+V8 plans before code was written, and 5 territory FPs in V8+V9 implementations before they could ship to production.
+
+4. **Test infrastructure is not optional.** Each rule change must:
+   - Pass `scripts/test-job-fit-rules.mjs` (semantic + adversarial assertions).
+   - Pass `scripts/test-realdata-fixtures.mjs` against `scripts/test-fixtures/v7-realdata-fixtures.jsonl` (66-row real-data set with `revised_in` audit trail tagging which version each fixture exercises).
+   - Pass `scripts/test-properties.mjs` (type/range/implication/set-membership/determinism invariants over 100 random rows).
+   - Pass `scripts/test-cohort-shape.mjs` (cohort-size band assertions — catches over/under-firing gates between versions).
+   - Pass `scripts/v<N-1>-v<N>-diff.mjs` regression-baseline gate (every status flip tagged to a specific A-item; zero unattributed flips).
+   - Baseline SHA `7bfe4ec5...071e` must remain unchanged across versions.
+
+5. **P-10 anti-pattern protection:** when validating a NEW gate that adds drops, sample the *newly-dropped* cohort, NOT the kept cohort or the location-string distribution. Kept cohorts cannot contain the new gate's FPs by definition; location-string sampling answers the wrong question. See `.claude/memory/pitfalls.md` P-10.
+
+6. **Production wiring is the last step**, with explicit user approval. Port from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs` only after manual review approval. Reversible via `git revert`.
+
+This pattern is reusable for any future calibration cycle (Phase 3 calibration round, V11 source-hygiene patch, etc.). The `revised_in` fixture audit trail makes the chain auditable across many versions.
 
 ## 2026-05-01T20:30:00-04:00 — Phase 2.8 fully closed (post-rescan + scoring v2 + Option A)
 

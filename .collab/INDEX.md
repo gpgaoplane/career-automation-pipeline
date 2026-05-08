@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-05-07T12:00:00-04:00
+last-updated: 2026-05-08T00:00:00-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -151,6 +151,11 @@ skip-if: "never"
 | docs/audits/2026-05-07-production-filter-refinement-v10-summary.json | audit-summary | claude | active | 2026-05-07T12:00:00-04:00 |
 | docs/audits/2026-05-07-shadow-v9-v10-diff-summary.json | audit-summary | claude | active | 2026-05-07T12:00:00-04:00 |
 | docs/audits/2026-05-07-v10-implementation-summary.md | audit | claude | active | 2026-05-07T12:00:00-04:00 |
+| docs/audits/2026-05-07-round7-verification-findings.md | audit | shared | active | 2026-05-07T12:00:00-04:00 |
+| docs/audits/2026-05-06-round5-verification-findings.md | audit | shared | active | 2026-05-06T18:30:00-04:00 |
+| docs/audits/2026-05-05-round4-verification-findings.md | audit | shared | active | 2026-05-05T22:30:00-04:00 |
+| docs/audits/2026-05-06-v8-plan-review.md | audit | reviewer-agent | active | 2026-05-06T09:30:00-04:00 |
+| docs/audits/2026-05-06-v8-plan-v2-verification.md | audit | reviewer-agent | active | 2026-05-06T10:00:00-04:00 |
 | scripts/v9-v10-diff.mjs | script | claude | active | 2026-05-07T12:00:00-04:00 |
 | scripts/test-v9-v10-diff.mjs | test | claude | active | 2026-05-07T12:00:00-04:00 |
 <!-- collab:index:end -->

@@ -2,7 +2,7 @@
 status: active
 type: shared
 owner: shared
-last-updated: 2026-05-01T20:00:00-04:00
+last-updated: 2026-05-08T00:00:00-04:00
 read-if: "you are any AI agent starting work in this repo"
 skip-if: "never"
 related: []
@@ -136,8 +136,21 @@ career ops/                        ← repo root, agents open here
 │   ├── STATUS.md                  ← project progress, updated at wrap-up
 │   ├── agents/claude.md           ← Claude work log
 │   ├── agents/codex.md            ← Codex work log (when Codex joins)
-│   ├── plans/                     ← implementation plans
+│   ├── agents/gemini.md           ← Gemini work log
+│   ├── plans/                     ← implementation plans (V7/V8 consolidated, etc.)
+│   ├── audits/                    ← per-version audit summaries + reviewer findings + diff JSONs
 │   └── design/                    ← durable technical design decisions
+├── scripts/                       ← project-owned scripts (NOT vendored upstream)
+│   ├── lib/                       ← shared rule modules: job-fit-rules.mjs, jd-sections.mjs (V10 SoT)
+│   ├── ats-adapters/              ← Phase 2.8 direct-ATS adapters
+│   ├── test-fixtures/             ← v7-realdata-fixtures.jsonl + samples
+│   ├── production-filter-refinement-audit.mjs   ← shadow workbook generator
+│   ├── v{N-1}-v{N}-diff.mjs       ← per-version diff scripts (V5-V6 through V9-V10)
+│   ├── test-*.mjs                 ← 1,418-assertion test infrastructure
+│   ├── full-run-audit.mjs         ← Phase 2.8 acceptance audit
+│   ├── reextract-signals.mjs      ← zero-Firecrawl post-processor for cached JDs
+│   └── collab-*.sh                ← multi-agent-collab v0.4.3 framework helpers
+├── templates/                     ← framework templates (multi-agent-collab v0.4.3)
 ├── context/
 │   ├── knowledge bank/            ← Will's personal context (read-only source of truth)
 │   └── AI_Companies_Consolidated_Ranked_v2.xlsx
@@ -227,6 +240,29 @@ node scripts/test-full-run-audit.mjs                                            
 # Re-extract signals from cached JD text (zero Firecrawl, after enrich-jobs.mjs logic changes)
 node scripts/reextract-signals.mjs                                                 # dry-run summary
 node scripts/reextract-signals.mjs --apply                                         # write updated cache
+```
+
+### Shadow filter calibration tooling (run from repo root)
+
+V1→V10 calibration arc closed 2026-05-07. V10 ready for production wiring. See `.claude/memory/decisions.md` D-22 + `.claude/memory/context.md` 2026-05-08 entry for the full methodology.
+
+```bash
+# Generate shadow workbook for a candidate rule version (zero Firecrawl)
+node scripts/production-filter-refinement-audit.mjs                                # writes review-{baseline}-vN.xlsx + summary JSON
+
+# Per-version diff (regression-baseline gate — every flip tagged to a specific A-item)
+node scripts/v9-v10-diff.mjs                                                       # latest version diff
+node scripts/shadow-version-diff.mjs                                               # multi-version comparison
+
+# Test infrastructure (1,418 assertions total; baseline SHA must remain unchanged)
+node scripts/test-job-fit-rules.mjs
+node scripts/test-jd-sections.mjs
+node scripts/test-properties.mjs
+node scripts/test-cohort-shape.mjs
+node scripts/test-realdata-fixtures.mjs                                            # 66 real-data fixtures with revised_in audit trails
+node scripts/test-shadow-version-diff.mjs
+node scripts/test-v{5,6,7,8,9}-v{6,7,8,9,10}-diff.mjs                              # per-version regression gates
+node scripts/test-production-filter-refinement-audit.mjs
 ```
 
 ### Pipeline Architecture

@@ -1,120 +1,111 @@
 ---
 status: active
 type: handoff
-owner: codex
-last-updated: 2026-05-05T11:39:22-04:00
+owner: claude
+last-updated: 2026-05-08T00:00:00-04:00
 read-if: "you are Claude or another AI agent resuming this project"
 skip-if: "status != active"
 related:
   - AI_HANDOFF.md
   - docs/STATUS.md
-  - docs/agents/codex.md
-  - .codex/memory/state.md
+  - docs/agents/claude.md
+  - .claude/memory/state.md
+  - .claude/memory/decisions.md
 ---
 
-# Resume Prompt — Shadow Filter Calibration Handoff
+# Resume Prompt — V10 Approved, Production Wiring Next
 
-You are Claude Code taking over in `D:/Projects/career ops` on branch `feat/phase-2.8-firecrawl`.
+You are Claude Code resuming in `D:/Projects/career ops` on branch `feat/phase-2.8-firecrawl`.
 
-Phase 2.8 is closed, but the active project is now **shadow-mode production filter calibration** for Will's 2026-05-01 full-run job pipeline. Do not treat the old Phase 2.8 manual-review prompt as current.
+The shadow filter calibration arc V1→V10 is **CLOSED**. Will manually reviewed the V10 workbook on 2026-05-07 and approved. Four checkpoint commits landed before the session ended. The next agent action is **production wiring** — porting V10 rules into the daily pipeline.
 
 ## First Actions
 
-1. Read `AGENTS.md`, `AI_AGENTS.md`, `.collab/INDEX.md`, `.collab/ROUTING.md`, `.collab/PROTOCOL.md`, and `.claude/CLAUDE.md`.
-2. Read this file and `AI_HANDOFF.md`.
-3. Read `docs/STATUS.md`.
-4. Read Codex's current memory and log:
-   - `.codex/memory/state.md`
-   - `.codex/memory/context.md`
-   - `.codex/memory/decisions.md`
-   - latest entries in `docs/agents/codex.md`
-5. Run `git status --short` and do not revert unrelated dirty work.
-6. Verify the latest artifacts exist:
-   - `career-ops/output/production-filter-refinement-review-2026-05-01-v5.xlsx`
-   - `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`
-   - `docs/audits/2026-05-04-production-filter-refinement-v5-summary.json`
-   - `docs/audits/2026-05-05-shadow-version-diff-summary.json`
+1. Read in order:
+   - `AI_AGENTS.md` (project context — load if not already cached)
+   - `.claude/CLAUDE.md` (Claude adapter)
+   - `AI_HANDOFF.md` (narrative handoff to V10 production wiring)
+   - `docs/STATUS.md` (latest state)
+   - `.claude/memory/state.md` (live state — V10 closure + 4-commit checkpoint)
+   - `.claude/memory/decisions.md` D-22 (calibration arc methodology)
+   - `.claude/memory/pitfalls.md` P-10 (self-verification anti-pattern)
+   - latest entry in `docs/agents/claude.md` (V10 closure Receipt)
+2. Run `git status --short` and `git log --oneline -6`. Expect a clean working tree (modulo `.claude/settings.local.json`, `.collab-upgrade-backups/`, `tmp-v9-review/`, `career-ops/tmp-extract-territory.mjs`, `docs/audits/*test*.json` — all intentional). Last 4 commits should be `2f5382b`, `7dd512e`, `17251c8`, `d73638b`.
+3. Verify the V10 artifacts exist and 1,418 assertions still pass:
+   ```powershell
+   node scripts/test-job-fit-rules.mjs
+   node scripts/test-jd-sections.mjs
+   node scripts/test-properties.mjs
+   node scripts/test-cohort-shape.mjs
+   node scripts/test-realdata-fixtures.mjs
+   node scripts/test-shadow-version-diff.mjs
+   node scripts/test-v9-v10-diff.mjs
+   ```
+4. **Do not start work until Will explicitly says "go"** — confirm with him whether to wire on this branch (recommended; shadow infra + wire are one logical phase) or branch a fresh `feat/phase-2.9-production-v10`.
 
 ## Current Truth
 
-- Baseline workbook: `career-ops/output/jobs-2026-05-01.xlsx`
-- Baseline SHA: `7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e`
-- Baseline must remain unchanged.
-- Production exporter/config/default scan/caches/tracker/live scraping remain unchanged.
-- Latest shadow workbook: `career-ops/output/production-filter-refinement-review-2026-05-01-v5.xlsx`
-- Latest diff workbook: `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`
-- Multi-agent-collab framework is now `0.4.3`; read `.collab/UPGRADE_NOTES.md` before substantive writes.
-- Local collab helper scripts/templates are present under `scripts/` and `templates/`, but Codex saw Git Bash Win32 error 5 in this sandbox, so Claude should verify Bash execution before relying on helper scripts.
+- **Branch:** `feat/phase-2.8-firecrawl` (4 commits ahead of `705d446`).
+- **Phase:** Shadow filter calibration arc CLOSED at V10. Phase 2.8 also CLOSED at `phase-2.8-complete` tag (preserved baseline).
+- **Will's verdict:** V10 manual review approved 2026-05-07. Production wiring authorized.
+- **Production code untouched:** `career-ops/export-jobs.mjs`, `career-ops/portals.yml`, `career-ops/config/profile.yml`, `career-ops/modes/_profile.md`, `career-ops/cv.md`, default `npm run full-scan`, caches, tracker — all unchanged.
+- **V10 rules live in:** `scripts/lib/job-fit-rules.mjs` + `scripts/lib/jd-sections.mjs` (single source of truth).
+- **V10 workbook (manual-reviewed and approved):** `career-ops/output/production-filter-refinement-review-2026-05-01-v10.xlsx`.
+- **Baseline workbook:** `career-ops/output/jobs-2026-05-01.xlsx` — must remain unchanged.
+- **Baseline SHA preserved:** `7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e`.
 
-## Current V5 Metrics
+## V10 Metrics (memorize these — they are the production target)
 
-- 956 pipeline rows
-- 613 baseline Excel rows
-- 514 shadow hard drops
-- 236 visible shadow hard drops
-- 108 sales hard drops
-- 1 compensation hard drop
-- 148 YoE hard drops
-- 361 location hard drops
-- 206 Source Repair Review rows
-- 4 review-only validation findings
-- 0 blocking validation findings
-
-## Version Diff Metrics
-
-- V3 -> V4:
-  - 356 materially changed rows
-  - 35 hard-drop additions
-  - 78 hard-drop removals
-  - 86 hard-drop reason changes
-  - 0 unmatched rows
-- V4 -> V5:
-  - 230 materially changed rows
-  - 0 hard-drop additions
-  - 29 hard-drop removals
-  - 192 row-level Source Repair movements
-  - 0 unmatched rows
+- pipeline_rows: 933
+- shadow_hard_drops: **536**
+- sales_hard_drops: 81 (Pre-Sales/SA survive; AE/AM/Director-sales strict-drop; CSM carve-out)
+- territory_hard_drops: 108 (NA-rooted strict; multi-region default-permissive; symmetric body-tie guard)
+- comp_hard_drops: 1
+- yoe_hard_drops: 148 (≥6-year requirements)
+- location_hard_drops: 361
+- source_repair_review_rows: 184
+- validation_findings: 0
 
 ## What Will Wants Solved
 
-Will wants the filter/rejection/scoring system to become robust before production wiring. The current problems are:
+**Production wire V10 — port shadow rules into daily pipeline.** Estimated 1-2 hours; reversible via `git revert`. Specifically:
 
-- Relevant AI/program/solutions/deployment/engineering roles were missed or under-ranked.
-- U.S./non-Toronto hybrid/on-site roles should hard-drop unless genuine remote is available.
-- Sales roles should hard-drop, but non-sales roles with incidental sales collaboration wording should not.
-- Compensation hard drops must only happen from real salary/rate evidence.
-- YoE must use lower-bound range logic and hard-drop only when the minimum required years are over 5.
-- Broken/generic/closed/listing/blog/missing-cache sources should be source-repair items, not fit decisions.
-- Every V3/V4/V5 change should be inspectable row by row.
+1. Port territory detector + sales classification (incl. CSM carve-out + Director extension) + NA city regex + role-anchor patterns + Pre-Sales survival from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs`.
+2. Verify `scripts/lib/jd-sections.mjs` SECTION_ALIASES are wired through (may already be in `enrich-jobs.mjs` — check before duplicating).
+3. Smoke test: regenerate today's `career-ops/output/jobs-YYYY-MM-DD.xlsx` with V10 rules active. Compare drop counts to V10 shadow workbook (~536 hard drops on comparable input is the target).
+4. Side-by-side diff vs the 2026-05-01 baseline workbook — confirm V10 deltas are the expected drops (territory + sales + Director + CSM-preserve), not regressions on legitimate roles.
+5. Commit + tag `production-v10`.
+6. Update `docs/STATUS.md` Done + Handoff Note, `.claude/memory/state.md`, `docs/agents/claude.md` Receipt for the wiring task.
 
-## Recommended Next Move
+## Watch-Outs (lessons from the calibration arc)
 
-Start by reviewing `career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx`. It is the current source of truth for Will's latest request about exactly what changed and why.
+- **P-10 anti-pattern:** if you self-verify production wiring by sampling the *kept* cohort or *location strings* and concluding "no FPs," you are wrong by construction. The relevant population for FP detection is the *newly-dropped* cohort, sampled adversarially. See `.claude/memory/pitfalls.md` P-10.
+- **Spec deviation in V10 is intentional and approved:** the V10 territory gate is "suppression-only," not "tie → NA promotion." Don't try to "fix" this during wiring.
+- **Do not modify shadow infra during wiring** — `scripts/lib/job-fit-rules.mjs` is canonical. If wiring reveals a bug in the rules, fix it in the lib AND port; don't fork the implementation.
+- **Trimble PM listing-chrome FP is known and deferred** to optional V11. Don't gate production wiring on it.
 
-If Will asks for a reviewer agent, run an independent reviewer pass on V5 and/or the diff workbook. The reviewer should inspect the important sheets like Will would, compare evidence against decisions, and return discrepancies with whether the issue appears to be the reviewer or the workbook/rules.
+## Phase 3 Candidate Menu (after production wiring lands — Will picks)
 
-Do not proceed to production wiring until Will approves a specific rule group. If approval happens, draft a short production-wiring implementation plan first.
+- **A** — LLM evaluation pipeline integration (per old roadmap)
+- **B** — Calibration round (after 2 weeks of V10 production output, compare to Will's actual application picks)
+- **C** — Delta detection ("what disappeared since last run")
+- **D** — V11 source-hygiene patch (Trimble PM listing-chrome; half-day, non-blocking)
+- **E** — NO_RELEVANT_JOBS roster cleanup (39 hardware/clinical companies returning healthy-but-Will-irrelevant jobs)
+- **F** — F-005 enrichment (deferred field surfaced in shadow audits)
 
-## Commands To Re-Validate
+## Commands To Re-Validate (sanity check)
 
 ```powershell
-node scripts\test-shadow-version-diff.mjs
-node scripts\test-production-filter-refinement-audit.mjs
 node scripts\test-job-fit-rules.mjs
 node scripts\test-jd-sections.mjs
-node scripts\test-fullrun-calibration-workbook.mjs
-cd career-ops
-node test-enrich-signals.mjs
-cd ..
+node scripts\test-properties.mjs
+node scripts\test-cohort-shape.mjs
+node scripts\test-realdata-fixtures.mjs
+node scripts\test-shadow-version-diff.mjs
+node scripts\test-production-filter-refinement-audit.mjs
+node scripts\test-v9-v10-diff.mjs
+cd career-ops; node test-enrich-signals.mjs; cd ..
 git diff --check
 ```
 
-Expected latest results:
-
-- shadow-version-diff: 15/15
-- production-filter-refinement-audit: 45/45
-- job-fit-rules: 52/52
-- jd-sections: 8/8
-- fullrun-calibration-workbook: 19/19
-- enrich-signals: 54/54
-- `git diff --check`: no whitespace errors, CRLF warnings only
+Expected: all suites green; total assertion count 1,418; CRLF warnings only on `git diff --check`.
