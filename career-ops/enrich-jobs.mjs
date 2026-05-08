@@ -170,6 +170,21 @@ function detectCurrency(window, fullText) {
   return 'unknown';
 }
 
+function compResult({ low, high, currency, rateType = 'annual', confidence = 'moderate' }) {
+  if (low > high) [low, high] = [high, low];
+  const annualLow = rateType === 'hourly' ? Math.round((low * 2080) / 1000) : Math.round(low / 1000);
+  const annualHigh = rateType === 'hourly' ? Math.round((high * 2080) / 1000) : Math.round(high / 1000);
+  return {
+    low_thousands: annualLow,
+    high_thousands: annualHigh,
+    currency,
+    rate_type: rateType,
+    annualized_low_thousands: annualLow,
+    annualized_high_thousands: annualHigh,
+    confidence,
+  };
+}
+
 function extractCompRange(text) {
   // Anchor phrases that introduce comp text. Expanded 2026-05-01 to catch
   // "annual salary"/"the salary"/"estimated annual salary"/"pay band" forms
@@ -212,12 +227,7 @@ function extractCompRange(text) {
     // Skip non-money ranges ("3-5 years") — both <1000 and no K marker.
     if (low < 1000 || high < 1000) return null;
     if (low > 10_000_000 || high > 10_000_000) return null;
-    if (low > high) [low, high] = [high, low];
-    return {
-      low_thousands: Math.round(low / 1000),
-      high_thousands: Math.round(high / 1000),
-      currency: detectCurrency(window, text),
-    };
+    return compResult({ low, high, currency: detectCurrency(window, text), confidence: 'strong' });
   }
 
   // Strategy 1: anchor-window scan with range pattern (preferred).
@@ -262,9 +272,40 @@ function extractCompRange(text) {
       let val = parseFloat(m[1].replace(/,/g, ''));
       if (m[2]) val *= 1000;
       if (val < 1000 || val > 10_000_000) continue;
-      const v = Math.round(val / 1000);
-      return { low_thousands: v, high_thousands: v, currency: detectCurrency(window, text) };
+      return compResult({ low: val, high: val, currency: detectCurrency(window, text), confidence: 'moderate' });
     }
+  }
+
+  // Strategy 4: currency-before annual ranges, e.g. "USD 120,000 to USD
+  // 150,000" or "CAD 120k - 160k". Kept after legacy strategies so existing
+  // anchored $ parsing remains stable.
+  const currencyFirstRangeRe = /\b(USD|CAD|US\$|CA\$|C\$)\s*([\d,]+(?:\.\d+)?)\s?([Kk])?\s*(?:[-–—]|\bto\b)\s*(?:(USD|CAD|US\$|CA\$|C\$)\s*)?([\d,]+(?:\.\d+)?)\s?([Kk])?/ig;
+  let cf;
+  while ((cf = currencyFirstRangeRe.exec(text)) !== null) {
+    let low = parseFloat(cf[2].replace(/,/g, ''));
+    let high = parseFloat(cf[5].replace(/,/g, ''));
+    if (isNaN(low) || isNaN(high)) continue;
+    if (cf[3]) low *= 1000;
+    if (cf[6]) high *= 1000;
+    if (!cf[3] && cf[6] && low < 1000) low *= 1000;
+    if (cf[3] && !cf[6] && high < 1000) high *= 1000;
+    if (low < 1000 || high < 1000 || low > 10_000_000 || high > 10_000_000) continue;
+    const start = Math.max(0, cf.index - 80);
+    const window = text.slice(start, Math.min(text.length, cf.index + 220));
+    return compResult({ low, high, currency: detectCurrency(window, text), confidence: 'moderate' });
+  }
+
+  // Strategy 5: hourly rates. Annualize at 2,080 hours/year for downstream
+  // floor checks while retaining comp_rate_type='hourly' for review.
+  const hourlyRangeRe = /(?:(USD|CAD|US\$|CA\$|C\$)\s*)?\$?\s?(\d{2,3}(?:\.\d+)?)\s*(?:[-–—]|\bto\b)\s*(?:(USD|CAD|US\$|CA\$|C\$)\s*)?\$?\s?(\d{2,3}(?:\.\d+)?)\s*(?:\/\s?(?:hour|hr)|per hour|hourly|\bhr\b)/ig;
+  let hr;
+  while ((hr = hourlyRangeRe.exec(text)) !== null) {
+    const low = parseFloat(hr[2]);
+    const high = parseFloat(hr[4]);
+    if (isNaN(low) || isNaN(high)) continue;
+    const start = Math.max(0, hr.index - 120);
+    const window = text.slice(start, Math.min(text.length, hr.index + 220));
+    return compResult({ low, high, currency: detectCurrency(window, text), rateType: 'hourly', confidence: 'moderate' });
   }
 
   return null;
@@ -306,6 +347,28 @@ function extractYoeSignal(text) {
   if (REGEXES.yoe02.test(text)) return '0-2';
   if (REGEXES.yoe35.test(text)) return '3-5';
   return null;
+}
+
+function extractYoeDetails(text) {
+  const requirementRe = /\b(?:minimum|required|requires?|need|must have|you have|qualified candidates? have|looking for)[\s\S]{0,50}?(\d+)\s*(\+)?\s*(?:years?|yrs?)\b[\s\S]{0,40}?\b(experience|exp)\b/i;
+  let m = requirementRe.exec(text);
+  let confidence = 'strong';
+  if (!m) {
+    m = /\b(\d+)\s*(\+)?\s*(?:years?|yrs?)\s*(?:of)?\s*experience\b/i.exec(text);
+    confidence = m ? 'moderate' : 'none';
+  }
+  if (!m) return { min: null, max: null, signal: null, confidence: 'none', sourceSection: null, openEnded: false };
+  const years = parseInt(m[1], 10);
+  const openEnded = Boolean(m[2]);
+  const signal = years > 5 ? '6+' : years <= 2 ? '0-2' : years <= 5 ? '3-5' : null;
+  return {
+    min: years,
+    max: openEnded ? null : years,
+    signal,
+    confidence,
+    sourceSection: 'whole_document',
+    openEnded,
+  };
 }
 
 function extractLocationMatches(text) {
@@ -378,15 +441,26 @@ function extractRawLocations(text) {
 
 export function extractSignals(text) {
   const comp = extractCompRange(text);
+  const yoe = extractYoeDetails(text);
   return {
     location_match: extractLocationMatches(text),
     location_raw: extractRawLocations(text),
     comp_low_thousands: comp ? comp.low_thousands : null,
     comp_high_thousands: comp ? comp.high_thousands : null,
     comp_currency: comp ? comp.currency : null,
+    comp_rate_type: comp ? comp.rate_type : null,
+    comp_annualized_low_thousands: comp ? comp.annualized_low_thousands : null,
+    comp_annualized_high_thousands: comp ? comp.annualized_high_thousands : null,
+    comp_confidence: comp ? comp.confidence : null,
     track_keywords_matched: uniqueCaseInsensitiveMatches(text, TRACK_KEYWORDS),
     tech_stack_matched: uniqueCaseInsensitiveMatches(text, TECH_STACK),
     yoe_signal: extractYoeSignal(text),
+    yoe_required_years: yoe.min,
+    yoe_required_min: yoe.min,
+    yoe_required_max: yoe.max,
+    yoe_confidence: yoe.confidence,
+    yoe_source_section: yoe.sourceSection,
+    yoe_open_ended: yoe.openEnded,
     deal_breaker_signal: extractDealBreaker(text),
   };
 }
