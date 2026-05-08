@@ -1,0 +1,95 @@
+{
+  "run_date": "2026-05-01",
+  "generated_at": "2026-05-05T14:39:57.103Z",
+  "outputs": {
+    "workbook": "career-ops/output/production-filter-refinement-v3-v4-v5-diff.xlsx",
+    "summary_json": "docs/audits/2026-05-05-shadow-version-diff-summary.json"
+  },
+  "inputs": {
+    "v3": {
+      "path": "career-ops/output/production-filter-refinement-review-2026-05-01-v3.xlsx",
+      "sha256": "d327cea14b149684e68659810910cf2d566b4650eb1f813fc171d58a74b87d18",
+      "counts": {
+        "shadow_rows": 956,
+        "hard_drops": 586,
+        "reviewer_queue": 352,
+        "source_repair_review_sheet_rows": 0,
+        "source_repair_review_shadow_rows": 0,
+        "sales_hard_drops": 47,
+        "validation_findings": 7
+      }
+    },
+    "v4": {
+      "path": "career-ops/output/production-filter-refinement-review-2026-05-01-v4.xlsx",
+      "sha256": "d86fc6ab68c7e21d01924a8c5fc5bc733768e68e65c2a75cbb6916566508effd",
+      "counts": {
+        "shadow_rows": 956,
+        "hard_drops": 543,
+        "reviewer_queue": 397,
+        "source_repair_review_sheet_rows": 0,
+        "source_repair_review_shadow_rows": 0,
+        "sales_hard_drops": 115,
+        "validation_findings": 6
+      }
+    },
+    "v5": {
+      "path": "career-ops/output/production-filter-refinement-review-2026-05-01-v5.xlsx",
+      "sha256": "0d8ef4519e7a2894efda2c33f73714aa5b78b8d8b9dc5f0c29cb7db0dd7717a6",
+      "counts": {
+        "shadow_rows": 956,
+        "hard_drops": 514,
+        "reviewer_queue": 425,
+        "source_repair_review_sheet_rows": 206,
+        "source_repair_review_shadow_rows": 192,
+        "sales_hard_drops": 108,
+        "validation_findings": 4
+      }
+    }
+  },
+  "counts": {
+    "v3_to_v4.from_shadow_rows": 956,
+    "v3_to_v4.to_shadow_rows": 956,
+    "v3_to_v4.changed_rows_any_material_field": 356,
+    "v3_to_v4.hard_drop_added_rows": 35,
+    "v3_to_v4.hard_drop_removed_rows": 78,
+    "v3_to_v4.hard_drop_reason_changed_rows": 86,
+    "v3_to_v4.review_queue_movement_rows": 111,
+    "v3_to_v4.source_repair_movement_rows": 0,
+    "v3_to_v4.score_or_band_changed_rows": 34,
+    "v3_to_v4.signal_changed_rows": 203,
+    "v3_to_v4.from_hard_drops": 586,
+    "v3_to_v4.to_hard_drops": 543,
+    "v3_to_v4.net_hard_drop_delta": -43,
+    "v3_to_v4.unmatched_rows": 0,
+    "v4_to_v5.from_shadow_rows": 956,
+    "v4_to_v5.to_shadow_rows": 956,
+    "v4_to_v5.changed_rows_any_material_field": 230,
+    "v4_to_v5.hard_drop_added_rows": 0,
+    "v4_to_v5.hard_drop_removed_rows": 29,
+    "v4_to_v5.hard_drop_reason_changed_rows": 1,
+    "v4_to_v5.review_queue_movement_rows": 28,
+    "v4_to_v5.source_repair_movement_rows": 192,
+    "v4_to_v5.score_or_band_changed_rows": 56,
+    "v4_to_v5.signal_changed_rows": 37,
+    "v4_to_v5.from_hard_drops": 543,
+    "v4_to_v5.to_hard_drops": 514,
+    "v4_to_v5.net_hard_drop_delta": -29,
+    "v4_to_v5.unmatched_rows": 0
+  },
+  "sheet_names": [
+    "Diff Manifest",
+    "V3 to V4 Changed Rows",
+    "V4 to V5 Changed Rows",
+    "Hard Drop Added",
+    "Hard Drop Removed",
+    "Hard Drop Reason Changed",
+    "Review Queue Movement",
+    "Source Repair Movement",
+    "Score And Band Changes",
+    "Signal Changes",
+    "Company Role Pivot",
+    "Unmatched Rows",
+    "Summary Metrics"
+  ],
+  "warnings": []
+}

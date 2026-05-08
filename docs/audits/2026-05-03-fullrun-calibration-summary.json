@@ -1,0 +1,403 @@
+{
+  "run_date": "2026-05-01",
+  "generated_at": "2026-05-03T20:09:55.325Z",
+  "manifest": [
+    {
+      "Artifact": "scan_history",
+      "Path": "career-ops/data/scan-history.tsv",
+      "Exists": true,
+      "Modified At": "2026-05-01T07:03:17.764Z",
+      "Size Bytes": 242218,
+      "SHA256": "eddd1f599a86e9070885c3ae0da2b8e5b7028b4c38ec548c6e1bcfe96c104f91",
+      "Observed Count": 1671,
+      "Expected Count": 1671,
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "pipeline",
+      "Path": "career-ops/data/pipeline.md",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:04:48.456Z",
+      "Size Bytes": 118961,
+      "SHA256": "9591c6f64837bd4136f240cfe2bbd5fc658c46eb0bb7069b73548575fe3ea43e",
+      "Observed Count": 956,
+      "Expected Count": 956,
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "jd_cache",
+      "Path": "career-ops/data/job-descriptions-cache.json",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:42:45.391Z",
+      "Size Bytes": 16664230,
+      "SHA256": "a276ff763811a85a465f14500f0cd89417cccb6d10f5688c2c7fb123de9aa606",
+      "Observed Count": 1502,
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "baseline_excel",
+      "Path": "career-ops/output/jobs-2026-05-01.xlsx",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:45:33.841Z",
+      "Size Bytes": 134009,
+      "SHA256": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+      "Observed Count": 613,
+      "Expected Count": 613,
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "baseline_excel_unique_urls",
+      "Path": "career-ops/output/jobs-2026-05-01.xlsx",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:45:33.841Z",
+      "Size Bytes": 134009,
+      "SHA256": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+      "Observed Count": 581,
+      "Expected Count": 586,
+      "Status": "warning",
+      "Warnings": "Expected 586, observed 581"
+    },
+    {
+      "Artifact": "fullrun_metrics",
+      "Path": "docs/audits/2026-05-01-fullrun-metrics.json",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:47:53.684Z",
+      "Size Bytes": 1870,
+      "SHA256": "a54da75daa926f225cbe6fb61fe0108f66abdc920249af43d9753645e5eb0b9b",
+      "Observed Count": "",
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "fullrun_classification",
+      "Path": "docs/audits/2026-05-01-fullrun-classification.md",
+      "Exists": true,
+      "Modified At": "2026-05-01T15:47:53.696Z",
+      "Size Bytes": 28054,
+      "SHA256": "356fc5b09a9018e6643c9a36a326e705d5c382a185e0e633bd850ba9ef5ad029",
+      "Observed Count": 213,
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "discovery_cache",
+      "Path": "career-ops/data/ats-discovery-cache.json",
+      "Exists": true,
+      "Modified At": "2026-05-01T07:03:17.762Z",
+      "Size Bytes": 33757,
+      "SHA256": "0033a0432f0dfe363b61ba48343567bf56986c6d70dd2045e8126d4f315620b6",
+      "Observed Count": 378,
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "fallback_queue",
+      "Path": "career-ops/data/firecrawl-fallback-queue.tsv",
+      "Exists": true,
+      "Modified At": "2026-05-01T05:48:57.211Z",
+      "Size Bytes": 4304,
+      "SHA256": "8b0504f0ad9bf2070e13941de64386cc654083c20a34062474665487d0d1df3f",
+      "Observed Count": 39,
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    },
+    {
+      "Artifact": "firecrawl_cost",
+      "Path": "career-ops/data/firecrawl-cost.tsv",
+      "Exists": true,
+      "Modified At": "2026-05-01T06:49:37.777Z",
+      "Size Bytes": 380745,
+      "SHA256": "85c8c42c05a026a400fcf8045b7d2050f0f59b983e20782bf6c8fb0524787a2d",
+      "Observed Count": 3764,
+      "Expected Count": "",
+      "Status": "ok",
+      "Warnings": ""
+    }
+  ],
+  "counts": {
+    "scan_history_rows": 1671,
+    "pipeline_rows": 956,
+    "excel_rows": 613,
+    "unique_excel_urls": 581,
+    "pipeline_to_excel_drops": 343,
+    "cache_only_exclusions": 2,
+    "canonical_collisions": 89,
+    "metrics_pending_jobs": 956
+  },
+  "reconciliation": [
+    {
+      "Stage": "Scan History",
+      "Rows": 1671,
+      "Expected Rows": 1671,
+      "Unique URLs": 1626,
+      "Expected Unique URLs": "",
+      "Companies": 205,
+      "Delta From Previous": "",
+      "Explained Delta": "retained scanner/adapter additions",
+      "Unresolved Delta": "",
+      "Status": "ok",
+      "Notes": "scan-history is not raw board inventory"
+    },
+    {
+      "Stage": "Pipeline",
+      "Rows": 956,
+      "Expected Rows": 956,
+      "Unique URLs": 923,
+      "Expected Unique URLs": "",
+      "Companies": 180,
+      "Delta From Previous": -715,
+      "Explained Delta": "post-processing, AE-only strip, dedup, URL variants",
+      "Unresolved Delta": "",
+      "Status": "ok",
+      "Notes": ""
+    },
+    {
+      "Stage": "Excel Visible",
+      "Rows": 613,
+      "Expected Rows": 613,
+      "Unique URLs": 581,
+      "Expected Unique URLs": 586,
+      "Companies": 154,
+      "Delta From Previous": -343,
+      "Explained Delta": "343 pipeline-to-Excel drops",
+      "Unresolved Delta": 0,
+      "Status": "warning",
+      "Notes": "Excel rows may contain duplicate normalized URLs/location variants"
+    },
+    {
+      "Stage": "Pipeline-to-Excel Drops",
+      "Rows": 343,
+      "Expected Rows": 343,
+      "Unique URLs": 343,
+      "Expected Unique URLs": "",
+      "Companies": 57,
+      "Delta From Previous": "",
+      "Explained Delta": "output-time dealbreaker/intern drops",
+      "Unresolved Delta": "",
+      "Status": "ok",
+      "Notes": "V1 observed drops are expected to be hybrid_non_toronto"
+    }
+  ],
+  "seed_trace_summary": {
+    "total": 14,
+    "by_defect_class": {
+      "TITLE_TAXONOMY_GAP": 12,
+      "SOURCE_INCOMPLETE": 2
+    }
+  },
+  "detector_counts": {
+    "output_drops": 343,
+    "low_ranked_high_intent": 205,
+    "potential_false_positives": 14,
+    "role_taxonomy_candidates": 37,
+    "visible_location_risk_rows": 613,
+    "visible_location_high_risk": 479,
+    "dealbreaker_false_negative_candidates": 150,
+    "missing_seed_root_causes": 14
+  },
+  "filter_robustness_metrics": {
+    "source_reachability_rate": {
+      "Metric": "source_reachability_rate",
+      "Value": 0.9796437659033079,
+      "Numerator": 385,
+      "Denominator": 393,
+      "Status": "observed",
+      "Notes": "From full-run metrics JSON"
+    },
+    "source_health_rate": {
+      "Metric": "source_health_rate",
+      "Value": 1,
+      "Numerator": 385,
+      "Denominator": 385,
+      "Status": "observed",
+      "Notes": "From full-run metrics JSON"
+    },
+    "raw_job_inventory_sources": {
+      "Metric": "raw_job_inventory_sources",
+      "Value": 219,
+      "Numerator": 219,
+      "Denominator": 385,
+      "Status": "observed",
+      "Notes": "Company-level raw counts are not fully retained offline"
+    },
+    "title_filter_retained_scan_rows": {
+      "Metric": "title_filter_retained_scan_rows",
+      "Value": 1671,
+      "Numerator": 1671,
+      "Denominator": "",
+      "Status": "observed",
+      "Notes": "scan-history is retained rows, not raw inventory"
+    },
+    "description_fetch_coverage_visible": {
+      "Metric": "description_fetch_coverage_visible",
+      "Value": 0.7944535073409462,
+      "Numerator": 487,
+      "Denominator": 613,
+      "Status": "observed",
+      "Notes": "Visible Excel rows with cached JD text"
+    },
+    "dealbreaker_extraction_coverage_pipeline_drops": {
+      "Metric": "dealbreaker_extraction_coverage_pipeline_drops",
+      "Value": 1,
+      "Numerator": 343,
+      "Denominator": 343,
+      "Status": "observed",
+      "Notes": "{\"hybrid_non_toronto\":343}"
+    },
+    "visible_location_risk_count": {
+      "Metric": "visible_location_risk_count",
+      "Value": 479,
+      "Numerator": 479,
+      "Denominator": 613,
+      "Status": "needs_review",
+      "Notes": "Rows classified as should-drop, review, or missing evidence"
+    },
+    "visible_location_risk_classification_rate": {
+      "Metric": "visible_location_risk_classification_rate",
+      "Value": 1,
+      "Numerator": 613,
+      "Denominator": 613,
+      "Status": "pass",
+      "Notes": "Every visible row receives a classification"
+    },
+    "dealbreaker_false_negative_candidates": {
+      "Metric": "dealbreaker_false_negative_candidates",
+      "Value": 150,
+      "Numerator": 150,
+      "Denominator": 956,
+      "Status": "needs_review",
+      "Notes": "Visible rows simulated as hard drops"
+    },
+    "missing_seed_explainability_rate": {
+      "Metric": "missing_seed_explainability_rate",
+      "Value": 1,
+      "Numerator": 14,
+      "Denominator": 14,
+      "Status": "pass",
+      "Notes": "Every seed has exactly one root-cause label"
+    },
+    "false_positive_detector_count": {
+      "Metric": "false_positive_detector_count",
+      "Value": 14,
+      "Numerator": 14,
+      "Denominator": 613,
+      "Status": "needs_review",
+      "Notes": "Known substring detectors only"
+    },
+    "role_family_candidate_recovery_count": {
+      "Metric": "role_family_candidate_recovery_count",
+      "Value": 37,
+      "Numerator": 37,
+      "Denominator": "",
+      "Status": "needs_review",
+      "Notes": "No production taxonomy change in V1"
+    },
+    "company_coverage_rows": {
+      "Metric": "company_coverage_rows",
+      "Value": 393,
+      "Numerator": 393,
+      "Denominator": "",
+      "Status": "observed",
+      "Notes": "Enabled companies represented in coverage sheet"
+    }
+  },
+  "rule_simulations": {
+    "MATCH_FALSE_POSITIVE_FIX": {
+      "Rule ID": "MATCH_FALSE_POSITIVE_FIX",
+      "Rule Type": "matching",
+      "Description": "Use phrase-aware matching for RAG and Technical Account",
+      "Affected Count": 14,
+      "Recovered Count": 0,
+      "Potential Noise Count": 0,
+      "Seed URLs Recovered": "",
+      "Examples": "Airbnb: Engineering Manager, Storage; Snowflake: Product Manager – Storage Platform & Pricing; Runway: Technical Accounting Manager; Anysphere (Cursor): Software Engineer, Storage; Broadcom: Mainframe Software, Technical Support Engineer - Storage Management",
+      "Guard Result": "deterministic",
+      "Recommendation": "Implement before broadening positives"
+    },
+    "HYBRID_REVIEW_MODE": {
+      "Rule ID": "HYBRID_REVIEW_MODE",
+      "Rule Type": "export-drop",
+      "Description": "Move hybrid_non_toronto hard drops into review queue",
+      "Affected Count": 343,
+      "Recovered Count": 343,
+      "Potential Noise Count": 343,
+      "Seed URLs Recovered": "",
+      "Examples": "Scale AI-adjacent: Labelbox: Forward Deployed Engineer; Scale AI-adjacent: Labelbox: Forward Deployed Engineering Manager; Scale AI-adjacent: Labelbox: Forward Deployed Engineer, RL Environments; Hugging Face-adjacent: Lightning AI: Machine Learning Solutions Engineer; Arize AI: DevSecOps Engineer (TypeScript & Agentic AI)",
+      "Guard Result": "review-only",
+      "Recommendation": "Audit examples before restoring"
+    },
+    "AI-EVAL_FAMILY": {
+      "Rule ID": "AI-EVAL_FAMILY",
+      "Rule Type": "role-family",
+      "Description": "Detect AI-EVAL candidates with guardrails",
+      "Affected Count": 7,
+      "Recovered Count": 7,
+      "Potential Noise Count": 0,
+      "Seed URLs Recovered": "Image Tutor; Video Tutor; AI Tutor - Chinese; AI Tutor - Crypto",
+      "Examples": "Skild AI: Technical Product Manager - Data Annotation & Labelling; Skild AI: Technical Product Manager - Data Annotation & Labelling; Skild AI: Technical Product Manager - Data Annotation & Labelling; xAI: Image Tutor; xAI: Video Tutor",
+      "Guard Result": "7/7 guard passed",
+      "Recommendation": "Review candidate rows; no band recalculation in V1"
+    },
+    "CREATIVE-AI_FAMILY": {
+      "Rule ID": "CREATIVE-AI_FAMILY",
+      "Rule Type": "role-family",
+      "Description": "Detect CREATIVE-AI candidates with guardrails",
+      "Affected Count": 1,
+      "Recovered Count": 1,
+      "Potential Noise Count": 0,
+      "Seed URLs Recovered": "AI Creative Producer - Ads",
+      "Examples": "ElevenLabs: AI Creative Producer - Ads",
+      "Guard Result": "1/1 guard passed",
+      "Recommendation": "Review candidate rows; no band recalculation in V1"
+    },
+    "AI-PROGRAM-OPS_FAMILY": {
+      "Rule ID": "AI-PROGRAM-OPS_FAMILY",
+      "Rule Type": "role-family",
+      "Description": "Detect AI-PROGRAM-OPS candidates with guardrails",
+      "Affected Count": 13,
+      "Recovered Count": 9,
+      "Potential Noise Count": 4,
+      "Seed URLs Recovered": "Technical Program Manager; Program Manager; AI Programs Analyst; Product Operations Manager",
+      "Examples": "Character.AI: Technical Program Manager, AI Infrastructure; Scale AI: Technical Program Manager, Public SectorColorado Springs, COApply Now; Character.AI: Technical Program Manager, AI Infrastructure; Scale AI: Technical Program Manager, Public SectorColorado Springs, COApply Now; Scale AI: Technical Program Manager, Public SectorColorado Springs, COApply Now",
+      "Guard Result": "9/13 guard passed",
+      "Recommendation": "Review candidate rows; no band recalculation in V1"
+    },
+    "DEPLOYMENT-STRATEGY_FAMILY": {
+      "Rule ID": "DEPLOYMENT-STRATEGY_FAMILY",
+      "Rule Type": "role-family",
+      "Description": "Detect DEPLOYMENT-STRATEGY candidates with guardrails",
+      "Affected Count": 16,
+      "Recovered Count": 16,
+      "Potential Noise Count": 0,
+      "Seed URLs Recovered": "Deployment Strategist - North America",
+      "Examples": "Hebbia: AI Strategist; Hebbia: AI Strategist, Strategic Accounts; Hebbia: Forward Deployed Banker (AI Strategist); Hebbia: Forward Deployed Investor (AI Strategist); DevRev: Forward Deployed AI Strategist ",
+      "Guard Result": "16/16 guard passed",
+      "Recommendation": "Review candidate rows; no band recalculation in V1"
+    }
+  },
+  "warnings": [
+    {
+      "type": "cache_only_exclusions",
+      "count": 2
+    },
+    {
+      "type": "canonical_collisions",
+      "count": 89
+    },
+    {
+      "type": "count_mismatch",
+      "artifact": "baseline_excel_unique_urls",
+      "observed": 581,
+      "expected": 586
+    }
+  ]
+}

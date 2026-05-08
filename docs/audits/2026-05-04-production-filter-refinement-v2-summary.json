@@ -1,0 +1,50 @@
+{
+  "run_date": "2026-05-01",
+  "generated_at": "2026-05-04T20:50:18.236Z",
+  "baseline_sha_before": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+  "baseline_sha_after": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+  "baseline_unchanged": true,
+  "outputs": {
+    "workbook": "career-ops/output/production-filter-refinement-review-2026-05-01-v2.xlsx",
+    "ledgers": {
+      "retainedTitle": "career-ops/output/checkpoints/2026-05-01/baseline-retained-title-ledger.tsv",
+      "prePipeline": "career-ops/output/checkpoints/2026-05-01/pre-pipeline-candidates.tsv",
+      "enrichment": "career-ops/output/checkpoints/2026-05-01/enrichment-ledger.tsv",
+      "location": "career-ops/output/checkpoints/2026-05-01/location-dealbreaker-ledger.tsv",
+      "scoring": "career-ops/output/checkpoints/2026-05-01/scoring-ledger.tsv"
+    }
+  },
+  "counts": {
+    "pipeline_rows": 956,
+    "scan_history_rows_for_run_date": 1671,
+    "baseline_excel_rows": 613,
+    "shadow_hard_drops": 552,
+    "visible_shadow_hard_drops": 287,
+    "sales_hard_drops": 47,
+    "comp_hard_drops": 17,
+    "yoe_hard_drops": 149,
+    "location_hard_drops": 316,
+    "missing_seed_explainability_rate": "14/14",
+    "old_band_distribution": "{\"A\":367,\"B\":198,\"S\":37,\"C\":11}",
+    "shadow_band_distribution": "{\"S\":266,\"A\":380,\"B\":216,\"C\":94}"
+  },
+  "sheet_names": [
+    "Run Manifest",
+    "Shadow Decisions",
+    "Hard Drop Review",
+    "Sales Hard Drops",
+    "Comp YoE Location",
+    "Score Deltas",
+    "Reviewer Queue",
+    "Metrics",
+    "Known Missing Seeds"
+  ],
+  "seed_trace_summary": {
+    "total": 14,
+    "explained": 14
+  },
+  "warnings": [
+    "baseline-retained-title-ledger is limited to retained 2026-05-01 artifacts and does not claim historical raw title rejects",
+    "shadow bands are calibration-only and not production defaults"
+  ]
+}

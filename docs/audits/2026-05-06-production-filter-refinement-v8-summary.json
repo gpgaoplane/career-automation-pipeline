@@ -1,0 +1,63 @@
+{
+  "run_date": "2026-05-01",
+  "generated_at": "2026-05-06T14:25:24.809Z",
+  "baseline_sha_before": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+  "baseline_sha_after": "7bfe4ec5a099102fa0b79a5a50d874a019ceeb1e2842b38b01954e51f1ed071e",
+  "baseline_unchanged": true,
+  "outputs": {
+    "workbook": "career-ops/output/production-filter-refinement-review-2026-05-01-v8.xlsx",
+    "ledgers": {
+      "retainedTitle": "career-ops/output/checkpoints/2026-05-01/baseline-retained-title-ledger.tsv",
+      "prePipeline": "career-ops/output/checkpoints/2026-05-01/pre-pipeline-candidates.tsv",
+      "enrichment": "career-ops/output/checkpoints/2026-05-01/enrichment-ledger.tsv",
+      "location": "career-ops/output/checkpoints/2026-05-01/location-dealbreaker-ledger.tsv",
+      "scoring": "career-ops/output/checkpoints/2026-05-01/scoring-ledger.tsv"
+    }
+  },
+  "counts": {
+    "pipeline_rows": 933,
+    "scan_history_rows_for_run_date": 1671,
+    "baseline_excel_rows": 613,
+    "shadow_hard_drops": 535,
+    "visible_shadow_hard_drops": 249,
+    "sales_hard_drops": 81,
+    "territory_hard_drops": 101,
+    "comp_hard_drops": 1,
+    "yoe_hard_drops": 148,
+    "location_hard_drops": 361,
+    "source_repair_review_rows": 184,
+    "missing_seed_explainability_rate": "14/14",
+    "old_band_distribution": "{\"A\":354,\"B\":188,\"S\":37,\"C\":11}",
+    "shadow_band_distribution": "{\"S\":254,\"A\":384,\"B\":221,\"C\":74}",
+    "validation_findings": 0,
+    "validation_blocking_findings": 0
+  },
+  "sheet_names": [
+    "Run Manifest",
+    "Shadow Decisions",
+    "Hard Drop Review",
+    "Sales Hard Drops",
+    "Comp YoE Location",
+    "Score Deltas",
+    "Validation Findings",
+    "Source Repair Review",
+    "Reviewer Queue",
+    "Metrics",
+    "Known Missing Seeds"
+  ],
+  "validation": {
+    "total_findings": 0,
+    "blocking_findings": 0,
+    "review_only_findings": 0,
+    "review_ready": true
+  },
+  "seed_trace_summary": {
+    "total": 14,
+    "explained": 14
+  },
+  "warnings": [
+    "baseline-retained-title-ledger is limited to retained 2026-05-01 artifacts and does not claim historical raw title rejects",
+    "shadow bands are calibration-only and not production defaults",
+    "no blocking validation findings; review-only findings may still need sampling"
+  ]
+}
