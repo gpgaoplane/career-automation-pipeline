@@ -960,3 +960,161 @@
 - [ ] https://careers.nebius.com/?gh_jid=4816975101 | Nebius Group | Technical Account Manager
 - [ ] https://careers.nebius.com/?gh_jid=4770163101 | Nebius Group | Technical Product Manager - AI Cloud Network
 - [ ] https://careers.nebius.com/?gh_jid=4737052101 | Nebius Group | Technical Product Manager - Soperator
+
+- [ ] https://job-boards.greenhouse.io/lightningai/jobs/7718708003 | Hugging Face-adjacent: Lightning AI | Infrastructure Engineer (Storage)
+- [ ] https://jobs.ashbyhq.com/legora/e4ce19dc-e800-42cd-835f-dcc43b96d004 | Harvey-adjacent: Legora | Software Engineer - AI Enablement & Workplace Technology
+- [ ] https://jobs.ashbyhq.com/xbowcareers/68f9d128-fe9b-43d3-8cd4-99a71a575a00 | XBOW | Field Engineer - Application / Offensive Security
+- [ ] https://jobs.ashbyhq.com/xbowcareers/09439fdb-a556-4d34-9043-eb9928bece8d | XBOW | Field Engineer - Offensive/Application Security
+- [ ] https://veritone.wd1.myworkdayjobs.com/job/United-States-of-America---Remote/Solutions-Architect---ATS---Programmatic-Integration-Specialist_R0158 | Veritone | Solutions Architect - ATS & Programmatic Integration Specialist
+- [ ] https://fis.wd5.myworkdayjobs.com/job/IRL-DUBL-11-12/Commercial-Product-Manager---Data-and-AI-_JR0306050-1 | Fidelity National Information Services | Commercial Product Manager – Data and AI 
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Product-Manager-II_JR0302576 | Fidelity National Information Services | Product Manager II
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Product-Manager--Commercial-Lending-Suite_JR0306056-1 | Fidelity National Information Services | Product Manager, Commercial Lending Suite
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/India---Gurgaon/Product-manager---III--Personalization---AI-_R-102763 | Expedia Group | Product manager - III (Personalization & AI)
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/India---Gurgaon/Data-Engineer-III--RAG-and-Gen-AI_R-103482-1 | Expedia Group | Data Engineer III, RAG and Gen AI
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/Spain---Madrid/Technical-Product-Manager-III_R-105105-1 | Expedia Group | Technical Product Manager III
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/India---Bangalore/Machine-Learning-Engineer-III_R-99283-1 | Expedia Group | Machine Learning Engineer III
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/India---Gurgaon/Machine-Learning-Engineer-II_R-101021 | Expedia Group | Machine Learning Engineer II
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/USA---California---San-Jose/Product-Manager--Autonomous-Operations_R-105339 | Expedia Group | Product Manager, Autonomous Operations
+- [ ] https://expedia.wd108.myworkdayjobs.com/job/India---Gurgaon/Software-Development-Engineer-II--AI-Platform---Finance-Products_R-101356 | Expedia Group | Software Development Engineer II, AI Platform – Finance Products
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Dublin/SR-IT-Infra-Governance---Architecture-Specialist_RP1036957 | F5 | Enterprise Architect
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Madrid/Global-Solutions-Engineer-Telefonica_RP1037258-1 | F5 | Global Solutions Engineer Telefonica
+- [ ] https://ffive.wd5.myworkdayjobs.com/job/Vietnam-Homebase/Senior-Solutions-Engineer--Ho-Chi-Minh-_RP1036468 | F5 | Solutions Engineer (Ho Chi Minh)
+- [ ] https://sonyglobal.wd1.myworkdayjobs.com/job/New-York/Technology-Field-Engineer--End-User-Support_JR-118579-1 | Sony | Technology Field Engineer, End User Support
+- [ ] https://workday.wd5.myworkdayjobs.com/job/Costa-Rica/Technical-Account-Manager_JR-0102943-2 | Workday | Technical Account Manager
+- [ ] https://workday.wd5.myworkdayjobs.com/job/Canada-ON-Toronto/Software-Engineer---AI-Pipelines_JR-0106620 | Workday | Software Engineer - AI Pipelines
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-AZ-Scottsdale/Product-Manager--Paradox-LLM-Platform_JR-0106071-1 | Workday | Product Manager, Paradox LLM Platform
+- [ ] https://kla.wd1.myworkdayjobs.com/job/Ann-Arbor-MI/Forward-Deployed-Engineer---Integration_2636219-2 | KLA | Forward Deployed Engineer — Integration
+- [ ] https://kla.wd1.myworkdayjobs.com/job/Ann-Arbor-MI/Forward-Deployed-Engineer---Workflow_2636220-2 | KLA | Forward Deployed Engineer — Workflow
+- [ ] https://kla.wd1.myworkdayjobs.com/job/Ann-Arbor-MI/Forward-Deployed-Engineer_2636221-1 | KLA | Forward Deployed Engineer
+- [ ] https://broadcom.wd1.myworkdayjobs.com/job/ITA-Milan-Remote-Location/Mainframe-Technical-Consultant----Mainframe-AIOPS_R023914 | Broadcom | Mainframe Technical Consultant  - Mainframe AIOPS
+- [ ] https://avav.wd1.myworkdayjobs.com/job/Centreville-VA/Machine-Learning-Engineer_7437 | Anduril-adjacent: AeroVironment | Machine Learning Engineer
+- [ ] https://symbotic.wd504.myworkdayjobs.com/job/USA-Remote--Travel/Field-Service-and-Deployment-Engineer_R6963 | Symbotic | Field Service and Deployment Engineer
+- [ ] https://sec.wd3.myworkdayjobs.com/job/12100-Samsung-Blvd-Austin-TX-USA/Device-Integration-Engineer_R116953 | Samsung | Device Integration Engineer
+- [ ] https://sec.wd3.myworkdayjobs.com/job/12100-Samsung-Blvd-Austin-TX-USA/Module-Integration-Engineer_R116987 | Samsung | Module Integration Engineer
+- [ ] https://sec.wd3.myworkdayjobs.com/job/Budapest-Gateway-Office-Centre-Budapest-Hungary/Brand-Memory-Product-Manager_R116580 | Samsung | Brand Memory Product Manager
+- [ ] https://sec.wd3.myworkdayjobs.com/job/12100-Samsung-Blvd-Austin-TX-USA/Process-Integration-Engineer_R116952 | Samsung | Process Integration Engineer
+- [ ] https://boards.greenhouse.io/cloudflare/jobs/7000469?gh_jid=7000469 | Cloudflare | Solutions Architect, AI/Cloudflare Developer Platform 
+- [ ] https://careers.airbnb.com/positions/7905365?gh_jid=7905365 | Airbnb | Product Manager, Relevance and Personalization
+- [ ] https://job-boards.greenhouse.io/assemblyai/jobs/4693817005 | AssemblyAI | Forward Deployed Engineer, Onboarding 
+- [ ] https://www.observe.ai/position?gh_jid=5211036008 | Observe.AI | AI Agent Engineer, Client Facing
+- [ ] https://job-boards.greenhouse.io/scaleai/jobs/4518690005 | Scale AI | Field Engineer, Public Sector
+- [ ] https://job-boards.greenhouse.io/scaleai/jobs/4692308005 | Scale AI | Product Manager, Trust & Safety
+- [ ] https://job-boards.greenhouse.io/scaleai/jobs/4640096005 | Scale AI | Solutions Engineer, Robotics
+- [ ] https://complyadvantage.com/careers/jobs/8508082002?gh_jid=8508082002 | ComplyAdvantage | Product Manager - Regulatory Reporting
+- [ ] https://job-boards.greenhouse.io/gitlab/jobs/8537853002 | GitLab | Distinguished Engineer, Agentic SDLC & Non‑Linear Productivity
+- [ ] https://job-boards.greenhouse.io/gitlab/jobs/8517171002 | GitLab | Forward Deployed Engineer
+- [ ] https://job-boards.greenhouse.io/gitlab/jobs/8396674002 | GitLab | Manager, Solutions Architects - SF Bay area
+- [ ] https://jobs.ashbyhq.com/notion/71cea34b-63aa-4b6f-9977-1f755cc4eaf7 | Notion AI | Manager - Solutions Engineering, Sydney
+- [ ] https://jobs.ashbyhq.com/Sierra/1a0a0334-41f8-4c15-9ed8-615336855e5e | Sierra | Agent Engineer, TLM
+- [ ] https://jobs.ashbyhq.com/unstructured/d0c516ec-cbb2-4560-99d9-abdc535ed645 | Unstructured | Forward Deployed Engineer
+- [ ] https://jobs.ashbyhq.com/unstructured/9df95483-7177-4f98-850e-4abbdf530434 | Unstructured | AI Engineer - Public Sector
+- [ ] https://jobs.ashbyhq.com/uipath/bd6678e1-3288-469a-ba1c-759b4232e097 | UiPath | Technical Account Manager
+- [ ] https://jobs.ashbyhq.com/uipath/626c37e3-f90d-4c10-a8ff-47748b2e1d00 | UiPath | Emerging Enterprise Account Executive (Agentic AI)
+- [ ] https://jobs.ashbyhq.com/Crusoe/d6a78556-dc38-45ef-b8c9-43198feb9263 | Crusoe | Group Product Manager, Storage (SF, Sunnyvale, Seattle)
+- [ ] https://jobs.ashbyhq.com/Crusoe/16d96420-c0eb-4e88-b2f0-3de0dfc1a535 | Crusoe | Group Product Manager, Storage (Denver)
+- [ ] https://jobs.ashbyhq.com/cognition/b3e47b13-df84-4ed3-a70b-f4d20cec6f82 | Codeium | Forward Deployed Marketer
+- [ ] https://jobs.ashbyhq.com/decagon/c2ea9bd2-7a20-4fbb-b301-5e587415baeb | Decagon | AI Engineer
+- [ ] https://jobs.ashbyhq.com/mercor/e106399e-d85e-4af2-9bc8-6a0e144f318f | Mercor | Software Engineer, Applied AI
+- [ ] https://jobs.ashbyhq.com/writer/ac8ce91e-81bd-4e1c-a525-3a81604fd4ef | Writer | Solutions architect (pre-sales) (West)
+- [ ] https://jobs.ashbyhq.com/writer/a1d96909-a580-4fd6-b099-bfc8a8dfa6e3 | Writer | Solutions architect (East) 
+- [ ] https://jobs.ashbyhq.com/writer/ee8e4914-8b56-40c1-97eb-fc530c123d30 | Writer | AI deployment engineer (West)
+- [ ] https://jobs.ashbyhq.com/writer/a9bff2f8-2443-47fa-8aa5-529026eb268c | Writer | AI deployment engineer (Central)
+- [ ] https://jobs.ashbyhq.com/writer/e86dd425-0711-4a28-af87-355f4a83b7bc | Writer | AI deployment engineer (East)
+- [ ] https://jobs.ashbyhq.com/snowflake/c6737b02-5f22-489c-8565-659fd1e5051a | Snowflake | Cloud Partner Solutions Engineer (AWS / Azure / Google Cloud)
+- [ ] https://jobs.ashbyhq.com/openai/05a8cae8-81bd-4f7b-bc48-41ef1bd67e5d | OpenAI | Product Manager, Sensitive Deployments
+- [ ] https://jobs.ashbyhq.com/openai/9f179118-5df6-4ccb-b8d1-cfb0642fba37 | OpenAI | Solutions Engineering, Ads Solutions 
+- [ ] https://jobs.ashbyhq.com/openai/f6494cf8-efbc-4dbe-ae76-662088b4f32c | OpenAI | Product Manager, Cyber Safety
+- [ ] https://jobs.ashbyhq.com/openai/0f4da2b4-df8a-4560-809d-d0a6ac1ad9bc | OpenAI | Product Manager, Financial Engineering
+- [ ] https://jobs.ashbyhq.com/openai/1c67d2de-ef49-44c2-978a-ab0d1dd1e236 | OpenAI | Product Manager, Premium Subscriptions
+- [ ] https://jobs.ashbyhq.com/openai/11a61b5b-3c1f-472f-93ec-4cb3e37e5ae8 | OpenAI | Product Manager, Families
+- [ ] https://jobs.ashbyhq.com/openai/791d2486-1e95-483f-ab79-098b255d1a16 | OpenAI | Product Manager, ChatGPT and Codex App Ecosystem
+- [ ] https://jobs.ashbyhq.com/openai/193d33d8-4993-4220-bc5d-cfd792d7e583 | OpenAI | AI Deployment Engineer - Startups
+- [ ] https://jobs.ashbyhq.com/openai/d8665fa8-89f3-4414-824d-3a3fcc883de5 | OpenAI | AI Deployment Engineer, Codex | Sydney
+- [ ] https://jobs.ashbyhq.com/openai/bd49dc36-bfc4-477e-8ddd-b0f8fc878c51 | OpenAI | AI Deployment Engineer, Codex | Singapore
+- [ ] https://jobs.ashbyhq.com/openai/980bc2ea-2c35-4546-bb48-5496a4e6847f | OpenAI | AI Deployment Engineer - Startups
+- [ ] https://jobs.ashbyhq.com/openai/75cdb2fe-5841-4649-8d88-a133deb94696 | OpenAI | AI Deployment Engineer - Startups
+- [ ] https://jobs.ashbyhq.com/openai/f659227e-e916-45fc-8726-6861f60979b6 | OpenAI | Ads Product Manager
+- [ ] https://jobs.ashbyhq.com/cohere/7a420921-b7dc-4341-a134-6fe209615e86 | Cohere | Engineering Manager, Agentic Platform 
+- [ ] https://jobs.ashbyhq.com/elevenlabs/85b7489f-5b0c-4f21-9c1c-7b76ed904c44 | ElevenLabs | Enterprise Solutions Engineer - Singapore
+- [ ] https://jobs.ashbyhq.com/doppel/02064b81-b0a6-4e89-9cf0-6a442ef97ce4 | Doppel | Forward Deployed Engineer
+- [ ] https://jobs.lever.co/veeva/2a642b08-62ca-4fe6-9bf0-c98c23a26150 | Veeva Systems | Technical Consultant - Integrations
+- [ ] https://jobs.lever.co/veeva/76102116-f0bc-488a-ad5b-b9db688f6837 | Veeva Systems | Technical Consultant - Integrations
+- [ ] https://jobs.lever.co/veeva/dd1d2834-b9d2-400b-987e-d9b102c3996b | Veeva Systems | Technical Consultant - Integrations
+- [ ] https://jobs.lever.co/shieldai/dce17863-39ea-4e24-ae68-c0ed7d53c540 | Shield AI | Technical Product Manager (R4779)
+- [ ] https://jobs.lever.co/palantir/0fccbe95-2520-4df3-8600-7897656c06a2 | Palantir | Forward Deployed Infrastructure Engineer - US Government
+- [ ] https://jobs.lever.co/palantir/be4ab5cb-9caa-4c2a-97b9-c73805fca4fc | Palantir | Forward Deployed Software Engineer - US Government - Federal Health and Civilian
+- [ ] https://jobs.lever.co/palantir/e7100322-be11-40c8-9dba-7a21b7302c08 | Palantir | Forward Deployed Software Engineer - US Government - Federal Health and Civilian
+- [ ] https://app.careerpuck.com/job-board/domino-data-lab/job/7895651 | Domino Data Lab | Solutions Engineer
+- [ ] https://app.careerpuck.com/job-board/domino-data-lab/job/7895446 | Domino Data Lab | Solutions Engineer, Public Sector
+- [ ] https://career.sea.com/jobs/product-manager | Sea Limited | Product Manager
+- [ ] https://www.ibm.com/careers/search?job=ai-developer&location=austin-tx | IBM | AI Developer
+- [ ] https://jobs.lenovo.com/en_US/careers/JobDetail/Product-Manager/67890 | Lenovo | Product Manager
+- [ ] https://www.lifeatcanva.com/en/jobs/6000000001050022/product-manager-subscriptions-lifecycle/ | Canva | Product Manager - Subscriptions Lifecycle
+- [ ] https://www.mongodb.com/careers/job/PM67890 | MongoDB | Product Manager
+- [ ] https://www.twelvelabs.io/careers/#Machine-Learning-Engineer | Twelve Labs | Machine Learning Engineer
+- [ ] https://www.twelvelabs.io/careers/#Product-Manager | Twelve Labs | Product Manager
+- [ ] https://www.everpuredata.com/company/careers/opportunities.html#product-manager-ai | Pure Storage | Product Manager - AI Solutions
+- [ ] https://jobs.gem.com/soundhound/am9icG9zdDrgEVMDydNw3B-Wy8ZCY7nz | SoundHound AI | Partner Engineer, Generative AI (Automotive+)
+- [ ] https://jobs.gem.com/soundhound/am9icG9zdDoOOdG-_B-rUjgXAXlyENan | SoundHound AI | Cognitive Implementation Engineer II, Enterprise
+- [ ] https://zhaopin.kuaishou.cn/recruit/e/#/official/index/automl | Kuaishou Technology | AutoML Engineer
+- [ ] https://zhaopin.kuaishou.cn/recruit/e/#/official/index/multimodal | Kuaishou Technology | Multimodal Engineer
+- [ ] https://zhaopin.kuaishou.cn/recruit/e/#/official/index/deeplearning | Kuaishou Technology | Deep Learning Engineer
+- [ ] https://zhaopin.kuaishou.cn/recruit/e/#/official/index/machinelearning | Kuaishou Technology | Machine Learning Engineer
+- [ ] https://www.databricks.com/company/careers/open-positions?department=product&location=tokyo%2C%20japan | Databricks | Product Manager
+- [ ] https://abnormal.ai/careers/open-roles/product-manager | Abnormal Security | Product Manager
+- [ ] https://www.cloudflare.com/careers/product-manager | Replicate | Product Manager
+- [ ] https://hippocraticai.com/careers/job/product-manager | Hippocratic AI | Product Manager
+- [ ] https://careers.hpe.com/us/en/job/abcd1234efgh5678ijkl9012mnop Cloud Solutions Architect | Hewlett Packard Enterprise | Cloud Solutions Architect
+- [ ] https://careers.netapp.com/job/cloud-solutions-architect | NetApp | Cloud Solutions Architect
+- [ ] https://jobs.bytedance.com/en/position/application | ByteDance | Product Manager
+- [ ] https://example.com/jobs/product-manager-ny | Baidu | Product Manager
+- [ ] https://careers.trip.com/job/product-manager/beijing/china | Trip.com | Product Manager
+- [ ] https://careers.bigbear.ai/jobs/4430?lang=en-us | BigBear.ai | Forward Deployed Engineer
+- [ ] https://careers.adobe.com/us/en/job/67890/product-manager | Adobe | Product Manager
+- [ ] https://careers.datadoghq.com/job/product-manager-new-york/ | Datadog | Product Manager
+- [ ] https://careers.zoom.us/jobs/view?id=56789 | Zoom | Product Manager
+- [ ] https://trimblecareers.trimble.com/careers/product-manager | Trimble | Product Manager
+- [ ] https://stripe.com/jobs/product/product-manager-financial-partnerships | Stripe | Product Manager, Financial Partnerships
+- [ ] https://www.coinbase.com/careers/positions/product-manager | Coinbase | Product Manager
+- [ ] https://careers.circle.com/us/en/job/123457/product-manager | Circle Internet Group | Product Manager
+- [ ] https://www.samsara.com/company/careers/roles/product-manager | Samsara | Product Manager
+- [ ] https://jobs.infineon.com/job/Munich-Powering-AI-Engineer/1234567890 | Infineon Technologies | Powering AI Engineer
+- [ ] http://stability.ai/careers?gh_jid=4770256101 | Stability AI | Multimodal Generative AI Researcher
+- [ ] http://stability.ai/careers?gh_jid=4840171101 | Stability AI | Solutions Engineer
+- [ ] http://stability.ai/careers?gh_jid=4712826101 | Stability AI | Generative AI Inference Engineer
+- [ ] https://airia.com/careers/ai-engineer | Airia | AI Engineer
+- [ ] https://airia.com/careers/product-manager-ai | Airia | Product Manager - AI
+- [ ] https://www.linkedin.com/company/humaforhealth/jobs/123457 | Huma | Product Manager
+- [ ] https://suffescom.zohorecruit.in/jobs/Product-Manager | Suffescom Solutions | Product Manager
+- [ ] https://www.asteralabs.com/careers/#product-manager | Astera Labs | Product Manager
+- [ ] https://careers.nebius.com/?gh_jid=4387617101 | Nebius Group | AI/ML Specialist Solutions Architect
+
+- [ ] https://job-boards.greenhouse.io/vercel/jobs/5804110004 | Vercel | Solutions Architect
+- [ ] https://job-boards.eu.greenhouse.io/nscaleoperationsukltd/jobs/4808553101 | Nscale | Solutions Architect (AI GPU Infrastructure / Data Centre Architecture)
+- [ ] https://workday.wd5.myworkdayjobs.com/job/USA-CA-Pleasanton/Technical-Consultant-for-Workday-CLM-Evisort_JR-0106966 | Workday | Technical Consultant for Workday CLM Evisort
+- [ ] https://fis.wd5.myworkdayjobs.com/job/CAN-MARK-125-STE-100/Product-Manager-I--Commercial_JR0306911 | Fidelity National Information Services | Product Manager I, Commercial
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Transformation-Product-Manager---AI-Solutions_JR0305371 | Fidelity National Information Services | Transformation Product Manager – AI Solutions
+- [ ] https://fis.wd5.myworkdayjobs.com/job/US-FL-JAX-347/Commercial-Product-Manager_JR0305975-1 | Fidelity National Information Services | Commercial Product Manager
+- [ ] https://www.wiz.io/careers/job/4679535006/solutions-engineer-growth-east?gh_jid=4679535006 | CrowdStrike-adjacent: Wiz | Solutions Engineer, Growth - EastSales/SERemote - USA
+- [ ] https://www.wiz.io/careers/job/4675870006/technical-account-manager-northeast?gh_jid=4675870006 | CrowdStrike-adjacent: Wiz | Technical Account Manager (Northeast)Technical Solutions Management/Technical Solutions ManagementRemote - USA
+- [ ] https://scale.com/careers/4692308005 | Scale AI | Product Manager, Trust & SafetySan Francisco, CAApply Now
+- [ ] https://scale.com/careers/4518690005 | Scale AI | Field Engineer, Public SectorWashington, DCApply Now
+- [ ] https://scale.com/careers/4640096005 | Scale AI | Solutions Engineer, RoboticsSan Francisco, CAApply Now
+- [ ] https://www.weareroku.com/jobs/technical-account-manager-new-york-united-states | Roku | Technical Account Manager
+- [ ] https://block.xyz/careers/jobs/5209920008 | Block | Strategic Account Manager, Food and Beverage Salt Lake City, UT, US
+- [ ] https://elevenlabs.io/careers/85b7489f-5b0c-4f21-9c1c-7b76ed904c44/enterprise-solutions-engineer-singapore | ElevenLabs | Enterprise Solutions Engineer - SingaporeRemoteSingapore+3 more
+- [ ] https://job-boards.greenhouse.io/togetherai/jobs/5131941007 | Together AI | Forward Deployed Engineer (Inference & Post-Training)
+- [ ] https://job-boards.greenhouse.io/adyen/jobs/7736384 | Adyen | Implementation Engineer
+- [ ] https://job-boards.greenhouse.io/adyen/jobs/7377244 | Adyen | Integration Engineer
+- [ ] https://job-boards.greenhouse.io/adyen/jobs/7897113 | Adyen | Partner Solutions Engineer
+- [ ] https://job-boards.greenhouse.io/adyen/jobs/7645479 | Adyen | Solutions Engineer
+- [ ] https://careers.nebius.com/?gh_jid=4791845101 | Nebius Group | Field Engineer (Hardware Delivery) 
+- [ ] https://careers.nebius.com/?gh_jid=4824181101 | Nebius Group | Forward Deployed Engineer, Ecosystem
+- [ ] https://careers.nebius.com/?gh_jid=4633942101 | Nebius Group | Key Customers Solutions Architect 
+- [ ] https://careers.nebius.com/?gh_jid=4773256101 | Nebius Group | Partner Solutions Architect
+- [ ] https://careers.nebius.com/?gh_jid=4849774101 | Nebius Group | Product Manager - Public Notifications & Communications
+- [ ] https://careers.nebius.com/?gh_jid=4831199101 | Nebius Group | Technical Account Manager
+- [ ] https://coreweave.com/careers/job?4679718006&board=coreweave&gh_jid=4679718006 | CoreWeave | Product Manager, Finance
+- [ ] https://coreweave.com/careers/job?4622845006&board=coreweave&gh_jid=4622845006 | CoreWeave | Solutions Architect
+- [ ] https://coreweave.com/careers/job?4649044006&board=coreweave&gh_jid=4649044006 | CoreWeave | Solutions Architect - HPC/AI/ML
+- [ ] https://coreweave.com/careers/job?4649036006&board=coreweave&gh_jid=4649036006 | CoreWeave | Solutions Architect - Kubernetes
