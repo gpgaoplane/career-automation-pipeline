@@ -107,7 +107,7 @@ When creating your log (`docs/agents/<self>.md`), start from `templates/work-log
 
 > User content — outside all framework markers. Preserved on every re-init and upgrade. This section is the canonical project summary every agent reads.
 
-**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **393 currently enabled companies** (448 total in `career-ops/portals.yml`, 55 disabled after the 2026-05-01 user-directed SOURCE_BROKEN disable round). Historical roster milestones: Phase 2.7 cleanup produced 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily over-pruned to 388 enabled / 60 disabled; Codex restored 9 high-confidence false disables on 2026-04-30 to reach 397 / 51; Phase 2.8 closure on 2026-05-01 disabled 4 SOURCE_BROKEN companies (Palo Alto Networks, Grammarly, SiFive, EvenUp) per Will to land at the current 393 / 55 baseline. See `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 reconciliation and `docs/audits/2026-05-01-source-broken-disables.md` for the SOURCE_BROKEN round.
+**Project:** AI-powered job search pipeline for **Will (Xinyuan) Guo** — Toronto-based applied AI practitioner and former founder of Dalamula Technology. Wraps the `career-ops` open-source tool with Will's personal knowledge bank, custom scrapers, and a batch evaluation pipeline covering **392 currently enabled companies** (448 total in `career-ops/portals.yml`, 56 disabled after the 2026-05-09 Inspur disable). Historical roster milestones: Phase 2.7 cleanup produced 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily over-pruned to 388 enabled / 60 disabled; Codex restored 9 high-confidence false disables on 2026-04-30 (→ 397 / 51); Phase 2.8 closure on 2026-05-01 disabled 4 SOURCE_BROKEN companies (Palo Alto Networks, Grammarly, SiFive, EvenUp) per Will (→ 393 / 55); Phase 1 V10-wire cleanup on 2026-05-09 disabled Inspur (career URL resolves to product nav page) → 392 / 56. See `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 reconciliation and `docs/audits/2026-05-01-source-broken-disables.md` for the SOURCE_BROKEN round.
 
 **User contact:** `inquiry@dalamula.ai`. Targets remote roles from Toronto (no US presence viable for in-office roles).
 
@@ -270,7 +270,7 @@ node scripts/test-production-filter-refinement-audit.mjs
 ```
 Excel (450 companies)
     ↓ filter
-career-ops/portals.yml (448 companies, 393 enabled)
+career-ops/portals.yml (448 companies, 392 enabled)
     ↓
 scan.mjs ──────────────── Greenhouse/Ashby/Lever direct ATS URLs (zero token cost)
 custom-scraper.mjs ─────── 3-tier ATS discovery + Playwright for branded pages
@@ -341,7 +341,7 @@ career-ops/data/applications.md          ← master tracker
 
 ### Companies Source
 
-`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. Current `career-ops/portals.yml` live roster is **448 total / 393 enabled / 55 disabled** after the 2026-05-01 SOURCE_BROKEN disable round. Historical Phase 2.7 cleanup was 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily reduced that to 388 enabled / 60 disabled before 9 false disables were restored on 2026-04-30 (→ 397/51); 2026-05-01 closure round disabled Palo Alto Networks, Grammarly, SiFive, EvenUp (→ 393/55). Disabled rows use explicit `note:` values; consult `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 cohort, `docs/audits/2026-05-01-source-broken-disables.md` for the closure cohort, and `docs/design/companies-roster.md` for the generated live roster. Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics. Sales/Business Development positive title-filter group also removed 2026-05-01 to drop AE-only roles per Will's scope refinement (multi-track AE+AI-ENG roles still pass via their other matches).
+`context/AI_Companies_Consolidated_Ranked_v2.xlsx` — 450 ranked companies. Current `career-ops/portals.yml` live roster is **448 total / 392 enabled / 56 disabled** after the 2026-05-09 Inspur disable. Historical Phase 2.7 cleanup was 428 enabled / 20 disabled; Phase 2.8 Step 0 temporarily reduced that to 388 enabled / 60 disabled before 9 false disables were restored on 2026-04-30 (→ 397/51); 2026-05-01 closure round disabled Palo Alto Networks, Grammarly, SiFive, EvenUp (→ 393/55); Phase 1 V10-wire cleanup on 2026-05-09 disabled Inspur (career URL is a product nav page) (→ 392/56). Disabled rows use explicit `note:` values; consult `docs/audits/2026-04-30-step0-disabled-company-audit.md` for the Step 0 cohort, `docs/audits/2026-05-01-source-broken-disables.md` for the closure cohort, and `docs/design/companies-roster.md` for the generated live roster. Excluded categories at scrape: semiconductors/HW supply chain, space, maritime, defense drones, pure consumer electronics. Sales/Business Development positive title-filter group also removed 2026-05-01 to drop AE-only roles per Will's scope refinement (multi-track AE+AI-ENG roles still pass via their other matches).
 
 Excel columns: Rank | Company Name | Type | Valuation | HQ | Category | Description | Career URL.
 

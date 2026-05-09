@@ -43,7 +43,7 @@ This pattern is reusable for any future calibration cycle (Phase 3 calibration r
 
 Durable invariants from the 2026-05-01 closure cycle. Supplements (does not supersede) the 2026-04-30 closure-facts entry below — that entry captured sample-50 truths; this entry captures full-run truths and the iterations on top.
 
-- **Roster baseline now 448 total / 393 enabled / 55 disabled / 0 missing notes.** 4 SOURCE_BROKEN companies disabled on 2026-05-01: Palo Alto Networks, Grammarly, SiFive, EvenUp. Per-company rationale durable in `docs/audits/2026-05-01-source-broken-disables.md`. All disable rows carry explicit `note:` values.
+- **Roster baseline now 448 total / 392 enabled / 56 disabled / 0 missing notes** after 2026-05-09 Inspur disable (was 393/55 after 2026-05-01 closure). 4 SOURCE_BROKEN companies disabled on 2026-05-01: Palo Alto Networks, Grammarly, SiFive, EvenUp; per-company rationale durable in `docs/audits/2026-05-01-source-broken-disables.md`. Inspur added 2026-05-09 (D-24): careers_url resolves to product nav page, not a job board; semiconductor-category match. All disable rows carry explicit `note:` values.
 
 - **Scoring policy v2 is the canonical scoring law** (per D-21). S threshold ≥18 (was ≥12); AE-only roles dropped at output time with lenient AE-multi-track keep; intern jobs dropped (defensive); deal-breaker jobs dropped (no longer penalized -5); Senior/Principal title-strength penalty -2 → -5 (Junior/Jr/Associate stay at -2). Sales/Business Development positive title-filter group removed from `portals.yml` so future scans never ingest AE-only jobs.
 

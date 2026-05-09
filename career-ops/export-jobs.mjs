@@ -58,9 +58,11 @@ function loadTitleNegatives() {
   return negatives.map(n => String(n).toLowerCase());
 }
 
-// Returns a Set of company names whose enabled flag is not false.
-// Used at export time to drop pipeline.md rows from companies that have been
-// disabled since the row was scraped (e.g. SOURCE_BROKEN companies).
+// Returns a Set of company names whose enabled flag is not false. Used at
+// export time to drop pipeline.md rows from companies that have been disabled
+// since the row was scraped (e.g. SOURCE_BROKEN companies) AND rows whose
+// `company` field doesn't appear in the active roster at all (alias drift,
+// pipeline.md staleness). Both cases route to the same drop counter.
 function loadEnabledCompanies() {
   const raw = fs.readFileSync(path.join(__dirname, 'portals.yml'), 'utf8');
   const parsed = yaml.load(raw);
@@ -161,7 +163,7 @@ async function main() {
   //     routed to Source Repair Review sheet rather than Pending Jobs
   const titleNegatives = loadTitleNegatives();
   const enabledCompanies = loadEnabledCompanies();
-  let droppedDisabledCompany = 0;
+  let droppedNotInRoster = 0;
   let droppedTitleNegative = 0;
   const droppedTitleNegativeByMatch = {};
   let droppedIntern = 0;
@@ -175,7 +177,7 @@ async function main() {
     // have been disabled in portals.yml (e.g. SOURCE_BROKEN) since the row
     // was scraped should not appear in the workbook.
     if (!enabledCompanies.has(job.company)) {
-      droppedDisabledCompany++;
+      droppedNotInRoster++;
       return [];
     }
 
@@ -260,7 +262,7 @@ async function main() {
 
   const totalReasonHits = Object.values(droppedHardByReason).reduce((a, b) => a + b, 0);
   console.log(
-    `Dropped at output: ${droppedDisabledCompany} disabled-company, ${droppedTitleNegative} title-negative, ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker, ` +
+    `Dropped at output: ${droppedNotInRoster} not-in-roster, ${droppedTitleNegative} title-negative, ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker, ` +
     `${droppedHardUrls.size} V10 hard-drops (${totalReasonHits} reason-hits)`
   );
   if (droppedTitleNegative > 0) {
@@ -433,12 +435,18 @@ async function main() {
   autoWidth(sourceRepairSheet);
 
   // Sheet 5: Reviewer Queue (V10.1 — surfaces kept rows that V10 flagged for
-  // review). Mirrors shadow audit's Reviewer Queue logic: kept (not hard-dropped)
-  // AND (annotation contains "review" OR primary_family is UNKNOWN). Catches
-  // borderline cases like "Mistral Paris" (location_review_hybrid_onsite_without_clear_remote)
-  // that look indistinguishable from confidently-kept S-tier roles in Pending Jobs.
+  // review or has uncertainty about). Mirrors shadow audit's Reviewer Queue
+  // logic exactly: kept (not hard-dropped) AND `/review|unknown/i` matches the
+  // concatenated `annotations primary_family` string. Catches:
+  //   - explicit review flags (e.g. `location_review_hybrid_onsite_without_clear_remote`
+  //     on Mistral Paris)
+  //   - uncertainty annotations (yoe_unknown, comp_unknown, location_unknown_or_unrestricted)
+  //   - rows where V10 couldn't classify primary_family (UNKNOWN)
+  // Width is intentional: under-firing leaves V10 rule-library FPs (e.g. Scale AI
+  // Doha tagged `location_unknown_or_unrestricted`) hiding in Pending Jobs S/A
+  // tier with no surface for review. See `production-filter-refinement-audit.mjs:512`.
   const reviewerQueue = jobsScored.filter(j =>
-    /review/i.test(j.annotations_str || '') || j.primary_family === 'UNKNOWN'
+    /review|unknown/i.test(`${j.annotations_str || ''} ${j.primary_family || ''}`)
   );
   reviewerQueue.sort((a, b) => {
     if (b.shadow_score !== a.shadow_score) return b.shadow_score - a.shadow_score;
