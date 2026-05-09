@@ -434,19 +434,23 @@ async function main() {
   for (const row of sourceRepairRows) sourceRepairSheet.addRow(row);
   autoWidth(sourceRepairSheet);
 
-  // Sheet 5: Reviewer Queue (V10.1 — surfaces kept rows that V10 flagged for
-  // review or has uncertainty about). Mirrors shadow audit's Reviewer Queue
-  // logic exactly: kept (not hard-dropped) AND `/review|unknown/i` matches the
-  // concatenated `annotations primary_family` string. Catches:
-  //   - explicit review flags (e.g. `location_review_hybrid_onsite_without_clear_remote`
-  //     on Mistral Paris)
-  //   - uncertainty annotations (yoe_unknown, comp_unknown, location_unknown_or_unrestricted)
-  //   - rows where V10 couldn't classify primary_family (UNKNOWN)
-  // Width is intentional: under-firing leaves V10 rule-library FPs (e.g. Scale AI
-  // Doha tagged `location_unknown_or_unrestricted`) hiding in Pending Jobs S/A
-  // tier with no surface for review. See `production-filter-refinement-audit.mjs:512`.
+  // Sheet 5: Reviewer Queue. Per Will (2026-05-09 refinement): this sheet is
+  // for kept rows where V10 saw a signal but was UNCERTAIN about a hard-drop
+  // decision, not for rows where information is simply MISSING. Filter matches
+  // four ambiguity-pattern annotation prefixes:
+  //   - `*_review_*` — explicit review flags (location_review_hybrid_..., yoe_open_ended_review,
+  //     yoe_5_plus_review, source_repair_or_cache_miss_review)
+  //   - `*mixed*` — mixed/conflicting signals (remote_mixed_with_hybrid_onsite)
+  //   - `*crosses_floor*` — comp partially below threshold (comp_range_crosses_floor)
+  //   - `*partner_context*` — sales partner context present but below hard-drop threshold
+  // Deliberately EXCLUDED: `*_unknown` annotations (missing info, not ambiguity);
+  // confidently-classified annotations (yoe_0_2, toronto_hybrid_onsite); UNKNOWN
+  // primary_family alone (the V10 source_repair_or_cache_miss_review annotation
+  // already catches the UNKNOWN-family + high-intent-title intersection).
+  // Diverges from shadow audit (which used /review|unknown/i) — narrower scope
+  // matches Will's "ambiguity, not missing-info" criterion.
   const reviewerQueue = jobsScored.filter(j =>
-    /review|unknown/i.test(`${j.annotations_str || ''} ${j.primary_family || ''}`)
+    /(review|mixed|crosses_floor|partner_context)/i.test(j.annotations_str || '')
   );
   reviewerQueue.sort((a, b) => {
     if (b.shadow_score !== a.shadow_score) return b.shadow_score - a.shadow_score;
