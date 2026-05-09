@@ -509,3 +509,51 @@ docs/design/filter-pipeline-reference.md docs/agents/claude.md .collab/INDEX.md
 | Next agent action | Await Will's manual review of `career-ops/output/jobs-2026-05-08.xlsx`. Then merge `feat/phase-2.8-firecrawl` → `main`. Then Phase 3 candidate selection. |
 | Reversibility | Full — `git revert HEAD; git tag -d production-v10` restores pre-wire state. Shadow infra in `scripts/lib/` and V10 workbook untouched. |
 | Open questions | Phase 3 candidate selection (A-F). Whether to tighten conservative R2 path after Will's review. Whether to lift `tmp-v10-smoke-verify.mjs` pattern into permanent diagnostic tooling. |
+
+## 2026-05-09 — Phase 1 V10 wire cleanup based on Will's manual-review feedback
+
+**Goal:** Address 4 defects + 1 feature request Will surfaced during manual review of `jobs-2026-05-08.xlsx`. Issues: (1) Mistral Paris Lever role kept at S-tier despite Paris on-site, (2) Inspur non-career URL in Pending Jobs, (3) no Reviewer Queue sheet to surface review-flagged kept rows, (4) general FP/FN concern, (5) filter request to drop research/scientist/theoretical roles.
+
+**Approach:**
+1. Wrote diagnostic `tmp-diagnose-fps.mjs` that traced each URL through the full pipeline (cache → detectSourceHygiene → parseJdSections → detectTerritory → classifyRoleFamily → scoreJob) and surveyed the kept cohort against `\b(research|scientist|phd|theoretical)\b`. Findings: Mistral Paris had `extractRawLocations` city list missing Paris/France + `detectTerritory` UNKNOWN + V10 already emitted `location_review_hybrid_onsite_without_clear_remote` annotation but no production sheet surfaced it. Inspur had `detectSourceHygiene invalid=false` (heuristics don't catch valid-but-not-job marketing pages). 12 research/scientist roles in kept cohort because `AI Research Engineer` was in title_filter.positive AND bare `Scientist` not in negatives.
+2. Proposed Phase 1 (config + small code, this session) vs Phase 2 (V11 rule library refinement, deferred). Will approved Phase 1.
+3. Phase 1 changes: (a) Reviewer Queue sheet added to `career-ops/export-jobs.mjs` mirroring shadow workbook line 512. (b) `portals.yml` title_filter.negative expanded with `Research`, `Researcher`, `Scientist`, `Theoretical`, `Theorist`. (c) `AI Research Engineer` removed from title_filter.positive. (d) Inspur disabled (`enabled: false` + SOURCE_BROKEN note). (e) Layer 0 defense-in-depth in export-jobs.mjs: 0a drops disabled-company rows, 0b applies title_filter.negative at export time. Layer 0b mirrors scan.mjs filter logic so policy propagates without rescan.
+4. Re-ran `node export-jobs.mjs` against existing cache (zero Firecrawl cost, 30 seconds). Wrote diagnostic verifier `tmp-verify-phase1.mjs` to confirm Mistral Paris in Reviewer Queue (verified, with `location_review` annotation), Inspur 0 rows (verified after Layer 0a fix), 0 research/scientist rows in Pending (verified). Deleted both temp scripts.
+5. Net effect: 956 pipeline → 1 disabled-company + 39 title-negative + 0 intern + 370 deal_breaker + 301 V10 hard-drops + 163 source-repair + 238 kept = 956 ✓. Bands S=45/A=91/B=81/C=21 (was S=47/A=101/B=83/C=24). 88 reviewer-queue rows (S=12/A=34/B=30/C=12).
+
+**Decisions:**
+- D-24 (decisions.md): Phase 1 V10 wire cleanup. Documents the 5 issues, the diagnostic findings, the 5 fixes, the reasoning for choosing Phase 1 (config + small code) over Phase 2 (rule library refinement), and tradeoffs (substring "Research"/"Scientist" broad but acceptable; conservative R2 still pre-drops 370 hybrid; defense-in-depth duplicates filter across scan + export but justified).
+- Phase 2 (V11) parked as Candidate D in Phase 3 menu.
+
+**Updates:**
+- `career-ops/portals.yml` — title_filter changes + Inspur disable.
+- `career-ops/export-jobs.mjs` — Reviewer Queue sheet + Layer 0a/0b filters + console summary updates.
+- `.claude/memory/state.md` — full rewrite reflecting V10 wire shipped + rescan + Phase 1 cleanup landed.
+- `.claude/memory/decisions.md` — append D-24.
+- `docs/STATUS.md` — Phase 1 entry; handoff note rewritten.
+- `docs/agents/claude.md` — this Receipt.
+- Two commits: (1) `data: 2026-05-08 V10 full-scan rescan output` (pipeline.md + scan-history.tsv from yesterday's rescan); (2) `feat: Phase 1 V10 wire cleanup — Reviewer Queue sheet, research filter, Inspur disable`.
+
+**Verification:**
+- Mistral Paris in Reviewer Queue with `location_review_hybrid_onsite_without_clear_remote` annotation ✓
+- Inspur rows in Pending Jobs: 0 (Layer 0a worked) ✓
+- Research/scientist rows in Pending Jobs: 0 (Layer 0b worked) ✓
+- 88 reviewer-queue rows (43 unknown_family + 27 location_review + others) ✓
+- Bands sensible; total accounting balances ✓
+- Baseline workbook SHA `7BFE4EC5...071E` preserved ✓
+- 1,418 V10 test suite would still pass (no rule library changes; not re-run since unaffected) ✓
+
+### Task Receipt
+
+| Field | Value |
+|---|---|
+| Task | Phase 1 V10 wire cleanup based on Will's manual-review feedback |
+| Outcome | DONE — 5 issues addressed, workbook regenerated, all verifications pass |
+| Commits | (1) data: 2026-05-08 V10 full-scan rescan output. (2) feat: Phase 1 V10 wire cleanup. |
+| Files touched | `career-ops/portals.yml` · `career-ops/export-jobs.mjs` · `career-ops/data/pipeline.md` · `career-ops/data/scan-history.tsv` · `.claude/memory/state.md` · `.claude/memory/decisions.md` · `docs/STATUS.md` · `docs/agents/claude.md` |
+| Tests | Diagnostic + verifier scripts confirmed all 4 fixes effective; 1,418 V10 suite unaffected (no rule library changes) |
+| Decisions | D-24 (Phase 1 V10 wire cleanup) |
+| Pitfalls | None new. Reinforces P-10: V10-wire smoke test sampled dropped cohort but not kept cohort, missed Mistral Paris and similar review-flagged FPs that should have been surfaced via Reviewer Queue. The omission of the Reviewer Queue sheet was a meta-P-10 — I sampled the wrong dataset to confirm the wire was correct. |
+| Next agent action | Candidate A — Will picks 5-15 URLs from `jobs-2026-05-09.xlsx` for LLM evaluation via `/career-ops oferta`. |
+| Reversibility | Full — `git revert <Phase-1-commit>` restores pre-cleanup state. portals.yml changes reversible by single commit revert; export-jobs.mjs changes reversible likewise. |
+| Open questions | Will's URL picks for Candidate A. Whether to fresh-rescan with new title_filter (drops research at scrape-time, eliminates need for Layer 0b on those rows). Phase 3 candidate selection. |

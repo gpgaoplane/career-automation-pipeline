@@ -2,7 +2,7 @@
 status: active
 type: state
 owner: claude
-last-updated: 2026-05-08T12:00:00-04:00
+last-updated: 2026-05-09T12:00:00-04:00
 read-if: "you need to know Claude's current live work state"
 skip-if: "status != active or last-updated <= your watermark"
 ---
@@ -10,58 +10,54 @@ skip-if: "status != active or last-updated <= your watermark"
 # Claude — Live State
 
 <!-- section:current-state:start -->
-**Branch:** `feat/phase-2.8-firecrawl` (still — not yet merged to main).
-**Active task:** **V10 PRODUCTION WIRING SHIPPED** (2026-05-08). V10 filter rules ported from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs`. Daily pipeline now produces V10-quality output with V10-native columns (Option B), source-hygiene gate, and source-repair routing. Conservative R2 path preserved (`signals.deal_breaker_signal` early-drop alongside V10). Single source of truth maintained — production imports directly from `scripts/lib/`, no duplication.
+**Branch:** `main` (V10 wire merged 2026-05-08; tag `production-v10` pushed to origin).
 
-**Pause point:** post-wire, pre-merge. Wire commit landed with tag `production-v10`. Working tree clean. Awaiting Will's review of the regenerated `career-ops/output/jobs-2026-05-08.xlsx` (172 kept rows: S=33 / A=85 / B=41 / C=13).
+**Active task:** V10 PRODUCTION WIRING SHIPPED + full rescan + Phase 1 cleanup pass. Sequence:
+1. **2026-05-08 morning:** V10 wire shipped via plan-review-revise-agent-review cycle. Tag `production-v10`. Merged to main. Pushed to origin.
+2. **2026-05-08 evening:** full `npm run full-scan` rescan ran 956 pipeline rows → 172 kept on 7-day-old cache, then fresh rescan → 255 kept (S=47/A=101/B=83/C=24, 83 companies, 136 source-repair).
+3. **2026-05-09:** Will manually reviewed, surfaced 4 real defects + 1 feature request:
+   - Mistral Paris (Lever, Applied AI Engineer Prototyping) kept at S-tier despite Paris on-site
+   - Inspur non-career URL in Pending Jobs
+   - No Reviewer Queue sheet (V10 wire commit `3cf700a` omitted it)
+   - General FP/FN concern
+   - Filter request: drop research/scientist/theoretical roles
+4. **2026-05-09 Phase 1 cleanup (D-24):** Reviewer Queue sheet added; portals.yml title_filter negatives expanded with Research/Researcher/Scientist/Theoretical/Theorist; AI Research Engineer removed from positives; Inspur disabled; Layer 0 defense-in-depth in export-jobs.mjs (disabled-company drop + title-negative drop). Net: 238 kept (S=45/A=91/B=81/C=21), 88 reviewer-queue rows, Mistral Paris verified routed to Reviewer Queue.
 
-**Wire methodology** (will inform future similar work):
-1. Plan v1 written → reviewer agent (subagent_type=reviewer) found 6 issues → REVISE_BEFORE_EXECUTION.
-2. Plan v2 with all 6 fixes + Will's three open-question answers (conservative R2, second reviewer pass, Option B columns) → second reviewer agent → APPROVE_FOR_EXECUTION with 3 minor nits.
-3. Three nits patched inline → executed Step 0 (test suite green) → Step 1 (port) → Step 2 (smoke).
-4. Smoke produced 0 intern + 343 deal_breaker + 250 V10 hard-drops + 191 source-repair + 172 kept = 956 ✓.
-5. Post-wire reviewer agent flagged P-10 residual risk (couldn't run 10-row random sample due to read-only). I extended the smoke script and ran the sample myself: 9/10 explicit genuine drops + 1 unverified-but-plausible. P-10 bar passed.
-6. Single commit lands: `career-ops/export-jobs.mjs` (the wire) + plan v2 + memory updates + handoff updates.
+**Pause point:** post-Phase-1-cleanup. Workbook regenerated at `career-ops/output/jobs-2026-05-09.xlsx`. Awaiting Will's review of the cleaned workbook + URL picks for Candidate A LLM evaluation.
 
-**Smoke counts vs V10 shadow expectations** (cached 2026-05-01 pipeline as input):
-- Pipeline: 956 (vs shadow 933; 23 newer rows since 2026-05-01)
-- Deal-breaker pre-drop: 343 (all `hybrid_non_toronto`; conservative R2 swallows V10-overlap)
-- V10 hard-drops: 250 (territory 50, sales-title 4, sales-content 28, yoe 55, comp 1, onsite-non-toronto 100, specific-non-toronto-location 79)
-- Source-repair: 191 (vs shadow 184; +3.8%)
-- Kept: 172 (vs shadow ~213 estimate; difference = R2 hybrid pre-swallow)
-- Total effective drops: 343 + 250 + 191 = 784 vs shadow's 720 (536 hard + 184 source-repair)
-- Bands: S=33 / A=85 / B=41 / C=13. S-tier sample inspected — Cohere FDE Infrastructure, Glean FDE PM, OpenAI AI Deployment Engineer, Mistral FDE all preserved-correct.
+**Roster baseline:** 448 total / **392 enabled / 56 disabled** after 2026-05-09 Inspur disable (was 393/55 post-Phase-2.8-closure).
 
-**Known V10-inherited FP** (NOT wire-introduced; deferred to V11):
-- `Mistral AI | Applied AI, Forward Deployed Machine Learning Engineer - Morocco` retained at S-tier. Cache shows Casablanca-only, "On-site", zero NA tokens in body. Same class as Trimble PM listing-chrome FP from V10 closure. Reviewer confirmed via `scoring-ledger.tsv:742` that V10 shadow already preserved this row.
+**Phase 2 (V11) deferred:** rule library refinements for `extractRawLocations` city list (Paris/France/Berlin/etc.), `detectTerritory` title-adjacent header tokens, `detectSourceHygiene` non-job marketing heuristic, `parseJdSections` location-line classification. Same shadow-first methodology as V1→V10.
 
-**Baseline workbook SHA preserved:** `7BFE4EC5A099102FA0B79A5A50D874A019CEEB1E2842B38B01954E51F1ED071E` ✓
-**Last commit on branch:** wire commit (this session). New tag: `production-v10`.
+**Baseline workbook SHA preserved:** `7BFE4EC5...071E` ✓
 <!-- section:current-state:end -->
 
 <!-- section:next-steps:start -->
-**Manual review (human-side):** Will reviews `career-ops/output/jobs-2026-05-08.xlsx` — Pending Jobs sheet (172 rows), Source Repair Review sheet (191 rows), By Company sheet (58 companies). Marks Push Decision / Will Notes columns where applicable.
+**Candidate A — LLM evaluation pipeline** (next agent action when Will provides URLs):
+1. Will picks 5-15 URLs from `jobs-2026-05-09.xlsx` (Pending Jobs S-tier preferred; can include Reviewer Queue rows he wants verified)
+2. Each URL → `/career-ops oferta` evaluation → A-G blocks + Block G legitimacy + `reports/{###}-{slug}-{date}.md` + `batch/tracker-additions/{###}-{slug}.tsv`
+3. After batch: `node merge-tracker.mjs` → updates `applications.md`
+4. Summary: which scored highest, which failed legitimacy, recommended apply order
+5. For Will's actual apply targets: generate ATS-optimized CV PDF + cover letter
 
 **Phase 3 candidate menu** (Will picks; no work scheduled):
-- **A — LLM evaluation pipeline integration:** route S/A-tier through per-job LLM evaluator, generate `reports/{###}-{slug}-{date}.md`, populate `applications.md` via `merge-tracker.mjs`. Aligns with original roadmap.
-- **B — Calibration round:** after ~2 weeks of V10 production output, compare to Will's actual application picks for threshold/weight tuning.
-- **C — Delta detection:** "what disappeared since last run" mechanism deferred from Phase 2.7.
-- **D — V11 source-hygiene + territory refinement:** Trimble PM listing-chrome + Mistral Morocco class. Half-day patch. Non-blocking.
-- **E — NO_RELEVANT_JOBS roster cleanup:** disable hardware/clinical companies returning healthy-but-Will-irrelevant jobs.
-- **F — F-005 enrichment:** earlier deferred field.
+- **B — Calibration round** (~2 weeks of V10 production output)
+- **C — Delta detection** ("what disappeared since last run")
+- **D — V11 rule library refinement** (Mistral Paris class + Inspur class + Mistral Morocco class). Half-day to ~session, shadow-first methodology.
+- **E — NO_RELEVANT_JOBS roster cleanup** (39 hardware/clinical companies)
+- **F — F-005 enrichment** (deferred field)
 
-**Operational next:** `feat/phase-2.8-firecrawl` → `main` merge after Will signs off on the V10-active workbook. Tag chain: `phase-2.8-complete` → `production-v10` → main.
-
-**Conservative R2 follow-up:** the deal_breaker pre-drop swallows 343 rows, many overlapping V10 territory/location. Worth revisiting after Will reviews regenerated output — could tighten to PhD-required + no-sponsorship-remote only (V10 catches the rest), reducing redundant filtering. Not blocking.
+**Operational follow-ups:**
+- Phase 2 (V11) timing — only after Will gets value from current pipeline; not blocking
+- Conservative R2 follow-up: 370 hybrid_non_toronto pre-drops; consider tightening after manual-review feedback. Not blocking.
 <!-- section:next-steps:end -->
 
 <!-- section:open-questions:start -->
-**All wire questions resolved. Open questions for Phase 3:**
-- Will's pick from candidates A-F.
-- Whether to tighten conservative R2 path after manual review (move location-shaped deal_breaker cases into V10 only; keep PhD/sponsorship as the residual early-drop).
-- Whether to lift `tmp-v10-smoke-verify.mjs` pattern into permanent diagnostic tooling at `scripts/diagnose-wire-output.mjs` (post-wire reviewer suggested; deferred).
+- Will's URL picks for Candidate A — awaiting.
+- Phase 3 candidate selection (B-F) — Will's call after Candidate A produces actual apply artifacts.
+- Whether to run another fresh rescan now that title_filter has been tightened (would re-fetch with new negatives applied at scrape time, dropping research roles before they ever enter pipeline.md). Not urgent — Layer 0b at export time already handles this for the existing cache.
 <!-- section:open-questions:end -->
 
 <!-- section:read-watermark:start -->
-Last read INDEX at: 2026-05-08T12:00:00-04:00
+Last read INDEX at: 2026-05-09T12:00:00-04:00
 <!-- section:read-watermark:end -->

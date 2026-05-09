@@ -48,6 +48,29 @@ function loadCompanyMap() {
   return map;
 }
 
+// Loads portals.yml title_filter.negative as a lower-cased substring list.
+// Used at export time as Layer 0 defense-in-depth: pipeline.md may carry rows
+// from earlier scans that pre-date title_filter changes; re-check them here.
+function loadTitleNegatives() {
+  const raw = fs.readFileSync(path.join(__dirname, 'portals.yml'), 'utf8');
+  const parsed = yaml.load(raw);
+  const negatives = parsed?.title_filter?.negative || [];
+  return negatives.map(n => String(n).toLowerCase());
+}
+
+// Returns a Set of company names whose enabled flag is not false.
+// Used at export time to drop pipeline.md rows from companies that have been
+// disabled since the row was scraped (e.g. SOURCE_BROKEN companies).
+function loadEnabledCompanies() {
+  const raw = fs.readFileSync(path.join(__dirname, 'portals.yml'), 'utf8');
+  const parsed = yaml.load(raw);
+  const enabled = new Set();
+  for (const c of parsed.tracked_companies || []) {
+    if (c.enabled !== false) enabled.add(c.name);
+  }
+  return enabled;
+}
+
 // ── pipeline + scan history parsing ──────────────────────────────────
 
 function parsePipelineMd(filePath) {
@@ -136,6 +159,11 @@ async function main() {
   //   • V10 hard-drop (territory/sales/yoe/comp/location)
   //   • source-hygiene-invalid OR scoreJob source-repair-route annotation —
   //     routed to Source Repair Review sheet rather than Pending Jobs
+  const titleNegatives = loadTitleNegatives();
+  const enabledCompanies = loadEnabledCompanies();
+  let droppedDisabledCompany = 0;
+  let droppedTitleNegative = 0;
+  const droppedTitleNegativeByMatch = {};
   let droppedIntern = 0;
   let droppedDealBreaker = 0;
   const droppedHardByReason = {};   // reason → count (multi-reason rows count in each)
@@ -143,6 +171,27 @@ async function main() {
   const sourceRepairRows = [];
 
   const jobsScored = jobs.flatMap(job => {
+    // Layer 0a — disabled-company defense-in-depth. Rows from companies that
+    // have been disabled in portals.yml (e.g. SOURCE_BROKEN) since the row
+    // was scraped should not appear in the workbook.
+    if (!enabledCompanies.has(job.company)) {
+      droppedDisabledCompany++;
+      return [];
+    }
+
+    // Layer 0b — title_filter.negative defense-in-depth (matches scan.mjs's
+    // scrape-time filter; catches pipeline.md rows from earlier scans).
+    const titleLower = (job.title || '').toLowerCase();
+    let neg = null;
+    for (const n of titleNegatives) {
+      if (titleLower.includes(n)) { neg = n; break; }
+    }
+    if (neg) {
+      droppedTitleNegative++;
+      droppedTitleNegativeByMatch[neg] = (droppedTitleNegativeByMatch[neg] || 0) + 1;
+      return [];
+    }
+
     if (/\b(intern|internship)\b/i.test(job.title)) {
       droppedIntern++;
       return [];
@@ -211,9 +260,13 @@ async function main() {
 
   const totalReasonHits = Object.values(droppedHardByReason).reduce((a, b) => a + b, 0);
   console.log(
-    `Dropped at output: ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker, ` +
+    `Dropped at output: ${droppedDisabledCompany} disabled-company, ${droppedTitleNegative} title-negative, ${droppedIntern} intern, ${droppedDealBreaker} deal-breaker, ` +
     `${droppedHardUrls.size} V10 hard-drops (${totalReasonHits} reason-hits)`
   );
+  if (droppedTitleNegative > 0) {
+    const top = Object.entries(droppedTitleNegativeByMatch).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    console.log(`  title-negative top matches: ${top.map(([k, v]) => `${k}=${v}`).join(', ')}`);
+  }
   for (const [reason, count] of Object.entries(droppedHardByReason).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${reason}: ${count}`);
   }
@@ -379,6 +432,51 @@ async function main() {
   for (const row of sourceRepairRows) sourceRepairSheet.addRow(row);
   autoWidth(sourceRepairSheet);
 
+  // Sheet 5: Reviewer Queue (V10.1 — surfaces kept rows that V10 flagged for
+  // review). Mirrors shadow audit's Reviewer Queue logic: kept (not hard-dropped)
+  // AND (annotation contains "review" OR primary_family is UNKNOWN). Catches
+  // borderline cases like "Mistral Paris" (location_review_hybrid_onsite_without_clear_remote)
+  // that look indistinguishable from confidently-kept S-tier roles in Pending Jobs.
+  const reviewerQueue = jobsScored.filter(j =>
+    /review/i.test(j.annotations_str || '') || j.primary_family === 'UNKNOWN'
+  );
+  reviewerQueue.sort((a, b) => {
+    if (b.shadow_score !== a.shadow_score) return b.shadow_score - a.shadow_score;
+    const ra = companyMap.get(a.company)?.rank ?? Infinity;
+    const rb = companyMap.get(b.company)?.rank ?? Infinity;
+    return ra - rb;
+  });
+  const reviewerQueueSheet = wb.addWorksheet('Reviewer Queue');
+  reviewerQueueSheet.columns = [
+    { header: 'Rank', key: 'rank', width: 8 },
+    { header: 'Company', key: 'company', width: 30 },
+    { header: 'Title', key: 'title', width: 50 },
+    { header: 'URL', key: 'url', width: 60 },
+    { header: 'Primary Family', key: 'primary_family', width: 22 },
+    { header: 'Shadow Score', key: 'shadow_score', width: 13 },
+    { header: 'Shadow Band', key: 'shadow_band', width: 12 },
+    { header: 'Annotations', key: 'annotations_str', width: 40 },
+    { header: 'Score Reasons', key: 'score_reasons', width: 50 },
+  ];
+  styleHeader(reviewerQueueSheet.getRow(1));
+  reviewerQueueSheet.views = [{ state: 'frozen', ySplit: 1 }];
+  reviewerQueueSheet.autoFilter = { from: 'A1', to: 'I1' };
+  for (const job of reviewerQueue) {
+    const meta = companyMap.get(job.company);
+    reviewerQueueSheet.addRow({
+      rank: meta?.rank ?? '',
+      company: job.company,
+      title: job.title,
+      url: job.url,
+      primary_family: job.primary_family,
+      shadow_score: job.shadow_score,
+      shadow_band: job.shadow_band,
+      annotations_str: job.annotations_str,
+      score_reasons: job.score_reasons,
+    });
+  }
+  autoWidth(reviewerQueueSheet);
+
   fs.mkdirSync(path.join(__dirname, 'output'), { recursive: true });
   const today = new Date().toISOString().slice(0, 10);
   const outPath = path.join(__dirname, `output/jobs-${today}.xlsx`);
@@ -386,7 +484,7 @@ async function main() {
 
   const bandCounts = { S: 0, A: 0, B: 0, C: 0 };
   for (const j of jobsScored) bandCounts[j.shadow_band]++;
-  console.log(`Exported ${filteredJobs.length}/${jobsScored.length} pending jobs (${cacheHits} cache hits, ${hitRate.toFixed(1)}%), ${byCompanyRows.length} companies, ${history.length} scan history rows, ${sourceRepairRows.length} source-repair rows`);
+  console.log(`Exported ${filteredJobs.length}/${jobsScored.length} pending jobs (${cacheHits} cache hits, ${hitRate.toFixed(1)}%), ${byCompanyRows.length} companies, ${history.length} scan history rows, ${sourceRepairRows.length} source-repair rows, ${reviewerQueue.length} reviewer-queue rows`);
   console.log(`Bands: S=${bandCounts.S} A=${bandCounts.A} B=${bandCounts.B} C=${bandCounts.C}`);
   console.log(`Output: ${outPath}`);
 }

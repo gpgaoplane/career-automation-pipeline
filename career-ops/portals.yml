@@ -30,7 +30,8 @@ title_filter:
     - "AI Infrastructure"
     - "Foundation Model"
     - "Model Engineer"
-    - "AI Research Engineer"
+    # Removed 2026-05-09: "AI Research Engineer" — Will doesn't want research-flavored roles
+    # (covered by negative-filter additions for Research / Scientist / Theoretical).
     - "Multimodal"
     - "NLP Engineer"
     - "Conversational AI"
@@ -113,7 +114,16 @@ title_filter:
     - "Managing Director"
     - "General Manager"
     - "Chief"
-    # ── Wrong discipline ─────────────────────────────────────────────────────
+    # ── Wrong discipline (research / pure science) ──────────────────────────
+    # Expanded 2026-05-09 per Will's request: drop research-flavored and pure-science roles.
+    # Bare "Research" catches Research Engineer / Researcher / Applied Research / Foundation Models Research.
+    # Bare "Scientist" catches Data Scientist / Forward Deployed Data Scientist (the prior
+    # `research scientist`-style negatives didn't substring-match those).
+    - "Research"
+    - "Researcher"
+    - "Scientist"
+    - "Theoretical"
+    - "Theorist"
     - "research scientist"
     - "principal scientist"
     - "staff scientist"
@@ -2945,7 +2955,8 @@ tracked_companies:
     rank: 214
     category: "Semiconductors & hardware supply chain"
     careers_url: "https://en.inspur.com/"
-    enabled: true
+    enabled: false
+    note: "SOURCE_BROKEN: careers_url resolves to product nav page (en.inspur.com/en/{N}/index.html), not a real job board. Also matches semiconductor-category exclusion. Disabled 2026-05-09 per Will's feedback after V10 review."
 
   - name: "Lattice Semiconductor"
     rank: 215
