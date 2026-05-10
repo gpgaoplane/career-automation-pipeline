@@ -29,12 +29,12 @@ try {
 }
 
 const DEFAULT_RUN_DATE = "2026-05-01";
-const DEFAULT_OUTPUT_XLSX = resolve(CAREER_OPS, "output", "production-filter-refinement-v7-v8-diff.xlsx");
+const DEFAULT_OUTPUT_XLSX = resolve(CAREER_OPS, "output", "calibration", "diffs", "v7-v8.xlsx");
 const DEFAULT_SUMMARY_JSON = resolve(REPO_ROOT, "docs", "audits", "2026-05-06-shadow-v7-v8-diff-summary.json");
 
 const DEFAULT_VERSIONS = {
-  v7: resolve(CAREER_OPS, "output", `production-filter-refinement-review-${DEFAULT_RUN_DATE}-v7.xlsx`),
-  v8: resolve(CAREER_OPS, "output", `production-filter-refinement-review-${DEFAULT_RUN_DATE}-v8.xlsx`),
+  v7: resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", "v7.xlsx"),
+  v8: resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", "v8.xlsx"),
 };
 
 const DIFF_FIELDS = [

@@ -24,9 +24,9 @@ function assertEq(actual, expected, msg) {
   }
 }
 
-const baseline = resolve("career-ops", "output", "jobs-2026-05-01.xlsx");
+const baseline = resolve("career-ops", "output", "workbooks", "jobs-2026-05-01.xlsx");
 const before = sha256(baseline);
-const outputXlsx = resolve("career-ops", "output", "production-filter-refinement-review-test.xlsx");
+const outputXlsx = resolve("career-ops", "output", "tests", "production-filter-refinement-review-test.xlsx");
 const summaryJson = resolve("docs", "audits", "production-filter-refinement-summary-test.json");
 
 const result = await buildAudit({

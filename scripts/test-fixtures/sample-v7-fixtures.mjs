@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "..", "..");
-const V6_WORKBOOK = resolve(REPO_ROOT, "career-ops", "output", "production-filter-refinement-review-2026-05-01-v6.xlsx");
+const V6_WORKBOOK = resolve(REPO_ROOT, "career-ops", "output", "calibration", "reviews-by-version", "v6.xlsx");
 const OUT_FILE = resolve(__dirname, "v7-realdata-fixtures.jsonl");
 
 const careerOpsRequire = createRequire(resolve(REPO_ROOT, "career-ops", "package.json"));

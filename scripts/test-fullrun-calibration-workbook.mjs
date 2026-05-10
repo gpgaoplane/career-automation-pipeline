@@ -30,8 +30,8 @@ const CAREER_OPS = resolve(REPO_ROOT, "career-ops");
 const careerOpsRequire = createRequire(resolve(CAREER_OPS, "package.json"));
 const ExcelJS = careerOpsRequire("exceljs");
 
-const BASELINE_XLSX = resolve(CAREER_OPS, "output", "jobs-2026-05-01.xlsx");
-const TMP_DIR = resolve(CAREER_OPS, "output", ".calibration-test");
+const BASELINE_XLSX = resolve(CAREER_OPS, "output", "workbooks", "jobs-2026-05-01.xlsx");
+const TMP_DIR = resolve(CAREER_OPS, "output", "tests", ".calibration-test");
 
 const tests = [];
 function test(name, fn) {

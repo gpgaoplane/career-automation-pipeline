@@ -25,8 +25,8 @@ try {
 }
 
 const DEFAULT_RUN_DATE = "2026-05-01";
-const BASELINE_XLSX = resolve(CAREER_OPS, "output", "jobs-2026-05-01.xlsx");
-const DEFAULT_OUT_XLSX = resolve(CAREER_OPS, "output", `production-filter-refinement-review-${DEFAULT_RUN_DATE}.xlsx`);
+const BASELINE_XLSX = resolve(CAREER_OPS, "output", "workbooks", "jobs-2026-05-01.xlsx");
+const DEFAULT_OUT_XLSX = resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", `${DEFAULT_RUN_DATE}.xlsx`);
 const DEFAULT_SUMMARY = resolve(REPO_ROOT, "docs", "audits", "2026-05-03-production-filter-refinement-summary.json");
 
 export const REVIEW_SHEETS = [
@@ -374,7 +374,7 @@ export async function buildAudit(flags) {
 
   const validationFindings = buildValidationFindings(decisions);
 
-  const checkpointDir = resolve(CAREER_OPS, "output", "checkpoints", flags.runDate);
+  const checkpointDir = resolve(CAREER_OPS, "output", "calibration", "checkpoints", flags.runDate);
   const ledgers = {
     retainedTitle: resolve(checkpointDir, "baseline-retained-title-ledger.tsv"),
     prePipeline: resolve(checkpointDir, "pre-pipeline-candidates.tsv"),

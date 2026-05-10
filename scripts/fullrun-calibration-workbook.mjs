@@ -23,9 +23,9 @@ try {
 }
 
 const DEFAULT_RUN_DATE = "2026-05-01";
-const DEFAULT_OUTPUT_XLSX = resolve(CAREER_OPS, "output", `fullrun-calibration-${DEFAULT_RUN_DATE}.xlsx`);
+const DEFAULT_OUTPUT_XLSX = resolve(CAREER_OPS, "output", "calibration", `fullrun-calibration-${DEFAULT_RUN_DATE}.xlsx`);
 const DEFAULT_SUMMARY_JSON = resolve(REPO_ROOT, "docs", "audits", "2026-05-03-fullrun-calibration-summary.json");
-const BASELINE_XLSX = resolve(CAREER_OPS, "output", "jobs-2026-05-01.xlsx");
+const BASELINE_XLSX = resolve(CAREER_OPS, "output", "workbooks", "jobs-2026-05-01.xlsx");
 
 const EXPECTED = {
   scanHistoryRows: 1671,

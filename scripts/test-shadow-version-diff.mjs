@@ -6,7 +6,7 @@ import { resolve } from "node:path";
 import { buildVersionDiff, normalizeUrl, rowKey } from "./shadow-version-diff.mjs";
 
 const REPO_ROOT = resolve(".");
-const outputXlsx = resolve(REPO_ROOT, "career-ops", "output", "shadow-version-diff-test.xlsx");
+const outputXlsx = resolve(REPO_ROOT, "career-ops", "output", "tests", "shadow-version-diff-test.xlsx");
 const summaryJson = resolve(REPO_ROOT, "docs", "audits", "shadow-version-diff-test-summary.json");
 
 function countWhere(rows, predicate) {
@@ -21,9 +21,9 @@ async function main() {
   );
 
   const result = await buildVersionDiff({ runDate: "2026-05-01", outputXlsx, summaryJson, allowOverwrite: true, versions: {
-    v3: resolve(REPO_ROOT, "career-ops", "output", "production-filter-refinement-review-2026-05-01-v3.xlsx"),
-    v4: resolve(REPO_ROOT, "career-ops", "output", "production-filter-refinement-review-2026-05-01-v4.xlsx"),
-    v5: resolve(REPO_ROOT, "career-ops", "output", "production-filter-refinement-review-2026-05-01-v5.xlsx"),
+    v3: resolve(REPO_ROOT, "career-ops", "output", "calibration", "reviews-by-version", "v3.xlsx"),
+    v4: resolve(REPO_ROOT, "career-ops", "output", "calibration", "reviews-by-version", "v4.xlsx"),
+    v5: resolve(REPO_ROOT, "career-ops", "output", "calibration", "reviews-by-version", "v5.xlsx"),
   } });
 
   assert.equal(result.versions.v3.counts.shadow_rows, 956);

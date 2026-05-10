@@ -35,7 +35,7 @@ function parseArgs(argv) {
 
 async function main() {
   const flags = parseArgs(process.argv);
-  const outputDir = resolve("career-ops", "output", "checkpoints", flags.runDate);
+  const outputDir = resolve("career-ops", "output", "calibration", "checkpoints", flags.runDate);
   const direct = await runDirectCoreV1({
     runDate: flags.runDate,
     company: flags.company,

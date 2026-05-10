@@ -23,7 +23,7 @@ const careerOpsRequire = createRequire(resolve(CAREER_OPS, "package.json"));
 const ExcelJS = careerOpsRequire("exceljs");
 
 // V10: workbook reference updated from V9 → V10 (V10 is the working baseline now).
-const V7_WORKBOOK = resolve(CAREER_OPS, "output", "production-filter-refinement-review-2026-05-01-v10.xlsx");
+const V7_WORKBOOK = resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", "v10.xlsx");
 
 // Reproduce FAMILY_BASE values from job-fit-rules.mjs:8-18 for the
 // family-base-correspondence invariant.

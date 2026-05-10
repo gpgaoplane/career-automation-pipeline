@@ -66,7 +66,7 @@ export async function runDirectCoreV1({
   company = null,
   dryRun = true,
   allowNetwork = false,
-  outputDir = resolve(REPO_ROOT, "career-ops", "output", "checkpoints", runDate),
+  outputDir = resolve(REPO_ROOT, "career-ops", "output", "calibration", "checkpoints", runDate),
 } = {}) {
   const targets = directAtsTargets({ company });
   const rows = [];

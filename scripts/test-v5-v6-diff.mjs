@@ -25,9 +25,9 @@ assertEq(
   "rowKey normalizes url + company (title stripped to allow V5/V6 chrome differences)",
 );
 
-const v5 = resolve("career-ops", "output", "production-filter-refinement-review-2026-05-01-v5.xlsx");
-const v6 = resolve("career-ops", "output", "production-filter-refinement-review-2026-05-01-v6.xlsx");
-const out = resolve("career-ops", "output", "production-filter-refinement-v5-v6-diff-test.xlsx");
+const v5 = resolve("career-ops", "output", "calibration", "reviews-by-version", "v5.xlsx");
+const v6 = resolve("career-ops", "output", "calibration", "reviews-by-version", "v6.xlsx");
+const out = resolve("career-ops", "output", "tests", "v5-v6-diff-test.xlsx");
 const summaryJson = resolve("docs", "audits", "shadow-v5-v6-diff-summary-test.json");
 
 const result = await buildVersionDiff({

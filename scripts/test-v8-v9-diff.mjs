@@ -37,7 +37,7 @@ function assertGe(actual, expected, msg) {
   }
 }
 
-const outputXlsx = resolve(CAREER_OPS, "output", "production-filter-refinement-v8-v9-diff-test.xlsx");
+const outputXlsx = resolve(CAREER_OPS, "output", "tests", "v8-v9-diff-test.xlsx");
 const summaryJson = resolve(REPO_ROOT, "docs", "audits", "shadow-v8-v9-diff-test-summary.json");
 
 const result = await buildVersionDiff({
@@ -46,8 +46,8 @@ const result = await buildVersionDiff({
   summaryJson,
   allowOverwrite: true,
   versions: {
-    v8: resolve(CAREER_OPS, "output", "production-filter-refinement-review-2026-05-01-v8.xlsx"),
-    v9: resolve(CAREER_OPS, "output", "production-filter-refinement-review-2026-05-01-v9.xlsx"),
+    v8: resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", "v8.xlsx"),
+    v9: resolve(CAREER_OPS, "output", "calibration", "reviews-by-version", "v9.xlsx"),
   },
 });
 

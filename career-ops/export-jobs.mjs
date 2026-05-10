@@ -2,7 +2,7 @@
 // export-jobs.mjs — converts pipeline + scan history to Excel with V10 filter rules
 // Reads: data/pipeline.md, data/scan-history.tsv, portals.yml,
 //        data/job-descriptions-cache.json (if present)
-// Writes: output/jobs-YYYY-MM-DD.xlsx
+// Writes: output/workbooks/jobs-YYYY-MM-DD.xlsx
 //
 // V10 wire (2026-05-08): scoring is delegated to scripts/lib/job-fit-rules.mjs
 // (single source of truth). Source-hygiene gate, hard-drop routing, and
@@ -489,9 +489,9 @@ async function main() {
   }
   autoWidth(reviewerQueueSheet);
 
-  fs.mkdirSync(path.join(__dirname, 'output'), { recursive: true });
+  fs.mkdirSync(path.join(__dirname, 'output/workbooks'), { recursive: true });
   const today = new Date().toISOString().slice(0, 10);
-  const outPath = path.join(__dirname, `output/jobs-${today}.xlsx`);
+  const outPath = path.join(__dirname, `output/workbooks/jobs-${today}.xlsx`);
   await wb.xlsx.writeFile(outPath);
 
   const bandCounts = { S: 0, A: 0, B: 0, C: 0 };

@@ -25,7 +25,7 @@ function assertEq(actual, expected, msg) {
   }
 }
 
-const outputXlsx = resolve("career-ops", "output", "production-filter-refinement-v6-v7-diff-test.xlsx");
+const outputXlsx = resolve("career-ops", "output", "tests", "v6-v7-diff-test.xlsx");
 const summaryJson = resolve("docs", "audits", "shadow-v6-v7-diff-test.json");
 const flags = parseArgs(["node", "scripts/v6-v7-diff.mjs", "--allow-overwrite",
   "--output-xlsx", outputXlsx, "--summary-json", summaryJson]);
