@@ -2,7 +2,7 @@
 status: active
 type: index
 owner: shared
-last-updated: 2026-05-08T00:00:00-04:00
+last-updated: 2026-05-12T00:00:00-04:00
 read-if: "session start, or before reading another agent's files"
 skip-if: "never"
 ---
@@ -13,15 +13,15 @@ skip-if: "never"
 | path | type | owner | status | last-updated |
 |------|------|-------|--------|--------------|
 | .claude/CLAUDE.md | adapter | claude | active | 2026-04-22T00:00:00-05:00 |
-| docs/agents/claude.md | work-log | claude | active | 2026-04-30T00:00:00-04:00 |
-| docs/STATUS.md | status | shared | active | 2026-05-05T11:39:22-04:00 |
-| .claude/memory/state.md | state | claude | active | 2026-04-30T22:11:51-04:00 |
-| .claude/memory/context.md | context | claude | active | 2026-04-30T22:11:51-04:00 |
-| .claude/memory/decisions.md | decisions | claude | active | 2026-04-30T22:11:51-04:00 |
-| .claude/memory/pitfalls.md | pitfalls | claude | active | 2026-04-30T22:11:51-04:00 |
-| AI_AGENTS.md | shared | shared | active | 2026-05-01T20:00:00-04:00 |
-| AI_HANDOFF.md | handoff | codex | active | 2026-05-05T11:39:22-04:00 |
-| RESUME_PROMPT.md | handoff | codex | active | 2026-05-05T11:39:22-04:00 |
+| docs/agents/claude.md | work-log | claude | active | 2026-05-12T00:00:00-04:00 |
+| docs/STATUS.md | status | shared | active | 2026-05-12T00:00:00-04:00 |
+| .claude/memory/state.md | state | claude | active | 2026-05-12T00:00:00-04:00 |
+| .claude/memory/context.md | context | claude | active | 2026-05-09T13:35:10-04:00 |
+| .claude/memory/decisions.md | decisions | claude | active | 2026-05-09T12:38:30-04:00 |
+| .claude/memory/pitfalls.md | pitfalls | claude | active | 2026-05-07T00:00:00-04:00 |
+| AI_AGENTS.md | shared | shared | active | 2026-05-09T13:35:10-04:00 |
+| AI_HANDOFF.md | handoff | claude | active | 2026-05-12T00:00:00-04:00 |
+| RESUME_PROMPT.md | handoff | claude | active | 2026-05-12T00:00:00-04:00 |
 | .collab/ACTIVE.md | active-board | shared | active | 2026-04-22T00:00:00-05:00 |
 | .collab/INDEX.md | index | shared | active | 2026-05-04T22:21:04-04:00 |
 | .collab/ROUTING.md | routing | shared | active | 2026-04-22T00:00:00-05:00 |
@@ -158,4 +158,8 @@ skip-if: "never"
 | docs/audits/2026-05-06-v8-plan-v2-verification.md | audit | reviewer-agent | active | 2026-05-06T10:00:00-04:00 |
 | scripts/v9-v10-diff.mjs | script | claude | active | 2026-05-07T12:00:00-04:00 |
 | scripts/test-v9-v10-diff.mjs | test | claude | active | 2026-05-07T12:00:00-04:00 |
+| docs/plans/2026-05-08-v10-production-wiring.md | implementation-plan | claude | active | 2026-05-08T13:15:05-04:00 |
+| scripts/render-cv-pdf.mjs | script | claude | active | 2026-05-10T12:57:49-04:00 |
+| career-ops/export-jobs.mjs | script | claude | active | 2026-05-10T12:52:23-04:00 |
+| career-ops/portals.yml | config | shared | active | 2026-05-09T12:38:30-04:00 |
 <!-- collab:index:end -->

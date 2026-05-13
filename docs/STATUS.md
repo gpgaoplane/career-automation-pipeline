@@ -2,17 +2,28 @@
 status: active
 type: status
 owner: shared
-last-updated: 2026-05-08T12:00:00-04:00
+last-updated: 2026-05-12T00:00:00-04:00
 read-if: "you need the current project phase, recent done items, blockers, or handoff note"
 skip-if: "status != active"
 ---
 
 # Project Status — Career Ops (Will Guo Job Search Pipeline)
 
-**Last Updated:** 2026-05-08
-**Current Phase:** **V10 PRODUCTION WIRING SHIPPED** on `feat/phase-2.8-firecrawl`. V10 filter rules ported from `scripts/lib/job-fit-rules.mjs` into `career-ops/export-jobs.mjs`. Plan-review-revise-agent-review cycle: plan v1 → reviewer flagged 6 issues → plan v2 → reviewer APPROVE_FOR_EXECUTION → wire executed → post-wire reviewer + 10-row P-10 adversarial sample (9/10 genuine drops) → APPROVE_FOR_COMMIT_AND_TAG. Tag `production-v10`. Single source of truth preserved (production imports `scoreJob`/`parseJdSections`/`detectSourceHygiene` directly from `scripts/lib/`+audit; no duplication). Smoke run produced `career-ops/output/jobs-2026-05-08.xlsx` — 172 kept (S=33/A=85/B=41/C=13), 191 source-repair, 250 V10 hard-drops, 343 deal_breaker pre-drops, on 956-row cached pipeline. Baseline workbook SHA preserved. **Next: Will's manual review of regenerated workbook + Phase 3 candidate selection (A=LLM eval, B=calibration, C=delta-detection, D=V11 source-hygiene+territory, E=NO_RELEVANT_JOBS cleanup, F=F-005 enrichment).** Earlier 4 commits on the branch: `d73638b` framework upgrade → `17251c8` test infra + enrichment patches → `7dd512e` audit trail → `2f5382b` memory + STATUS commit → `3954346` doc-sync → V10-wire commit (this). **Next: production wiring (V10 rules → `career-ops/export-jobs.mjs`).** Phase 2.8 remains CLOSED at `75ec403` / tag `phase-2.8-complete`. Current roster baseline is **448 total / 393 enabled / 55 disabled / 0 missing notes**. Full 393-company clean rescan executed 2026-05-01T03:36:40Z onward; 3,552 Firecrawl credits consumed (within 5,000 cap; budget remaining 96,849); output workbook `career-ops/output/jobs-2026-05-01.xlsx` remains the untouched baseline for Will's manual review (613 jobs across 154 companies; S=37 / A=370 / B=195 / C=11). Acceptance audit on full-run metrics: **12 PASS / 0 FAIL / 0 pending**. Codex also produced V1 offline calibration/risk-audit artifacts on 2026-05-03: `career-ops/output/fullrun-calibration-2026-05-01.xlsx` and `docs/audits/2026-05-03-fullrun-calibration-summary.json`. Tag `scan-v2-prerescan` preserves the pre-rescan baseline; tag `phase-2.8-complete` is the canonical closure checkpoint.
+**Last Updated:** 2026-05-12
+**Current Phase:** **POST-V10 FORWARD MOTION — Candidate A (LLM evaluation) in early progress.** V10 calibration arc closed; V10 production wiring shipped on `main` (tag `production-v10`); Phase 1 manual-review cleanup landed; Reviewer Queue refined twice; `career-ops/output/` reorganized into `workbooks/` + `applications/` + `calibration/` + `tests/` buckets; new `scripts/render-cv-pdf.mjs` (markdown CV → PDF) added. **3 V10 evaluation rows tracked in `applications.md`** via `/career-ops oferta`; awaiting Will's next URL batch or Phase 3 menu pick (B=calibration, C=delta-detection, D=V11 rule refinement, E=NO_RELEVANT_JOBS cleanup, F=F-005 enrichment). Current canonical workbook: `career-ops/output/workbooks/jobs-2026-05-10.xlsx` (238 kept, S=45/A=91/B=81/C=21, 88 reviewer-queue rows). Roster baseline: **448 total / 392 enabled / 56 disabled**. Baseline workbook SHA `7BFE4EC5...071E` preserved at `career-ops/output/workbooks/jobs-2026-05-01.xlsx`. Phase 2.8 remains CLOSED at tag `phase-2.8-complete`.
 
 ## Done
+
+- [x] **Post-Phase-1 forward motion: output reorg, Reviewer Queue refinement, CV PDF tool, Candidate A start** (2026-05-09 → 2026-05-10, Claude + Will):
+  - **`7b4d0c5`** widened Reviewer Queue filter to mirror shadow workbook line 512 + doc-sync of `AI_AGENTS.md` and `.claude/memory/context.md` roster baseline.
+  - **`9302b48`** narrowed Reviewer Queue to ambiguity signals only — kept rows where annotations match `/review/i` OR `primary_family === 'UNKNOWN'`. Drops missing-info-only rows that would otherwise clutter the queue.
+  - **`6da770f`** reorganized `career-ops/output/` into `workbooks/` / `applications/` / `calibration/` / `tests/` subdirs. Updated `career-ops/export-jobs.mjs` and 14 scripts (`production-filter-refinement-audit.mjs`, `shadow-version-diff.mjs`, V5-V6 through V9-V10 diff/test pairs, `fullrun-calibration-workbook.mjs`, `gated-full-scan-v1.mjs`, `direct-core-v1.mjs`) so all read/write paths point at the new bucket layout. Baseline workbook now at `career-ops/output/workbooks/jobs-2026-05-01.xlsx`.
+  - **`faacfa5`** tracked 3 V10 evaluation rows in `career-ops/data/applications.md` — Candidate A (LLM evaluation pipeline) is now in early progress.
+  - **`3fa70b2`** added `scripts/render-cv-pdf.mjs` (markdown CV → HTML → PDF renderer) for generating ATS-tailored CV PDFs at apply time.
+  - All commits zero-Firecrawl. Workbook regenerated as `jobs-2026-05-10.xlsx` (same kept cohort as 2026-05-09 since Reviewer Queue narrowing only affects which kept rows go to Sheet 5, not pipeline drop logic).
+  - No new decisions/pitfalls — these are tactical refinements + tool addition, not architectural changes.
+
+- [x] **Phase 1 V10 wire cleanup based on Will's manual-review feedback** (2026-05-09, Claude + Will):
 - [x] **Phase 1 V10 wire cleanup based on Will's manual-review feedback** (2026-05-09, Claude + Will):
   - Will's manual review of `jobs-2026-05-08.xlsx` (post-rescan) surfaced 4 real defects + 1 feature request: Mistral Paris kept at S-tier (should drop on Paris on-site); Inspur non-career URL in Pending Jobs; no Reviewer Queue sheet to surface review-flagged rows; general FP/FN concern; filter request to drop research/scientist/theoretical roles.
   - Diagnostic traced: Mistral Paris had `extractRawLocations` missing Paris/France + `detectTerritory` returning UNKNOWN + V10 emitted `location_review_hybrid_onsite_without_clear_remote` annotation (V10 said "needs review" but production had no surface for it). Inspur had `detectSourceHygiene invalid=false` (heuristics don't catch valid-but-not-job marketing pages). 12 research/scientist roles in kept cohort because `AI Research Engineer` was in positives and bare `Scientist` not in negatives.

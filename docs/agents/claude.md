@@ -556,4 +556,64 @@ docs/design/filter-pipeline-reference.md docs/agents/claude.md .collab/INDEX.md
 | Pitfalls | None new. Reinforces P-10: V10-wire smoke test sampled dropped cohort but not kept cohort, missed Mistral Paris and similar review-flagged FPs that should have been surfaced via Reviewer Queue. The omission of the Reviewer Queue sheet was a meta-P-10 — I sampled the wrong dataset to confirm the wire was correct. |
 | Next agent action | Candidate A — Will picks 5-15 URLs from `jobs-2026-05-09.xlsx` for LLM evaluation via `/career-ops oferta`. |
 | Reversibility | Full — `git revert <Phase-1-commit>` restores pre-cleanup state. portals.yml changes reversible by single commit revert; export-jobs.mjs changes reversible likewise. |
+
+## 2026-05-12 — Doc-sync audit: refresh stale tracking docs to current state
+
+**Goal:** Will asked for an audit of tracking docs to ensure none project inaccurate or stale information. Five commits had landed since the last state.md update (2026-05-09 morning) without corresponding Receipts or tracking-doc refresh — output reorg, Reviewer Queue refinement (twice), CV PDF renderer, Candidate A start. Two handoff docs (`AI_HANDOFF.md`, `RESUME_PROMPT.md`) still framed the V10-wiring-next narrative even though wiring shipped 2026-05-08. STATUS.md Current Phase header was also pre-Phase-1.
+
+**Audit findings:**
+
+| File | Status | Action |
+|------|--------|--------|
+| `AI_HANDOFF.md` | Stale narrative — "V10 wiring next" but wiring shipped | Full rewrite |
+| `RESUME_PROMPT.md` | Stale narrative — same premise as AI_HANDOFF | Full rewrite |
+| `docs/STATUS.md` | Current Phase header pre-Phase-1; frontmatter date 2026-05-08 | Update header + frontmatter + new Done entry |
+| `.claude/memory/state.md` | Mentions `output/jobs-2026-05-09.xlsx` (file moved post-reorg); missing 5 recent commits | Rewrite active-task + next-steps sections |
+| `.collab/INDEX.md` | Missing `docs/plans/2026-05-08-v10-production-wiring.md`, `scripts/render-cv-pdf.mjs`; stale timestamps on touched files | Add 4 new rows + bump 10 timestamps |
+| `docs/agents/claude.md` | No Receipts for 5 post-Phase-1 commits | Append this entry |
+| `.claude/memory/context.md` | Roster baseline current (392/56); no new durable invariants from recent commits | Leave alone |
+| `.claude/memory/decisions.md` | D-24 (Phase 1) is latest; recent commits are tactical refinements not architectural decisions | Leave alone |
+| `.claude/memory/pitfalls.md` | No new pitfalls | Leave alone |
+| `AI_AGENTS.md` | Roster 392/56 already synced 2026-05-09 (commit `7b4d0c5`) | Leave alone |
+
+**Approach:**
+1. Read all 7 tracking docs + verified commit history via `git log --pretty=format:"%h %ci %s" -10` and workbook file timestamps via `ls -la career-ops/output/workbooks/`.
+2. Confirmed `jobs-2026-05-10.xlsx` is current canonical workbook (141,190 bytes, same as 2026-05-09; reflects narrowed Reviewer Queue logic from commit `9302b48`).
+3. Executed the 6 targeted updates above; left the 4 still-current files alone per "only the truly needed modified" guidance.
+
+**Updates:**
+- `.claude/memory/state.md` — rewrote `current-state`, `next-steps`, `open-questions`, `read-watermark` sections. Active task now reflects post-Phase-1 forward motion + Candidate A in early progress. Frontmatter bumped to 2026-05-12.
+- `docs/STATUS.md` — Current Phase header rewritten ("POST-V10 FORWARD MOTION — Candidate A in early progress"); frontmatter bumped; new top Done entry consolidates the 5 post-Phase-1 commits (`7b4d0c5`, `9302b48`, `6da770f`, `faacfa5`, `3fa70b2`).
+- `AI_HANDOFF.md` — full rewrite. Premise changed from "V10 wiring next" to "post-V10, Candidate A in early progress." Reflects current branch (main), current workbook (`jobs-2026-05-10.xlsx`), current roster (392/56), and default next action (continue Candidate A) with Phase 3 menu as pivot option.
+- `RESUME_PROMPT.md` — full rewrite, parallel to AI_HANDOFF.md but framed as session-resume instructions.
+- `.collab/INDEX.md` — added 4 new rows (`docs/plans/2026-05-08-v10-production-wiring.md`, `scripts/render-cv-pdf.mjs`, `career-ops/export-jobs.mjs`, `career-ops/portals.yml`); bumped timestamps on 10 touched files; bumped frontmatter to 2026-05-12.
+- `docs/agents/claude.md` — this entry.
+
+**What was deliberately NOT changed** (per "only truly needed" scope):
+- `.claude/memory/context.md` — no new durable invariants; output reorg is cosmetic; render-cv-pdf is a tool addition not a project-truth shift.
+- `.claude/memory/decisions.md` — recent commits don't qualify as architectural decisions (D-23 covered V10 wire, D-24 covered Phase 1; reorg/refinement/tool-add are tactical).
+- `.claude/memory/pitfalls.md` — no new pitfalls surfaced.
+- `AI_AGENTS.md` — roster baseline already synced 2026-05-09; no other drift.
+- Intentionally uncommitted local files (`.claude/settings.local.json`, `docs/audits/*test*.json`, `.collab-upgrade-backups/`, `tmp-v9-review/`) — left in place per state.md note.
+
+**Verification:**
+- Read all 7 audited files in full before editing.
+- Cross-referenced 5 recent commits via `git log` with commit timestamps to verify dates.
+- Confirmed workbook layout via `ls -la career-ops/output/workbooks/` — current canonical is `jobs-2026-05-10.xlsx`.
+- No production code, no `career-ops/*` config, no scripts touched. Documentation-only refresh.
+
+### Task Receipt
+
+| Field | Value |
+|---|---|
+| Task | Doc-sync audit: refresh stale tracking docs to current state |
+| Outcome | DONE — 6 docs updated, 4 left intentionally untouched, no production code touched |
+| Commits | None yet — uncommitted; awaiting Will's go for a doc-sync commit |
+| Files touched | `.claude/memory/state.md` · `docs/STATUS.md` · `AI_HANDOFF.md` · `RESUME_PROMPT.md` · `.collab/INDEX.md` · `docs/agents/claude.md` |
+| Tests | N/A — documentation-only |
+| Decisions | None new (no architectural shifts) |
+| Pitfalls | None new |
+| Next agent action | Await Will's direction: continue Candidate A (default), or pivot to Phase 3 menu pick. Optionally commit this doc-sync if Will wants the working tree clean. |
+| Reversibility | Full — `git checkout -- <file>` on any individual doc reverts to pre-audit state. |
+| Open questions | Whether Will wants the doc-sync committed as a single `chore: doc-sync` commit, or rolled into the next substantive commit. |
 | Open questions | Will's URL picks for Candidate A. Whether to fresh-rescan with new title_filter (drops research at scrape-time, eliminates need for Layer 0b on those rows). Phase 3 candidate selection. |
